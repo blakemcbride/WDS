@@ -1,0 +1,12 @@
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.CMD. text eol=crlf
+*.BAT. text eol=crlf
+*.dm text eol=crlf
+*.DM text eol=crlf
+*.mk text eol=crlf
+*.MK text eol=crlf
+*.rc text eol=crlf
+*.RC text eol=crlf
+*.man. text eol=crlf
+

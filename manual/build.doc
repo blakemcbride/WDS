@@ -1,0 +1,17 @@
+
+Process needed to generate the documentation.
+
+From DOS -	Spell check files after date of spell file (ispell) 
+		Remove tabs  (rt.bat)
+		touch spell file
+		
+From UNIX -	Delete carage returns (delcr *.tex)
+		Run TeX (tex-all)
+		Generate .1 and .2 files (gen)
+		Create misc files (make-rest)
+		Delete unnecessary files (c)
+
+		Check overfull boxes
+		touch spell file
+
+

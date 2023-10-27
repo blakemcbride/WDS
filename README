@@ -1,0 +1,61 @@
+
+This is the Dynace Object Oriented Extension to C.
+
+It contains the following enhancements over the previous releases:
+
+	Added the following classes:
+
+		Exception handling classes
+			Abort
+			Condition
+			Error
+			Restart
+			SeriousCondition
+			SimpleRestart
+			SimpleWarning
+			Warning
+		XML DOM & XPath Support
+		WeakPointer
+		ObjectPool
+		Mime handling
+
+Although I don't believe it is documented, in addition to cooperative
+threads, Dynace supports native threads under Win32 and could easily
+be enhanced to support Posix threads.
+
+The manual was
+complete with the last release but hasn't been updated with the new
+classes yet, although there have been enhancements made to it.  The
+GUI library (WDS) has been out of date for years.
+
+BTW, this system is very well tested and used in large development
+shops with many developers every day for the last ten years.  It is
+rock solid and, IMO, a valuable tool.
+
+See docs\DESCRIBE.txt for a basic description of the system.
+
+See docs\ORIENT.txt for a description of the components and their
+location.
+
+See docs\BUILD.txt for instructions on building the system.
+
+Please see docs\LICENSE.txt for licensing information.
+
+Once the system is installed see docs\INDEX.txt for a description of
+included documentation files.
+
+I am:
+
+	Blake McBride
+	4535 Scenic Hills Lane
+	Franklin, TN 37064
+	USA
+
+	e-mail:  blake@mcbridemail.com
+
+Software download area:
+
+	https://github.com/blakemcbride/Dynace
+
+
+
