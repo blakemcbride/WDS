@@ -13,7 +13,6 @@ DYNACE_PATH = ..\..
 JAVAINC = $(JAVAHOME)\include
 JAVAINC2 = $(JAVAHOME)\include\win32
 
-BINDIR = $(DYNACE_PATH)\bin
 LIBDIR = $(DYNACE_PATH)\lib
 INCDIR = $(DYNACE_PATH)\include
 
@@ -39,7 +38,7 @@ OBJ = $(CLASS_SRC:s/.d/.obj/)
 CC = cl
 
 .d.c .PRECIOUS :
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -p $<
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -p $<
 
 
 allok.cm .LIBRARY :  $(INCDIR)\generics.h curlib.cm
@@ -51,42 +50,42 @@ curlib.cm .LIBRARY : $(OBJ)
 .ELSE
 	lib /nologo /out:$(LIBDIR)\dynlcm.lib $(LIBDIR)\dynlcm.lib @$(mktmp $(?:t"\n")\n)
 .END
-	$(BINDIR)\rm -zq *.obj
+	rm -zq *.obj
 	echo Done >$@
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
 
 Java.obj JavaClass.obj : package.h
 
 newgens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)/generics.h -p *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)/generics.h -p *.d -h $(INCDIR)\generics.h
 
 makegens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)/generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)/generics.h -s *.d -h $(INCDIR)\generics.h
 
 
 clean realclean:
-	$(BINDIR)\rm -zq {$(CLASS_SRC:b)}.c
-	$(BINDIR)\rm -zq *.cm
-	$(BINDIR)\rm -zq *.obj
-	$(BINDIR)\rm -zq *.exe
-	$(BINDIR)\rm -zq *.ex1
-	$(BINDIR)\rm -zq *.res
-	$(BINDIR)\rm -zq *.aps
-	$(BINDIR)\rm -zq *.pdb
-	$(BINDIR)\rm -zq *.wsp
-	$(BINDIR)\rm -zq *.ilk
-	$(BINDIR)\rm -zq *.bsc
-	$(BINDIR)\rm -zq *.vcp
-	$(BINDIR)\rm -zq *.pch
-	$(BINDIR)\rm -zq *.sbr
-	$(BINDIR)\rm -zq *.vcw
-	$(BINDIR)\rm -zq *.map
-	$(BINDIR)\rm -zq generics.*
-	$(BINDIR)\rm -zqr WinDebug
-	$(BINDIR)\rm -zqr WinRel
-	$(BINDIR)\rm -zq *.idb *.mdp *.ncb
-	$(BINDIR)\rm -zq *.dsw *.opt *.plg
-	$(BINDIR)\rm -zq *.dsp
+	rm -zq {$(CLASS_SRC:b)}.c
+	rm -zq *.cm
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map
+	rm -zq generics.*
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.idb *.mdp *.ncb
+	rm -zq *.dsw *.opt *.plg
+	rm -zq *.dsp
 

@@ -1,9 +1,9 @@
 
 # DMAKE makefile for NT using Microsoft Visual C++ 32
 
-BINDIR = ..\bin
 LIBDIR = ..\lib
 INCDIR = ..\include
+DYNINC = $(DYNACE_ROOT)\include
 
 #  JavaScript (Spidermonkey) stuff
 #JS_IPATH = C:\JavaScript\src
@@ -13,7 +13,7 @@ JS_LPATH = $(JS_IPATH)\Debug
 
 
 .d.c .PRECIOUS :
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
 
 CFEXTRA += -MT
 
@@ -26,12 +26,12 @@ CFEXTRA += -DNATIVE_THREADS
 #endif
 
 .IF $(DEBUG)
-CFLAGS = -nologo -I$(INCDIR) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) $(WINVER)
-#GFLAGS = -nologo -I$(INCDIR) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
-GFLAGS = -nologo -I$(INCDIR) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(WINVER)
+CFLAGS = -nologo -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) $(WINVER)
+#GFLAGS = -nologo -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
+GFLAGS = -nologo -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(WINVER)
 .ELSE
-CFLAGS = -nologo -I$(INCDIR) -O2 -D_WINDOWS -DWIN32 $(CFEXTRA) $(WINVER)
-GFLAGS = -nologo -I$(INCDIR) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 $(WINVER)
+CFLAGS = -nologo -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS -DWIN32 $(CFEXTRA) $(WINVER)
+GFLAGS = -nologo -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 $(WINVER)
 .END
 
 .IF $(DEMO)
@@ -75,38 +75,38 @@ curlib.nm .LIBRARY : $(OBJS)
 .ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @$(mktmp $(?:t"\n")\n)
 .END
-	$(BINDIR)\rm -zq *.obj
+	rm -zq *.obj
 	echo Done >$@
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(^:t"\n"))
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(^:t"\n"))
 
 CheckBox.obj ComboBox.obj DateControl.obj ListBox.obj NumericControl.obj PushButton.obj RadioButton.obj \
 StaticTextControl.obj TextControl.obj Window.obj : ctlsave.h
 
 printdib.c : printdib.d
-	$(BINDIR)\cp $< $@
+	cp $< $@
 
 JavaScript.obj : JavaScript.c
 	$(CC) $(CFLAGS) -c -I$(JS_IPATH) $<
 
 generics.c : generics.h
-	$(BINDIR)\dpp $(STRAT) -C -g -c
+	dpp $(STRAT) -C -g -c
 
 generics.obj : generics.c
 	$(CC) -c $(GFLAGS) $<
 
 newgens : 
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
 
 makegens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
 
 
 clean:
-	$(BINDIR)\rm -zq *.obj *.o *.exe *.err *.pdb
-	$(BINDIR)\rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	rm -zq *.obj *.o *.exe *.err *.pdb
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
 
 realclean: clean
-	$(BINDIR)\rm -zq curlib.* allok.* *.c generics.h generics.1
+	rm -zq curlib.* allok.* *.c generics.h generics.1
 

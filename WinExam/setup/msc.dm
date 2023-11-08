@@ -8,7 +8,7 @@ TARGET = main
 C_SRC = main.c
 
 
-DYNACE_PATH = ..\..
+DYNACE_PATH = $(DYNACE_ROOT)
 
 CFEXTRA += -MT
 

@@ -3,7 +3,6 @@
 
 WDIR = include
 
-BINDIR = ..\bin
 LIBDIR = ..\lib
 INCDIR = ..\include
 
@@ -15,7 +14,7 @@ CFEXTRA += -DNATIVE_THREADS
 
 
 .d.c .PRECIOUS :
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
 
 
 .IF $(DEBUG)
@@ -44,24 +43,24 @@ curlib.nm .LIBRARY : $(OBJS)
 .ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @$(mktmp $(?:t"\n")\n)
 .END
-	$(BINDIR)\rm -zq *.obj
+	rm -zq *.obj
 	echo Done >$@
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
 
 
 newgens : 
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -p *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -p *.d -h $(INCDIR)\generics.h
 
 makegens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
 
 
 clean:
-	$(BINDIR)\rm -zq *.obj *.o *.exe *.err *.pdb
-	$(BINDIR)\rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	rm -zq *.obj *.o *.exe *.err *.pdb
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
 
 realclean: clean
-	$(BINDIR)\rm -zq curlib.* allok.* generics.h generics.1
+	rm -zq curlib.* allok.* generics.h generics.1
 

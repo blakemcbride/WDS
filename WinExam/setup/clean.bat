@@ -1,32 +1,32 @@
 @echo off
-..\..\bin\rm -zq *.obj
-..\..\bin\rm -zq *.exe
-..\..\bin\rm -zq *.ex1
-..\..\bin\rm -zq *.map
-..\..\bin\rm -zq *.res
-..\..\bin\rm -zq *.aps
-..\..\bin\rm -zq *.pdb
-..\..\bin\rm -zq *.wsp
-..\..\bin\rm -zq *.ilk
-..\..\bin\rm -zq *.mdp
-..\..\bin\rm -zq *.ncb
-..\..\bin\rm -zq *.idb
-..\..\bin\rm -zq *.bsc
-..\..\bin\rm -zq *.vcp
-..\..\bin\rm -zq *.pch
-..\..\bin\rm -zq *.sbr *.opt *.sln
-..\..\bin\rm -zq *.vcw
-..\..\bin\rm -zq *.map
-..\..\bin\rm -zq class1.c
-..\..\bin\rm -zq generics.*
-..\..\bin\rm -zqr WinDebug
-..\..\bin\rm -zqr WinRel
-..\..\bin\rm -zq *.~ *.?~ *.??~ *.bak
+rm -zq *.obj
+rm -zq *.exe
+rm -zq *.ex1
+rm -zq *.map
+rm -zq *.res
+rm -zq *.aps
+rm -zq *.pdb
+rm -zq *.wsp
+rm -zq *.ilk
+rm -zq *.mdp
+rm -zq *.ncb
+rm -zq *.idb
+rm -zq *.bsc
+rm -zq *.vcp
+rm -zq *.pch
+rm -zq *.sbr *.opt *.sln
+rm -zq *.vcw
+rm -zq *.map
+rm -zq class1.c
+rm -zq generics.*
+rm -zqr WinDebug
+rm -zqr WinRel
+rm -zq *.~ *.?~ *.??~ *.bak
 if exist --linux-.--- del --linux-.---
 
 rem From Borland
-..\..\bin\rm -zq *.rws
-..\..\bin\rm -zq *.~re
-..\..\bin\rm -zq *.csm
-..\..\bin\rm -zq *.dsw
-..\..\bin\rm -zq *.~de
+rm -zq *.rws
+rm -zq *.~re
+rm -zq *.csm
+rm -zq *.dsw
+rm -zq *.~de

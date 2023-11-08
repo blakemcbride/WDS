@@ -19,7 +19,6 @@ RESOURCES = $(TARGET).res
 YACC = bison
 LEX = flex
 
-BINDIR = ..\bin
 LIBDIR = ..\lib
 INCDIR = ..\include
 
@@ -55,7 +54,7 @@ OBJS = {$(CLASS_SRC:b)}.obj {$(C_SRC:b)}.obj sqlgrammar.obj
 CC = cl
 
 .d.c .PRECIOUS :
-	$(BINDIR)\dpp -g $(INCDIR)\generics.h -p $<
+	dpp -g $(INCDIR)\generics.h -p $<
 
 
 # Since DMAKE diversions treat the backslach like an escape sequence it is
@@ -81,7 +80,7 @@ curlib.nm .LIBRARY : $(OBJS)
 .ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @$(mktmp $(?:t"\n")\n)
 .END
-	$(BINDIR)\rm -zq *.obj
+	rm -zq *.obj
 	echo Done >$@
 
 main.obj : resource.h
@@ -93,19 +92,19 @@ StringFile.obj : StringFile.c
 #	$(CC) $(CFLAGS) -MT -c $<
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
 
 generics.c : generics.h
-	$(BINDIR)\dpp $(STRAT) -C -g -c -Isc windows.h sql.h sqlext.h
+	dpp $(STRAT) -C -g -c -Isc windows.h sql.h sqlext.h
 
 generics.obj : generics.c
 	$(CC) -c $(GFLAGS) $<
 
 newgens : 
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(CLASS_SRC:t"\n")\n)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(CLASS_SRC:t"\n")\n)
 
 makegens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(CLASS_SRC:t"\n")\n)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(CLASS_SRC:t"\n")\n)
 
 sqlgrammar.c sqlgrammar.h: sqlgrammar.y sqlstructs.h
 	${YACC} -tvd sqlgrammar.y
@@ -127,30 +126,30 @@ sqlgrammar.obj : sqlgrammar.c
 
 	
 clean:
-	$(BINDIR)\rm -zq sqlgrammar.out
-	$(BINDIR)\rm -zq *.obj
-	$(BINDIR)\rm -zq *.exe
-	$(BINDIR)\rm -zq *.ex1
-	$(BINDIR)\rm -zq *.res
-	$(BINDIR)\rm -zq *.aps
-	$(BINDIR)\rm -zq *.pdb
-	$(BINDIR)\rm -zq *.wsp
-	$(BINDIR)\rm -zq *.ilk
-	$(BINDIR)\rm -zq *.bsc
-	$(BINDIR)\rm -zq *.vcp
-	$(BINDIR)\rm -zq *.pch *.idb
-	$(BINDIR)\rm -zq *.sbr
-	$(BINDIR)\rm -zq *.vcw
-	$(BINDIR)\rm -zq *.map *.ncb
-	$(BINDIR)\rm -zqr WinDebug
-	$(BINDIR)\rm -zqr WinRel
-	$(BINDIR)\rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
-#	$(BINDIR)\rm -zq sqlgrammar.c
-#	$(BINDIR)\rm -zq sqlgrammar.h
-#	$(BINDIR)\rm -zq sqltokens.c
+	rm -zq sqlgrammar.out
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch *.idb
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map *.ncb
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+#	rm -zq sqlgrammar.c
+#	rm -zq sqlgrammar.h
+#	rm -zq sqltokens.c
 
 
 realclean: clean
-	$(BINDIR)\rm -zq curlib.* allok.* generics.c generics.h generics.1
-	$(BINDIR)\rm -zq {$(CLASS_SRC:b)}.c
+	rm -zq curlib.* allok.* generics.c generics.h generics.1
+	rm -zq {$(CLASS_SRC:b)}.c
 

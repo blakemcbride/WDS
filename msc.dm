@@ -1,11 +1,11 @@
 
 # DMAKE makefile for Microsoft C 32 & 64 bit
 
-DPP = ..\bin\dpp
+DPP = dpp
 
 DPPOPTS = -C $(STRAT)
 
-TOUCH = ..\bin\touch
+TOUCH = touch
 
 
 
@@ -13,27 +13,7 @@ all : # setup.dos
 %@[
 	@echo off
 
-	cd kernel
-	echo Entering kernel
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-	cd ..\class
-	echo Entering class
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-	cd ..\threads
-	echo Entering threads
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-	cd ..\dpp
-	echo Entering dpp
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) install
-	if errorlevel 1 goto done
-
-	cd ..\generics
+	cd generics
 	echo Entering generics
 	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
 	if errorlevel 1 goto done
@@ -90,52 +70,7 @@ rem	if errorlevel 1 goto done
 	cd ..
 ]
 
-all-scratch : setup.dos
-%@[
-	@echo off
-
-	md lib
-
-rem	copy bin\win32\dpp.exe bin
-
-	cd kernel
-	echo Entering kernel
-	rem $(TOUCH) *.c
-	rem $(TOUCH) ..\include\generics.h
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) NEW=1
-	if errorlevel 1 goto done
-
-	cd ..\class
-	echo Entering class
-	rem $(TOUCH) *.c
-	rem $(TOUCH) ..\include\generics.h
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-	cd ..\threads
-	echo Entering threads
-	rem $(TOUCH) *.c
-	rem $(TOUCH) ..\include\generics.h
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-	cd ..\dpp
-	echo Entering dpp
-	rem $(TOUCH) *.c
-	rem $(TOUCH) ..\include\generics.h
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) install
-	if errorlevel 1 goto done
-
-	cd ..\generics
-	echo Entering generics
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
-	if errorlevel 1 goto done
-
-:done
-	cd ..
-]
-
-wds-all-scratch : all-scratch
+all-scratch :
 %@[
 	@echo off
 
@@ -194,39 +129,7 @@ rem	if errorlevel 1 goto done
 	cd ..
 ]
 
-clean : 
-%@[
-	@echo off
-
-	cd kernel
-	echo Entering kernel
-	$(MAKE) clean $(MAKEFILE)
-
-	cd ..\class
-	echo Entering class
-	$(MAKE) clean $(MAKEFILE)
-
-	cd ..\threads
-	echo Entering threads
-	$(MAKE) clean $(MAKEFILE)
-
-	cd ..\generics
-	echo Entering generics
-	$(MAKE) clean $(MAKEFILE)
-
-	cd ..\dpp
-	echo Entering dpp
-	$(MAKE) clean $(MAKEFILE)
-
-	cd ..\examples\setup
-	echo Entering examples (takes a while - please wait)
-	call cleanall.bat
-
-	cd ..\..
-	bin\rm -zq setup.unx setup.dos setup.p9 *.~ *.?~ *.??~ #*.* *.{*
-]
-
-wds-clean : clean
+clean :
 %@[
 	@echo off
 
@@ -268,44 +171,11 @@ rem	$(MAKE) clean $(MAKEFILE)
 	cd ..\..
 ]
 
-realclean :
+realclean : 
 %@[
 	@echo off
 
-	cd kernel
-	echo Entering kernel
-	$(MAKE) realclean $(MAKEFILE)
-
-	cd ..\class
-	echo Entering class
-	$(MAKE) realclean $(MAKEFILE)
-
-	cd ..\threads
-	echo Entering threads
-	$(MAKE) realclean $(MAKEFILE)
-
-	cd ..\generics
-	echo Entering generics
-	$(MAKE) realclean $(MAKEFILE)
-
-	cd ..\dpp
-	echo Entering dpp
-	$(MAKE) realclean $(MAKEFILE)
-
-	rem cd ..\examples\setup
-	rem echo Entering examples (takes a while - please wait)
-	rem call cleanall.bat
-
-	cd ..
-	bin\rm -zq setup.unx setup.dos setup.p9 *.~ *.?~ *.??~ #*.* *.{*
-	bin\rm -zq lib\d*.* bin\dpp bin\dpp.exe 
-	bin\rm -zq bin\addcr bin\addcr.exe bin\delcr bin\delcr.exe lib\d*.*
-]
-
-
-wds-realclean : realclean
-%@[
-	@echo off
+	rm -zq include\generics.h
 
 	cd Registry
 	echo Entering Registry
@@ -354,63 +224,39 @@ dist:
 	zip -r dynace winexam\list winexam\exam* winexam\setup
 
 
-makegens:
+makegens :
 %@[
-	@echo off
-
-	cd kernel
-	..\bin\rm -zq generics.* 
-	$(DPP) $(DPPOPTS) -h -i -s *.d
-	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include
-
-	cd ..\class
-	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
-	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include
-
-	cd ..\threads
-	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
-	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include
-
-:done
-	cd ..
-]
-
-wds-makegens : makegens
-%@[
-	@echo off
+	rem @echo off
 
 	cd Windows
-	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
+	$(DPP) $(DPPOPTS) -h -i -g %DYNACE_ROOT%\include\generics.h -s *.d
 	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include/generics.h
+	mv generics.h ../include/generics.h
 
 	cd ..\ODBC
 	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
 	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include/generics.h
+	mv generics.h ../include/generics.h
 
 	cd ..\OLE
 	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
 	if errorlevel 1 goto done
-	..\bin\mv generics.h ../include/generics.h
+	mv generics.h ../include/generics.h
 
 rem	cd ..\Widgets
 rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
 rem	if errorlevel 1 goto done
-rem	..\bin\mv generics.h ../include/generics.h
+rem	mv generics.h ../include/generics.h
 
 rem	cd ..\WordProc
 rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
 rem	if errorlevel 1 goto done
-rem	..\bin\mv generics.h ../include/generics.h
+rem	mv generics.h ../include/generics.h
 
 	cd ..\Java\Dynace
-	..\$(DPP) $(DPPOPTS) -h -i -g ../../include/generics.h -s *.d
+	$(DPP) $(DPPOPTS) -h -i -g ../../include/generics.h -s *.d
 	if errorlevel 1 goto done
-	..\..\bin\mv generics.h ../../include/generics.h
+	mv generics.h ../../include/generics.h
 	cd ..
 
 :done
@@ -418,40 +264,7 @@ rem	..\bin\mv generics.h ../include/generics.h
 ]
 
 
-newgens : 
-%@[
-	@echo off
-
-	bin\rm include\generics.h
-
-	cd kernel
-	echo Entering kernel
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) reallynewgens
-	if errorlevel 1 goto done
-
-	cd ..\class
-	echo Entering class
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	if errorlevel 1 goto done
-
-	cd ..\threads
-	echo Entering threads
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	if errorlevel 1 goto done
-
-	cd ..\dpp
-	echo Entering dpp
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	if errorlevel 1 goto done
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) generics.c
-	if errorlevel 1 goto done
-
-:done
-	cd ..
-]
-
-
-wds-newgens : newgens
+newgens :
 %@[
 	@echo off
 

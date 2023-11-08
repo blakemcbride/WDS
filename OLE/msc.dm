@@ -8,8 +8,6 @@ C_SRC = makeguid.c
 CLASS_SRC = ComClient.d ComServer.d ComInterface.d ComInstance.d OLEDispatch.d OLEClient.d
 
 
-
-BINDIR = ..\bin
 LIBDIR = ..\lib
 INCDIR = ..\include
 
@@ -42,7 +40,7 @@ OBJS = {$(CLASS_SRC:b)}.obj {$(C_SRC:b)}.obj
 CC = cl
 
 .d.c .PRECIOUS :
-	$(BINDIR)\dpp -C -g $(INCDIR)\generics.h -p $<
+	dpp -C -g $(INCDIR)\generics.h -p $<
 
 
 # Since DMAKE diversions treat the backslach like an escape sequence it is
@@ -64,48 +62,48 @@ curlib.nm .LIBRARY : $(OBJS)
 .ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @$(mktmp $(?:t"\n")\n)
 .END
-	$(BINDIR)\rm -zq *.obj
+	rm -zq *.obj
 	echo Done >$@
 
 main.obj : resource.h
 
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(^:t"\n"))
 
 
 generics.c : generics.h
-	$(BINDIR)\dpp $(STRAT) -C -g -c -Isc windows.h sql.h sqlext.h
+	dpp $(STRAT) -C -g -c -Isc windows.h sql.h sqlext.h
 
 generics.obj : generics.c
 	$(CC) -c $(GFLAGS) $<
 
 newgens : 
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(CLASS_SRC:t"\n")\n)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p @$(mktmp $(CLASS_SRC:t"\n")\n)
 
 makegens:
-	$(BINDIR)\dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(CLASS_SRC:t"\n")\n)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s @$(mktmp $(CLASS_SRC:t"\n")\n)
 
 clean:
-	$(BINDIR)\rm -zq *.obj
-	$(BINDIR)\rm -zq *.exe
-	$(BINDIR)\rm -zq *.ex1
-	$(BINDIR)\rm -zq *.res
-	$(BINDIR)\rm -zq *.aps
-	$(BINDIR)\rm -zq *.pdb
-	$(BINDIR)\rm -zq *.wsp
-	$(BINDIR)\rm -zq *.ilk
-	$(BINDIR)\rm -zq *.bsc
-	$(BINDIR)\rm -zq *.vcp
-	$(BINDIR)\rm -zq *.pch
-	$(BINDIR)\rm -zq *.sbr
-	$(BINDIR)\rm -zq *.vcw
-	$(BINDIR)\rm -zq *.map *.ncb
-	$(BINDIR)\rm -zqr WinDebug
-	$(BINDIR)\rm -zqr WinRel
-	$(BINDIR)\rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map *.ncb
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
 
 
 realclean: clean
-	$(BINDIR)\rm -zq curlib.* allok.* {$(CLASS_SRC:b)}.c generics.c generics.h generics.1
+	rm -zq curlib.* allok.* {$(CLASS_SRC:b)}.c generics.c generics.h generics.1
 
