@@ -2354,7 +2354,8 @@ cmeth	gNewDialogControl()
 
 imeth	gSubclassWindow(HWND hctl)
 {
-	iOrgWndProc = SubclassWindow(hctl, WindowProc);
+//	iOrgWndProc = SubclassWindow(hctl, WindowProc);
+	iOrgWndProc = (WNDPROC)SetWindowLongPtr(hctl, GWLP_WNDPROC, (LONG_PTR)WindowProc);
 	return self;
 }
 

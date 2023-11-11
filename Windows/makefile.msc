@@ -1,0 +1,111 @@
+
+# NMAKE makefile for Windows build
+
+LIBDIR = ..\lib
+INCDIR = ..\include
+DYNINC = $(DYNACE_ROOT)\include
+
+CFEXTRA = -MT
+
+!IFDEF NATIVE_THREADS
+CFEXTRA += -DNATIVE_THREADS
+!ENDIF
+
+!IF 0
+#define WINVER	 -DWINVER=0x0500
+!ENDIF
+
+!IFDEF DEBUG
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) $(WINVER)
+#GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(WINVER)
+!ELSE
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS -DWIN32 $(CFEXTRA) $(WINVER)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 $(WINVER)
+!ENDIF
+
+!IFDEF LASTDATE
+CFLAGS += -DLASTDATE=$(LASTDATE)
+!ENDIF
+
+.SUFFIXES: .d .c .obj .exe
+
+.d.c :
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+
+.c.obj:
+	$(CC) $(CFLAGS) $<
+
+.d.obj:
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+	$(CC) $(CFLAGS) $*.c
+
+CLASS_SRC = Application.d Window.d Menu.d PopupMenu.d Dialog.d TextControl.d StaticControl.d \
+	NumericControl.d DateControl.d Control.d HandleCache.d Font.d TextVector.d MessageDispatcher.d \
+	HandleCacheNode.d MainWindow.d PopupWindow.d ChildWindow.d PushButton.d CheckBox.d \
+	RadioButton.d ListBox.d ComboBox.d ScrollBar.d Icon.d Cursor.d Brush.d \
+	SystemBrush.d StockBrush.d SolidBrush.d HatchBrush.d SystemFont.d ExternalFont.d ExternalFontWithColor.d \
+	ExternalIcon.d SystemIcon.d SystemCursor.d ExternalCursor.d Printer.d ButtonWindow.d \
+	Pen.d StockPen.d CustomPen.d CommonDialog.d ColorDialog.d FontDialog.d FileDialog.d \
+	PrintDialog.d HelpSystem.d MessageHandler.d DynamicLibrary.d CustomControl.d ExternalMenu.d \
+	InternalMenu.d ModalDialog.d ModelessDialog.d DirListBox.d StatusBar.d ToolBar.d \
+	ClientArea.d wdsopts.d DisplayWindow.d TaskList.d Task.d DialogTask.d main.d \
+	SpinControl.d StatusWindow.d SplashWindow.d Scheme.d ControlVector.d StaticTextControl.d TreeView.d \
+	TreeViewItem.d ProgramManager.d Bitmap.d WindowTask.d TreeViewTaskList.d TrackRect.d DragWindow.d \
+	RectControl.d LineControl.d ImageControl.d CLD.d SchemeWindowTask.d SchemeDialogTask.d Ftp.d Mapi.d \
+	FunctionList.d ImageList.d StackTracer.d SchemeThread.d HttpRequest.d DatePicker.d ShortcutMenu.d \
+	TimeControl.d JavaScriptString.d WebService.d GenericControl.d
+#	JavaScript.d
+
+#supplimental-wind.d
+
+C_SRC = printdib.c 
+
+OBJS = $(CLASS_SRC:.d=.obj) $(C_SRC:.c=.obj)
+
+allok.nm : $(INCDIR)\generics.h curlib.nm
+	echo Done >$@
+
+curlib.nm : $(OBJS)
+	echo $? >lib
+!IFDEF  NEW
+	lib /nologo /out:$(LIBDIR)\dwdsnm.lib @lib
+!ELSE
+	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @lib
+!ENDIF
+	rm lib
+	rm -zq *.obj
+	echo Done >$@
+
+$(INCDIR)\generics.h : $(CLASS_SRC)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s $**
+
+CheckBox.obj ComboBox.obj DateControl.obj ListBox.obj NumericControl.obj PushButton.obj RadioButton.obj \
+      StaticTextControl.obj TextControl.obj Window.obj : ctlsave.h
+
+printdib.c : printdib.d
+	cp $** $@
+
+JavaScript.obj : JavaScript.c
+	$(CC) $(CFLAGS) -c -I$(JS_IPATH) $**
+
+generics.c : generics.h
+	dpp $(STRAT) -C -g -c
+
+generics.obj : generics.c
+	$(CC) -c $(GFLAGS) $**
+
+newgens : 
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+
+makegens:
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+
+
+clean:
+	rm -zq *.obj *.o *.exe *.err *.pdb
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+
+realclean: clean
+	rm -zq curlib.* allok.* *.c generics.h generics.1
+

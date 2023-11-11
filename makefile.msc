@@ -1,0 +1,306 @@
+
+# NMAKE makefile for Microsoft C
+
+DPP = dpp
+
+DPPOPTS = -C $(STRAT)
+
+TOUCH = touch
+
+
+
+all : # setup.win
+	cd generics
+	echo Entering generics
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	cd ..
+
+wds-all : all
+	cd Registry
+	echo Entering Registry
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\Windows
+	echo Entering Windows
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\ODBC
+	echo Entering ODBC
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\Resources
+	echo Entering Resources
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\OLE
+	echo Entering OLE
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\Widgets
+	@rem	echo Entering Widgets
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\WordProc
+	@rem	echo Entering WordProc
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\WDS
+	@rem	echo Entering WDS
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) curlib.nm
+	@rem
+	cd ..
+
+all-scratch :
+	cd Windows
+	echo Entering Windows
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) NEW=1
+	@rem
+	cd ..\Registry
+	echo Entering Registry
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\ODBC
+	echo Entering ODBC
+	$(TOUCH) sqlgrammar.c sqlgrammar.h sqltokens.c 
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+ 	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\Resources
+	echo Entering Resources
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	cd ..\OLE
+	echo Entering OLE
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\Widgets
+	@rem	echo Entering Widgets
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\WordProc
+	@rem	echo Entering WordProc
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem
+	@rem	cd ..\WDS
+	@rem	echo Entering WDS
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) curlib.nm
+	@rem
+	cd ..
+
+clean :
+	cd Registry
+	echo Entering Registry
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\Windows
+	echo Entering Windows
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\ODBC
+	echo Entering ODBC
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\Resources
+	echo Entering Resources
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\OLE
+	echo Entering OLE
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	@rem	cd ..\Widgets
+	@rem	echo Entering Widgets
+	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem
+	@rem	cd ..\WordProc
+	@rem	echo Entering WordProc
+	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem
+	@rem	cd ..\WDS
+	@rem	echo Entering WDS
+	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\winexam\setup
+	echo Entering winexam (takes a while - please wait)
+	call realcln.bat
+	cd ..\..
+
+realclean : 
+	rm -zq include\generics.h
+	@rem
+	cd Registry
+	echo Entering Registry
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\Windows
+	echo Entering Windows
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\ODBC
+	echo Entering ODBC
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\Resources
+	echo Entering Resources
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\OLE
+	echo Entering OLE
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	@rem	cd ..\Widgets
+	@rem	echo Entering Widgets
+	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	@rem	cd ..\WordProc
+	@rem	echo Entering WordProc
+	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	@rem	cd ..\WDS
+	@rem	echo Entering WDS
+	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\winexam\setup
+	echo Entering winexam (takes a while - please wait)
+	call realcln.bat
+	cd ..\..
+
+dist:
+	rm -zq dynace*.zip
+	zip -r dynace README msc.dm makefile.unx makefile.inc change.log
+	zip dynace docs\* generics\* lib\*
+	zip dynace include\* Windows\* ODBC\* Resources\*
+	zip -r dynace winexam\list winexam\exam* winexam\setup
+
+
+makegens :
+	cd Windows
+	$(DPP) $(DPPOPTS) -h -i -g %DYNACE_ROOT%\include\generics.h -s *.d
+	if errorlevel 1 goto done
+	mv generics.h ../include/generics.h
+	@rem
+	cd ..\ODBC
+	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
+	mv generics.h ../include/generics.h
+	@rem
+	cd ..\OLE
+	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
+	mv generics.h ../include/generics.h
+	@rem
+	@rem	cd ..\Widgets
+	@rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
+	@rem	mv generics.h ../include/generics.h
+	@rem
+	@rem	cd ..\WordProc
+	@rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
+	@rem	mv generics.h ../include/generics.h
+	@rem
+	cd ..\Java\Dynace
+	$(DPP) $(DPPOPTS) -h -i -g ../../include/generics.h -s *.d
+	mv generics.h ../../include/generics.h
+	cd ..
+
+
+newgens :
+	cd Windows
+	echo Entering Windows
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem
+	cd ..\ODBC
+	echo Entering ODBC
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem
+	cd ..\OLE
+	echo Entering OLE
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem
+	@rem	cd ..\Widgets
+	@rem	echo Entering Widgets
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem
+	@rem	cd ..\WordProc
+	@rem	echo Entering WordProc
+	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem
+	cd ..\Java\Dynace
+	echo Entering Java\Dynace
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	cd ..
+
+
+java-build : 
+	cd Java
+	@rem
+	cd DLL
+	echo Entering Java\DLL
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	@rem
+	cd ..\Dynace
+	echo Entering Java\Dynace
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	@rem
+	cd ..\Java
+	echo Entering Java\Java
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	@rem
+	cd ..\..
+
+java-newgens : 
+	cd Java\Dynace
+	echo Entering Java\Dynace
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	cd ..\..
+
+java-makegens : 
+	cd Java\Dynace
+	echo Entering Java\Dynace
+	$(MAKE) $(MAKEFILE) $(MAKEMACROS) makegens
+	cd ..\..
+
+java-clean : 
+	cd Java
+	@rem
+	cd DLL
+	echo Entering Java\DLL
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\Dynace
+	echo Entering Java\Dynace
+	if errorlevel 1 goto done
+	@rem
+	cd ..\Java
+	echo Entering Java\Java
+	$(MAKE) clean $(MAKEFILE)
+	@rem
+	cd ..\..
+
+java-realclean : 
+	cd Java
+	@rem
+	cd DLL
+	echo Entering Java\DLL
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\Dynace
+	echo Entering Java\Dynace
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\Java
+	echo Entering Java\Java
+	$(MAKE) realclean $(MAKEFILE)
+	@rem
+	cd ..\..
+
+setup.win :
+	touch kernel\*.c
+	touch class\*.c
+	touch threads\*.c
+	touch dpp\*.c
+	touch dpp\generics.*
+	pause
+	touch include\generics.h
+

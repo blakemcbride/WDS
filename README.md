@@ -1,9 +1,7 @@
 
 # Windows Development System
 
-__Note: Between the time this code was used and now, Microsoft significanly changed their API.
-They went from traditional WIN32 to UWP.  Because of this, converting this code to UWP would
-be a significant effort.  Lacking sufficient demand, I am abondining this project.__
+__Note: Over the years, WDS has suffered fro bit rot.  I am in the process of correcting it.__
 
 This Windows Development System (WDS) is a set of Dynace
 (https://github.com/blakemcbride/Dynace) classes that makes the

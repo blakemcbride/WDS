@@ -236,7 +236,8 @@ private	imeth	void	initList(object self)
 private	imeth	void	set_tab_stops(object self, HWND hDlg)
 {
 	object	fobj = gGetFont(self);
-	HGDIOBJ	hFont = fobj ? gHandle(fobj) : GetWindowFont(hDlg);
+//	HGDIOBJ	hFont = fobj ? gHandle(fobj) : GetWindowFont(hDlg);
+	HGDIOBJ	hFont = fobj ? gHandle(fobj) : (HFONT)sendMessage(hDlg, WM_GETFONT, 0, 0);
 	HDC	hdc = GetDC(hDlg);
 	HGDIOBJ org = SelectObject(hdc, hFont);
 	int	extra = GetTextCharacterExtra(hdc);
@@ -287,7 +288,8 @@ private	imeth	void	set_width(object self, char *text)
 		return;
 	}
 	hdlg = gHandle(iDlg);
-	hFont = fobj ? gHandle(fobj) : GetWindowFont(hdlg);
+//	hFont = fobj ? gHandle(fobj) : GetWindowFont(hdlg);
+	hFont = fobj ? gHandle(fobj) : (HFONT)SendMessage(hdlg, WM_GETFONT, 0, 0);
 	hdc = GetDC(hdlg);
 	org = SelectObject(hdc, hFont);
 	GetTextMetrics(hdc, &tfm);

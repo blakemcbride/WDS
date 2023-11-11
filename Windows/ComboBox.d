@@ -541,8 +541,7 @@ imeth	int	gShow()
 	
 	if (iEdit  &&  iEdit != iHCtl)  {
 		HC_NEW(WINDOW_HANDLE_CACHE, iEdit, self);
-		iOrgEdtProc = SubclassWindow(iEdit, EdtWindowProc);
-
+		iOrgEdtProc = (WNDPROC)SetWindowLongPtr(iEdit, GWLP_WNDPROC, (LONG_PTR)EdtWindowProc);
 		if (gIsKindOf(iDlg, Window)) {
 			RECT	r;
 			int	pm = gSetScalingMode(Application, SM_PIXELS);
@@ -622,7 +621,7 @@ imeth	gInitialize(HWND hDlg, dlg)
 
 	if (iEdit  &&  iEdit != iHCtl)  {
 		HC_NEW(WINDOW_HANDLE_CACHE, iEdit, self);
-		iOrgEdtProc = SubclassWindow(iEdit, EdtWindowProc);
+		iOrgEdtProc = (WNDPROC)SetWindowLongPtr(iEdit, GWLP_WNDPROC, (LONG_PTR)EdtWindowProc);
 	}
 
 	if (fobj)
