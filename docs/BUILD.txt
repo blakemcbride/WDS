@@ -16,6 +16,8 @@ are built on top of Dynace.  Dynace is independent of WDS and can be
 used without it.  WDS itself depends upon the Microsoft Win32 API.
 This API is also available on Linux and Mac through the Wine project.
 
+You must build Dynace before any of this will work.
+
 ----------------------------------------
 
 
@@ -24,15 +26,11 @@ Build instructions:
 It is assumed that before you try to do anything with WDS, you have 
 Dynace up and running.  See https://github.com/blakemcbride/Dynace
 
-There are five sections labeled:
+There are two sections labeled:
 
     Windows
-    Linux, Apple Mac, FreeBSD, Solaris, and Cygwin under Windows
-    Plan 9
-    Minix
-    ARM
-
-The DOS port should still work but is no longer tested.
+    
+    Linux, Apple Mac, FreeBSD, Solaris (using WINE)
 
 The system runs fine under 32 and 64 bit Linux as well as 64 bit Mac.
 It should run fine with possible minor tweaks to the makefiles.
@@ -113,7 +111,7 @@ custom resource editor which is loaded at runtime by this system.  To
 build use:
 
 	cd cld
-	dmake -f msc.dm
+	nmake -f makefile.msc
 
 --------------------
 
@@ -148,57 +146,6 @@ building and running the example using the following commands:
 	cd examples/exam03
 	make
 	./main
-
---------------------
-
-Building in the faster mode (for 32 bit Linux only)
-
-If you are operating under a 32 bit Linux/Unix you should be able to
-rebuild using the faster mode which relies on an assembler piece.
-This does not work on 64 bit builds, but the system operates fine
-in 32 or 64 bit mode without this step.
-
-If you have any trouble with this step, you should erase everything,
-re unpack the distribution, rebuild, and skip this step.  It is not
-needed.
-
-If you are performing a 32 bit build you could follow the following
-steps to enable the assembler dispatcher. 
-
-To do this just type the following commands (after the above build):
-
-(Cygwin: all make commands, add CYGWIN=1 to the make command line
-     Also:  use jumpto.s5 instead of jumpto.s4 below)
-
-	cd back to the root of the Dynace tree
-	make STRAT=-S1 newgens
-	make realclean
-	Edit kernel/makefile to enable the inclusion of JUMPTO
-	  (uncomment by removing the # before JUMPTO)
-
-At this point you must copy the appropriate assembler code for your
-architecture.  From within the kernel/jumpto directory you must copy
-one of the jumpto.* files into jumpto.s It remains in the same
-directory.  Choose one of the following:
-
-	jumpto.s6	32 bit Linux using GCC 4.7
-	
-Now go back to the root of the Dynace tree and type:
-
-	make
-
-
-You should then clean and re-run the example program as follows:
-
-	cd examples/exam03
-	make clean
-	make
-	./main
-
-If you have any trouble linking it may be due to a different version of
-GCC.  You may want to try a different jumpto assembler piece.  See
-kernel/makefile.unx  and  kernel/jumpto/*
-That directory contains jumpto assembler routines for several machines.
 
 --------------------
 
@@ -272,101 +219,6 @@ Documentation
 The complete manuals in PDF format are in the "manual" directory.
 
 See the section above labeled Language Tutorial
-
-================================================================================
-
-Plan 9
------
-
-Just go into the main directory and type:
-
-	mk
-
-This will build the entire system.  You can check it by typing:
-
-	cd examples/exam03
-	mk
-	main
-
-
-The complete manuals in PDF format are in the "manual" directory.
-
-See the section above labeled Language Tutorial
-
-
-
-================================================================================
-
-Minix
-
-This was done on Minix 3.2.1
-
-To build under Minix you should follow the same instructions listed
-under the section labeled Linux, Apple Mac, etc. except for what
-follows in this section.
-
-gmake is required.  Use gmake in all places where make is shown.
-
-The system works with GCC or CLANG.  The system is setup to build
-with gcc by default.  You must change makefile.inc (not makefile)
-at the top level to switch from gcc to cc.  So, to change from gcc
-to clang, change makefile.inc from:
-
-    CC = gcc
-
-to:
-
-    CC = cc
-
-
-Lastly, all of the makefiles for the example programs (under the
-examples directory) use gcc by default.  You would have to change
-each one as you use them (from gcc to cc) if you want to use clang.
-
-
-================================================================================
-
-ARM
-
-The system has been enhanced to cross-compile from a Linux host to an
-ARM target.  The ARM processor targeted is the 32 bit ARM with
-software float.  Other cross-compile targets should be easy if you
-follow the single commit that shows what was changed to make this
-cross-compile work.
-
-Build instructions
-
-Basically it has to be built twice.  The first time builds the
-necessary host programs.  The second time builds the target libraries.
-It is expected that all builds will be done on the host but run on the
-target machine.
-
-	make realclean
-	make
-	make ARM32SF=1 realclean
-	make ARM32SF=1
-
-Building the examples.  Use:
-
-	 make TCC=arm-linux-gnueabi-gcc
-	 
-================================================================================
-
-Dynace supports native threads under Windows, and Posix/Linux/Mac
-using pthreads - as an alternative to the Dynace supplied cooperative
-threading system.  Dynace's supplied cooperative threading system only
-uses a single OS thread - a single CPU.  Native threads allows your
-system to take advantage of the multiple CPU's.
-
-To build with native thread support, add "NATIVE_THREADS=1" to the make lines.
-For example:
-
-	make NATIVE_THREADS=1
-	
-What this does is make the Dynace kernel and classes thread safe.  Once this
-is done, you would use the environment-supplied method of creating and using
-threads.  In other words, don't use Dynace's cooperative threads to create and
-manage threads.  Use the native mechanisms.  Dynace will be native thread safe.
 
 ================================================================================
 
