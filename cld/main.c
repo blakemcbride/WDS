@@ -6,6 +6,8 @@
 #endif
 #define _POSIX_
 
+#include <dynwin.h>
+
 #include <windows.h>
 #include <wininet.h>
 #include <initguid.h>

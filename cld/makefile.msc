@@ -1,0 +1,71 @@
+
+#  Makefile designed for use by the NMAKE.EXE utility and
+#  Microsoft Visual C
+
+
+C_SRC = main.c flash.c jsfl.c
+
+
+BINDIR = $(DYNACE_ROOT)\bin
+LIBDIR = ..\lib
+INCDIR = ..\include
+DYNINC = $(DYNACE_ROOT)\include
+
+!IFDEF	DEBUG
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -Zi -Od -D_WINDOWS -MT
+LFLAGS = /nologo /subsystem:windows /debug
+!IFDEF INTEGRA
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -Zi -Od -D_WINDOWS -DINTEGRA -MT
+!ENDIF
+!ELSE
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -O2 -D_WINDOWS -MT
+LFLAGS = /nologo /subsystem:windows
+!IFDEF INTEGRA
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -O2 -D_WINDOWS -DINTEGRA -MT
+!ENDIF
+!ENDIf
+
+
+LIBS = $(LIBDIR)\dwdsnm.lib $(DYNACE_ROOT)\lib\dynlcm.lib
+
+MSLIBS = kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib comctl32.lib advapi32.lib \
+         shell32.lib wsock32.lib odbc32.lib winmm.lib ole32.lib wininet.lib rpcrt4.lib mpr.lib msimg32.lib
+
+OBJS = $(C_SRC:.c=.obj)
+
+RESOURCES = main.res
+
+.rc.res:
+	rc /nologo $<
+
+cld.exe : $(OBJS) $(RESOURCES) $(LIBS)
+	link /out:$@ $(LFLAGS) $(OBJS) $(LIBS) $(MSLIBS) $(RESOURCES)
+
+
+$(OBJS) : resource.h
+
+$(OBJS) : ../windows/ctlsave.h
+
+
+realclean clean:
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map
+	rm -zq generics.*
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.idb *.mdp *.ncb
+	rm -zq *.dsw *.opt *.plg
+	rm -zq *.dsp
+
