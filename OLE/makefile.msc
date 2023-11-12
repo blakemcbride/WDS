@@ -1,0 +1,105 @@
+#  Makefile designed for use by the NMAKE.EXE utility and
+#  Microsoft Visual C/C++
+
+DYNINC = $(DYNACE_ROOT)\include
+
+
+C_SRC = makeguid.c
+
+CLASS_SRC = ComClient.d ComServer.d ComInterface.d ComInstance.d OLEDispatch.d OLEClient.d
+
+
+LIBDIR = ..\lib
+INCDIR = ..\include
+
+CFEXTRA = -MT
+
+!IFDEF NATIVE_THREADS
+CFEXTRA += -DNATIVE_THREADS
+!ENDIF
+
+
+!IFDEF	DEBUG
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -D_WINDOWS -Od -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -Zi -Fd$(LIBDIR)\dynm32.pdb
+LFLAGS = /nologo /subsystem:windows /debug
+!ELSE
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -O2 -D_WINDOWS $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS
+LFLAGS = /nologo /subsystem:windows
+!ENDIF
+
+OBJS = $(CLASS_SRC:.d=.obj) $(C_SRC:.c=.obj)
+
+CC = cl
+
+.SUFFIXES: .d .c .h .obj .exe .lib
+
+.d.c :
+	dpp $(STRAT) -g $(INCDIR)\generics.h -t -p $<
+
+.c.obj:
+	$(CC) $(CFLAGS) $<
+
+.d.obj:
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+	$(CC) $(CFLAGS) $*.c
+
+.rc.res:
+	rc $<
+
+allok.nm : $(INCDIR)\generics.h curlib.nm
+	echo Done >$@
+
+
+curlib.nm : $(OBJS)
+!IFDEF  NEW
+	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $?
+!ELSE
+	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib $?
+!ENDIF
+	rm -zq *.obj
+	echo Done >$@
+
+main.obj : resource.h
+
+
+$(INCDIR)\generics.h : $(CLASS_SRC)
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p $**
+
+
+generics.c : generics.h
+	dpp $(STRAT) -g -c -Isc windows.h sql.h sqlext.h
+
+generics.obj : generics.c
+	$(CC) -c $(GFLAGS) $<
+
+newgens : 
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -p $(CLASS_SRC)
+
+makegens:
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -h $(INCDIR)\generics.h -s $(CLASS_SRC)
+
+clean:
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map *.ncb
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+
+
+realclean: clean
+	rm -zq curlib.* allok.* $(CLASS_SRC:.d=.c) generics.c generics.h generics.1
+

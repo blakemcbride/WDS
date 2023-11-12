@@ -8,121 +8,127 @@ DPPOPTS = -C $(STRAT)
 TOUCH = touch
 
 
+MAKEFILE=makefile.msc
+
+
 
 all : # setup.win
 	cd generics
 	echo Entering generics
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	cd ..
 
 wds-all : all
 	cd Registry
 	echo Entering Registry
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\Windows
 	echo Entering Windows
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\Resources
 	echo Entering Resources
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\OLE
 	echo Entering OLE
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\Widgets
 	@rem	echo Entering Widgets
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\WordProc
 	@rem	echo Entering WordProc
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\WDS
 	@rem	echo Entering WDS
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) curlib.nm
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) curlib.nm
 	@rem
 	cd ..
 
 all-scratch :
 	cd Windows
 	echo Entering Windows
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) NEW=1
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) NEW=1
 	@rem
 	cd ..\Registry
 	echo Entering Registry
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
 	$(TOUCH) sqlgrammar.c sqlgrammar.h sqltokens.c 
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
- 	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
+ 	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\Resources
 	echo Entering Resources
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	cd ..\OLE
 	echo Entering OLE
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\Widgets
 	@rem	echo Entering Widgets
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\WordProc
 	@rem	echo Entering WordProc
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS)
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
 	@rem	cd ..\WDS
 	@rem	echo Entering WDS
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) curlib.nm
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) curlib.nm
 	@rem
+	cd ..\generics
+	echo Entering generics
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	cd ..
 
 clean :
 	cd Registry
 	echo Entering Registry
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Windows
 	echo Entering Windows
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Resources
 	echo Entering Resources
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\OLE
 	echo Entering OLE
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\Widgets
 	@rem	echo Entering Widgets
-	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\WordProc
 	@rem	echo Entering WordProc
-	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\WDS
 	@rem	echo Entering WDS
-	@rem	$(MAKE) clean $(MAKEFILE)
+	@rem	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\winexam\setup
 	echo Entering winexam (takes a while - please wait)
@@ -131,38 +137,39 @@ clean :
 
 realclean : 
 	rm -zq include\generics.h
+	rm -zq lib\dwdsnm.lib
 	@rem
 	cd Registry
 	echo Entering Registry
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Windows
 	echo Entering Windows
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Resources
 	echo Entering Resources
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\OLE
 	echo Entering OLE
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\Widgets
 	@rem	echo Entering Widgets
-	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\WordProc
 	@rem	echo Entering WordProc
-	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	@rem	cd ..\WDS
 	@rem	echo Entering WDS
-	@rem	$(MAKE) realclean $(MAKEFILE)
+	@rem	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\winexam\setup
 	echo Entering winexam (takes a while - please wait)
@@ -199,36 +206,36 @@ makegens :
 	@rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
 	@rem	mv generics.h ../include/generics.h
 	@rem
-	cd ..\Java\Dynace
-	$(DPP) $(DPPOPTS) -h -i -g ../../include/generics.h -s *.d
-	mv generics.h ../../include/generics.h
+	@rem cd ..\Java\Dynace
+	@rem $(DPP) $(DPPOPTS) -h -i -g ../../include/generics.h -s *.d
+	@rem mv generics.h ../../include/generics.h
 	cd ..
 
 
 newgens :
 	cd Windows
 	echo Entering Windows
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	@rem
 	cd ..\OLE
 	echo Entering OLE
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	@rem
 	@rem	cd ..\Widgets
 	@rem	echo Entering Widgets
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	@rem
 	@rem	cd ..\WordProc
 	@rem	echo Entering WordProc
-	@rem	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	@rem
-	cd ..\Java\Dynace
-	echo Entering Java\Dynace
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	@rem cd ..\Java\Dynace
+	@rem echo Entering Java\Dynace
+	@rem $(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	cd ..
 
 
@@ -237,28 +244,28 @@ java-build :
 	@rem
 	cd DLL
 	echo Entering Java\DLL
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) -E
 	@rem
 	cd ..\Dynace
 	echo Entering Java\Dynace
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) -E
 	@rem
 	cd ..\Java
 	echo Entering Java\Java
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) -E
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) -E
 	@rem
 	cd ..\..
 
 java-newgens : 
 	cd Java\Dynace
 	echo Entering Java\Dynace
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) newgens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
 	cd ..\..
 
 java-makegens : 
 	cd Java\Dynace
 	echo Entering Java\Dynace
-	$(MAKE) $(MAKEFILE) $(MAKEMACROS) makegens
+	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) makegens
 	cd ..\..
 
 java-clean : 
@@ -266,7 +273,7 @@ java-clean :
 	@rem
 	cd DLL
 	echo Entering Java\DLL
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Dynace
 	echo Entering Java\Dynace
@@ -274,7 +281,7 @@ java-clean :
 	@rem
 	cd ..\Java
 	echo Entering Java\Java
-	$(MAKE) clean $(MAKEFILE)
+	$(MAKE) clean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\..
 
@@ -283,15 +290,15 @@ java-realclean :
 	@rem
 	cd DLL
 	echo Entering Java\DLL
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Dynace
 	echo Entering Java\Dynace
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\Java
 	echo Entering Java\Java
-	$(MAKE) realclean $(MAKEFILE)
+	$(MAKE) realclean /nologo /f $(MAKEFILE)
 	@rem
 	cd ..\..
 

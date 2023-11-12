@@ -27,6 +27,7 @@
 */
 
 
+#include <dynwin.h>
 
 
 defclass WindowTask : Task {

@@ -27,6 +27,7 @@
 */
 
 
+#include <dynwin.h>
 
 
 #ifdef _MSC_VER

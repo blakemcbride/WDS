@@ -85,7 +85,7 @@ to update setupenv.bat to reflect this change.
 	nmake -f makefile.msc makegens
 	nmake -f makefile.msc all-scratch
 	cd WinExam\setup
-	mscdm
+	windows
 
 You can test the GUI system as follows:
 

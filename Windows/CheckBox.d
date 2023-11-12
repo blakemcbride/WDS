@@ -28,6 +28,7 @@
 
 
 
+#include <dynwin.h>
 
 
 //#include "logfile.h"
@@ -116,13 +117,17 @@ private	imeth	LRESULT	process_wm_lbuttondblclk(object	self,
 			gExecuteInNamespaceNR(SchemeClassSurrogate,
 					      gNamespaceName(SchemeClassSurrogate, (object)iDCFun, ns), 
 					      cmd);
-		} else if (JavaCallbackClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaCallbackClassSurrogate)
+		}
+#ifdef JAVA
+		else if (JavaCallbackClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaCallbackClassSurrogate)
 			return gPerformJavaObjCallback((object)iDCFun, iDlg);
 		else if (JavaScriptClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaScriptString) {
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), StringToObject(\"%lld\"))", gStringValue((object)iDCFun), PTOLL(self), PTOLL(iDlg));
 			gExecuteStringNR(JavaScriptClassSurrogate, cmd);
-		} else
+		}
+#endif
+		else
 			iDCFun(self, iDlg);
 		return 0L;
 	} else if (iWindowControl  &&  iDlg  &&  gModifyChildren(iDlg))
@@ -302,7 +307,9 @@ imeth	int	gCheckValue()
 					strcpy(buf, gStringValue(ret));
 				gDispose(ret);
 			}
-		} else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
+		}
+#ifdef JAVA
+		else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
 			object	ret;
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), StringToObject(\"%lld\"))", gStringValue((object)iAcf), PTOLL(self), PTOLL(iValue));
@@ -319,7 +326,9 @@ imeth	int	gCheckValue()
 				strcpy(buf, gStringValue(msg));
 				gDispose(msg);
 			}
-		} else
+		}
+#endif
+		else
 			r = iAcf(self, iValue, buf);
 		if (r) {
 			if (*buf)

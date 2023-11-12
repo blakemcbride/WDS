@@ -26,7 +26,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-
+#include <dynwin.h>
 
 
 //#include "logfile.h"
@@ -536,13 +536,17 @@ private	imeth	LRESULT	process_wm_lbuttonup(object	self,
 			gExecuteInNamespaceNR(SchemeClassSurrogate,
 					      gNamespaceName(SchemeClassSurrogate, (object)fun, ns), 
 					      cmd);
-		} else if (JavaCallbackClassSurrogate  &&  IsObj((object)fun)  &&  ClassOf(fun) == JavaCallbackClassSurrogate)
+		}
+#ifdef JAVA
+		else if (JavaCallbackClassSurrogate  &&  IsObj((object)fun)  &&  ClassOf(fun) == JavaCallbackClassSurrogate)
 			return gPerformJavaMenuCallback((object)fun, iParent, iID[i]);
 		else if (JavaScriptClassSurrogate  &&  IsObj((object)fun)  &&  ClassOf(fun) == JavaScriptString) {
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), %lld)", gStringValue((object)fun), PTOLL(iParent), PTOLL(iID[i]));
 			gExecuteStringNR(JavaScriptClassSurrogate, cmd);
-		} else
+		}
+#endif
+		else
 			fun(iParent, iID[i]);
 	}
 	return 0L;

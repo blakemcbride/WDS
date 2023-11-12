@@ -26,6 +26,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <dynwin.h>
 
 
 defclass  StringFile  {
@@ -60,8 +61,6 @@ private	imeth	void	read_file(object fp, long filelen);
 
 private	imeth	void	sendServerCmd(char *cmd);
 private	imeth	int		readIntFromServer();
-
-typedef	unsigned long  int uint32_t;
 
 cmeth	gNewWithStr(char *file)
 {

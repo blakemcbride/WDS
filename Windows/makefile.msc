@@ -28,7 +28,7 @@ GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 $
 CFLAGS += -DLASTDATE=$(LASTDATE)
 !ENDIF
 
-.SUFFIXES: .d .c .obj .exe
+.SUFFIXES: .d .c .h .obj .exe .lib
 
 .d.c :
 	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
@@ -96,10 +96,10 @@ generics.obj : generics.c
 	$(CC) -c $(GFLAGS) $**
 
 newgens : 
-	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -g %DYNACE_ROOT%\include\generics.h -s *.d -h $(INCDIR)\generics.h
 
 makegens:
-	dpp $(STRAT) -C -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h
 
 
 clean:

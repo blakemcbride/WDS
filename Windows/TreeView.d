@@ -27,7 +27,7 @@
 */
 
 
-
+#include <dynwin.h>
 
 #include "hdlcache.h"
 
@@ -153,7 +153,9 @@ imeth	int	gCheckValue()
 					strcpy(buf, gStringValue(ret));
 				gDispose(ret);
 			}
-		} else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
+		}
+#ifdef JAVA
+		else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
 			object	ret;
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), %lld)", gStringValue((object)iAcf), PTOLL(self), PTOLL(0));
@@ -170,7 +172,9 @@ imeth	int	gCheckValue()
 				strcpy(buf, gStringValue(msg));
 				gDispose(msg);
 			}
-		} else
+		}
+#endif
+		else
 			r = iAcf(self, NULL, buf);
 		if (r) {
 			if (*buf)

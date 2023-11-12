@@ -34,7 +34,7 @@
 #endif
 #endif
 
-
+#include <dynwin.h>
 
 #include <windows.h>
 #include <string.h>
@@ -413,10 +413,12 @@ private	imeth	LRESULT	process_wm_timer(object	self,
 	
 	if (mobj) {
 		object	obj = gValue(mobj);
-		
+#ifdef JAVA
 		if (IsObj((object)obj)  &&  ClassOf((object)obj) == JavaCallbackClassSurrogate)
 			gPerformJavaObjCallback((object)obj, self);
-		else if (SchemeClassSurrogate  &&  IsObj(obj)  &&  ClassOf(obj) == String) {
+		else
+#endif
+		if (SchemeClassSurrogate  &&  IsObj(obj)  &&  ClassOf(obj) == String) {
 			char	cmd[100], ns[80];
 			
 			sprintf(cmd, "(%s (int->object %lld))",
@@ -425,11 +427,15 @@ private	imeth	LRESULT	process_wm_timer(object	self,
 			gExecuteInNamespaceNR(SchemeClassSurrogate,
 					      gNamespaceName(SchemeClassSurrogate, (object) obj, ns), 
 					      cmd);
-		} else if (JavaScriptClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == JavaScriptString) {
+		}
+#ifdef JAVA
+		else if (JavaScriptClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == JavaScriptString) {
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"))", gStringValue((object)obj), PTOLL(self));
 			gExecuteStringNR(JavaScriptClassSurrogate, cmd);
-		} else {
+		}
+#endif
+		else {
 			ifun	fun = (ifun) gPointerValue(obj);
 				
 			fun(self);
@@ -1798,11 +1804,14 @@ private	imeth	LRESULT	process_wm_command(object	self,
 				fp = (lfun) gMenuFunction(iMenu, id);
 				if (!fp)
 					break;
+#ifdef JAVA
 				if (IsObj((object)fp)  &&  ClassOf(fp) == JavaCallbackClassSurrogate) {
 					object	callback = (object)fp;
 					BOOL	bErr;
 					return gPerformJavaMenuCallback(callback, self, id);
-				} else if (SchemeClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == String) {
+				} else
+#endif
+				if (SchemeClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == String) {
 					char	cmd[100], ns[80];
 					object	ret;
 					long	res = 0;
@@ -1817,7 +1826,9 @@ private	imeth	LRESULT	process_wm_command(object	self,
 						gDispose(ret);
 					}
 					return res;
-				} else if (JavaScriptClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == JavaScriptString) {
+				}
+#ifdef JAVA
+				else if (JavaScriptClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == JavaScriptString) {
 					long	res = 0;
 					object	ret;
 					char	cmd[128];
@@ -1830,7 +1841,9 @@ private	imeth	LRESULT	process_wm_command(object	self,
 						gDispose(ret);
 					}
 					return res;
-				} else
+				}
+#endif
+				else
 					return fp(self, id);
 				break;
 			}
@@ -6821,7 +6834,7 @@ private	imeth	int	modalWindowParam(object self)
 	HWND	pw = iParent ? gHandle(iParent) : (HWND) 0;
 	
 	if (IsWindow(pw)) {
-		while (GetWindowStyle(pw) & WS_CHILD)
+		while (GetWindowLongPtr(pw, GWL_STYLE) & WS_CHILD)
 			pw = GetParent(pw);
 		if (pw)
 			EnableWindow(pw, FALSE);

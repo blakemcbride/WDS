@@ -26,6 +26,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <dynwin.h>
 
 #include "logfile.h"
 #include "hdlcache.h"
@@ -1024,13 +1025,17 @@ private	imeth	LRESULT	process_wm_lbuttondblclk(object	self,
 			gExecuteInNamespaceNR(SchemeClassSurrogate,
 					      gNamespaceName(SchemeClassSurrogate, (object)iDCFun, ns), 
 					      cmd);
-		} else if (JavaCallbackClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaCallbackClassSurrogate)
+		}
+#ifdef JAVA
+		else if (JavaCallbackClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaCallbackClassSurrogate)
 			return gPerformJavaObjCallback((object)iDCFun, iDlg);
 		else if (JavaScriptClassSurrogate  &&  IsObj((object)iDCFun)  &&  ClassOf(iDCFun) == JavaScriptString) {
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), StringToObject(\"%lld\"))", gStringValue((object)iDCFun), PTOLL(self), PTOLL(iDlg));
 			gExecuteStringNR(JavaScriptClassSurrogate, cmd);
-		} else
+		}
+#endif
+		else
 			iDCFun(self, iDlg);
 		return 0L;
 	} 

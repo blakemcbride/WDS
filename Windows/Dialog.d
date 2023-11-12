@@ -27,6 +27,7 @@
 */
 
 
+#include <dynwin.h>
 
 
 //#include "logfile.h"
@@ -859,7 +860,7 @@ private	imeth	int	dialogBoxParam(HINSTANCE	ins,
 	MSG	msg;
 	
 	if (IsWindow(pw)) {
-		while (GetWindowStyle(pw) & WS_CHILD)
+		while (GetWindowLongPtr(pw, GWL_STYLE) & WS_CHILD)
 			pw = GetParent(pw);
 		if (pw)
 			EnableWindow(pw, FALSE);

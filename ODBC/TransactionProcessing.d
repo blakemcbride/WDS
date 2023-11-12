@@ -27,6 +27,7 @@
 */
 
 
+#include <dynwin.h>
 
 
 #ifdef _MSC_VER
@@ -108,8 +109,6 @@ private imeth	int	pCommitOutputStreams(object self, object dataBuffStream);
 private	imeth	int	pWriteHostInt(int val, object stream);
 private	imeth	void pCheckServer();
 private	imeth	pConnectToServer(char *server);
-
-typedef	unsigned long  int uint32_t;
 
 private	imeth	int	pWriteHostInt(int val, object stream)
 {

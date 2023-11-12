@@ -80,9 +80,12 @@ imeth	int	gExecuteFunctionsObjObj(object ctl, object dlg)
 	object	seq, obj;
 
 	for (seq=gSequence(self) ; (obj = gNext(seq))  &&  !rval ; )
+#ifdef JAVA
 		if (IsObj((object)obj)  &&  ClassOf((object)obj) == JavaCallbackClassSurrogate)
 			return gPerformJavaObjObjCallback((object)obj, ctl, dlg);
-		else if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
+		else
+#endif
+		if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
 			char	cmd[100], ns[80];
 			object	ret;
 			sprintf(cmd, "(%s (int->object %lld) (int->object %lld))",
@@ -123,9 +126,12 @@ imeth	int	gExecuteFunctionsObj(object dlg)
 	object	seq, obj;
 
 	for (seq=gSequence(self) ; (obj = gNext(seq))  &&  !rval ; )
+#ifdef JAVA
 		if (IsObj((object)obj)  &&  ClassOf((object)obj) == JavaCallbackClassSurrogate)
 			return gPerformJavaObjCallback((object)obj, dlg);
-		else if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
+		else
+#endif
+		if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
 			char	cmd[100], ns[80];
 			object	ret;
 			sprintf(cmd, "(%s (int->object %lld))",
@@ -206,9 +212,12 @@ imeth	int	gExecuteFunctionsObjInt(object dlg, int res)
 	object	seq, obj;
 
 	for (seq=gSequence(self) ; (obj = gNext(seq))  &&  !rval ; )
+#ifdef JAVA
 		if (IsObj((object)obj)  &&  ClassOf((object)obj) == JavaCallbackClassSurrogate)
 			return gPerformJavaMenuCallback((object)obj, dlg, res);
-		else if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
+		else
+#endif
+		if (SchemeClassSurrogate  &&  IsObj((object)obj)  &&  ClassOf(obj) == String) {
 			char	cmd[100], ns[80];
 			object	ret;
 			sprintf(cmd, "(%s (int->object %lld) %d)",

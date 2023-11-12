@@ -21,6 +21,8 @@ rm -zq class1.c
 rm -zq generics.*
 rm -zqr WinDebug
 rm -zqr WinRel
+rm -zqr *.ico
+rm -qzr makefile makefile.msc
 rm -zq *.~ *.?~ *.??~ *.bak
 if exist --linux-.--- del --linux-.---
 

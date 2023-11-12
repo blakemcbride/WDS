@@ -26,6 +26,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <dynwin.h>
 
 
 //#include "logfile.h"
@@ -237,7 +238,7 @@ private	imeth	void	set_tab_stops(object self, HWND hDlg)
 {
 	object	fobj = gGetFont(self);
 //	HGDIOBJ	hFont = fobj ? gHandle(fobj) : GetWindowFont(hDlg);
-	HGDIOBJ	hFont = fobj ? gHandle(fobj) : (HFONT)sendMessage(hDlg, WM_GETFONT, 0, 0);
+	HGDIOBJ	hFont = fobj ? gHandle(fobj) : (HFONT)SendMessage(hDlg, WM_GETFONT, 0, 0);
 	HDC	hdc = GetDC(hDlg);
 	HGDIOBJ org = SelectObject(hdc, hFont);
 	int	extra = GetTextCharacterExtra(hdc);
@@ -521,7 +522,9 @@ imeth	int	gCheckValue()
 					strcpy(buf, gStringValue(ret));
 				gDispose(ret);
 			}
-		} else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
+		}
+#ifdef JAVA
+		else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
 			object	ret;
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), StringToObject(\"%lld\"))", gStringValue((object)iAcf), PTOLL(self), PTOLL(iValue));
@@ -538,7 +541,9 @@ imeth	int	gCheckValue()
 				strcpy(buf, gStringValue(msg));
 				gDispose(msg);
 			}
-		} else
+		}
+#endif
+		else
 			r = iAcf(self, iValue, buf);
 		if (r) {
 			if (*buf)
@@ -983,7 +988,9 @@ imeth	int	gPerformChg()
 			gDispose(ret);
 		}
 		return res;
-	} else if (JavaScriptClassSurrogate  &&  IsObj((object)iChgFun)  &&  ClassOf(iChgFun) == JavaScriptString) {
+	}
+#ifdef JAVA
+	else if (JavaScriptClassSurrogate  &&  IsObj((object)iChgFun)  &&  ClassOf(iChgFun) == JavaScriptString) {
 		int	res = 0;
 		object	ret;
 		char	cmd[128];
@@ -997,6 +1004,7 @@ imeth	int	gPerformChg()
 		return res;
 	} else if (JavaCallbackClassSurrogate  &&  IsObj((object)iChgFun)  &&  ClassOf(iChgFun) == JavaCallbackClassSurrogate)
 		return gPerformJavaObjCallback((object)iChgFun, iDlg);
+#endif
 	else
 		return iChgFun ? (*iChgFun)(self, iDlg) : 0;
 }

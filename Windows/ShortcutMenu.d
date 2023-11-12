@@ -27,7 +27,7 @@
 */
 
 
-
+#include <dynwin.h>
 
 #include "logfile.h"
 #include "hdlcache.h"
@@ -155,12 +155,19 @@ imeth	int	gPerform()
 		lfun	fp = (lfun) gMenuFunction(self, id);
 
 		if (fp) {
+#ifdef JAVA
 			if (IsObj((object)fp)  &&  ClassOf(fp) == JavaCallbackClassSurrogate) {
 				object	callback = (object)fp;
 				BOOL	bErr;
 			
 				gPerformJavaMenuCallback(callback, wind, id);
-			} else if (SchemeClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == String) {
+			} else if (JavaScriptClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == JavaScriptString) {
+				char	cmd[128];
+				sprintf(cmd, "%s(StringToObject(\"%lld\"), %lld)", gStringValue((object)fp), PTOLL(wind), PTOLL(id));
+				gExecuteStringNR(JavaScriptClassSurrogate, cmd);
+			} else
+#endif
+				if (SchemeClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == String) {
 				char	cmd[100], ns[80];
 
 				sprintf(cmd, "(%s (int->object %lld) %u)",
@@ -169,10 +176,6 @@ imeth	int	gPerform()
 				gExecuteInNamespaceNR(SchemeClassSurrogate,
 						      gNamespaceName(SchemeClassSurrogate, (object)fp, ns), 
 						      cmd);
-			} else if (JavaScriptClassSurrogate  &&  IsObj((object)fp)  &&  ClassOf(fp) == JavaScriptString) {
-				char	cmd[128];
-				sprintf(cmd, "%s(StringToObject(\"%lld\"), %lld)", gStringValue((object)fp), PTOLL(wind), PTOLL(id));
-				gExecuteStringNR(JavaScriptClassSurrogate, cmd);
 			} else
 				fp(wind, id);
 		}

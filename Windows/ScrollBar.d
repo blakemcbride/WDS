@@ -171,7 +171,9 @@ imeth	int	gCheckValue()
 					strcpy(buf, gStringValue(ret));
 				gDispose(ret);
 			}
-		} else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
+		}
+#ifdef JAVA
+		else if (JavaScriptClassSurrogate  &&  IsObj((object)iAcf)  &&  ClassOf(iAcf) == JavaScriptString) {
 			object	ret;
 			char	cmd[128];
 			sprintf(cmd, "%s(StringToObject(\"%lld\"), StringToObject(\"%lld\"))", gStringValue((object)iAcf), PTOLL(self), PTOLL(iValue));
@@ -188,7 +190,9 @@ imeth	int	gCheckValue()
 				strcpy(buf, gStringValue(msg));
 				gDispose(msg);
 			}
-		} else
+		}
+#endif
+		else
 			r = iAcf(self, iValue, buf);
 		if (r) {
 			if (*buf)
