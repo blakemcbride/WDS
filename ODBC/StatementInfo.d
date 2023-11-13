@@ -43,6 +43,12 @@
 #include <ctype.h>
 #include "dynsql.h"
 
+#ifdef __WINE__
+#include <sqlucode.h>
+#include <math.h>
+#define _isnan isnan
+#endif
+
 #if	!defined(_WIN32)  ||  defined(__WINE__)
 #define	_int64	long
 #endif

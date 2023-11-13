@@ -43,6 +43,14 @@
 #include "dynsql.h"
 #include "sqlite3.h"
 
+#ifdef __WINE__
+#include <sqlucode.h>
+#include <math.h>
+#define _isnan isnan
+#endif
+
+#define Strcpy strcpy
+
 
 #if	!defined(_WIN32)  ||  defined(__WINE__)
 #define	_int64	long

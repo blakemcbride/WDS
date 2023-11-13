@@ -23,9 +23,10 @@ DEBUG = -g
 TARGET = main
 
 CLASSES =  Database.d Statement.d StatementInfo.d TableInfo.d ColumnInfo.d TableListbox.d VirtualListbox.d WorkFlow.d \
-	WorkFlowAssociation.d ODBCListbox.d GenericSelection.d TreeViewWorkFlow.d ListBoxWorkFlow.d StringFile.d \
+	WorkFlowAssociation.d GenericSelection.d TreeViewWorkFlow.d ListBoxWorkFlow.d StringFile.d \
         TransactionProcessing.d TaskListDetail.d TaskListDetailRecord.d UniqueIdentifier.d CacheResult.d CacheCalculation.d \
 	CachedDatabase.d CacheStatement.d CachedTable.d CacheStatementInfo.d
+#	 ODBCListbox.d
 
 CFILES = prikeys.c sqlparser.c sqltokens.c sqlgrammar.c
 

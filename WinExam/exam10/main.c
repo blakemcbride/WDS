@@ -1,4 +1,7 @@
 
+#include <windows.h>
+#include <stdio.h>
+
 #include <dynwin.h>
 
 #include "generics.h"

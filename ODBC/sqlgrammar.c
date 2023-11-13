@@ -40,6 +40,9 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
+extern int yylex (void);
+
+
 /* Identify Bison output.  */
 #define YYBISON 1
 

@@ -30,6 +30,7 @@
 
 
 #include <string.h>
+#include <math.h>
 
 #ifdef _WIN32
 #include <rpc.h>

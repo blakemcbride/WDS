@@ -45,6 +45,12 @@
 #include "dynsql.h"
 #include "sqlite3.h"
 
+#ifdef __WINE__
+#include <sqlucode.h>
+#include <math.h>
+#define _isnan isnan
+#endif
+
 
 #ifndef	WIN32
 #define SQL_WCHAR		(-8)
@@ -52,6 +58,8 @@
 #define SQL_WLONGVARCHAR 	(-10)
 #define SQL_GUID		(-11)
 #endif
+
+#define Strcpy strcpy
 
 
 /* this class stores the cache state of a table

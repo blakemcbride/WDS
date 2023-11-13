@@ -1232,7 +1232,7 @@ imeth	gSetMaskFunction(ifun fun)
 	return self;
 }
 
-static	maskFormatPhone(char *mask, char *in, char *out)
+static	int maskFormatPhone(char *mask, char *in, char *out)
 {
 	object	sobj = gNewWithStr(String, in);
 
@@ -1256,7 +1256,7 @@ static	maskFormatPhone(char *mask, char *in, char *out)
 	return 0;
 }
 
-static	maskFormatZipCode(char *mask, char *in, char *out)
+static	int maskFormatZipCode(char *mask, char *in, char *out)
 {
 	object	sobj = gNewWithStr(String, in);
 
@@ -1273,7 +1273,7 @@ static	maskFormatZipCode(char *mask, char *in, char *out)
 	return 0;
 }
 
-static	maskFormatSSNumber(char *mask, char *in, char *out)
+static	int maskFormatSSNumber(char *mask, char *in, char *out)
 {
 	object	sobj = gNewWithStr(String, in);
 

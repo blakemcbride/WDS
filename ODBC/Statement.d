@@ -61,6 +61,11 @@
 #define	Streq(a,b)	!strcmp((a),(b))
 #define	Strne(a,b)	strcmp((a),(b))
 
+#ifdef __WINE__
+#include <math.h>
+#define _isnan	isnan
+#endif
+
 
 #ifndef	WIN32
 #define SQL_WCHAR		(-8)

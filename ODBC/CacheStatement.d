@@ -42,6 +42,15 @@
 #include <string.h>
 #include <malloc.h>
 
+#ifdef __WINE__
+#include <sqlucode.h>
+#include <math.h>
+#define _isnan isnan
+#endif
+
+#define Strcpy  strcpy
+#define Strcat strcat
+
 /*  for gFldSetFile  */
 #include <fcntl.h>
 #include <sys/types.h>
@@ -1825,7 +1834,7 @@ static	int	get_table(char *table, char *cmd, object *tlist)
 
 
 	
-
+#if 0
 private	imeth	int	DBSelectOne(char *cmd, int useCursors)
 {
 	UDWORD	crow;
@@ -1846,7 +1855,7 @@ private	imeth	int	DBSelectOne(char *cmd, int useCursors)
 
 	return r;
 }
-
+#endif
 
 private	imeth	pUpdateVarText(object self)
 {

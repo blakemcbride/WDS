@@ -32,6 +32,10 @@
 #include <sql.h>
 #include <sqlext.h>
 
+#ifdef __WINE__
+#include <sqlucode.h>
+#endif
+
 
 defclass  ColumnInfo {
 	int	iNum;

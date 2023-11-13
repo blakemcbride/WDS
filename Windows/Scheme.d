@@ -1068,6 +1068,8 @@ Scheme_Object	*Scheme_execute_string(char *str)
 	return r;
 }
 
+extern void scheme_reset_string_output_port();
+
 static	Scheme_Object	*Scheme_execute_string_with_error(char *str, char *errbuf, int *errflg)
 {
 	jmp_buf	jb;

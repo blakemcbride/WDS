@@ -1,7 +1,5 @@
 # Makefile for WDS on Wine and Linux   	-*-Makefile-*-
 
-WINE = 1
-
 include ../makefile.inc
 
 CC = winegcc

@@ -1,4 +1,9 @@
 
+# Change the following line for your environment
+DYNACE_ROOT=/home/blake/Dynace
+
+WINE=1
+
 ifdef DEBUG
 OPT = -g
 else
@@ -9,14 +14,15 @@ ifdef WINE
 OPT += -fPIC
 WINEINCPATH = /usr/include/wine
 # WINEINCPATH = /opt/wine-devel/include/wine
-THIRTYTWOBIT = true
+#THIRTYTWOBIT = true
 endif
 
 .SUFFIXES: .d .iv
 .PRECIOUS : %.c %.iv
-BINDIR = ../bin
+BINDIR = $DYNACE_ROOT/bin
 LIBDIR = ../lib
 INCDIR = ../include
+DYNINC = $(DYNACE_ROOT)/include
 
 # 32 bit ARM processor with software float
 # I had to use -D_FORTIFY_SOURCE=0 because the target system had an old GLIBC
@@ -28,7 +34,7 @@ CC = gcc
 HCC = gcc
 endif
 
-DPP = $(BINDIR)/dpp
+DPP = $(DYNACE_ROOT)/bin/dpp
 DPPOPTS = -C
 
 ifdef THIRTYTWOBIT
@@ -43,7 +49,7 @@ ifdef CYGWIN
 EXE = .exe
 endif
 
-CFLAGS = -I$(INCDIR) $(OPT) -Wno-parentheses
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(OPT) -Wno-parentheses
 
 LDFLAGS = -lm
 
