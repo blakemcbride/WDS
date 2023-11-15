@@ -14,9 +14,9 @@ CFEXTRA += -DNATIVE_THREADS
 !ENDIF
 
 !IFDEF DEBUG
-CFLAGS = -I$(INCDIR) -I$(DYNACE_ROOT)\include -nologo -Od -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
+CFLAGS = -I$(INCDIR) -I$(DYNACE_PATH)\include -nologo -Od -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
 !ELSE
-CFLAGS = -I$(INCDIR) -I$(DYNACE_ROOT)\include -nologo -Oityb1 -Gs -Gy $(CFEXTRA)
+CFLAGS = -I$(INCDIR) -I$(DYNACE_PATH)\include -nologo -Oityb1 -Gs -Gy $(CFEXTRA)
 !ENDIF
 
 curlib.cm : $(INCDIR)\generics.h

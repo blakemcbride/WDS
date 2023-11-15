@@ -5,7 +5,7 @@ WDIR = include
 
 LIBDIR = ..\lib
 INCDIR = ..\include
-DYNINC = $(DYNACE_ROOT)\include
+DYNINC = $(DYNACE_PATH)\include
 
 CFEXTRA = -MT
 

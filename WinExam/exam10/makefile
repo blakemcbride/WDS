@@ -21,13 +21,13 @@ DYNINC = $(DYNACE_PATH)/include
 WINEINC = -I$(WINEINCPATH)/windows -I$(WINEINCPATH)/msvcrt
 
 
-WINELIBS = -lwine -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsvcrt -lmsimg32
+WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsvcrt -lmsimg32
 
 DEBUG = -g
 #DEBUG = -O
 
-CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS
-GFLAGS = -I$(INCDIR) -O -w
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -fPIC -D_WINDOWS -D_WIN32 -D__WINE__ -fno-builtin
+GFLAGS = -I$(INCDIR) -O -w -fPIC
 
 TARGET = main
 

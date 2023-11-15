@@ -5,7 +5,7 @@
 TARGET = main
 
 
-DYNACE_PATH = $(DYNACE_ROOT)
+DYNACE_PATH = $(DYNACE_PATH)
 
 
 C_SRC = main.c

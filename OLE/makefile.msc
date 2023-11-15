@@ -1,7 +1,7 @@
 #  Makefile designed for use by the NMAKE.EXE utility and
 #  Microsoft Visual C/C++
 
-DYNINC = $(DYNACE_ROOT)\include
+DYNINC = $(DYNACE_PATH)\include
 
 
 C_SRC = makeguid.c

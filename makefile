@@ -38,6 +38,7 @@ realclean : clean
 	rm -f bin/delcr.exe
 	rm -f bin/addcr
 	rm -rf lib/wds.a lib/dynlcm.lib lib/dynm32.pdb
+	rm -f include/generics.h
 
 ship-unix : realclean
 	find . -name '*.exe' -exec rm \{\} \;
@@ -77,7 +78,7 @@ setup.dos :
 	touch setup.dos
 
 makegens :
-	cd Windows ; $(DPP) $(DPPOPTS) -h -i -g $(DYNACE_ROOT)/include/generics.h -s *.d ; mv generics.h ../include/generics.h
+	cd Windows ; $(DPP) $(DPPOPTS) -h -i -g $(DYNACE_PATH)/include/generics.h -s *.d ; mv generics.h ../include/generics.h
 	cd ODBC ; $(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d ; mv generics.h ../include/generics.h
 #	cd OLE ; $(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d ; mv generics.h ../include/generics.h
 

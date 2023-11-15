@@ -186,7 +186,7 @@ dist:
 
 makegens :
 	cd Windows
-	$(DPP) $(DPPOPTS) -h -i -g %DYNACE_ROOT%\include\generics.h -s *.d
+	$(DPP) $(DPPOPTS) -h -i -g %DYNACE_PATH%\include\generics.h -s *.d
 	if errorlevel 1 goto done
 	mv generics.h ../include/generics.h
 	@rem

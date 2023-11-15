@@ -3,7 +3,7 @@
 
 LIBDIR = ..\lib
 INCDIR = ..\include
-DYNINC = $(DYNACE_ROOT)\include
+DYNINC = $(DYNACE_PATH)\include
 
 CFEXTRA = -MT
 
@@ -96,7 +96,7 @@ generics.obj : generics.c
 	$(CC) -c $(GFLAGS) $**
 
 newgens : 
-	dpp $(STRAT) -g %DYNACE_ROOT%\include\generics.h -s *.d -h $(INCDIR)\generics.h
+	dpp $(STRAT) -g %DYNACE_PATH%\include\generics.h -s *.d -h $(INCDIR)\generics.h
 
 makegens:
 	dpp $(STRAT) -g $(INCDIR)\generics.h -s *.d -h $(INCDIR)\generics.h

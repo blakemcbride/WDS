@@ -64,7 +64,7 @@ WDS tree.  For example, you should see sub-directories named
 ODBC, Windows, WinExam, etc. at this level.
 
 1.  Edit the file named "setupenv.bat".  Change the line which sets
-    DYNACE_ROOT to be correct for your environment.
+    DYNACE_PATH to be correct for your environment.
     
 2.  Setup the build environment by executing the following file:
 
@@ -132,7 +132,14 @@ Linux, Apple Mac, FreeBSD, Solaris, and Cygwin under Windows
 
 GNU-make, bash and gcc are assumed.
 
-1.  Build the system as follows:
+1.  Build Dynace (seperate package)
+
+2.  Set DYNACE_PATH in the file makefile.inc
+
+3.  Create generics.h with:
+	make makegens
+
+4.  Build the system as follows:
 
 	make
 
@@ -143,6 +150,8 @@ At this point the language portion of the system is built in the
 portable mode.  You can test it by going into examples/exam03,
 building and running the example using the following commands:
 
+
+	export DYNACE_PATH=[full path to Dynace]
 	cd examples/exam03
 	make
 	./main
