@@ -130,6 +130,13 @@ Add DR\lib to your linker's library search path
 Linux, Apple Mac, FreeBSD, Solaris, and Cygwin under Windows
 ------------------------------------------------------------
 
+WDS uses the WINE library to support the Win32/Win64 API under
+these operating systems.  WINE would have to be installed prior to any
+of this working.
+
+Although this port worked in the past, it currently does not for 
+reasons we have not yet discovered.  This effort is ongoing.
+
 GNU-make, bash and gcc are assumed.
 
 1.  Build Dynace (seperate package)
