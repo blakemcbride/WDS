@@ -54,6 +54,7 @@ wds-all : all
 	cd ..
 
 all-scratch :
+	-mkdir lib
 	cd Windows
 	echo Entering Windows
 	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens

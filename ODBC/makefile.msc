@@ -66,7 +66,7 @@ CC = cl
 .rc.res:
 	rc $<
 
-allok.nm .LIBRARY : $(INCDIR)\generics.h curlib.nm
+allok.nm : $(INCDIR)\generics.h curlib.nm
 	echo Done >$@
 
 $(TARGET).exe : curlib.nm main.obj $(OBJS) $(RESOURCES) $(LIBS)

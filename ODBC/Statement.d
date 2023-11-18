@@ -371,7 +371,6 @@ imeth 	long gGetNativeErrorCode()
 ivmeth	vError(char *fmt, ...)
 {
 	char	buf1[256];
-	MAKE_REST(fmt);
 
 	vsprintf(buf1, fmt, _rest_);
 
@@ -3492,7 +3491,6 @@ ivmeth	int	vDBSelect, vExecuteWithBind, vDBSelectDNC (char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gExecuteWithBind(self, buf);
@@ -3504,7 +3502,6 @@ ivmeth	int	vLazyDBSelect, vLazyExecuteWithBind (ifun fun, char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gLazyDBSelect(self, fun, buf);
@@ -3516,7 +3513,6 @@ ivmeth	int	vDBSelectOne, vDBSelectOneDNC (char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gDBSelectOne(self, buf);
@@ -3528,7 +3524,6 @@ ivmeth	int	vLazyDBSelectOne(ifun fun, char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gLazyDBSelectOne(self, fun, buf);
@@ -3540,7 +3535,6 @@ ivmeth	int	vExecute(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gExecute(self, buf);

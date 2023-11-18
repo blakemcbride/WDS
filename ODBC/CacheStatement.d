@@ -1095,7 +1095,6 @@ ivmeth	int	vDBSelectDNC(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 	iUsingCache=0;
 
 	vsprintf(buf, fmt, _rest_);
@@ -1115,7 +1114,6 @@ ivmeth	int	vDBSelectOneDNC(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 	iUsingCache=0;
 
 	vsprintf(buf, fmt, _rest_);
@@ -1354,7 +1352,6 @@ ivmeth	vError(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	object	r;
-	MAKE_REST(fmt);
 	iUsingCache=0;
 
 	vsprintf(buf, fmt, _rest_);
@@ -3612,7 +3609,6 @@ ivmeth	int	vDBSelect, vExecuteWithBind (char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gExecuteWithBind(self, buf);
@@ -3624,7 +3620,6 @@ ivmeth	int	vLazyDBSelect, vLazyExecuteWithBind (ifun fun, char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gLazyDBSelect(self, fun, buf);
@@ -3636,7 +3631,6 @@ ivmeth	int	vDBSelectOne(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gDBSelectOne(self, buf);
@@ -3648,7 +3642,6 @@ ivmeth	int	vLazyDBSelectOne(ifun fun, char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gLazyDBSelectOne(self, fun, buf);
@@ -3660,7 +3653,6 @@ ivmeth	int	vExecute(char *fmt, ...)
 {
 	char	*buf = Tnalloc(char, BUF_SIZE);
 	int	r;
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	r = gExecute(self, buf);

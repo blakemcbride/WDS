@@ -111,7 +111,6 @@ imeth	object	gDeepDispose, gDispose ()
 ivmeth	vSetStringValue(char *fmt, ...)
 {
 	char	*buf = gGetBuf(Application);
-	MAKE_REST(fmt);
 
 	vsprintf(buf, fmt, _rest_);
 	return gSetStringValue(self, buf);

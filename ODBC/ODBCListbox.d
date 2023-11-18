@@ -481,7 +481,6 @@ imeth	vSelect(...)
 {
 	object	keys[MAX_KEYS], seq, lo, loseq, kv;
 	int	num, i, r;
-	MAKE_REST(self);
 
 	for (num=0 ; num < MAX_KEYS  &&  (keys[num] = GetArg(object)) ; num++);
 	for (r=0, seq = gSequence(iKeyFieldValues) ; lo = gNext(seq) ; r++) {

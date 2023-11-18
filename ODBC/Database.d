@@ -783,7 +783,6 @@ ivmeth	vVarTextFields(char *table, ...)
 {
 	object	flds = gNew(StringDictionary), ret;
 	char	*fld, *vttbl, tbl[100], lcfld[100];
-	MAKE_REST(table);
 	while (fld = GetArg(char *)) {
 		strcpy(lcfld, fld);
 		if (!(vttbl = GetArg(char *)))
@@ -859,7 +858,6 @@ ivmeth	vPrimaryKey(char *table, ...)
 {
 	object	flds = gNew(LinkObject), ret;
 	char	*fld;
-	MAKE_REST(table);
 	while (fld = GetArg(char *))
 		gAddLast(flds, gNewWithStr(String, lcname(fld)));
 	ret = gAddStr(iPrimaryKeys, lcname(table), flds);

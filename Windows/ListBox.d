@@ -1120,13 +1120,14 @@ ivmeth	vSetTabStops(...)
 {
 	int	n, i;
 	object	ary;
-	MAKE_REST(self);
+	va_list _rest2_;
+	va_copy(_rest2_, _rest_);
 
 	for (n=0 ; GetArg(int) ; n++);
 	ary = vNew(IntegerArray, 1, n);
-	RESET_REST;
 	for (i=0 ; i < n ; i++)
-		vChangeShortValue(ary, GetArg(int), i);
+		vChangeShortValue(ary, va_arg(_rest2_, int), i);
+	va_end(_rest2_);
 	return gSetTabStopsArray(self, ary);
 }
 
@@ -1134,13 +1135,14 @@ ivmeth	vSetTabWidths(...)
 {
 	int	n, i;
 	object	ary;
-	MAKE_REST(self);
+	va_list _rest2_;
+	va_copy(_rest2_, _rest_);
 
 	for (n=0 ; GetArg(int) ; n++);
 	ary = vNew(IntegerArray, 1, n);
-	RESET_REST;
 	for (i=0 ; i < n ; i++)
-		vChangeShortValue(ary, GetArg(int), i);
+		vChangeShortValue(ary, va_arg(_rest2_, int), i);
+	va_end(_rest2_);
 	return gSetTabWidthsArray(self, ary);
 }
 
