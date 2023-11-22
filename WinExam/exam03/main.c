@@ -1,4 +1,4 @@
-
+#include "dynwin.h"
 #include "generics.h"
 #include "resource.h"
 

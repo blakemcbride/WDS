@@ -2,7 +2,7 @@
 
 /*  This program is fully documented in the file main.txt   */
 
-#include <dynwin.h>
+#include "dynwin.h"
 
 #include "generics.h"
 #include "resource.h"

@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <sql.h>
 #include <sqlext.h>
+#include "dynwin.h"
 #include "generics.h"
 #include "resource.h"
 
