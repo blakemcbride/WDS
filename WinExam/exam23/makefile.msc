@@ -1,0 +1,117 @@
+#  Makefile designed for use by the NMAKE.EXE utility and		-*-Makefile-*-
+#  Microsoft Visual C/C++
+
+
+TARGET = main
+
+
+DYNACE_PATH = $(DYNACE_PATH)
+
+
+C_SRC = main.c
+
+
+CLASS_SRC = dialogs.d dialog1.d dialog2.d dialog3.d
+
+
+RESOURCES = $(TARGET).res
+
+CFEXTRA = -MT
+
+!IFDEF NATIVE_THREADS
+CFEXTRA += -DNATIVE_THREADS
+!ENDIF
+
+BINDIR = $(DYNACE_PATH)\bin
+LIBDIR = ..\..\lib
+INCDIR = ..\..\include
+DYNINC = $(DYNACE_PATH)\include
+
+
+!IFDEF	DEBUG
+CFLAGS = -nologo -c -I$(INCDIR -I$(DYNINC)) -WX -Zi -D_WINDOWS $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -Zi -D_WINDOWS $(CFEXTRA)
+LFLAGS = /nologo /subsystem:windows /debug
+!ELSE
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -WX -O2 -D_WINDOWS $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS $(CFEXTRA)
+LFLAGS = /nologo /subsystem:windows
+!ENDIF
+
+
+LIBS = $(LIBDIR)\dwdsnm.lib $(DYNACE_PATH)\lib\dynlcm.lib
+
+MSLIBS = kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib comctl32.lib advapi32.lib \
+         shell32.lib wsock32.lib odbc32.lib winmm.lib ole32.lib wininet.lib rpcrt4.lib mpr.lib msimg32.lib
+
+
+OBJS = $(C_SRC:.c=.obj) $(CLASS_SRC:.d=.obj)
+
+CC = cl
+
+.SUFFIXES: .d .c .h .obj .exe .lib
+
+.rc.res:
+	rc $<
+
+.d.c :
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+
+.c.obj:
+	$(CC) $(CFLAGS) $<
+
+.d.obj:
+	dpp $(STRAT) -C -g $(INCDIR)\generics.h -t -p $<
+	$(CC) $(CFLAGS) $*.c
+
+$(TARGET).exe : generics.1 generics.h generics.obj $(OBJS) $(RESOURCES) $(LIBS)
+	link /out:$@ $(LFLAGS) $(OBJS) generics.obj $(LIBS) $(MSLIBS) $(RESOURCES)
+
+
+$(OBJS) : resource.h
+
+
+generics.h : $(CLASS_SRC)
+	dpp -g -t -h -p $**
+
+
+generics.c : generics.h
+	dpp -g -c
+
+generics.obj : generics.c
+	$(CC) -c $(GFLAGS) generics.c
+
+generics.1 : 
+	dpp -g $(INCDIR)\generics.h -h -p $(CLASS_SRC)
+	@echo Done >generics.1
+
+newgens:
+	dpp -g $(INCDIR)\generics.h -h -p $(CLASS_SRC)
+	@echo Done >generics.1
+
+
+
+
+clean:
+	rm -zq $(CLASS_SRC:.d=.c)
+	rm -zq *.obj
+	rm -zq *.exe
+	rm -zq *.ex1
+	rm -zq *.res
+	rm -zq *.aps
+	rm -zq *.pdb
+	rm -zq *.wsp
+	rm -zq *.ilk
+	rm -zq *.bsc
+	rm -zq *.vcp
+	rm -zq *.pch
+	rm -zq *.sbr
+	rm -zq *.vcw
+	rm -zq *.map
+	rm -zq generics.*
+	rm -zqr WinDebug
+	rm -zqr WinRel
+	rm -zq *.idb *.mdp *.ncb
+	rm -zq *.dsw *.opt *.plg
+	rm -zq *.dsp
+

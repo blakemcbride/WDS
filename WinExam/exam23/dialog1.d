@@ -1,5 +1,5 @@
 
-
+#include "dynwin.h"
 #include "resource.h"
 
 defclass Dialog1 : DialogTask {

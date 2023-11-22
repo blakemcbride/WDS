@@ -3,9 +3,9 @@
 #include "generics.h"
 #include "resource.h"
 
-static	long	file_message(object wind, unsigned id);
-static	long	file_exit(object wind, unsigned id);
-static	long	tool_file_new(object wind, unsigned bm);
+static	LRESULT	file_message(object wind, unsigned id);
+static	LRESULT	file_exit(object wind, unsigned id);
+static	LRESULT	tool_file_new(object wind, unsigned bm);
 
 #define	FIRST_SECTION	1
 
@@ -33,19 +33,19 @@ int	start()
 	return gProcessMessages(win);
 }
 
-static	long	tool_file_new(object wind, unsigned bm)
+static	LRESULT	tool_file_new(object wind, unsigned bm)
 {
 	gMessage(wind, "New bitmap hit");
 	return 0L;
 }
 
-static	long	file_message(object wind, unsigned id)
+static	LRESULT	file_message(object wind, unsigned id)
 {
 	gMessage(wind, "File Message");
 	return 0L;
 }
 
-static	long	file_exit(object wind, unsigned id)
+static	LRESULT	file_exit(object wind, unsigned id)
 {
 	gQuitApplication(Application, 0);
 	return 0L;
