@@ -214,14 +214,14 @@ cmeth	gNewTP(char type, char *file, long station, long user)
 	else
 		iMode = 'R';
 	
-#ifdef __WINE__
+#if defined(__WINE__) || 1
 	envptr = NULL;
 #else
 	envptr = Getenv("DATASYNC_SERVER_HOST");
 #endif	
 	if (envptr && iMode == 'W') {
 		object socketstream;
-#ifdef __WINE__
+#if defined(__WINE__) || 1
 		char	*envAndTran = NULL;
 #else
 		char	*envAndTran = Getenv("DATASYNC_SERVER_AND_TRANFILE");
