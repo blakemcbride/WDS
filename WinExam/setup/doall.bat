@@ -55,8 +55,8 @@ cd ..\exam18
 %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 rem This one has special makefiles
-cd ..\exam19
-%1 %2 %3 %4 %5 %6 %7 %8 %9
+rem cd ..\exam19
+rem %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 cd ..\exam20
 %1 %2 %3 %4 %5 %6 %7 %8 %9
@@ -67,8 +67,9 @@ cd ..\exam21
 cd ..\exam22
 %1 %2 %3 %4 %5 %6 %7 %8 %9
 
-cd ..\exam23
-%1 %2 %3 %4 %5 %6 %7 %8 %9
+rem This one has special makefiles
+rem cd ..\exam23
+rem %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 cd ..\exam24
 %1 %2 %3 %4 %5 %6 %7 %8 %9
