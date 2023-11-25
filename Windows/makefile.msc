@@ -53,7 +53,7 @@ CLASS_SRC = Application.d Window.d Menu.d PopupMenu.d Dialog.d TextControl.d Sta
 	SpinControl.d StatusWindow.d SplashWindow.d Scheme.d ControlVector.d StaticTextControl.d TreeView.d \
 	TreeViewItem.d ProgramManager.d Bitmap.d WindowTask.d TreeViewTaskList.d TrackRect.d DragWindow.d \
 	RectControl.d LineControl.d ImageControl.d CLD.d SchemeWindowTask.d SchemeDialogTask.d Ftp.d Mapi.d \
-	FunctionList.d ImageList.d StackTracer.d SchemeThread.d HttpRequest.d DatePicker.d ShortcutMenu.d \
+	FunctionList.d ImageList.d SchemeThread.d HttpRequest.d DatePicker.d ShortcutMenu.d \
 	TimeControl.d JavaScriptString.d WebService.d GenericControl.d
 #	JavaScript.d
 
