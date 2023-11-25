@@ -264,22 +264,22 @@ static	void	init_class()
 	gSetErrorFunction(Object, command_line_error_handler);
 }
 
-imeth void gSetLogOn(BOOL bOn) 
+imeth void gSetLogOn(int bOn) 
 { 
 	iLogOn = bOn; 
 }
 
-imeth void gSetDisplayOn(BOOL bOn) 
+imeth void gSetDisplayOn(int bOn) 
 { 
 	iDisplayOn = bOn; 
 }
 
-imeth BOOL gIsLogOn() 
+imeth int gIsLogOn() 
 { 
 	return iLogOn; 
 }
 
-imeth BOOL gIsDisplayOn() 
+imeth int gIsDisplayOn() 
 { 
 	return iDisplayOn; 
 }
