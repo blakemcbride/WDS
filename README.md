@@ -137,3 +137,8 @@ static	long	file_exit(object wind, unsigned id)
 	return 0L;
 }
 ```
+
+## Building
+
+See docs/BUILD.txt
+
