@@ -17,6 +17,7 @@ used without it.  WDS itself depends upon the Microsoft Win32 API.
 This API is also available on Linux and Mac through the Wine project.
 
 You must build Dynace before any of this will work.
+Dynace is located at https://github.com/blakemcbride/Dynace 
 
 ----------------------------------------
 

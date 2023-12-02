@@ -138,7 +138,7 @@ static	long	file_exit(object wind, unsigned id)
 }
 ```
 
-## Building
+## Getting started
 
-See docs/BUILD.txt
+See docs/ORIENT.txt
 

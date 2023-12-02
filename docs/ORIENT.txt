@@ -1,6 +1,6 @@
 
 
-See BUILD.txt for build instructions.
+See docs/BUILD.txt for build instructions.
 
 -----
 
@@ -26,17 +26,6 @@ lib		Dynace libraries
 
 Source code
 ---------------------------------------------------------------------
-kernel		source code to the Dynace kernel
-
-class		source code to the Dynace class library
-
-threads		source code to the Thread, Pipe & Semaphore classes
-
-dpp		source code to the Dynace preprocessor
-
-generics	source code to build procedures used to build the master
-		(initial) Dynace generics files
-
 utils		source code to various utility programs
 
 Windows		source code to the WIN32 GUI development system which
@@ -61,15 +50,13 @@ Documentation
 ----------------------------------------------------------------------
 docs		various readme files to help orient a new user
 
-manual		various formats of the Dynace & WDS manuals (600+ pages!)
+manual		various formats of the WDS manuals 
 		along with source to them.
 		See the PDF files in that directory for pre-made manuals.
 
 
 Examples
 ----------------------------------------------------------------------
-examples	Dynace language examples and tutorial
-
 WinExam		GUI examples and tutorial
 
 
