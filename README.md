@@ -7,16 +7,6 @@ development of Windows GUI applications extremely easy.  It also works
 on Linux & macOS through the WINE Win32 library.  It has been used in
 commercial applications for nearly 20 years.
 
-In an ever-evolving technological landscape, APIs and environmental
-dependencies continually undergo changes. While we have actively
-maintained Dynace to adapt to these shifts, WDS has not received the
-same level of upkeep. As a result, WDS will require targeted
-maintenance to ensure compatibility with contemporary systems.
-
-Despite its current limitations, I wanted to make the WDS code
-publicly accessible. Updates and improvements will be rolled out as
-time permits to ensure compatibility with modern systems.
-
 ## WDS includes:
 
 * Win32 GUI development system (portable through WINE)
