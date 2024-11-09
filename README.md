@@ -12,12 +12,12 @@ commercial applications for nearly 20 years.
 * Win32 GUI development system (portable through WINE)
 * interfaces with Java, ODBC, OLE
 * SQL interface / class library
-* 250 pages of documentation  (https://blakemcbride.github.io/WDS/manual/WDS.pdf)
+* 250 pages of documentation  [https://blakemcbride.github.io/WDS/manual/WDS.pdf](https://blakemcbride.github.io/WDS/manual/WDS.pdf)
 * tutorial
 
-The main home for this system is:  https://github.com/blakemcbride/WDS
+Source code for this system is at:  [https://github.com/blakemcbride/WDS](https://github.com/blakemcbride/WDS)
 
-Build instructions are at:  docs/BUILD.txt
+Build instructions are at:  [docs/BUILD.txt](https://github.com/blakemcbride/WDS/blob/main/docs/BUILD.txt)
 
 
 
@@ -130,5 +130,8 @@ static	long	file_exit(object wind, unsigned id)
 
 ## Getting started
 
-See docs/ORIENT.txt
+See [docs/ORIENT.txt](https://github.com/blakemcbride/WDS/blob/main/docs/ORIENT.txt)
+
+This system was written by Blake McBride
+
 
