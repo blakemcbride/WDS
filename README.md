@@ -2,10 +2,24 @@
 # Windows Development System
 
 This Windows Development System (WDS) is a set of Dynace
-[https://blakemcbride.github.io/Dynace/](https://blakemcbride.github.io/Dynace/) classes that makes the
+[https://blakemcbride.github.io/Dynace/](https://blakemcbride.github.io/Dynace/) classes that make the
 development of Windows GUI applications extremely easy.  It also works
-on Linux & macOS through the WINE Win32 library.  It has been used in
+on Linux and macOS through the WINE Win32 library.  It has been used in
 commercial applications for nearly 20 years.
+
+## Current Status
+
+WDS was a rock-solid, complete system used commercially under 32-bit WIN32 on Windows for about 15 years.
+During that time, Win32 morphed a bit, but WDS has not kept up.  Additionally, WDS was successfully ported to Wine
+many years ago.
+
+Currently, WDS doesn't build on Windows because of the changes that occurred over the years and the move to 64 bits.
+In spite of this, my sense is that it wouldn't be too hard to get running.
+
+Additionally, WDS currently builds under 64-bit WINE but will not link.  Questions on the WINE group were left unanswered,
+so the project was abandoned.  Presuming WineAPI works, getting this working should also be easy.
+
+Dynace (the system WDS is built upon) is current and works fine in all of those environments.
 
 ## WDS includes:
 
