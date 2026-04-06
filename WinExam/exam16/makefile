@@ -1,27 +1,30 @@
 #  Makefile designed for use by the GNUMAKE utility and		-*-Makefile-*-
 #  the Wine libraries
 
-CC = winegcc -m32
+CC = winegcc
 
 
-DYNACE_PATH = ../..
+WDS_PATH = ../..
+DYNACE_PATH = /home/blake/Dynace
 
 WINEINCPATH = /usr/include/wine
 
 
-BINDIR = $(DYNACE_PATH)/bin
-LIBDIR = $(DYNACE_PATH)/lib
-INCDIR = $(DYNACE_PATH)/include
+BINDIR = $(WDS_PATH)/bin
+LIBDIR = $(WDS_PATH)/lib
+INCDIR = $(WDS_PATH)/include
+DYNINC = $(DYNACE_PATH)/include
+DYNLIB = $(DYNACE_PATH)/lib
 
-WINEINC = -I$(WINEINCPATH)/windows -I$(WINEINCPATH)/msvcrt
+WINEINC = -I$(WINEINCPATH)/windows
 
 
-WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lwine -lmsvcrt -lmsimg32
+WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsimg32
 
 DEBUG = -g
 #DEBUG = -O
 
-CFLAGS = -I$(INCDIR) $(WINEINC) -D_WINDOWS
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS -D_WIN32 -D__WINE__ -std=gnu17 -include $(INCDIR)/winecompat.h
 GFLAGS = -I$(INCDIR) -O -w
 
 TARGET = main
@@ -43,7 +46,7 @@ OBJS = $(CFILES:.c=.o)
 
 
 $(TARGET) : $(OBJS) algocorp.ico main.res
-	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(LIBDIR)/dynace.a $(WINELIBS) -lm 
+	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(DYNLIB)/dynace.a $(WINELIBS) -lm 
 	mv $(TARGET).exe $(TARGET)
 
 algocorp.ico : ../setup/algocorp.ico

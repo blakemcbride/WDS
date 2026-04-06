@@ -28,7 +28,6 @@
 
 #include <dynwin.h>
 
-
 defclass  StringFile  {
 	iFileName;	//  file strings are stored in
 	long	iFileSize;
@@ -43,7 +42,9 @@ defclass  StringFile  {
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef __WINE__
 #include <io.h>
+#endif
 #include <errno.h>
 #include <ctype.h>
 

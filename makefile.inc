@@ -10,6 +10,8 @@ else
 OPT = -O
 endif
 
+OPT += -std=gnu17
+
 ifdef WINE
 OPT += -fPIC
 WINEINCPATH = /usr/include/wine
@@ -80,7 +82,7 @@ DPPOPTS += -X
 endif
 
 ifdef WINE
-CFLAGS += -I$(WINEINCPATH)/windows -D_WINDOWS -D_WIN32 -D__WINE__
+CFLAGS += -I$(WINEINCPATH)/windows -D_WINDOWS -D_WIN32 -D__WINE__ -include $(INCDIR)/winecompat.h
 endif
 
 DPPOPTS += $(STRAT)

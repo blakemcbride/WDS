@@ -1181,7 +1181,7 @@ private	imeth	LRESULT	process_wm_move(object	self,
 		GetWindowPlacement(iHwnd, &wp);
 
 		GetWindowRect(iHwnd, &rect);
-		if (GetWindowLong(iHwnd, GWL_STYLE) & WS_CHILD) {
+		if (GetWindowLongPtr(iHwnd, GWL_STYLE) & WS_CHILD) {
 			POINT	p;
 			HWND	h = GetParent(iHwnd);
 			p.x = rect.left;
@@ -1318,7 +1318,7 @@ private	imeth	LRESULT	process_wm_buttondown(object	self,
 			fun(iMenu, iMenuID, (unsigned) wParam | orval);
 	}
 
-	iInModifyMode = GetWindowLong(iHwnd, GWL_STYLE) & WS_CHILD  &&
+	iInModifyMode = GetWindowLongPtr(iHwnd, GWL_STYLE) & WS_CHILD  &&
 		(parent=gGetParent(self))  && gModifyChildren(parent);
 	if (iInModifyMode) {
 		object	ctl;
@@ -5459,7 +5459,9 @@ imeth	gPlayMetaFile(char *file)
 }
 
 #include <fcntl.h>
+#ifndef __WINE__
 #include <io.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 

@@ -6,7 +6,7 @@ include ../makefile.inc
 
 CC = winegcc
 
-CFLAGS += -I$(WINEINCPATH)/msvcrt -D_WINDOWS -fno-builtin
+CFLAGS += -D_WINDOWS -fno-builtin
 
 
 C_SRC = readres.c

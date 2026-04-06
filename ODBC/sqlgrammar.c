@@ -1,8 +1,9 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -33,6 +34,10 @@
 /* C LALR(1) parser skeleton written by Richard Stallman, by
    simplifying the original so-called "semantic" parser.  */
 
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
+
 /* All symbols defined below should begin with yy or YY, to avoid
    infringing on user name space.  This should be done even for local
    variables, as they might otherwise be expanded by user macros.
@@ -40,14 +45,11 @@
    define necessary library symbols; they are noted "INFRINGES ON
    USER NAME SPACE" below.  */
 
-extern int yylex (void);
+/* Identify Bison output, and Bison version.  */
+#define YYBISON 30802
 
-
-/* Identify Bison output.  */
-#define YYBISON 1
-
-/* Bison version.  */
-#define YYBISON_VERSION "3.0.2"
+/* Bison version string.  */
+#define YYBISON_VERSION "3.8.2"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -64,8 +66,8 @@ extern int yylex (void);
 
 
 
-/* Copy the first part of user declarations.  */
-#line 3 "sqlgrammar.y" /* yacc.c:339  */
+/* First part of user prologue.  */
+#line 3 "sqlgrammar.y"
 
 
 
@@ -79,6 +81,8 @@ extern int yylex (void);
 #define YYDEBUG 1
 
 #pragma warning (disable:4013)
+
+int yylex(void);
 
 int block_count = 0;
 
@@ -121,193 +125,352 @@ int yyerror(void *root, char const *msg)
 	return 1;
 }
 
-#line 122 "sqlgrammar.tab.c" /* yacc.c:339  */
+#line 129 "sqlgrammar.tab.c"
 
-# ifndef YY_NULLPTR
-#  if defined __cplusplus && 201103L <= __cplusplus
-#   define YY_NULLPTR nullptr
+# ifndef YY_CAST
+#  ifdef __cplusplus
+#   define YY_CAST(Type, Val) static_cast<Type> (Val)
+#   define YY_REINTERPRET_CAST(Type, Val) reinterpret_cast<Type> (Val)
 #  else
-#   define YY_NULLPTR 0
+#   define YY_CAST(Type, Val) ((Type) (Val))
+#   define YY_REINTERPRET_CAST(Type, Val) ((Type) (Val))
+#  endif
+# endif
+# ifndef YY_NULLPTR
+#  if defined __cplusplus
+#   if 201103L <= __cplusplus
+#    define YY_NULLPTR nullptr
+#   else
+#    define YY_NULLPTR 0
+#   endif
+#  else
+#   define YY_NULLPTR ((void*)0)
 #  endif
 # endif
 
-/* Enabling verbose error messages.  */
-#ifdef YYERROR_VERBOSE
-# undef YYERROR_VERBOSE
-# define YYERROR_VERBOSE 1
-#else
-# define YYERROR_VERBOSE 0
-#endif
+#include "sqlgrammar.tab.h"
+/* Symbol kind.  */
+enum yysymbol_kind_t
+{
+  YYSYMBOL_YYEMPTY = -2,
+  YYSYMBOL_YYEOF = 0,                      /* "end of file"  */
+  YYSYMBOL_YYerror = 1,                    /* error  */
+  YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
+  YYSYMBOL_NAME = 3,                       /* NAME  */
+  YYSYMBOL_STRING = 4,                     /* STRING  */
+  YYSYMBOL_INTNUM = 5,                     /* INTNUM  */
+  YYSYMBOL_APPROXNUM = 6,                  /* APPROXNUM  */
+  YYSYMBOL_OR = 7,                         /* OR  */
+  YYSYMBOL_AND = 8,                        /* AND  */
+  YYSYMBOL_NOT = 9,                        /* NOT  */
+  YYSYMBOL_10_ = 10,                       /* '+'  */
+  YYSYMBOL_11_ = 11,                       /* '-'  */
+  YYSYMBOL_12_ = 12,                       /* '*'  */
+  YYSYMBOL_13_ = 13,                       /* '/'  */
+  YYSYMBOL_UMINUS = 14,                    /* UMINUS  */
+  YYSYMBOL_ALL = 15,                       /* ALL  */
+  YYSYMBOL_AMMSC = 16,                     /* AMMSC  */
+  YYSYMBOL_ANY = 17,                       /* ANY  */
+  YYSYMBOL_AS = 18,                        /* AS  */
+  YYSYMBOL_ASC = 19,                       /* ASC  */
+  YYSYMBOL_AUTHORIZATION = 20,             /* AUTHORIZATION  */
+  YYSYMBOL_BETWEEN = 21,                   /* BETWEEN  */
+  YYSYMBOL_BY = 22,                        /* BY  */
+  YYSYMBOL_CHARACTER = 23,                 /* CHARACTER  */
+  YYSYMBOL_CHECK = 24,                     /* CHECK  */
+  YYSYMBOL_CLOSE = 25,                     /* CLOSE  */
+  YYSYMBOL_COMMIT = 26,                    /* COMMIT  */
+  YYSYMBOL_CREATE = 27,                    /* CREATE  */
+  YYSYMBOL_CURRENT = 28,                   /* CURRENT  */
+  YYSYMBOL_CURSOR = 29,                    /* CURSOR  */
+  YYSYMBOL_DATE_LITERAL = 30,              /* DATE_LITERAL  */
+  YYSYMBOL_DECIMAL2 = 31,                  /* DECIMAL2  */
+  YYSYMBOL_DECLARE = 32,                   /* DECLARE  */
+  YYSYMBOL_DEFAULT = 33,                   /* DEFAULT  */
+  YYSYMBOL_DELETE2 = 34,                   /* DELETE2  */
+  YYSYMBOL_DESC = 35,                      /* DESC  */
+  YYSYMBOL_DISTINCT = 36,                  /* DISTINCT  */
+  YYSYMBOL_DOUBLE2 = 37,                   /* DOUBLE2  */
+  YYSYMBOL_DROP = 38,                      /* DROP  */
+  YYSYMBOL_EQUALS = 39,                    /* EQUALS  */
+  YYSYMBOL_ESCAPE = 40,                    /* ESCAPE  */
+  YYSYMBOL_EXISTS = 41,                    /* EXISTS  */
+  YYSYMBOL_FETCH = 42,                     /* FETCH  */
+  YYSYMBOL_FLOAT2 = 43,                    /* FLOAT2  */
+  YYSYMBOL_FOR = 44,                       /* FOR  */
+  YYSYMBOL_FOREIGN = 45,                   /* FOREIGN  */
+  YYSYMBOL_FROM = 46,                      /* FROM  */
+  YYSYMBOL_GRANT = 47,                     /* GRANT  */
+  YYSYMBOL_GREATER_THAN = 48,              /* GREATER_THAN  */
+  YYSYMBOL_GREATER_THAN_EQ = 49,           /* GREATER_THAN_EQ  */
+  YYSYMBOL_GROUP = 50,                     /* GROUP  */
+  YYSYMBOL_HAVING = 51,                    /* HAVING  */
+  YYSYMBOL_IN2 = 52,                       /* IN2  */
+  YYSYMBOL_INDICATOR = 53,                 /* INDICATOR  */
+  YYSYMBOL_INNER = 54,                     /* INNER  */
+  YYSYMBOL_INSERT = 55,                    /* INSERT  */
+  YYSYMBOL_INTEGER = 56,                   /* INTEGER  */
+  YYSYMBOL_INTO = 57,                      /* INTO  */
+  YYSYMBOL_IS = 58,                        /* IS  */
+  YYSYMBOL_JOIN = 59,                      /* JOIN  */
+  YYSYMBOL_KEY = 60,                       /* KEY  */
+  YYSYMBOL_LANGUAGE = 61,                  /* LANGUAGE  */
+  YYSYMBOL_LEFT = 62,                      /* LEFT  */
+  YYSYMBOL_LESS_THAN = 63,                 /* LESS_THAN  */
+  YYSYMBOL_LESS_THAN_EQ = 64,              /* LESS_THAN_EQ  */
+  YYSYMBOL_LIKE = 65,                      /* LIKE  */
+  YYSYMBOL_MODULE = 66,                    /* MODULE  */
+  YYSYMBOL_NOT_EQUALS = 67,                /* NOT_EQUALS  */
+  YYSYMBOL_NULLX = 68,                     /* NULLX  */
+  YYSYMBOL_NUMERIC = 69,                   /* NUMERIC  */
+  YYSYMBOL_OF = 70,                        /* OF  */
+  YYSYMBOL_ON = 71,                        /* ON  */
+  YYSYMBOL_OPEN = 72,                      /* OPEN  */
+  YYSYMBOL_OPTION = 73,                    /* OPTION  */
+  YYSYMBOL_ORDER = 74,                     /* ORDER  */
+  YYSYMBOL_OUTER = 75,                     /* OUTER  */
+  YYSYMBOL_PRECISION = 76,                 /* PRECISION  */
+  YYSYMBOL_PRIMARY = 77,                   /* PRIMARY  */
+  YYSYMBOL_PRIVILEGES = 78,                /* PRIVILEGES  */
+  YYSYMBOL_PROCEDURE = 79,                 /* PROCEDURE  */
+  YYSYMBOL_PUBLIC = 80,                    /* PUBLIC  */
+  YYSYMBOL_REAL = 81,                      /* REAL  */
+  YYSYMBOL_REFERENCES = 82,                /* REFERENCES  */
+  YYSYMBOL_RIGHT = 83,                     /* RIGHT  */
+  YYSYMBOL_ROLLBACK = 84,                  /* ROLLBACK  */
+  YYSYMBOL_SCHEMA = 85,                    /* SCHEMA  */
+  YYSYMBOL_SELECT = 86,                    /* SELECT  */
+  YYSYMBOL_SET = 87,                       /* SET  */
+  YYSYMBOL_SMALLINT = 88,                  /* SMALLINT  */
+  YYSYMBOL_SOME = 89,                      /* SOME  */
+  YYSYMBOL_SQLCODE = 90,                   /* SQLCODE  */
+  YYSYMBOL_SYSDATE = 91,                   /* SYSDATE  */
+  YYSYMBOL_TABLE = 92,                     /* TABLE  */
+  YYSYMBOL_TIME_LITERAL = 93,              /* TIME_LITERAL  */
+  YYSYMBOL_TO = 94,                        /* TO  */
+  YYSYMBOL_TRIGGER = 95,                   /* TRIGGER  */
+  YYSYMBOL_UNION = 96,                     /* UNION  */
+  YYSYMBOL_UNIQUE = 97,                    /* UNIQUE  */
+  YYSYMBOL_UPDATE = 98,                    /* UPDATE  */
+  YYSYMBOL_USER = 99,                      /* USER  */
+  YYSYMBOL_VALUES = 100,                   /* VALUES  */
+  YYSYMBOL_VIEW = 101,                     /* VIEW  */
+  YYSYMBOL_WHERE = 102,                    /* WHERE  */
+  YYSYMBOL_WITH = 103,                     /* WITH  */
+  YYSYMBOL_WORK = 104,                     /* WORK  */
+  YYSYMBOL_COBOL = 105,                    /* COBOL  */
+  YYSYMBOL_FORTRAN = 106,                  /* FORTRAN  */
+  YYSYMBOL_PASCAL2 = 107,                  /* PASCAL2  */
+  YYSYMBOL_PLI = 108,                      /* PLI  */
+  YYSYMBOL_C = 109,                        /* C  */
+  YYSYMBOL_ADA = 110,                      /* ADA  */
+  YYSYMBOL_VARCHAR = 111,                  /* VARCHAR  */
+  YYSYMBOL_112_ = 112,                     /* ';'  */
+  YYSYMBOL_113_ = 113,                     /* '('  */
+  YYSYMBOL_114_ = 114,                     /* ')'  */
+  YYSYMBOL_115_ = 115,                     /* ','  */
+  YYSYMBOL_116_ = 116,                     /* '.'  */
+  YYSYMBOL_117_ = 117,                     /* ':'  */
+  YYSYMBOL_YYACCEPT = 118,                 /* $accept  */
+  YYSYMBOL_root = 119,                     /* root  */
+  YYSYMBOL_sql_list = 120,                 /* sql_list  */
+  YYSYMBOL_sql = 121,                      /* sql  */
+  YYSYMBOL_schema = 122,                   /* schema  */
+  YYSYMBOL_opt_schema_element_list = 123,  /* opt_schema_element_list  */
+  YYSYMBOL_schema_element_list = 124,      /* schema_element_list  */
+  YYSYMBOL_schema_element = 125,           /* schema_element  */
+  YYSYMBOL_drop_trigger = 126,             /* drop_trigger  */
+  YYSYMBOL_drop_table = 127,               /* drop_table  */
+  YYSYMBOL_base_table_def = 128,           /* base_table_def  */
+  YYSYMBOL_base_table_element_commalist = 129, /* base_table_element_commalist  */
+  YYSYMBOL_base_table_element = 130,       /* base_table_element  */
+  YYSYMBOL_column_def = 131,               /* column_def  */
+  YYSYMBOL_column_def_opt_list = 132,      /* column_def_opt_list  */
+  YYSYMBOL_column_def_opt = 133,           /* column_def_opt  */
+  YYSYMBOL_table_constraint_def = 134,     /* table_constraint_def  */
+  YYSYMBOL_column_commalist = 135,         /* column_commalist  */
+  YYSYMBOL_view_def = 136,                 /* view_def  */
+  YYSYMBOL_opt_with_check_option = 137,    /* opt_with_check_option  */
+  YYSYMBOL_opt_column_commalist = 138,     /* opt_column_commalist  */
+  YYSYMBOL_privilege_def = 139,            /* privilege_def  */
+  YYSYMBOL_opt_with_grant_option = 140,    /* opt_with_grant_option  */
+  YYSYMBOL_privileges = 141,               /* privileges  */
+  YYSYMBOL_operation_commalist = 142,      /* operation_commalist  */
+  YYSYMBOL_operation = 143,                /* operation  */
+  YYSYMBOL_grantee_commalist = 144,        /* grantee_commalist  */
+  YYSYMBOL_grantee = 145,                  /* grantee  */
+  YYSYMBOL_module_def = 146,               /* module_def  */
+  YYSYMBOL_opt_module = 147,               /* opt_module  */
+  YYSYMBOL_lang = 148,                     /* lang  */
+  YYSYMBOL_opt_cursor_def_list = 149,      /* opt_cursor_def_list  */
+  YYSYMBOL_cursor_def_list = 150,          /* cursor_def_list  */
+  YYSYMBOL_cursor_def = 151,               /* cursor_def  */
+  YYSYMBOL_opt_order_by_clause = 152,      /* opt_order_by_clause  */
+  YYSYMBOL_ordering_spec_commalist = 153,  /* ordering_spec_commalist  */
+  YYSYMBOL_ordering_spec = 154,            /* ordering_spec  */
+  YYSYMBOL_opt_asc_desc = 155,             /* opt_asc_desc  */
+  YYSYMBOL_procedure_def_list = 156,       /* procedure_def_list  */
+  YYSYMBOL_procedure_def = 157,            /* procedure_def  */
+  YYSYMBOL_manipulative_statement_list = 158, /* manipulative_statement_list  */
+  YYSYMBOL_parameter_def_list = 159,       /* parameter_def_list  */
+  YYSYMBOL_parameter_def = 160,            /* parameter_def  */
+  YYSYMBOL_manipulative_statement = 161,   /* manipulative_statement  */
+  YYSYMBOL_close_statement = 162,          /* close_statement  */
+  YYSYMBOL_commit_statement = 163,         /* commit_statement  */
+  YYSYMBOL_delete_statement_positioned = 164, /* delete_statement_positioned  */
+  YYSYMBOL_delete_statement_searched = 165, /* delete_statement_searched  */
+  YYSYMBOL_fetch_statement = 166,          /* fetch_statement  */
+  YYSYMBOL_insert_statement = 167,         /* insert_statement  */
+  YYSYMBOL_values_or_query_spec = 168,     /* values_or_query_spec  */
+  YYSYMBOL_insert_atom_commalist = 169,    /* insert_atom_commalist  */
+  YYSYMBOL_insert_atom = 170,              /* insert_atom  */
+  YYSYMBOL_open_statement = 171,           /* open_statement  */
+  YYSYMBOL_rollback_statement = 172,       /* rollback_statement  */
+  YYSYMBOL_select_statement = 173,         /* select_statement  */
+  YYSYMBOL_opt_all_distinct = 174,         /* opt_all_distinct  */
+  YYSYMBOL_update_statement_positioned = 175, /* update_statement_positioned  */
+  YYSYMBOL_assignment_commalist = 176,     /* assignment_commalist  */
+  YYSYMBOL_assignment = 177,               /* assignment  */
+  YYSYMBOL_update_statement_searched = 178, /* update_statement_searched  */
+  YYSYMBOL_target_commalist = 179,         /* target_commalist  */
+  YYSYMBOL_target = 180,                   /* target  */
+  YYSYMBOL_opt_where_clause = 181,         /* opt_where_clause  */
+  YYSYMBOL_query_exp = 182,                /* query_exp  */
+  YYSYMBOL_query_term = 183,               /* query_term  */
+  YYSYMBOL_query_spec = 184,               /* query_spec  */
+  YYSYMBOL_selection = 185,                /* selection  */
+  YYSYMBOL_table_exp = 186,                /* table_exp  */
+  YYSYMBOL_from_clause = 187,              /* from_clause  */
+  YYSYMBOL_join_ref = 188,                 /* join_ref  */
+  YYSYMBOL_table_ref_commalist = 189,      /* table_ref_commalist  */
+  YYSYMBOL_table_ref = 190,                /* table_ref  */
+  YYSYMBOL_where_clause = 191,             /* where_clause  */
+  YYSYMBOL_opt_group_by_clause = 192,      /* opt_group_by_clause  */
+  YYSYMBOL_column_ref_commalist = 193,     /* column_ref_commalist  */
+  YYSYMBOL_opt_having_clause = 194,        /* opt_having_clause  */
+  YYSYMBOL_search_condition = 195,         /* search_condition  */
+  YYSYMBOL_predicate = 196,                /* predicate  */
+  YYSYMBOL_comparison_predicate = 197,     /* comparison_predicate  */
+  YYSYMBOL_between_predicate = 198,        /* between_predicate  */
+  YYSYMBOL_like_predicate = 199,           /* like_predicate  */
+  YYSYMBOL_opt_escape = 200,               /* opt_escape  */
+  YYSYMBOL_test_for_null = 201,            /* test_for_null  */
+  YYSYMBOL_in_predicate = 202,             /* in_predicate  */
+  YYSYMBOL_atom_commalist = 203,           /* atom_commalist  */
+  YYSYMBOL_all_or_any_predicate = 204,     /* all_or_any_predicate  */
+  YYSYMBOL_any_all_some = 205,             /* any_all_some  */
+  YYSYMBOL_existence_test = 206,           /* existence_test  */
+  YYSYMBOL_subquery = 207,                 /* subquery  */
+  YYSYMBOL_scalar_exp = 208,               /* scalar_exp  */
+  YYSYMBOL_scalar_exp_commalist = 209,     /* scalar_exp_commalist  */
+  YYSYMBOL_atom = 210,                     /* atom  */
+  YYSYMBOL_parameter_ref = 211,            /* parameter_ref  */
+  YYSYMBOL_function_ref = 212,             /* function_ref  */
+  YYSYMBOL_literal = 213,                  /* literal  */
+  YYSYMBOL_string_literal = 214,           /* string_literal  */
+  YYSYMBOL_table = 215,                    /* table  */
+  YYSYMBOL_trigger_name = 216,             /* trigger_name  */
+  YYSYMBOL_column_ref = 217,               /* column_ref  */
+  YYSYMBOL_comparison = 218,               /* comparison  */
+  YYSYMBOL_data_type = 219,                /* data_type  */
+  YYSYMBOL_column = 220,                   /* column  */
+  YYSYMBOL_cursor = 221,                   /* cursor  */
+  YYSYMBOL_module = 222,                   /* module  */
+  YYSYMBOL_parameter = 223,                /* parameter  */
+  YYSYMBOL_procedure = 224,                /* procedure  */
+  YYSYMBOL_range_variable = 225,           /* range_variable  */
+  YYSYMBOL_user = 226                      /* user  */
+};
+typedef enum yysymbol_kind_t yysymbol_kind_t;
 
-/* In a future release of Bison, this section will be replaced
-   by #include "sqlgrammar.tab.h".  */
-#ifndef YY_YY_SQLGRAMMAR_TAB_H_INCLUDED
-# define YY_YY_SQLGRAMMAR_TAB_H_INCLUDED
-/* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 1
-#endif
-#if YYDEBUG
-extern int yydebug;
-#endif
-
-/* Token type.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-  enum yytokentype
-  {
-    NAME = 258,
-    STRING = 259,
-    INTNUM = 260,
-    APPROXNUM = 261,
-    OR = 262,
-    AND = 263,
-    NOT = 264,
-    EQUALS = 265,
-    GREATER_THAN = 266,
-    GREATER_THAN_EQ = 267,
-    LESS_THAN = 268,
-    LESS_THAN_EQ = 269,
-    NOT_EQUALS = 270,
-    UMINUS = 271,
-    ALL = 272,
-    AMMSC = 273,
-    ANY = 274,
-    AS = 275,
-    ASC = 276,
-    AUTHORIZATION = 277,
-    BETWEEN = 278,
-    BY = 279,
-    CHARACTER = 280,
-    CHECK = 281,
-    CLOSE = 282,
-    COMMIT = 283,
-    CREATE = 284,
-    CURRENT = 285,
-    CURSOR = 286,
-    DATE_LITERAL = 287,
-    DECIMAL2 = 288,
-    DECLARE = 289,
-    DEFAULT = 290,
-    DELETE2 = 291,
-    DESC = 292,
-    DISTINCT = 293,
-    DOUBLE2 = 294,
-    DROP = 295,
-    ESCAPE = 296,
-    EXISTS = 297,
-    FETCH = 298,
-    FLOAT2 = 299,
-    FOR = 300,
-    FOREIGN = 301,
-    FROM = 302,
-    GRANT = 303,
-    GROUP = 304,
-    HAVING = 305,
-    IN2 = 306,
-    INDICATOR = 307,
-    INNER = 308,
-    INSERT = 309,
-    INTEGER = 310,
-    INTO = 311,
-    IS = 312,
-    JOIN = 313,
-    KEY = 314,
-    LANGUAGE = 315,
-    LEFT = 316,
-    LIKE = 317,
-    MODULE = 318,
-    NULLX = 319,
-    NUMERIC = 320,
-    OF = 321,
-    ON = 322,
-    OPEN = 323,
-    OPTION = 324,
-    ORDER = 325,
-    OUTER = 326,
-    PRECISION = 327,
-    PRIMARY = 328,
-    PRIVILEGES = 329,
-    PROCEDURE = 330,
-    PUBLIC = 331,
-    REAL = 332,
-    REFERENCES = 333,
-    RIGHT = 334,
-    ROLLBACK = 335,
-    SCHEMA = 336,
-    SELECT = 337,
-    SET = 338,
-    SMALLINT = 339,
-    SOME = 340,
-    SQLCODE = 341,
-    SYSDATE = 342,
-    TABLE = 343,
-    TIME_LITERAL = 344,
-    TO = 345,
-    TRIGGER = 346,
-    UNION = 347,
-    UNIQUE = 348,
-    UPDATE = 349,
-    USER = 350,
-    VALUES = 351,
-    VIEW = 352,
-    WHERE = 353,
-    WITH = 354,
-    WORK = 355,
-    COBOL = 356,
-    FORTRAN = 357,
-    PASCAL2 = 358,
-    PLI = 359,
-    C = 360,
-    ADA = 361,
-    VARCHAR = 362
-  };
-#endif
-
-/* Value type.  */
-#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
-# define YYSTYPE_IS_TRIVIAL 1
-# define YYSTYPE_IS_DECLARED 1
-#endif
 
 
-extern YYSTYPE yylval;
-
-int yyparse (void *root);
-
-#endif /* !YY_YY_SQLGRAMMAR_TAB_H_INCLUDED  */
-
-/* Copy the second part of user declarations.  */
-
-#line 281 "sqlgrammar.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
 #endif
 
-#ifdef YYTYPE_UINT8
-typedef YYTYPE_UINT8 yytype_uint8;
-#else
-typedef unsigned char yytype_uint8;
+/* On compilers that do not define __PTRDIFF_MAX__ etc., make sure
+   <limits.h> and (if available) <stdint.h> are included
+   so that the code can choose integer types of a good width.  */
+
+#ifndef __PTRDIFF_MAX__
+# include <limits.h> /* INFRINGES ON USER NAME SPACE */
+# if defined __STDC_VERSION__ && 199901 <= __STDC_VERSION__
+#  include <stdint.h> /* INFRINGES ON USER NAME SPACE */
+#  define YY_STDINT_H
+# endif
 #endif
 
-#ifdef YYTYPE_INT8
-typedef YYTYPE_INT8 yytype_int8;
+/* Narrow types that promote to a signed type and that can represent a
+   signed or unsigned integer of at least N bits.  In tables they can
+   save space and decrease cache pressure.  Promoting to a signed type
+   helps avoid bugs in integer arithmetic.  */
+
+#ifdef __INT_LEAST8_MAX__
+typedef __INT_LEAST8_TYPE__ yytype_int8;
+#elif defined YY_STDINT_H
+typedef int_least8_t yytype_int8;
 #else
 typedef signed char yytype_int8;
 #endif
 
-#ifdef YYTYPE_UINT16
-typedef YYTYPE_UINT16 yytype_uint16;
+#ifdef __INT_LEAST16_MAX__
+typedef __INT_LEAST16_TYPE__ yytype_int16;
+#elif defined YY_STDINT_H
+typedef int_least16_t yytype_int16;
 #else
-typedef unsigned short int yytype_uint16;
+typedef short yytype_int16;
 #endif
 
-#ifdef YYTYPE_INT16
-typedef YYTYPE_INT16 yytype_int16;
+/* Work around bug in HP-UX 11.23, which defines these macros
+   incorrectly for preprocessor constants.  This workaround can likely
+   be removed in 2023, as HPE has promised support for HP-UX 11.23
+   (aka HP-UX 11i v2) only through the end of 2022; see Table 2 of
+   <https://h20195.www2.hpe.com/V2/getpdf.aspx/4AA4-7673ENW.pdf>.  */
+#ifdef __hpux
+# undef UINT_LEAST8_MAX
+# undef UINT_LEAST16_MAX
+# define UINT_LEAST8_MAX 255
+# define UINT_LEAST16_MAX 65535
+#endif
+
+#if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
+typedef __UINT_LEAST8_TYPE__ yytype_uint8;
+#elif (!defined __UINT_LEAST8_MAX__ && defined YY_STDINT_H \
+       && UINT_LEAST8_MAX <= INT_MAX)
+typedef uint_least8_t yytype_uint8;
+#elif !defined __UINT_LEAST8_MAX__ && UCHAR_MAX <= INT_MAX
+typedef unsigned char yytype_uint8;
 #else
-typedef short int yytype_int16;
+typedef short yytype_uint8;
+#endif
+
+#if defined __UINT_LEAST16_MAX__ && __UINT_LEAST16_MAX__ <= __INT_MAX__
+typedef __UINT_LEAST16_TYPE__ yytype_uint16;
+#elif (!defined __UINT_LEAST16_MAX__ && defined YY_STDINT_H \
+       && UINT_LEAST16_MAX <= INT_MAX)
+typedef uint_least16_t yytype_uint16;
+#elif !defined __UINT_LEAST16_MAX__ && USHRT_MAX <= INT_MAX
+typedef unsigned short yytype_uint16;
+#else
+typedef int yytype_uint16;
+#endif
+
+#ifndef YYPTRDIFF_T
+# if defined __PTRDIFF_TYPE__ && defined __PTRDIFF_MAX__
+#  define YYPTRDIFF_T __PTRDIFF_TYPE__
+#  define YYPTRDIFF_MAXIMUM __PTRDIFF_MAX__
+# elif defined PTRDIFF_MAX
+#  ifndef ptrdiff_t
+#   include <stddef.h> /* INFRINGES ON USER NAME SPACE */
+#  endif
+#  define YYPTRDIFF_T ptrdiff_t
+#  define YYPTRDIFF_MAXIMUM PTRDIFF_MAX
+# else
+#  define YYPTRDIFF_T long
+#  define YYPTRDIFF_MAXIMUM LONG_MAX
+# endif
 #endif
 
 #ifndef YYSIZE_T
@@ -315,15 +478,28 @@ typedef short int yytype_int16;
 #  define YYSIZE_T __SIZE_TYPE__
 # elif defined size_t
 #  define YYSIZE_T size_t
-# elif ! defined YYSIZE_T
+# elif defined __STDC_VERSION__ && 199901 <= __STDC_VERSION__
 #  include <stddef.h> /* INFRINGES ON USER NAME SPACE */
 #  define YYSIZE_T size_t
 # else
-#  define YYSIZE_T unsigned int
+#  define YYSIZE_T unsigned
 # endif
 #endif
 
-#define YYSIZE_MAXIMUM ((YYSIZE_T) -1)
+#define YYSIZE_MAXIMUM                                  \
+  YY_CAST (YYPTRDIFF_T,                                 \
+           (YYPTRDIFF_MAXIMUM < YY_CAST (YYSIZE_T, -1)  \
+            ? YYPTRDIFF_MAXIMUM                         \
+            : YY_CAST (YYSIZE_T, -1)))
+
+#define YYSIZEOF(X) YY_CAST (YYPTRDIFF_T, sizeof (X))
+
+
+/* Stored state numbers (used for stacks). */
+typedef yytype_int16 yy_state_t;
+
+/* State numbers in computations.  */
+typedef int yy_state_fast_t;
 
 #ifndef YY_
 # if defined YYENABLE_NLS && YYENABLE_NLS
@@ -337,47 +513,43 @@ typedef short int yytype_int16;
 # endif
 #endif
 
-#ifndef YY_ATTRIBUTE
-# if (defined __GNUC__                                               \
-      && (2 < __GNUC__ || (__GNUC__ == 2 && 96 <= __GNUC_MINOR__)))  \
-     || defined __SUNPRO_C && 0x5110 <= __SUNPRO_C
-#  define YY_ATTRIBUTE(Spec) __attribute__(Spec)
+
+#ifndef YY_ATTRIBUTE_PURE
+# if defined __GNUC__ && 2 < __GNUC__ + (96 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_PURE __attribute__ ((__pure__))
 # else
-#  define YY_ATTRIBUTE(Spec) /* empty */
+#  define YY_ATTRIBUTE_PURE
 # endif
 #endif
 
-#ifndef YY_ATTRIBUTE_PURE
-# define YY_ATTRIBUTE_PURE   YY_ATTRIBUTE ((__pure__))
-#endif
-
 #ifndef YY_ATTRIBUTE_UNUSED
-# define YY_ATTRIBUTE_UNUSED YY_ATTRIBUTE ((__unused__))
-#endif
-
-#if !defined _Noreturn \
-     && (!defined __STDC_VERSION__ || __STDC_VERSION__ < 201112)
-# if defined _MSC_VER && 1200 <= _MSC_VER
-#  define _Noreturn __declspec (noreturn)
+# if defined __GNUC__ && 2 < __GNUC__ + (7 <= __GNUC_MINOR__)
+#  define YY_ATTRIBUTE_UNUSED __attribute__ ((__unused__))
 # else
-#  define _Noreturn YY_ATTRIBUTE ((__noreturn__))
+#  define YY_ATTRIBUTE_UNUSED
 # endif
 #endif
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YYUSE(E) ((void) (E))
+# define YY_USE(E) ((void) (E))
 #else
-# define YYUSE(E) /* empty */
+# define YY_USE(E) /* empty */
 #endif
 
-#if defined __GNUC__ && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN \
-    _Pragma ("GCC diagnostic push") \
-    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")\
+#if defined __GNUC__ && ! defined __ICC && 406 <= __GNUC__ * 100 + __GNUC_MINOR__
+# if __GNUC__ * 100 + __GNUC_MINOR__ < 407
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")
+# else
+#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+    _Pragma ("GCC diagnostic push")                                     \
+    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-# define YY_IGNORE_MAYBE_UNINITIALIZED_END \
+# endif
+# define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
 # define YY_INITIAL_VALUE(Value) Value
@@ -390,8 +562,22 @@ typedef short int yytype_int16;
 # define YY_INITIAL_VALUE(Value) /* Nothing. */
 #endif
 
+#if defined __cplusplus && defined __GNUC__ && ! defined __ICC && 6 <= __GNUC__
+# define YY_IGNORE_USELESS_CAST_BEGIN                          \
+    _Pragma ("GCC diagnostic push")                            \
+    _Pragma ("GCC diagnostic ignored \"-Wuseless-cast\"")
+# define YY_IGNORE_USELESS_CAST_END            \
+    _Pragma ("GCC diagnostic pop")
+#endif
+#ifndef YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_BEGIN
+# define YY_IGNORE_USELESS_CAST_END
+#endif
 
-#if ! defined yyoverflow || YYERROR_VERBOSE
+
+#define YY_ASSERT(E) ((void) (0 && (E)))
+
+#if !defined yyoverflow
 
 /* The parser invokes alloca or malloc; define the necessary symbols.  */
 
@@ -456,8 +642,7 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 # endif
-#endif /* ! defined yyoverflow || YYERROR_VERBOSE */
-
+#endif /* !defined yyoverflow */
 
 #if (! defined yyoverflow \
      && (! defined __cplusplus \
@@ -466,17 +651,17 @@ void free (void *); /* INFRINGES ON USER NAME SPACE */
 /* A type that is properly aligned for any stack member.  */
 union yyalloc
 {
-  yytype_int16 yyss_alloc;
+  yy_state_t yyss_alloc;
   YYSTYPE yyvs_alloc;
 };
 
 /* The size of the maximum gap between one aligned stack and the next.  */
-# define YYSTACK_GAP_MAXIMUM (sizeof (union yyalloc) - 1)
+# define YYSTACK_GAP_MAXIMUM (YYSIZEOF (union yyalloc) - 1)
 
 /* The size of an array large to enough to hold all stacks, each with
    N elements.  */
 # define YYSTACK_BYTES(N) \
-     ((N) * (sizeof (yytype_int16) + sizeof (YYSTYPE)) \
+     ((N) * (YYSIZEOF (yy_state_t) + YYSIZEOF (YYSTYPE)) \
       + YYSTACK_GAP_MAXIMUM)
 
 # define YYCOPY_NEEDED 1
@@ -489,11 +674,11 @@ union yyalloc
 # define YYSTACK_RELOCATE(Stack_alloc, Stack)                           \
     do                                                                  \
       {                                                                 \
-        YYSIZE_T yynewbytes;                                            \
+        YYPTRDIFF_T yynewbytes;                                         \
         YYCOPY (&yyptr->Stack_alloc, Stack, yysize);                    \
         Stack = &yyptr->Stack_alloc;                                    \
-        yynewbytes = yystacksize * sizeof (*Stack) + YYSTACK_GAP_MAXIMUM; \
-        yyptr += yynewbytes / sizeof (*yyptr);                          \
+        yynewbytes = yystacksize * YYSIZEOF (*Stack) + YYSTACK_GAP_MAXIMUM; \
+        yyptr += yynewbytes / YYSIZEOF (*yyptr);                        \
       }                                                                 \
     while (0)
 
@@ -505,12 +690,12 @@ union yyalloc
 # ifndef YYCOPY
 #  if defined __GNUC__ && 1 < __GNUC__
 #   define YYCOPY(Dst, Src, Count) \
-      __builtin_memcpy (Dst, Src, (Count) * sizeof (*(Src)))
+      __builtin_memcpy (Dst, Src, YY_CAST (YYSIZE_T, (Count)) * sizeof (*(Src)))
 #  else
 #   define YYCOPY(Dst, Src, Count)              \
       do                                        \
         {                                       \
-          YYSIZE_T yyi;                         \
+          YYPTRDIFF_T yyi;                      \
           for (yyi = 0; yyi < (Count); yyi++)   \
             (Dst)[yyi] = (Src)[yyi];            \
         }                                       \
@@ -522,7 +707,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  69
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   715
+#define YYLAST   705
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  118
@@ -533,23 +718,26 @@ union yyalloc
 /* YYNSTATES -- Number of states.  */
 #define YYNSTATES  503
 
-/* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
-   by yylex, with out-of-bounds checking.  */
-#define YYUNDEFTOK  2
+/* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   362
 
-#define YYTRANSLATE(YYX)                                                \
-  ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
+
+/* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
+   as returned by yylex, with out-of-bounds checking.  */
+#define YYTRANSLATE(YYX)                                \
+  (0 <= (YYX) && (YYX) <= YYMAXUTOK                     \
+   ? YY_CAST (yysymbol_kind_t, yytranslate[YYX])        \
+   : YYSYMBOL_YYUNDEF)
 
 /* YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to TOKEN-NUM
-   as returned by yylex, without out-of-bounds checking.  */
-static const yytype_uint8 yytranslate[] =
+   as returned by yylex.  */
+static const yytype_int8 yytranslate[] =
 {
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     113,   114,    18,    16,   115,    17,   116,    19,     2,     2,
+     113,   114,    12,    10,   115,    11,   116,    13,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,   117,   112,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -571,8 +759,8 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    20,    21,    22,    23,    24,    25,    26,    27,    28,
+       5,     6,     7,     8,     9,    14,    15,    16,    17,    18,
+      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
       29,    30,    31,    32,    33,    34,    35,    36,    37,    38,
       39,    40,    41,    42,    43,    44,    45,    46,    47,    48,
       49,    50,    51,    52,    53,    54,    55,    56,    57,    58,
@@ -585,65 +773,72 @@ static const yytype_uint8 yytranslate[] =
 };
 
 #if YYDEBUG
-  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint16 yyrline[] =
+/* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+static const yytype_int16 yyrline[] =
 {
-       0,    99,    99,   106,   111,   116,   125,   133,   143,   152,
-     154,   161,   166,   174,   181,   188,   195,   203,   213,   220,
-     227,   237,   242,   250,   257,   267,   279,   282,   290,   297,
-     304,   311,   320,   329,   338,   345,   353,   365,   372,   379,
-     390,   402,   412,   417,   425,   438,   441,   449,   452,   459,
-     472,   475,   482,   489,   496,   506,   511,   519,   524,   529,
-     534,   539,   549,   554,   562,   566,   573,   580,   587,   589,
-     593,   594,   595,   596,   597,   598,   601,   603,   607,   608,
-     612,   617,   620,   628,   633,   642,   650,   662,   665,   669,
-     676,   677,   681,   686,   691,   699,   700,   704,   705,   710,
-     720,   727,   734,   741,   748,   749,   750,   751,   752,   753,
-     754,   758,   762,   766,   768,   772,   780,   790,   794,   805,
-     812,   822,   827,   835,   839,   846,   850,   854,   869,   872,
-     876,   883,   887,   888,   893,   901,   908,   918,   929,   934,
-     942,   950,   953,   961,   971,   977,   984,   994,  1001,  1012,
-    1024,  1031,  1046,  1053,  1066,  1072,  1078,  1084,  1091,  1099,
-    1107,  1119,  1124,  1132,  1139,  1147,  1155,  1166,  1174,  1177,
-    1184,  1189,  1198,  1201,  1210,  1218,  1226,  1233,  1240,  1249,
-    1256,  1263,  1270,  1277,  1284,  1291,  1301,  1310,  1322,  1331,
-    1343,  1352,  1365,  1368,  1375,  1382,  1392,  1401,  1410,  1419,
-    1431,  1436,  1444,  1456,  1460,  1464,  1471,  1478,  1487,  1497,
-    1507,  1515,  1523,  1531,  1539,  1547,  1555,  1561,  1567,  1573,
-    1582,  1587,  1595,  1602,  1609,  1619,  1620,  1621,  1625,  1632,
-    1640,  1647,  1655,  1662,  1671,  1675,  1682,  1689,  1696,  1703,
-    1710,  1721,  1729,  1741,  1747,  1757,  1763,  1773,  1779,  1789,
-    1799,  1806,  1817,  1828,  1839,  1840,  1841,  1842,  1843,  1844,
-    1848,  1855,  1862,  1868,  1875,  1883,  1889,  1896,  1904,  1910,
-    1916,  1922,  1928,  1934,  1941,  1952,  1958,  1964,  1971,  1977,
-    1983,  1989
+       0,   101,   101,   108,   113,   118,   127,   135,   145,   154,
+     156,   163,   168,   176,   183,   190,   197,   205,   215,   222,
+     229,   239,   244,   252,   259,   269,   281,   284,   292,   299,
+     306,   313,   322,   331,   340,   347,   355,   367,   374,   381,
+     392,   404,   414,   419,   427,   440,   443,   451,   454,   461,
+     474,   477,   484,   491,   498,   508,   513,   521,   526,   531,
+     536,   541,   551,   556,   564,   568,   575,   582,   589,   591,
+     595,   596,   597,   598,   599,   600,   603,   605,   609,   610,
+     614,   619,   622,   630,   635,   644,   652,   664,   667,   671,
+     678,   679,   683,   688,   693,   701,   702,   706,   707,   712,
+     722,   729,   736,   743,   750,   751,   752,   753,   754,   755,
+     756,   760,   764,   768,   770,   774,   782,   792,   796,   807,
+     814,   824,   829,   837,   841,   848,   852,   856,   871,   874,
+     878,   885,   889,   890,   895,   903,   910,   920,   931,   936,
+     944,   952,   955,   963,   973,   979,   986,   996,  1003,  1014,
+    1026,  1033,  1048,  1055,  1068,  1074,  1080,  1086,  1093,  1101,
+    1109,  1121,  1126,  1134,  1141,  1149,  1157,  1168,  1176,  1179,
+    1186,  1191,  1200,  1203,  1212,  1220,  1228,  1235,  1242,  1251,
+    1258,  1265,  1272,  1279,  1286,  1293,  1303,  1312,  1324,  1333,
+    1345,  1354,  1367,  1370,  1377,  1384,  1394,  1403,  1412,  1421,
+    1433,  1438,  1446,  1458,  1462,  1466,  1473,  1480,  1489,  1499,
+    1509,  1517,  1525,  1533,  1541,  1549,  1557,  1563,  1569,  1575,
+    1584,  1589,  1597,  1604,  1611,  1621,  1622,  1623,  1627,  1634,
+    1642,  1649,  1657,  1664,  1673,  1677,  1684,  1691,  1698,  1705,
+    1712,  1723,  1731,  1743,  1749,  1759,  1765,  1775,  1781,  1791,
+    1801,  1808,  1819,  1830,  1841,  1842,  1843,  1844,  1845,  1846,
+    1850,  1857,  1864,  1870,  1877,  1885,  1891,  1898,  1906,  1912,
+    1918,  1924,  1930,  1936,  1943,  1954,  1960,  1966,  1973,  1979,
+    1985,  1991
 };
 #endif
 
-#if YYDEBUG || YYERROR_VERBOSE || 0
+/** Accessing symbol of state STATE.  */
+#define YY_ACCESSING_SYMBOL(State) YY_CAST (yysymbol_kind_t, yystos[State])
+
+#if YYDEBUG || 0
+/* The user-facing name of the symbol whose (internal) number is
+   YYSYMBOL.  No bounds checking.  */
+static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
+
 /* YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "NAME", "STRING", "INTNUM", "APPROXNUM",
-  "OR", "AND", "NOT", "EQUALS", "GREATER_THAN", "GREATER_THAN_EQ",
-  "LESS_THAN", "LESS_THAN_EQ", "NOT_EQUALS", "'+'", "'-'", "'*'", "'/'",
+  "\"end of file\"", "error", "\"invalid token\"", "NAME", "STRING",
+  "INTNUM", "APPROXNUM", "OR", "AND", "NOT", "'+'", "'-'", "'*'", "'/'",
   "UMINUS", "ALL", "AMMSC", "ANY", "AS", "ASC", "AUTHORIZATION", "BETWEEN",
   "BY", "CHARACTER", "CHECK", "CLOSE", "COMMIT", "CREATE", "CURRENT",
   "CURSOR", "DATE_LITERAL", "DECIMAL2", "DECLARE", "DEFAULT", "DELETE2",
-  "DESC", "DISTINCT", "DOUBLE2", "DROP", "ESCAPE", "EXISTS", "FETCH",
-  "FLOAT2", "FOR", "FOREIGN", "FROM", "GRANT", "GROUP", "HAVING", "IN2",
-  "INDICATOR", "INNER", "INSERT", "INTEGER", "INTO", "IS", "JOIN", "KEY",
-  "LANGUAGE", "LEFT", "LIKE", "MODULE", "NULLX", "NUMERIC", "OF", "ON",
-  "OPEN", "OPTION", "ORDER", "OUTER", "PRECISION", "PRIMARY", "PRIVILEGES",
-  "PROCEDURE", "PUBLIC", "REAL", "REFERENCES", "RIGHT", "ROLLBACK",
-  "SCHEMA", "SELECT", "SET", "SMALLINT", "SOME", "SQLCODE", "SYSDATE",
-  "TABLE", "TIME_LITERAL", "TO", "TRIGGER", "UNION", "UNIQUE", "UPDATE",
-  "USER", "VALUES", "VIEW", "WHERE", "WITH", "WORK", "COBOL", "FORTRAN",
-  "PASCAL2", "PLI", "C", "ADA", "VARCHAR", "';'", "'('", "')'", "','",
-  "'.'", "':'", "$accept", "root", "sql_list", "sql", "schema",
-  "opt_schema_element_list", "schema_element_list", "schema_element",
-  "drop_trigger", "drop_table", "base_table_def",
+  "DESC", "DISTINCT", "DOUBLE2", "DROP", "EQUALS", "ESCAPE", "EXISTS",
+  "FETCH", "FLOAT2", "FOR", "FOREIGN", "FROM", "GRANT", "GREATER_THAN",
+  "GREATER_THAN_EQ", "GROUP", "HAVING", "IN2", "INDICATOR", "INNER",
+  "INSERT", "INTEGER", "INTO", "IS", "JOIN", "KEY", "LANGUAGE", "LEFT",
+  "LESS_THAN", "LESS_THAN_EQ", "LIKE", "MODULE", "NOT_EQUALS", "NULLX",
+  "NUMERIC", "OF", "ON", "OPEN", "OPTION", "ORDER", "OUTER", "PRECISION",
+  "PRIMARY", "PRIVILEGES", "PROCEDURE", "PUBLIC", "REAL", "REFERENCES",
+  "RIGHT", "ROLLBACK", "SCHEMA", "SELECT", "SET", "SMALLINT", "SOME",
+  "SQLCODE", "SYSDATE", "TABLE", "TIME_LITERAL", "TO", "TRIGGER", "UNION",
+  "UNIQUE", "UPDATE", "USER", "VALUES", "VIEW", "WHERE", "WITH", "WORK",
+  "COBOL", "FORTRAN", "PASCAL2", "PLI", "C", "ADA", "VARCHAR", "';'",
+  "'('", "')'", "','", "'.'", "':'", "$accept", "root", "sql_list", "sql",
+  "schema", "opt_schema_element_list", "schema_element_list",
+  "schema_element", "drop_trigger", "drop_table", "base_table_def",
   "base_table_element_commalist", "base_table_element", "column_def",
   "column_def_opt_list", "column_def_opt", "table_constraint_def",
   "column_commalist", "view_def", "opt_with_check_option",
@@ -673,99 +868,85 @@ static const char *const yytname[] =
   "column", "cursor", "module", "parameter", "procedure", "range_variable",
   "user", YY_NULLPTR
 };
+
+static const char *
+yysymbol_name (yysymbol_kind_t yysymbol)
+{
+  return yytname[yysymbol];
+}
 #endif
 
-# ifdef YYPRINT
-/* YYTOKNUM[NUM] -- (External) token number corresponding to the
-   (internal) symbol number NUM (which must be that of a token).  */
-static const yytype_uint16 yytoknum[] =
-{
-       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,    43,    45,    42,    47,
-     271,   272,   273,   274,   275,   276,   277,   278,   279,   280,
-     281,   282,   283,   284,   285,   286,   287,   288,   289,   290,
-     291,   292,   293,   294,   295,   296,   297,   298,   299,   300,
-     301,   302,   303,   304,   305,   306,   307,   308,   309,   310,
-     311,   312,   313,   314,   315,   316,   317,   318,   319,   320,
-     321,   322,   323,   324,   325,   326,   327,   328,   329,   330,
-     331,   332,   333,   334,   335,   336,   337,   338,   339,   340,
-     341,   342,   343,   344,   345,   346,   347,   348,   349,   350,
-     351,   352,   353,   354,   355,   356,   357,   358,   359,   360,
-     361,   362,    59,    40,    41,    44,    46,    58
-};
-# endif
+#define YYPACT_NINF (-364)
 
-#define YYPACT_NINF -417
+#define yypact_value_is_default(Yyn) \
+  ((Yyn) == YYPACT_NINF)
 
-#define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-417)))
+#define YYTABLE_NINF (-1)
 
-#define YYTABLE_NINF -1
-
-#define yytable_value_is_error(Yytable_value) \
+#define yytable_value_is_error(Yyn) \
   0
 
-  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-     STATE-NUM.  */
+/* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+   STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     571,    33,   -34,   189,    55,   -20,    33,   180,    14,   135,
-      33,    66,   154,   197,   249,   571,   140,  -417,  -417,  -417,
-    -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,
-    -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,  -417,
-    -417,   244,   197,   197,   166,   197,   178,   197,   292,   224,
-     210,  -417,  -417,   211,  -417,   211,   246,   195,  -417,   197,
-    -417,   268,  -417,  -417,  -417,  -417,  -417,   538,   263,  -417,
-     230,  -417,   348,   243,   211,   366,   276,   389,  -417,  -417,
-    -417,   267,  -417,   293,  -417,   382,  -417,  -417,   197,   279,
-     211,   527,    17,  -417,  -417,  -417,   538,   538,  -417,   278,
-    -417,  -417,   538,   236,   363,   299,  -417,  -417,   400,  -417,
-     382,  -417,  -417,   281,    31,   398,  -417,   412,  -417,   494,
-     367,   311,   494,   127,  -417,  -417,  -417,  -417,  -417,  -417,
-    -417,  -417,   649,   375,   439,   440,   330,  -417,  -417,   -10,
-    -417,   226,  -417,   356,  -417,   141,  -417,  -417,  -417,  -417,
-    -417,  -417,   429,  -417,   456,   190,   173,   173,   354,    35,
-     197,   293,   386,   359,  -417,   538,   538,   538,   538,   469,
-     538,  -417,   149,  -417,   467,   235,  -417,   281,  -417,   365,
-     417,   420,   371,   239,  -417,  -417,  -417,   509,   399,   424,
-    -417,    33,   399,  -417,    11,   289,   494,   494,    97,  -417,
-    -417,  -417,  -417,  -417,  -417,   538,   377,   229,   470,    53,
-    -417,  -417,   293,   293,  -417,  -417,   382,    24,   154,   388,
-    -417,  -417,   348,  -417,    23,  -417,   381,   538,   501,  -417,
-      47,   393,  -417,   394,   130,   212,   -18,   480,  -417,   494,
-     460,   204,   204,   173,   173,  -417,   363,   435,   382,  -417,
-     255,  -417,   494,   401,   402,   382,  -417,    31,   404,   409,
-     447,  -417,  -417,   411,  -417,  -417,   413,  -417,   426,    33,
-    -417,   421,  -417,   519,  -417,   538,   423,   229,   446,   112,
-    -417,   418,  -417,   500,  -417,  -417,  -417,  -417,  -417,   515,
-     311,  -417,   363,   471,  -417,  -417,  -417,  -417,  -417,    29,
-    -417,  -417,   538,   176,   511,  -417,   544,   547,  -417,    95,
-      25,   444,  -417,  -417,   197,   130,   197,   478,   486,  -417,
-    -417,   559,  -417,  -417,   164,   536,   512,   495,  -417,  -417,
-     363,    15,   382,   382,   248,  -417,   562,   564,  -417,   565,
-     566,   144,   542,  -417,  -417,  -417,   576,   112,  -417,   500,
-     538,   259,  -417,   555,   229,  -417,  -417,  -417,   523,    24,
-    -417,   525,  -417,   274,  -417,  -417,    33,   498,   511,  -417,
-    -417,  -417,  -417,   577,  -417,  -417,  -417,   264,   130,   130,
-    -417,   177,   466,  -417,   177,   501,   494,  -417,    33,  -417,
-     285,   287,  -417,   468,   294,   298,   472,   517,   475,   250,
-     197,  -417,   516,   538,   305,  -417,   363,  -417,   229,  -417,
-     518,  -417,  -417,   176,   561,   595,   498,  -417,  -417,   494,
-    -417,  -417,  -417,  -417,  -417,  -417,   164,  -417,   484,  -417,
-     127,  -417,   524,  -417,  -417,  -417,   600,  -417,   604,  -417,
-     186,   494,  -417,  -417,  -417,   497,  -417,   363,  -417,  -417,
-    -417,  -417,   563,  -417,   -35,  -417,   232,  -417,   501,   197,
-     499,   502,   551,  -417,    22,   382,    45,  -417,    60,  -417,
-     509,  -417,  -417,   504,  -417,  -417,  -417,  -417,   312,    45,
-      -6,  -417,  -417,   159,  -417,  -417,   382,  -417,    90,    71,
-    -417,   154,   159,  -417,   317,  -417,    45,  -417,   538,  -417,
-    -417,  -417,   567
+     545,    91,    -6,    46,    21,   -18,    91,   520,   144,   134,
+      91,    28,    26,   204,   225,   545,   127,  -364,  -364,  -364,
+    -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,
+    -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,  -364,
+    -364,   245,   204,   204,   154,   204,   141,   204,   252,   220,
+     202,  -364,  -364,   168,  -364,   168,   222,   186,  -364,   204,
+    -364,   221,  -364,  -364,  -364,  -364,  -364,   526,   208,  -364,
+     198,  -364,   316,   214,   168,   327,   237,   312,  -364,  -364,
+    -364,   228,  -364,   249,  -364,   360,  -364,  -364,   204,   163,
+     168,   440,    33,  -364,  -364,  -364,   526,   526,  -364,   260,
+    -364,  -364,   526,   118,   549,   263,  -364,  -364,   381,  -364,
+     360,  -364,  -364,   219,   171,   362,  -364,   365,  -364,   464,
+     326,   294,   464,   266,  -364,  -364,  -364,  -364,  -364,  -364,
+    -364,  -364,   638,   354,   415,   416,   305,  -364,  -364,   -20,
+    -364,   177,  -364,   329,  -364,   -25,  -364,  -364,  -364,  -364,
+    -364,  -364,   402,  -364,   421,   226,   210,   210,   248,   169,
+     204,   249,   352,   325,  -364,   526,   526,   526,   526,   426,
+     526,  -364,   102,  -364,   391,   139,  -364,   219,  -364,   318,
+     372,   378,   331,   188,  -364,  -364,  -364,   497,   359,   369,
+    -364,    91,   359,  -364,    15,   223,   464,   464,    75,   526,
+    -364,  -364,  -364,   335,  -364,  -364,   106,  -364,   398,    38,
+    -364,  -364,   249,   249,  -364,  -364,   360,    27,    26,   336,
+    -364,  -364,   316,  -364,    35,  -364,   337,   526,   447,  -364,
+     180,   339,  -364,   340,   246,   212,     9,   432,  -364,   464,
+     407,   376,   376,   210,   210,  -364,   549,   431,   360,  -364,
+     496,  -364,   464,   347,   349,   360,  -364,   171,   350,   351,
+     389,  -364,  -364,   358,  -364,  -364,   364,  -364,   379,    91,
+    -364,   367,  -364,   475,  -364,   526,   371,   106,   583,    22,
+    -364,   370,  -364,   445,  -364,  -364,  -364,  -364,  -364,   511,
+     294,  -364,   549,   420,  -364,  -364,  -364,  -364,  -364,   -45,
+    -364,  -364,   526,    60,   458,  -364,   489,   490,  -364,   286,
+      51,   383,  -364,  -364,   204,   246,   204,   423,   428,  -364,
+    -364,   492,  -364,  -364,   166,   482,   459,   439,  -364,  -364,
+     549,    42,   360,   360,   192,  -364,   508,   513,  -364,   514,
+     528,   187,   501,  -364,  -364,  -364,   650,    22,  -364,   445,
+     526,   199,  -364,   527,   106,  -364,  -364,  -364,   504,    27,
+    -364,   509,  -364,   211,  -364,  -364,    91,   479,   458,  -364,
+    -364,  -364,  -364,   540,  -364,  -364,  -364,   289,   246,   246,
+    -364,   167,   448,  -364,   167,   447,   464,  -364,    91,  -364,
+     218,   232,  -364,   451,   235,   240,   454,   512,   456,   353,
+     204,  -364,   503,   526,   277,  -364,   549,  -364,   106,  -364,
+     515,  -364,  -364,    60,   552,   581,   479,  -364,  -364,   464,
+    -364,  -364,  -364,  -364,  -364,  -364,   166,  -364,   483,  -364,
+     266,  -364,   517,  -364,  -364,  -364,   600,  -364,   602,  -364,
+      73,   464,  -364,  -364,  -364,   499,  -364,   549,  -364,  -364,
+    -364,  -364,   566,  -364,    24,  -364,   328,  -364,   447,   204,
+     500,   502,   553,  -364,    52,   360,    44,  -364,   -44,  -364,
+     497,  -364,  -364,   510,  -364,  -364,  -364,  -364,   284,    44,
+      39,  -364,  -364,   548,  -364,  -364,   360,  -364,    80,     6,
+    -364,    26,   548,  -364,   302,  -364,    44,  -364,   526,  -364,
+    -364,  -364,   558
 };
 
-  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-     Performed when YYTABLE does not specify something else to do.  Zero
-     means the default is an error.  */
-static const yytype_uint16 yydefact[] =
+/* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+   Performed when YYTABLE does not specify something else to do.  Zero
+   means the default is an error.  */
+static const yytype_int16 yydefact[] =
 {
        0,     0,     0,     0,     0,     0,     0,     0,     0,    68,
        0,     0,   128,     0,     0,     2,     5,     6,     7,    16,
@@ -786,8 +967,8 @@ static const yytype_uint16 yydefact[] =
        0,     0,    81,   141,   208,     0,     0,     0,     0,     0,
        0,   242,   141,   133,     0,     0,     8,    10,    11,     0,
        0,     0,     0,     0,    21,    23,    24,     0,     0,     0,
-     176,     0,     0,   206,     0,     0,     0,     0,     0,   254,
-     256,   258,   257,   259,   255,     0,     0,     0,     0,     0,
+     176,     0,     0,   206,     0,     0,     0,     0,     0,     0,
+     254,   256,   258,     0,   257,   259,     0,   255,     0,     0,
      246,   278,     0,     0,   226,    48,     0,     0,   128,     0,
      118,   120,     0,   249,   250,   238,   237,     0,     0,   233,
        0,   217,   219,   152,   161,   163,     0,     0,   149,     0,
@@ -820,26 +1001,26 @@ static const yytype_uint16 yydefact[] =
       40,   146,     0
 };
 
-  /* YYPGOTO[NTERM-NUM].  */
+/* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -417,  -417,  -417,   606,  -417,  -417,  -417,   -78,  -417,  -417,
-    -417,  -417,   362,  -417,  -417,  -417,  -417,  -244,  -417,  -417,
-      36,  -417,  -417,  -417,  -417,   533,  -417,   265,  -417,  -417,
-    -417,  -417,  -417,   257,   146,  -417,   213,   256,  -417,   214,
-    -417,  -417,   174,  -153,  -417,  -417,  -417,  -417,  -417,  -417,
-    -417,  -417,   228,  -417,  -417,  -417,  -212,  -417,  -417,   396,
-    -417,   485,   433,   -16,   168,  -416,     0,  -295,   414,  -417,
-    -301,  -417,   -68,  -417,  -417,  -417,  -417,  -110,  -417,  -417,
-    -417,  -417,   300,  -417,  -417,   301,  -417,  -417,  -417,  -139,
-     -65,  -417,  -194,   -66,  -417,  -183,  -417,    -3,  -417,   -74,
-    -417,   183,   -89,    -2,  -417,  -134,  -417,  -417,   -56
+    -364,  -364,  -364,   606,  -364,  -364,  -364,   -78,  -364,  -364,
+    -364,  -364,   368,  -364,  -364,  -364,  -364,  -244,  -364,  -364,
+     129,  -364,  -364,  -364,  -364,   533,  -364,   267,  -364,  -364,
+    -364,  -364,  -364,   259,   148,  -364,   207,   251,  -364,   224,
+    -364,  -364,   162,  -236,  -364,  -364,  -364,  -364,  -364,  -364,
+    -364,  -364,   229,  -364,  -364,  -364,  -212,  -364,  -364,   388,
+    -364,   476,   433,   -47,   159,  -363,     0,  -286,   408,  -364,
+    -296,  -364,  -108,  -364,  -364,  -364,  -364,  -110,  -364,  -364,
+    -364,  -364,   303,  -364,  -364,   307,  -364,  -364,  -364,  -132,
+     -65,  -364,  -186,   -66,  -364,  -199,  -364,    -3,  -364,   -74,
+    -364,   185,   -96,    -2,  -364,  -134,  -364,  -364,   -59
 };
 
-  /* YYDEFGOTO[NTERM-NUM].  */
+/* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int16 yydefgoto[] =
 {
-      -1,    14,    15,    16,    17,   176,   177,    18,    19,    20,
+       0,    14,    15,    16,    17,   176,   177,    18,    19,    20,
       21,   183,   184,   185,   341,   401,   186,   141,    22,   343,
       86,    23,   360,    56,    57,    58,   299,   300,    24,    61,
      152,   367,   368,   369,   238,   382,   383,   425,   416,   417,
@@ -852,219 +1033,217 @@ static const yytype_int16 yydefgoto[] =
      208,   267,   142,    39,    62,   139,   454,   322,   301
 };
 
-  /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-     positive, shift that token.  If negative, reduce the rule whose
-     number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_uint16 yytable[] =
+/* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+   positive, shift that token.  If negative, reduce the rule whose
+   number is the opposite.  If YYTABLE_NINF, syntax error.  */
+static const yytype_int16 yytable[] =
 {
-      37,    46,   104,   133,    49,   214,   302,   361,    63,   190,
-      68,   334,   194,   283,   376,    37,   113,   138,   196,   197,
-     153,   174,   196,   197,   285,   187,   305,   112,   153,   196,
-     197,   156,   157,   160,   140,   178,    38,   159,   164,    73,
-      74,   154,    76,   133,    80,   133,   213,   306,   133,   154,
-     164,   165,   166,   167,   168,   467,    90,   195,    44,   169,
-     118,   179,   293,   165,   166,   167,   168,   280,   237,   291,
-      40,   169,    47,   497,    59,    48,   420,   421,   422,   296,
-     501,   180,   135,   349,   231,   143,   273,   274,   390,   391,
-     489,    87,   496,   230,   285,   138,   285,   212,   164,   251,
-     241,   242,   243,   244,   298,   246,    45,   135,   181,   365,
-     115,   165,   166,   167,   168,   281,    93,    94,    95,   169,
-     285,   294,   133,   133,   275,   272,   145,   297,   182,   389,
-      98,   218,   358,   155,   196,   197,   477,   348,    60,   307,
-     278,   373,   331,   292,   359,   221,   138,   240,   100,   232,
-     467,   356,   276,   397,   311,   471,   249,   218,   479,   174,
-     409,   312,   309,   277,   285,   133,   304,   310,   187,   381,
-      64,   285,   483,   133,   398,    65,   164,   135,   133,   281,
-      93,    94,    95,   399,   479,   330,   489,   315,   268,   270,
-       1,     2,   316,   224,    98,   317,    66,   169,   218,     4,
-      44,    50,   423,   502,   495,   101,     6,   164,   225,   372,
-     346,   282,   100,   318,   449,   320,   444,     8,   424,   365,
-      51,   478,   167,   168,   159,   285,   400,   218,   169,   135,
-     285,    10,   281,    93,    94,    95,   321,   104,    52,   196,
-     197,   219,   494,    11,   362,   491,   375,    98,   377,    69,
-     384,   247,    71,   281,    93,    94,    95,    13,    92,    93,
-      94,    95,    53,   462,   248,   100,    54,   344,    98,   101,
-      72,    96,    97,    98,    41,   282,   430,    99,    55,   498,
-      77,    42,    75,   463,    83,   406,   100,   160,    84,   315,
-      43,   100,   164,   135,   316,    81,   161,   317,   198,   199,
-     200,   201,   202,   203,   204,   165,   166,   167,   168,   456,
-      89,   429,   133,   169,   175,   318,   205,    88,   442,    51,
-     470,   315,   101,   329,    85,     5,   316,    42,   282,   317,
-     493,   464,    91,     7,   470,   419,    43,    52,   447,   499,
-     215,   216,   111,   101,   206,   133,   135,   318,   101,   443,
-     110,   112,   384,   256,   257,   207,   114,    92,    93,    94,
-      95,    53,   392,   216,   414,    54,   164,   133,   102,   116,
-      96,    97,   226,   407,   408,   227,    99,    55,   117,   165,
-     166,   167,   168,   134,   472,   140,   431,   169,   412,   413,
-     100,   158,    92,    93,    94,    95,   228,   445,   119,   432,
-     216,   433,   216,   232,   171,    96,    97,    98,   435,   436,
-     135,    99,   437,   438,   170,    92,    93,    94,    95,   448,
-     408,   119,   188,   120,   192,   100,   487,   216,    96,    97,
-      98,   500,   216,   104,    99,   121,   209,   191,    92,    93,
-      94,    95,   210,   211,   119,   212,   189,   101,   100,   164,
-     217,    96,    97,    98,   350,   222,   473,    99,   121,   223,
-     237,   239,   165,   166,   167,   168,   482,   102,   229,   327,
-     169,   100,   245,    92,    93,    94,    95,   250,   252,   482,
-     253,   121,   101,   254,   255,   218,    96,    97,    98,   482,
-     279,   286,    99,   287,   269,   308,   482,    92,    93,    94,
-      95,   303,   122,   119,   310,   101,   100,   313,   324,   314,
-      96,    97,    98,   325,   332,   333,    99,   336,    92,    93,
-      94,    95,   337,   338,   339,   122,   340,   197,   101,   342,
-     100,    96,    97,    98,   353,   345,   347,    99,   258,   357,
-     121,    92,    93,    94,    95,   354,   259,   370,   122,   366,
-     371,   100,   260,   378,    96,    97,    98,   261,   374,   288,
-      99,   379,   380,   101,   385,   388,   386,   393,   262,   394,
-     395,   396,   402,   225,   100,   410,   160,   415,   263,   164,
-     224,   426,   434,   289,   403,   440,   439,   101,   441,   446,
-     264,   450,   165,   166,   167,   168,   452,   265,   453,   458,
-     169,   218,     1,     2,     3,   460,   459,   122,   101,   461,
-     465,     4,   466,   474,   476,     5,   475,   486,     6,   335,
-     266,    70,   144,     7,   411,   418,   490,   161,   102,     8,
-     455,   101,   146,   147,   148,   149,   150,   151,     9,   457,
-     427,   451,   484,    10,   328,   295,   236,   488,   404,   405,
-     323,   102,   164,   485,     0,    11,     0,    12,   198,   199,
-     200,   201,   202,   203,   204,   165,   166,   167,   168,    13,
-       0,     0,     0,   169,     0,     0,   205,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,   206,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,   207
+      37,    46,   104,   133,    49,   214,   302,   285,    63,   190,
+      68,   334,   194,   113,   174,    37,   361,   138,   187,   376,
+     283,   496,   196,   197,    44,   281,    93,    94,    95,   118,
+     112,   156,   157,   213,    98,   178,   153,   159,   305,    73,
+      74,    65,    76,   133,    80,   133,   467,   293,   133,   196,
+     197,   154,   100,   306,   153,   160,    90,   195,   358,   196,
+     197,   218,    66,   281,    93,    94,    95,    45,   483,   154,
+     359,   280,    98,   135,    47,   219,   291,    48,   285,   296,
+     285,   420,   421,   422,   231,   143,   273,   274,   390,   391,
+     100,   349,   218,   230,    38,   138,   275,   135,    40,   251,
+     241,   242,   243,   244,   285,   246,   294,   298,   218,   281,
+      93,    94,    95,   237,   467,   101,   240,   365,    98,   479,
+     297,   282,   133,   133,   212,   249,   497,   276,   362,   272,
+     218,    41,    64,   501,   278,   489,   100,    60,    42,   135,
+     277,   135,   331,   292,   348,   221,   138,    43,   285,   155,
+     462,   307,   174,   101,   311,   285,   389,   479,   356,   282,
+     471,   187,   309,   304,   160,   133,   477,   373,   409,   310,
+     463,   381,   164,   133,   140,   161,   489,   135,   133,   165,
+     166,   167,   168,   164,    87,   330,   423,   169,   268,   270,
+     165,   166,   167,   168,   495,   179,   397,    51,   169,   101,
+     444,    59,   424,   115,   247,   282,   375,    44,   377,   285,
+     346,   398,   502,   164,   285,   320,   180,   248,    52,   145,
+     399,   478,   449,   135,   159,    69,   164,   365,   169,   224,
+     321,    42,   198,   165,   166,   167,   168,   104,   225,    71,
+      43,   169,   494,    77,   199,    53,   175,   493,   181,    54,
+     384,    92,    93,    94,    95,    81,   499,     5,    96,    97,
+     226,    55,   200,   227,    99,    72,     7,   344,   182,   400,
+      75,   201,   202,   196,   197,   203,   430,    83,   100,   498,
+      84,    85,    91,   232,   228,   406,   204,   205,   206,   164,
+     207,   215,   216,    88,   312,   110,   165,   166,   167,   168,
+     315,    89,   256,   257,   169,   316,   392,   216,   317,   456,
+     111,   429,   133,   407,   408,    92,    93,    94,    95,   112,
+     470,   119,    96,    97,    98,   412,   413,   114,    99,   318,
+     116,   464,   432,   216,   470,   196,   197,   232,   447,   117,
+     120,   101,   100,   315,   134,   133,   433,   216,   316,   435,
+     436,   317,   384,   121,   437,   438,   281,    93,    94,    95,
+     419,   102,   229,   140,   414,    98,   135,   133,    92,    93,
+      94,    95,   318,   158,   119,    96,    97,    98,   170,   164,
+     188,    99,   315,   100,   472,   171,   431,   316,   167,   168,
+     317,   448,   408,   189,   169,   100,   191,   445,   487,   216,
+     372,    92,    93,    94,    95,   101,   121,   192,    96,    97,
+      98,   318,   209,   286,    99,   287,   500,   216,   210,   211,
+     212,   442,   222,   217,   223,   122,   237,   239,   100,   245,
+     250,   252,   253,   104,    92,    93,    94,    95,   254,   269,
+     119,    96,    97,    98,   255,   218,   101,    99,   279,   303,
+     310,   308,   443,   313,   324,   314,   473,   325,   101,   327,
+     332,   100,   333,   336,   337,   338,   482,    92,    93,    94,
+      95,   339,   121,   119,    96,    97,    98,   340,   122,   482,
+      99,   345,   342,   197,   347,   354,   353,   288,   357,   482,
+     366,   101,   370,   371,   100,   380,   482,   374,   378,    92,
+      93,    94,    95,   379,   385,   121,    96,    97,    98,   388,
+     386,   289,    99,   393,    92,    93,    94,    95,   394,   395,
+     258,    96,    97,    98,   101,   402,   100,    99,   259,    92,
+      93,    94,    95,   396,   260,    50,    96,    97,    98,   225,
+     261,   100,    99,   224,   122,   146,   147,   148,   149,   150,
+     151,   410,   164,   262,    51,   160,   100,   101,   415,   165,
+     166,   167,   168,   426,   329,   434,   263,   169,   439,   441,
+       1,     2,     3,     1,     2,    52,   446,   122,   264,     4,
+     440,   452,     4,     5,   453,   265,   164,     6,   450,   101,
+       6,   350,     7,   165,   166,   167,   168,   218,   458,   459,
+       8,   169,    53,     8,   101,   460,    54,   461,   266,   102,
+     466,     9,   465,   476,   474,   161,   475,    10,    55,   101,
+      10,    70,   144,   486,   102,   335,   411,   418,   490,    11,
+     484,    12,    11,   457,   491,   427,   328,   236,   488,   102,
+     455,   164,   451,    13,   323,   295,    13,   198,   165,   166,
+     167,   168,   405,   164,   404,   485,   169,     0,   403,   199,
+     165,   166,   167,   168,     0,     0,     0,     0,   169,     0,
+       0,     0,     0,     0,     0,     0,     0,   200,     0,     0,
+       0,     0,     0,     0,     0,     0,   201,   202,     0,     0,
+     203,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,   204,   205,   206,     0,   207
 };
 
 static const yytype_int16 yycheck[] =
 {
-       0,     4,    67,    77,     6,   139,   218,   302,    10,   119,
-      13,   255,   122,   207,   315,    15,    72,    83,     7,     8,
-       3,   110,     7,     8,   207,   114,     3,     3,     3,     7,
-       8,    96,    97,    51,     3,   113,     3,   102,     3,    42,
-      43,    24,    45,   117,    47,   119,    56,    24,   122,    24,
-       3,    16,    17,    18,    19,    90,    59,   122,     3,    24,
-      76,    30,     9,    16,    17,    18,    19,   206,    74,   208,
-     104,    24,    92,   489,    60,    95,   377,   378,   379,   213,
-     496,    50,   117,   277,   158,    88,   196,   197,   332,   333,
-      96,    55,    21,   158,   277,   161,   279,   115,     3,   177,
-     165,   166,   167,   168,    80,   170,    51,   117,    77,   303,
-      74,    16,    17,    18,    19,     3,     4,     5,     6,    24,
-     303,    68,   196,   197,    27,   114,    90,   216,    97,   114,
-      18,    86,   103,   116,     7,     8,   114,   276,     3,   116,
-     205,   116,   252,   208,   115,   145,   212,   163,    36,   114,
-      90,   290,    55,     9,   228,   456,   172,    86,   113,   248,
-     354,   114,   227,    66,   347,   239,   222,     3,   257,     5,
-     104,   354,   112,   247,    30,    21,     3,   117,   252,     3,
-       4,     5,     6,    39,   113,   250,    96,    57,   188,   191,
-      31,    32,    62,     3,    18,    65,    42,    24,    86,    40,
-       3,    21,    25,   498,   114,    93,    47,     3,    18,   114,
-     275,    99,    36,    83,   408,     3,   399,    58,    41,   413,
-      40,   465,    18,    19,   289,   408,    82,    86,    24,   117,
-     413,    72,     3,     4,     5,     6,    24,   302,    58,     7,
-       8,   100,   486,    84,    68,    86,   314,    18,   316,     0,
-     324,   102,   112,     3,     4,     5,     6,    98,     3,     4,
-       5,     6,    82,    77,   115,    36,    86,   269,    18,    93,
-      26,    16,    17,    18,    85,    99,   386,    22,    98,   491,
-     102,    92,   116,    97,    60,   350,    36,    51,    78,    57,
-     101,    36,     3,   117,    62,     3,    60,    65,     9,    10,
-      11,    12,    13,    14,    15,    16,    17,    18,    19,   419,
-     115,   385,   386,    24,    33,    83,    27,    71,    68,    40,
-     454,    57,    93,    68,   113,    44,    62,    92,    99,    65,
-     483,   441,    64,    52,   468,    71,   101,    58,   403,   492,
-     114,   115,   112,    93,    55,   419,   117,    83,    93,    99,
-      87,     3,   426,   114,   115,    66,   113,     3,     4,     5,
-       6,    82,   114,   115,   366,    86,     3,   441,   113,     3,
-      16,    17,    18,   114,   115,    21,    22,    98,   102,    16,
-      17,    18,    19,   116,   458,     3,   388,    24,   114,   115,
-      36,   113,     3,     4,     5,     6,    42,   400,     9,   114,
-     115,   114,   115,   114,     4,    16,    17,    18,   114,   115,
-     117,    22,   114,   115,   115,     3,     4,     5,     6,   114,
-     115,     9,    24,    34,   113,    36,   114,   115,    16,    17,
-      18,   114,   115,   498,    22,    46,    61,    70,     3,     4,
-       5,     6,     3,     3,     9,   115,    34,    93,    36,     3,
-      94,    16,    17,    18,     8,    26,   459,    22,    46,     3,
-      74,   102,    16,    17,    18,    19,   466,   113,   114,    34,
-      24,    36,     3,     3,     4,     5,     6,    10,   113,   479,
-      63,    46,    93,    63,   113,    86,    16,    17,    18,   489,
-     113,    21,    22,    23,    70,   114,   496,     3,     4,     5,
-       6,   113,   113,     9,     3,    93,    36,   114,    28,   115,
-      16,    17,    18,    53,   113,   113,    22,   113,     3,     4,
-       5,     6,   113,    76,   113,   113,   113,     8,    93,   103,
-      36,    16,    17,    18,   116,   114,   113,    22,    29,    68,
-      46,     3,     4,     5,     6,    45,    37,     3,   113,    38,
-       3,    36,    43,    75,    16,    17,    18,    48,   114,    89,
-      22,    75,     3,    93,    28,    70,    54,     5,    59,     5,
-       5,     5,    30,    18,    36,    52,    51,    79,    69,     3,
-       3,   115,   114,   113,     8,    68,   114,    93,   113,    73,
-      81,    73,    16,    17,    18,    19,    35,    88,     3,   115,
-      24,    86,    31,    32,    33,     5,    82,   113,    93,     5,
-     113,    40,    49,   114,    63,    44,   114,   113,    47,   257,
-     111,    15,    89,    52,   359,   368,   480,    60,   113,    58,
-     416,    93,   105,   106,   107,   108,   109,   110,    67,   426,
-     384,   413,   468,    72,   248,   212,   161,   479,   347,   349,
-     236,   113,     3,   470,    -1,    84,    -1,    86,     9,    10,
-      11,    12,    13,    14,    15,    16,    17,    18,    19,    98,
-      -1,    -1,    -1,    24,    -1,    -1,    27,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    55,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    66
+       0,     4,    67,    77,     6,   139,   218,   206,    10,   119,
+      13,   255,   122,    72,   110,    15,   302,    83,   114,   315,
+     206,    15,     7,     8,     3,     3,     4,     5,     6,    76,
+       3,    96,    97,    53,    12,   113,     3,   102,     3,    42,
+      43,    15,    45,   117,    47,   119,    90,     9,   122,     7,
+       8,    18,    30,    18,     3,    46,    59,   122,   103,     7,
+       8,    86,    36,     3,     4,     5,     6,    46,   112,    18,
+     115,   203,    12,   117,    92,   100,   208,    95,   277,   213,
+     279,   377,   378,   379,   158,    88,   196,   197,   332,   333,
+      30,   277,    86,   158,     3,   161,    21,   117,   104,   177,
+     165,   166,   167,   168,   303,   170,    68,    80,    86,     3,
+       4,     5,     6,    74,    90,    93,   163,   303,    12,   113,
+     216,    99,   196,   197,   115,   172,   489,    52,    68,   114,
+      86,    85,   104,   496,   199,    96,    30,     3,    92,   117,
+      65,   117,   252,   208,   276,   145,   212,   101,   347,   116,
+      77,   116,   248,    93,   228,   354,   114,   113,   290,    99,
+     456,   257,   227,   222,    46,   239,   114,   116,   354,     3,
+      97,     5,     3,   247,     3,    57,    96,   117,   252,    10,
+      11,    12,    13,     3,    55,   250,    19,    18,   188,   191,
+      10,    11,    12,    13,   114,    24,     9,    34,    18,    93,
+     399,    57,    35,    74,   102,    99,   314,     3,   316,   408,
+     275,    24,   498,     3,   413,     3,    45,   115,    55,    90,
+      33,   465,   408,   117,   289,     0,     3,   413,    18,     3,
+      18,    92,     9,    10,    11,    12,    13,   302,    12,   112,
+     101,    18,   486,   102,    21,    82,    27,   483,    77,    86,
+     324,     3,     4,     5,     6,     3,   492,    38,    10,    11,
+      12,    98,    39,    15,    16,    20,    47,   269,    97,    82,
+     116,    48,    49,     7,     8,    52,   386,    57,    30,   491,
+      78,   113,    61,   114,    36,   350,    63,    64,    65,     3,
+      67,   114,   115,    71,   114,    87,    10,    11,    12,    13,
+      54,   115,   114,   115,    18,    59,   114,   115,    62,   419,
+     112,   385,   386,   114,   115,     3,     4,     5,     6,     3,
+     454,     9,    10,    11,    12,   114,   115,   113,    16,    83,
+       3,   441,   114,   115,   468,     7,     8,   114,   403,   102,
+      28,    93,    30,    54,   116,   419,   114,   115,    59,   114,
+     115,    62,   426,    41,   114,   115,     3,     4,     5,     6,
+      71,   113,   114,     3,   366,    12,   117,   441,     3,     4,
+       5,     6,    83,   113,     9,    10,    11,    12,   115,     3,
+      18,    16,    54,    30,   458,     4,   388,    59,    12,    13,
+      62,   114,   115,    28,    18,    30,    70,   400,   114,   115,
+     114,     3,     4,     5,     6,    93,    41,   113,    10,    11,
+      12,    83,    58,    15,    16,    17,   114,   115,     3,     3,
+     115,    68,    20,    94,     3,   113,    74,   102,    30,     3,
+      39,   113,    60,   498,     3,     4,     5,     6,    60,    70,
+       9,    10,    11,    12,   113,    86,    93,    16,   113,   113,
+       3,   114,    99,   114,    22,   115,   459,    50,    93,    28,
+     113,    30,   113,   113,   113,    76,   466,     3,     4,     5,
+       6,   113,    41,     9,    10,    11,    12,   113,   113,   479,
+      16,   114,   103,     8,   113,    40,   116,    89,    68,   489,
+      32,    93,     3,     3,    30,     3,   496,   114,    75,     3,
+       4,     5,     6,    75,    22,    41,    10,    11,    12,    70,
+      51,   113,    16,     5,     3,     4,     5,     6,     5,     5,
+      23,    10,    11,    12,    93,    24,    30,    16,    31,     3,
+       4,     5,     6,     5,    37,    15,    10,    11,    12,    12,
+      43,    30,    16,     3,   113,   105,   106,   107,   108,   109,
+     110,    47,     3,    56,    34,    46,    30,    93,    79,    10,
+      11,    12,    13,   115,    68,   114,    69,    18,   114,   113,
+      25,    26,    27,    25,    26,    55,    73,   113,    81,    34,
+      68,    29,    34,    38,     3,    88,     3,    42,    73,    93,
+      42,     8,    47,    10,    11,    12,    13,    86,   115,    82,
+      55,    18,    82,    55,    93,     5,    86,     5,   111,   113,
+      44,    66,   113,    60,   114,    57,   114,    72,    98,    93,
+      72,    15,    89,   113,   113,   257,   359,   368,   480,    84,
+     468,    86,    84,   426,    86,   384,   248,   161,   479,   113,
+     416,     3,   413,    98,   236,   212,    98,     9,    10,    11,
+      12,    13,   349,     3,   347,   470,    18,    -1,     8,    21,
+      10,    11,    12,    13,    -1,    -1,    -1,    -1,    18,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    39,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    48,    49,    -1,    -1,
+      52,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    63,    64,    65,    -1,    67
 };
 
-  /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
-     symbol of state STATE-NUM.  */
+/* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
+   state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    31,    32,    33,    40,    44,    47,    52,    58,    67,
+       0,    25,    26,    27,    34,    38,    42,    47,    55,    66,
       72,    84,    86,    98,   119,   120,   121,   122,   125,   126,
      127,   128,   136,   139,   146,   161,   162,   163,   164,   165,
      166,   167,   171,   172,   173,   175,   178,   184,     3,   221,
-     104,    85,    92,   101,     3,    51,   215,    92,    95,   221,
-      21,    40,    58,    82,    86,    98,   141,   142,   143,    60,
-       3,   147,   222,   221,   104,    21,    42,   174,   215,     0,
-     121,   112,    26,   215,   215,   116,   215,   102,   181,   191,
-     215,     3,   216,    60,    78,   113,   138,   138,    71,   115,
-     215,    64,     3,     4,     5,     6,    16,    17,    18,    22,
-      36,    93,   113,   185,   208,   209,   212,   213,   214,   217,
+     104,    85,    92,   101,     3,    46,   215,    92,    95,   221,
+      15,    34,    55,    82,    86,    98,   141,   142,   143,    57,
+       3,   147,   222,   221,   104,    15,    36,   174,   215,     0,
+     121,   112,    20,   215,   215,   116,   215,   102,   181,   191,
+     215,     3,   216,    57,    78,   113,   138,   138,    71,   115,
+     215,    61,     3,     4,     5,     6,    10,    11,    12,    16,
+      30,    93,   113,   185,   208,   209,   212,   213,   214,   217,
       87,   112,     3,   226,   113,   138,     3,   102,   181,     9,
-      34,    46,   113,   195,   196,   197,   198,   199,   201,   202,
+      28,    41,   113,   195,   196,   197,   198,   199,   201,   202,
      204,   206,   208,   217,   116,   117,   179,   180,   211,   223,
        3,   135,   220,   215,   143,   138,   105,   106,   107,   108,
-     109,   110,   148,     3,    24,   116,   208,   208,   113,   208,
-      51,    60,   186,   187,     3,    16,    17,    18,    19,    24,
-     115,     4,   176,   177,   220,    33,   123,   124,   125,    30,
-      50,    77,    97,   129,   130,   131,   134,   220,    24,    34,
-     195,    70,   113,   207,   195,   208,     7,     8,     9,    10,
-      11,    12,    13,    14,    15,    27,    55,    66,   218,    61,
-       3,     3,   115,    56,   223,   114,   115,    94,    86,   100,
-     168,   184,    26,     3,     3,    18,    18,    21,    42,   114,
+     109,   110,   148,     3,    18,   116,   208,   208,   113,   208,
+      46,    57,   186,   187,     3,    10,    11,    12,    13,    18,
+     115,     4,   176,   177,   220,    27,   123,   124,   125,    24,
+      45,    77,    97,   129,   130,   131,   134,   220,    18,    28,
+     195,    70,   113,   207,   195,   208,     7,     8,     9,    21,
+      39,    48,    49,    52,    63,    64,    65,    67,   218,    58,
+       3,     3,   115,    53,   223,   114,   115,    94,    86,   100,
+     168,   184,    20,     3,     3,    12,    12,    15,    36,   114,
      208,   217,   114,   189,   190,   215,   179,    74,   152,   102,
      181,   208,   208,   208,   208,     3,   208,   102,   115,   181,
-      10,   125,   113,    63,    63,   113,   114,   115,    29,    37,
-      43,    48,    59,    69,    81,    88,   111,   219,   184,    70,
-     221,   184,   114,   195,   195,    27,    55,    66,   208,   113,
-     207,     3,    99,   210,   211,   213,    21,    23,    89,   113,
+      39,   125,   113,    60,    60,   113,   114,   115,    23,    31,
+      37,    43,    56,    69,    81,    88,   111,   219,   184,    70,
+     221,   184,   114,   195,   195,    21,    52,    65,   208,   113,
+     207,     3,    99,   210,   211,   213,    15,    17,    89,   113,
      205,   207,   208,     9,    68,   180,   223,   220,    80,   144,
-     145,   226,   174,   113,   226,     3,    24,   116,   114,   208,
-       3,   217,   114,   114,   115,    57,    62,    65,    83,   188,
-       3,    24,   225,   186,    28,    53,   192,    34,   177,    68,
+     145,   226,   174,   113,   226,     3,    18,   116,   114,   208,
+       3,   217,   114,   114,   115,    54,    59,    62,    83,   188,
+       3,    18,   225,   186,    22,    50,   192,    28,   177,    68,
      208,   195,   113,   113,   135,   130,   113,   113,    76,   113,
      113,   132,   103,   137,   221,   114,   208,   113,   207,   210,
-       8,   203,   210,   116,    45,   200,   207,    68,   103,   115,
-     140,   185,    68,   169,   170,   210,    38,   149,   150,   151,
+       8,   203,   210,   116,    40,   200,   207,    68,   103,   115,
+     140,   185,    68,   169,   170,   210,    32,   149,   150,   151,
        3,     3,   114,   116,   114,   190,   188,   190,    75,    75,
-       3,     5,   153,   154,   217,    28,    54,   194,    70,   114,
-     135,   135,   114,     5,     5,     5,     5,     9,    30,    39,
-      82,   133,    30,     8,   203,   200,   208,   114,   115,   210,
-      52,   145,   114,   115,   221,    79,   156,   157,   151,    71,
-     188,   188,   188,    25,    41,   155,   115,   155,   193,   217,
+       3,     5,   153,   154,   217,    22,    51,   194,    70,   114,
+     135,   135,   114,     5,     5,     5,     5,     9,    24,    33,
+      82,   133,    24,     8,   203,   200,   208,   114,   115,   210,
+      47,   145,   114,   115,   221,    79,   156,   157,   151,    71,
+     188,   188,   188,    19,    35,   155,   115,   155,   193,   217,
      195,   221,   114,   114,   114,   114,   115,   114,   115,   114,
       68,   113,    68,    99,   213,   215,    73,   208,   114,   210,
-      73,   170,    35,     3,   224,   157,   195,   154,   115,    82,
-       5,     5,    77,    97,   195,   113,    49,    90,   159,   160,
-     223,   188,   217,   215,   114,   114,    63,   114,   135,   113,
+      73,   170,    29,     3,   224,   157,   195,   154,   115,    82,
+       5,     5,    77,    97,   195,   113,    44,    90,   159,   160,
+     223,   188,   217,   215,   114,   114,    60,   114,   135,   113,
      182,   183,   184,   112,   160,   219,   113,   114,   182,    96,
-     152,    86,   158,   161,   135,   114,    21,   183,   174,   161,
+     152,    86,   158,   161,   135,   114,    15,   183,   174,   161,
      114,   183,   185
 };
 
-  /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
+/* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_uint8 yyr1[] =
 {
        0,   118,   119,   120,   120,   120,   121,   121,   122,   123,
@@ -1098,8 +1277,8 @@ static const yytype_uint8 yyr1[] =
      225,   226
 };
 
-  /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
-static const yytype_uint8 yyr2[] =
+/* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
+static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     2,     3,     1,     1,     1,     5,     0,
        1,     1,     2,     1,     1,     1,     1,     1,     3,     3,
@@ -1133,39 +1312,39 @@ static const yytype_uint8 yyr2[] =
 };
 
 
+enum { YYENOMEM = -2 };
+
 #define yyerrok         (yyerrstatus = 0)
 #define yyclearin       (yychar = YYEMPTY)
-#define YYEMPTY         (-2)
-#define YYEOF           0
 
 #define YYACCEPT        goto yyacceptlab
 #define YYABORT         goto yyabortlab
 #define YYERROR         goto yyerrorlab
+#define YYNOMEM         goto yyexhaustedlab
 
 
 #define YYRECOVERING()  (!!yyerrstatus)
 
-#define YYBACKUP(Token, Value)                                  \
-do                                                              \
-  if (yychar == YYEMPTY)                                        \
-    {                                                           \
-      yychar = (Token);                                         \
-      yylval = (Value);                                         \
-      YYPOPSTACK (yylen);                                       \
-      yystate = *yyssp;                                         \
-      goto yybackup;                                            \
-    }                                                           \
-  else                                                          \
-    {                                                           \
-      yyerror (root, YY_("syntax error: cannot back up")); \
-      YYERROR;                                                  \
-    }                                                           \
-while (0)
+#define YYBACKUP(Token, Value)                                    \
+  do                                                              \
+    if (yychar == YYEMPTY)                                        \
+      {                                                           \
+        yychar = (Token);                                         \
+        yylval = (Value);                                         \
+        YYPOPSTACK (yylen);                                       \
+        yystate = *yyssp;                                         \
+        goto yybackup;                                            \
+      }                                                           \
+    else                                                          \
+      {                                                           \
+        yyerror (root, YY_("syntax error: cannot back up")); \
+        YYERROR;                                                  \
+      }                                                           \
+  while (0)
 
-/* Error token number */
-#define YYTERROR        1
-#define YYERRCODE       256
-
+/* Backward compatibility with an undocumented macro.
+   Use YYerror or YYUNDEF. */
+#define YYERRCODE YYUNDEF
 
 
 /* Enable debugging if requested.  */
@@ -1182,56 +1361,53 @@ do {                                            \
     YYFPRINTF Args;                             \
 } while (0)
 
-/* This macro is provided for backward compatibility. */
-#ifndef YY_LOCATION_PRINT
-# define YY_LOCATION_PRINT(File, Loc) ((void) 0)
-#endif
 
 
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)                    \
+
+# define YY_SYMBOL_PRINT(Title, Kind, Value, Location)                    \
 do {                                                                      \
   if (yydebug)                                                            \
     {                                                                     \
       YYFPRINTF (stderr, "%s ", Title);                                   \
       yy_symbol_print (stderr,                                            \
-                  Type, Value, root); \
+                  Kind, Value, root); \
       YYFPRINTF (stderr, "\n");                                           \
     }                                                                     \
 } while (0)
 
 
-/*----------------------------------------.
-| Print this symbol's value on YYOUTPUT.  |
-`----------------------------------------*/
+/*-----------------------------------.
+| Print this symbol's value on YYO.  |
+`-----------------------------------*/
 
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, void *root)
+yy_symbol_value_print (FILE *yyo,
+                       yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, void *root)
 {
-  FILE *yyo = yyoutput;
-  YYUSE (yyo);
-  YYUSE (root);
+  FILE *yyoutput = yyo;
+  YY_USE (yyoutput);
+  YY_USE (root);
   if (!yyvaluep)
     return;
-# ifdef YYPRINT
-  if (yytype < YYNTOKENS)
-    YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
-# endif
-  YYUSE (yytype);
+  YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
+  YY_USE (yykind);
+  YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
 
-/*--------------------------------.
-| Print this symbol on YYOUTPUT.  |
-`--------------------------------*/
+/*---------------------------.
+| Print this symbol on YYO.  |
+`---------------------------*/
 
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, void *root)
+yy_symbol_print (FILE *yyo,
+                 yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep, void *root)
 {
-  YYFPRINTF (yyoutput, "%s %s (",
-             yytype < YYNTOKENS ? "token" : "nterm", yytname[yytype]);
+  YYFPRINTF (yyo, "%s %s (",
+             yykind < YYNTOKENS ? "token" : "nterm", yysymbol_name (yykind));
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, root);
-  YYFPRINTF (yyoutput, ")");
+  yy_symbol_value_print (yyo, yykind, yyvaluep, root);
+  YYFPRINTF (yyo, ")");
 }
 
 /*------------------------------------------------------------------.
@@ -1240,7 +1416,7 @@ yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, voi
 `------------------------------------------------------------------*/
 
 static void
-yy_stack_print (yytype_int16 *yybottom, yytype_int16 *yytop)
+yy_stack_print (yy_state_t *yybottom, yy_state_t *yytop)
 {
   YYFPRINTF (stderr, "Stack now");
   for (; yybottom <= yytop; yybottom++)
@@ -1263,21 +1439,21 @@ do {                                                            \
 `------------------------------------------------*/
 
 static void
-yy_reduce_print (yytype_int16 *yyssp, YYSTYPE *yyvsp, int yyrule, void *root)
+yy_reduce_print (yy_state_t *yyssp, YYSTYPE *yyvsp,
+                 int yyrule, void *root)
 {
-  unsigned long int yylno = yyrline[yyrule];
+  int yylno = yyrline[yyrule];
   int yynrhs = yyr2[yyrule];
   int yyi;
-  YYFPRINTF (stderr, "Reducing stack by rule %d (line %lu):\n",
+  YYFPRINTF (stderr, "Reducing stack by rule %d (line %d):\n",
              yyrule - 1, yylno);
   /* The symbols being reduced.  */
   for (yyi = 0; yyi < yynrhs; yyi++)
     {
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr,
-                       yystos[yyssp[yyi + 1 - yynrhs]],
-                       &(yyvsp[(yyi + 1) - (yynrhs)])
-                                              , root);
+                       YY_ACCESSING_SYMBOL (+yyssp[yyi + 1 - yynrhs]),
+                       &yyvsp[(yyi + 1) - (yynrhs)], root);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1292,8 +1468,8 @@ do {                                    \
    multiple parsers can coexist.  */
 int yydebug;
 #else /* !YYDEBUG */
-# define YYDPRINTF(Args)
-# define YY_SYMBOL_PRINT(Title, Type, Value, Location)
+# define YYDPRINTF(Args) ((void) 0)
+# define YY_SYMBOL_PRINT(Title, Kind, Value, Location)
 # define YY_STACK_PRINT(Bottom, Top)
 # define YY_REDUCE_PRINT(Rule)
 #endif /* !YYDEBUG */
@@ -1316,256 +1492,39 @@ int yydebug;
 #endif
 
 
-#if YYERROR_VERBOSE
 
-# ifndef yystrlen
-#  if defined __GLIBC__ && defined _STRING_H
-#   define yystrlen strlen
-#  else
-/* Return the length of YYSTR.  */
-static YYSIZE_T
-yystrlen (const char *yystr)
-{
-  YYSIZE_T yylen;
-  for (yylen = 0; yystr[yylen]; yylen++)
-    continue;
-  return yylen;
-}
-#  endif
-# endif
 
-# ifndef yystpcpy
-#  if defined __GLIBC__ && defined _STRING_H && defined _GNU_SOURCE
-#   define yystpcpy stpcpy
-#  else
-/* Copy YYSRC to YYDEST, returning the address of the terminating '\0' in
-   YYDEST.  */
-static char *
-yystpcpy (char *yydest, const char *yysrc)
-{
-  char *yyd = yydest;
-  const char *yys = yysrc;
 
-  while ((*yyd++ = *yys++) != '\0')
-    continue;
-
-  return yyd - 1;
-}
-#  endif
-# endif
-
-# ifndef yytnamerr
-/* Copy to YYRES the contents of YYSTR after stripping away unnecessary
-   quotes and backslashes, so that it's suitable for yyerror.  The
-   heuristic is that double-quoting is unnecessary unless the string
-   contains an apostrophe, a comma, or backslash (other than
-   backslash-backslash).  YYSTR is taken from yytname.  If YYRES is
-   null, do not copy; instead, return the length of what the result
-   would have been.  */
-static YYSIZE_T
-yytnamerr (char *yyres, const char *yystr)
-{
-  if (*yystr == '"')
-    {
-      YYSIZE_T yyn = 0;
-      char const *yyp = yystr;
-
-      for (;;)
-        switch (*++yyp)
-          {
-          case '\'':
-          case ',':
-            goto do_not_strip_quotes;
-
-          case '\\':
-            if (*++yyp != '\\')
-              goto do_not_strip_quotes;
-            /* Fall through.  */
-          default:
-            if (yyres)
-              yyres[yyn] = *yyp;
-            yyn++;
-            break;
-
-          case '"':
-            if (yyres)
-              yyres[yyn] = '\0';
-            return yyn;
-          }
-    do_not_strip_quotes: ;
-    }
-
-  if (! yyres)
-    return yystrlen (yystr);
-
-  return yystpcpy (yyres, yystr) - yyres;
-}
-# endif
-
-/* Copy into *YYMSG, which is of size *YYMSG_ALLOC, an error message
-   about the unexpected token YYTOKEN for the state stack whose top is
-   YYSSP.
-
-   Return 0 if *YYMSG was successfully written.  Return 1 if *YYMSG is
-   not large enough to hold the message.  In that case, also set
-   *YYMSG_ALLOC to the required number of bytes.  Return 2 if the
-   required number of bytes is too large to store.  */
-static int
-yysyntax_error (YYSIZE_T *yymsg_alloc, char **yymsg,
-                yytype_int16 *yyssp, int yytoken)
-{
-  YYSIZE_T yysize0 = yytnamerr (YY_NULLPTR, yytname[yytoken]);
-  YYSIZE_T yysize = yysize0;
-  enum { YYERROR_VERBOSE_ARGS_MAXIMUM = 5 };
-  /* Internationalized format string. */
-  const char *yyformat = YY_NULLPTR;
-  /* Arguments of yyformat. */
-  char const *yyarg[YYERROR_VERBOSE_ARGS_MAXIMUM];
-  /* Number of reported tokens (one for the "unexpected", one per
-     "expected"). */
-  int yycount = 0;
-
-  /* There are many possibilities here to consider:
-     - If this state is a consistent state with a default action, then
-       the only way this function was invoked is if the default action
-       is an error action.  In that case, don't check for expected
-       tokens because there are none.
-     - The only way there can be no lookahead present (in yychar) is if
-       this state is a consistent state with a default action.  Thus,
-       detecting the absence of a lookahead is sufficient to determine
-       that there is no unexpected or expected token to report.  In that
-       case, just report a simple "syntax error".
-     - Don't assume there isn't a lookahead just because this state is a
-       consistent state with a default action.  There might have been a
-       previous inconsistent state, consistent state with a non-default
-       action, or user semantic action that manipulated yychar.
-     - Of course, the expected token list depends on states to have
-       correct lookahead information, and it depends on the parser not
-       to perform extra reductions after fetching a lookahead from the
-       scanner and before detecting a syntax error.  Thus, state merging
-       (from LALR or IELR) and default reductions corrupt the expected
-       token list.  However, the list is correct for canonical LR with
-       one exception: it will still contain any token that will not be
-       accepted due to an error action in a later state.
-  */
-  if (yytoken != YYEMPTY)
-    {
-      int yyn = yypact[*yyssp];
-      yyarg[yycount++] = yytname[yytoken];
-      if (!yypact_value_is_default (yyn))
-        {
-          /* Start YYX at -YYN if negative to avoid negative indexes in
-             YYCHECK.  In other words, skip the first -YYN actions for
-             this state because they are default actions.  */
-          int yyxbegin = yyn < 0 ? -yyn : 0;
-          /* Stay within bounds of both yycheck and yytname.  */
-          int yychecklim = YYLAST - yyn + 1;
-          int yyxend = yychecklim < YYNTOKENS ? yychecklim : YYNTOKENS;
-          int yyx;
-
-          for (yyx = yyxbegin; yyx < yyxend; ++yyx)
-            if (yycheck[yyx + yyn] == yyx && yyx != YYTERROR
-                && !yytable_value_is_error (yytable[yyx + yyn]))
-              {
-                if (yycount == YYERROR_VERBOSE_ARGS_MAXIMUM)
-                  {
-                    yycount = 1;
-                    yysize = yysize0;
-                    break;
-                  }
-                yyarg[yycount++] = yytname[yyx];
-                {
-                  YYSIZE_T yysize1 = yysize + yytnamerr (YY_NULLPTR, yytname[yyx]);
-                  if (! (yysize <= yysize1
-                         && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
-                    return 2;
-                  yysize = yysize1;
-                }
-              }
-        }
-    }
-
-  switch (yycount)
-    {
-# define YYCASE_(N, S)                      \
-      case N:                               \
-        yyformat = S;                       \
-      break
-      YYCASE_(0, YY_("syntax error"));
-      YYCASE_(1, YY_("syntax error, unexpected %s"));
-      YYCASE_(2, YY_("syntax error, unexpected %s, expecting %s"));
-      YYCASE_(3, YY_("syntax error, unexpected %s, expecting %s or %s"));
-      YYCASE_(4, YY_("syntax error, unexpected %s, expecting %s or %s or %s"));
-      YYCASE_(5, YY_("syntax error, unexpected %s, expecting %s or %s or %s or %s"));
-# undef YYCASE_
-    }
-
-  {
-    YYSIZE_T yysize1 = yysize + yystrlen (yyformat);
-    if (! (yysize <= yysize1 && yysize1 <= YYSTACK_ALLOC_MAXIMUM))
-      return 2;
-    yysize = yysize1;
-  }
-
-  if (*yymsg_alloc < yysize)
-    {
-      *yymsg_alloc = 2 * yysize;
-      if (! (yysize <= *yymsg_alloc
-             && *yymsg_alloc <= YYSTACK_ALLOC_MAXIMUM))
-        *yymsg_alloc = YYSTACK_ALLOC_MAXIMUM;
-      return 1;
-    }
-
-  /* Avoid sprintf, as that infringes on the user's name space.
-     Don't have undefined behavior even if the translation
-     produced a string with the wrong number of "%s"s.  */
-  {
-    char *yyp = *yymsg;
-    int yyi = 0;
-    while ((*yyp = *yyformat) != '\0')
-      if (*yyp == '%' && yyformat[1] == 's' && yyi < yycount)
-        {
-          yyp += yytnamerr (yyp, yyarg[yyi++]);
-          yyformat += 2;
-        }
-      else
-        {
-          yyp++;
-          yyformat++;
-        }
-  }
-  return 0;
-}
-#endif /* YYERROR_VERBOSE */
 
 /*-----------------------------------------------.
 | Release the memory associated to this symbol.  |
 `-----------------------------------------------*/
 
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, void *root)
+yydestruct (const char *yymsg,
+            yysymbol_kind_t yykind, YYSTYPE *yyvaluep, void *root)
 {
-  YYUSE (yyvaluep);
-  YYUSE (root);
+  YY_USE (yyvaluep);
+  YY_USE (root);
   if (!yymsg)
     yymsg = "Deleting";
-  YY_SYMBOL_PRINT (yymsg, yytype, yyvaluep, yylocationp);
+  YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YYUSE (yytype);
+  YY_USE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
 
-
-
-/* The lookahead symbol.  */
+/* Lookahead token kind.  */
 int yychar;
 
 /* The semantic value of the lookahead symbol.  */
 YYSTYPE yylval;
 /* Number of syntax errors so far.  */
 int yynerrs;
+
+
 
 
 /*----------.
@@ -1575,43 +1534,36 @@ int yynerrs;
 int
 yyparse (void *root)
 {
-    int yystate;
+    yy_state_fast_t yystate = 0;
     /* Number of tokens to shift before error messages enabled.  */
-    int yyerrstatus;
+    int yyerrstatus = 0;
 
-    /* The stacks and their tools:
-       'yyss': related to states.
-       'yyvs': related to semantic values.
-
-       Refer to the stacks through separate pointers, to allow yyoverflow
+    /* Refer to the stacks through separate pointers, to allow yyoverflow
        to reallocate them elsewhere.  */
 
-    /* The state stack.  */
-    yytype_int16 yyssa[YYINITDEPTH];
-    yytype_int16 *yyss;
-    yytype_int16 *yyssp;
+    /* Their size.  */
+    YYPTRDIFF_T yystacksize = YYINITDEPTH;
 
-    /* The semantic value stack.  */
+    /* The state stack: array, bottom, top.  */
+    yy_state_t yyssa[YYINITDEPTH];
+    yy_state_t *yyss = yyssa;
+    yy_state_t *yyssp = yyss;
+
+    /* The semantic value stack: array, bottom, top.  */
     YYSTYPE yyvsa[YYINITDEPTH];
-    YYSTYPE *yyvs;
-    YYSTYPE *yyvsp;
-
-    YYSIZE_T yystacksize;
+    YYSTYPE *yyvs = yyvsa;
+    YYSTYPE *yyvsp = yyvs;
 
   int yyn;
+  /* The return value of yyparse.  */
   int yyresult;
-  /* Lookahead token as an internal (translated) token number.  */
-  int yytoken = 0;
+  /* Lookahead symbol kind.  */
+  yysymbol_kind_t yytoken = YYSYMBOL_YYEMPTY;
   /* The variables used to return semantic value and location from the
      action routines.  */
   YYSTYPE yyval;
 
-#if YYERROR_VERBOSE
-  /* Buffer for error messages, and its allocated size.  */
-  char yymsgbuf[128];
-  char *yymsg = yymsgbuf;
-  YYSIZE_T yymsg_alloc = sizeof yymsgbuf;
-#endif
+
 
 #define YYPOPSTACK(N)   (yyvsp -= (N), yyssp -= (N))
 
@@ -1619,71 +1571,75 @@ yyparse (void *root)
      Keep to zero when no symbol should be popped.  */
   int yylen = 0;
 
-  yyssp = yyss = yyssa;
-  yyvsp = yyvs = yyvsa;
-  yystacksize = YYINITDEPTH;
-
   YYDPRINTF ((stderr, "Starting parse\n"));
 
-  yystate = 0;
-  yyerrstatus = 0;
-  yynerrs = 0;
   yychar = YYEMPTY; /* Cause a token to be read.  */
+
   goto yysetstate;
 
+
 /*------------------------------------------------------------.
-| yynewstate -- Push a new state, which is found in yystate.  |
+| yynewstate -- push a new state, which is found in yystate.  |
 `------------------------------------------------------------*/
- yynewstate:
+yynewstate:
   /* In all cases, when you get here, the value and location stacks
      have just been pushed.  So pushing a state here evens the stacks.  */
   yyssp++;
 
- yysetstate:
-  *yyssp = yystate;
+
+/*--------------------------------------------------------------------.
+| yysetstate -- set current state (the top of the stack) to yystate.  |
+`--------------------------------------------------------------------*/
+yysetstate:
+  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
+  YY_ASSERT (0 <= yystate && yystate < YYNSTATES);
+  YY_IGNORE_USELESS_CAST_BEGIN
+  *yyssp = YY_CAST (yy_state_t, yystate);
+  YY_IGNORE_USELESS_CAST_END
+  YY_STACK_PRINT (yyss, yyssp);
 
   if (yyss + yystacksize - 1 <= yyssp)
+#if !defined yyoverflow && !defined YYSTACK_RELOCATE
+    YYNOMEM;
+#else
     {
       /* Get the current used size of the three stacks, in elements.  */
-      YYSIZE_T yysize = yyssp - yyss + 1;
+      YYPTRDIFF_T yysize = yyssp - yyss + 1;
 
-#ifdef yyoverflow
+# if defined yyoverflow
       {
         /* Give user a chance to reallocate the stack.  Use copies of
            these so that the &'s don't force the real ones into
            memory.  */
+        yy_state_t *yyss1 = yyss;
         YYSTYPE *yyvs1 = yyvs;
-        yytype_int16 *yyss1 = yyss;
 
         /* Each stack pointer address is followed by the size of the
            data in use in that stack, in bytes.  This used to be a
            conditional around just the two extra args, but that might
            be undefined if yyoverflow is a macro.  */
         yyoverflow (YY_("memory exhausted"),
-                    &yyss1, yysize * sizeof (*yyssp),
-                    &yyvs1, yysize * sizeof (*yyvsp),
+                    &yyss1, yysize * YYSIZEOF (*yyssp),
+                    &yyvs1, yysize * YYSIZEOF (*yyvsp),
                     &yystacksize);
-
         yyss = yyss1;
         yyvs = yyvs1;
       }
-#else /* no yyoverflow */
-# ifndef YYSTACK_RELOCATE
-      goto yyexhaustedlab;
-# else
+# else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
-        goto yyexhaustedlab;
+        YYNOMEM;
       yystacksize *= 2;
       if (YYMAXDEPTH < yystacksize)
         yystacksize = YYMAXDEPTH;
 
       {
-        yytype_int16 *yyss1 = yyss;
+        yy_state_t *yyss1 = yyss;
         union yyalloc *yyptr =
-          (union yyalloc *) YYSTACK_ALLOC (YYSTACK_BYTES (yystacksize));
+          YY_CAST (union yyalloc *,
+                   YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
-          goto yyexhaustedlab;
+          YYNOMEM;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
 #  undef YYSTACK_RELOCATE
@@ -1691,30 +1647,31 @@ yyparse (void *root)
           YYSTACK_FREE (yyss1);
       }
 # endif
-#endif /* no yyoverflow */
 
       yyssp = yyss + yysize - 1;
       yyvsp = yyvs + yysize - 1;
 
-      YYDPRINTF ((stderr, "Stack size increased to %lu\n",
-                  (unsigned long int) yystacksize));
+      YY_IGNORE_USELESS_CAST_BEGIN
+      YYDPRINTF ((stderr, "Stack size increased to %ld\n",
+                  YY_CAST (long, yystacksize)));
+      YY_IGNORE_USELESS_CAST_END
 
       if (yyss + yystacksize - 1 <= yyssp)
         YYABORT;
     }
+#endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
 
-  YYDPRINTF ((stderr, "Entering state %d\n", yystate));
 
   if (yystate == YYFINAL)
     YYACCEPT;
 
   goto yybackup;
 
+
 /*-----------.
 | yybackup.  |
 `-----------*/
 yybackup:
-
   /* Do appropriate processing given the current state.  Read a
      lookahead token if we need one and don't already have one.  */
 
@@ -1725,17 +1682,28 @@ yybackup:
 
   /* Not known => get a lookahead token if don't already have one.  */
 
-  /* YYCHAR is either YYEMPTY or YYEOF or a valid lookahead symbol.  */
+  /* YYCHAR is either empty, or end-of-input, or a valid lookahead.  */
   if (yychar == YYEMPTY)
     {
-      YYDPRINTF ((stderr, "Reading a token: "));
+      YYDPRINTF ((stderr, "Reading a token\n"));
       yychar = yylex ();
     }
 
   if (yychar <= YYEOF)
     {
-      yychar = yytoken = YYEOF;
+      yychar = YYEOF;
+      yytoken = YYSYMBOL_YYEOF;
       YYDPRINTF ((stderr, "Now at end of input.\n"));
+    }
+  else if (yychar == YYerror)
+    {
+      /* The scanner already issued an error message, process directly
+         to error recovery.  But do not keep the error token as
+         lookahead, it is too special and may lead us to an endless
+         loop in error recovery. */
+      yychar = YYUNDEF;
+      yytoken = YYSYMBOL_YYerror;
+      goto yyerrlab1;
     }
   else
     {
@@ -1764,15 +1732,13 @@ yybackup:
 
   /* Shift the lookahead token.  */
   YY_SYMBOL_PRINT ("Shifting", yytoken, &yylval, &yylloc);
-
-  /* Discard the shifted token.  */
-  yychar = YYEMPTY;
-
   yystate = yyn;
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
   *++yyvsp = yylval;
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 
+  /* Discard the shifted token.  */
+  yychar = YYEMPTY;
   goto yynewstate;
 
 
@@ -1787,7 +1753,7 @@ yydefault:
 
 
 /*-----------------------------.
-| yyreduce -- Do a reduction.  |
+| yyreduce -- do a reduction.  |
 `-----------------------------*/
 yyreduce:
   /* yyn is the number of a rule to reduce with.  */
@@ -1807,2428 +1773,2429 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 100 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			*((sql_list_t**)root) = (sql_list_t*)(yyvsp[0]);
+  case 2: /* root: sql_list  */
+#line 102 "sqlgrammar.y"
+                {
+			*((sql_list_t**)root) = (sql_list_t*)yyvsp[0];
 		}
-#line 1813 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1782 "sqlgrammar.tab.c"
     break;
 
-  case 3:
-#line 107 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[-1]));
+  case 3: /* sql_list: sql ';'  */
+#line 109 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[-1]);
 		}
-#line 1822 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1791 "sqlgrammar.tab.c"
     break;
 
-  case 4:
-#line 112 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[-1])); 
-			(yyval) = (yyvsp[-2]);
+  case 4: /* sql_list: sql_list sql ';'  */
+#line 114 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[-1]); 
+			yyval = yyvsp[-2];
 		}
-#line 1831 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1800 "sqlgrammar.tab.c"
     break;
 
-  case 5:
-#line 117 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 5: /* sql_list: sql  */
+#line 119 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 1840 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1809 "sqlgrammar.tab.c"
     break;
 
-  case 6:
-#line 126 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 6: /* sql: schema  */
+#line 128 "sqlgrammar.y"
+                        {
 				sql_declare(sql_t, psql);
 				psql->which = 0;
-				psql->pschema = (schema_t*)(yyvsp[0]);
-				(yyval) = (LITEM)psql;
+				psql->pschema = (schema_t*)yyvsp[0];
+				yyval = (LITEM)psql;
 			}
-#line 1851 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1820 "sqlgrammar.tab.c"
     break;
 
-  case 7:
-#line 134 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 7: /* sql: schema_element  */
+#line 136 "sqlgrammar.y"
+                        {
 				sql_declare(sql_t, psql);
 				psql->which = 4;
-				psql->pschema_element = (schema_element_t*)(yyvsp[0]);
-				(yyval) = (LITEM)psql;
+				psql->pschema_element = (schema_element_t*)yyvsp[0];
+				yyval = (LITEM)psql;
 			}
-#line 1862 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1831 "sqlgrammar.tab.c"
     break;
 
-  case 8:
-#line 144 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 8: /* schema: CREATE SCHEMA AUTHORIZATION user opt_schema_element_list  */
+#line 146 "sqlgrammar.y"
+                {
 			schema_t *pschema = sql_alloc(schema_t);
-			pschema->puser = (user_t*)(yyvsp[-1]);
-			pschema->plist = (yyvsp[0]);
-			(yyval) = (LITEM)pschema;
+			pschema->puser = (user_t*)yyvsp[-1];
+			pschema->plist = yyvsp[0];
+			yyval = (LITEM)pschema;
 		}
-#line 1873 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1842 "sqlgrammar.tab.c"
     break;
 
-  case 10:
-#line 155 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 10: /* opt_schema_element_list: schema_element_list  */
+#line 157 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 1881 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1850 "sqlgrammar.tab.c"
     break;
 
-  case 11:
-#line 162 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 11: /* schema_element_list: schema_element  */
+#line 164 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 1890 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1859 "sqlgrammar.tab.c"
     break;
 
-  case 12:
-#line 167 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-1]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-1]);
+  case 12: /* schema_element_list: schema_element_list schema_element  */
+#line 169 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-1], yyvsp[0]); 
+			yyval = yyvsp[-1];
 		}
-#line 1899 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1868 "sqlgrammar.tab.c"
     break;
 
-  case 13:
-#line 175 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 13: /* schema_element: base_table_def  */
+#line 177 "sqlgrammar.y"
+                {
 			schema_element_t *pelement = sql_alloc(schema_element_t);
 			pelement->which = 0;
-			pelement->ptabledef = (base_table_def_t *)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->ptabledef = (base_table_def_t *)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 1910 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1879 "sqlgrammar.tab.c"
     break;
 
-  case 14:
-#line 182 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 14: /* schema_element: view_def  */
+#line 184 "sqlgrammar.y"
+                {
 			schema_element_t *pelement = sql_alloc(schema_element_t);
 			pelement->which = 1;
-			pelement->pviewdef = (view_def_t *)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pviewdef = (view_def_t *)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 1921 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1890 "sqlgrammar.tab.c"
     break;
 
-  case 15:
-#line 189 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 15: /* schema_element: privilege_def  */
+#line 191 "sqlgrammar.y"
+                {
 			schema_element_t *pelement = sql_alloc(schema_element_t);
 			pelement->which = 2;
-			pelement->pprivilegedef = (privilege_def_t *)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pprivilegedef = (privilege_def_t *)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 1932 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1901 "sqlgrammar.tab.c"
     break;
 
-  case 16:
-#line 196 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 16: /* schema_element: drop_trigger  */
+#line 198 "sqlgrammar.y"
+                {
 			schema_element_t *pelement = sql_alloc(schema_element_t);
 			pelement->which = 3;
-			pelement->pdroptrigger = (drop_trigger_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pdroptrigger = (drop_trigger_t*)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 1943 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1912 "sqlgrammar.tab.c"
     break;
 
-  case 17:
-#line 204 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 17: /* schema_element: drop_table  */
+#line 206 "sqlgrammar.y"
+                {
 			schema_element_t *pelement = sql_alloc(schema_element_t);
 			pelement->which = 4;
-			pelement->pdroptable = (drop_table_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pdroptable = (drop_table_t*)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 1954 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1923 "sqlgrammar.tab.c"
     break;
 
-  case 18:
-#line 214 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 18: /* drop_trigger: DROP TRIGGER trigger_name  */
+#line 216 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 1962 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1931 "sqlgrammar.tab.c"
     break;
 
-  case 19:
-#line 221 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 19: /* drop_table: DROP TABLE table  */
+#line 223 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 1970 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1939 "sqlgrammar.tab.c"
     break;
 
-  case 20:
-#line 228 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 20: /* base_table_def: CREATE TABLE table '(' base_table_element_commalist ')'  */
+#line 230 "sqlgrammar.y"
+                {
 			base_table_def_t *pdef = sql_alloc(base_table_def_t);
-			pdef->ptable = (table_t*)(yyvsp[-3]);
-			pdef->plist = (yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->ptable = (table_t*)yyvsp[-3];
+			pdef->plist = yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 1981 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1950 "sqlgrammar.tab.c"
     break;
 
-  case 21:
-#line 238 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 21: /* base_table_element_commalist: base_table_element  */
+#line 240 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 1990 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1959 "sqlgrammar.tab.c"
     break;
 
-  case 22:
-#line 243 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-2]);
+  case 22: /* base_table_element_commalist: base_table_element_commalist ',' base_table_element  */
+#line 245 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]); 
+			yyval = yyvsp[-2];
 		}
-#line 1999 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1968 "sqlgrammar.tab.c"
     break;
 
-  case 23:
-#line 251 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 23: /* base_table_element: column_def  */
+#line 253 "sqlgrammar.y"
+                {
 			sql_declare(base_table_element_t, pelement);
 			pelement->which = 0;
-			pelement->pcolumn = (column_def_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pcolumn = (column_def_t*)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 2010 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1979 "sqlgrammar.tab.c"
     break;
 
-  case 24:
-#line 258 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 24: /* base_table_element: table_constraint_def  */
+#line 260 "sqlgrammar.y"
+                {
 			sql_declare(base_table_element_t, pelement);
 			pelement->which = 1;
-			pelement->pconstraint = (table_constraint_def_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pelement;
+			pelement->pconstraint = (table_constraint_def_t*)yyvsp[0];
+			yyval = (LITEM)pelement;
 		}
-#line 2021 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 1990 "sqlgrammar.tab.c"
     break;
 
-  case 25:
-#line 268 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 25: /* column_def: column data_type column_def_opt_list  */
+#line 270 "sqlgrammar.y"
+                {
 			sql_declare(column_def_t, pcolumn);
-			pcolumn->pcolumn = (column_t)(yyvsp[-2]);
-			pcolumn->ptype = (data_type_t*)(yyvsp[-1]);
-			pcolumn->popt = (yyvsp[0]);
-			(yyval) = (LITEM)pcolumn;
+			pcolumn->pcolumn = (column_t)yyvsp[-2];
+			pcolumn->ptype = (data_type_t*)yyvsp[-1];
+			pcolumn->popt = yyvsp[0];
+			yyval = (LITEM)pcolumn;
 		}
-#line 2033 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2002 "sqlgrammar.tab.c"
     break;
 
-  case 26:
-#line 279 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-		(yyval) = (LITEM)NULL;
+  case 26: /* column_def_opt_list: %empty  */
+#line 281 "sqlgrammar.y"
+        {
+		yyval = (LITEM)NULL;
 	}
-#line 2041 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2010 "sqlgrammar.tab.c"
     break;
 
-  case 27:
-#line 283 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-1]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-1]);
+  case 27: /* column_def_opt_list: column_def_opt_list column_def_opt  */
+#line 285 "sqlgrammar.y"
+        {
+			_sql_add_tail(yyvsp[-1], yyvsp[0]); 
+			yyval = yyvsp[-1];
 	}
-#line 2050 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2019 "sqlgrammar.tab.c"
     break;
 
-  case 28:
-#line 291 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 28: /* column_def_opt: NOT NULLX  */
+#line 293 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 0;
 			pdef->notnull = NOT_NULLX;
-			(yyval) = (LITEM)pdef;
+			yyval = (LITEM)pdef;
 		}
-#line 2061 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2030 "sqlgrammar.tab.c"
     break;
 
-  case 29:
-#line 298 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 29: /* column_def_opt: NOT NULLX UNIQUE  */
+#line 300 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 0;
 			pdef->notnull = NOT_NULLX_UNIQUE;
-			(yyval) = (LITEM)pdef;
+			yyval = (LITEM)pdef;
 		}
-#line 2072 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2041 "sqlgrammar.tab.c"
     break;
 
-  case 30:
-#line 305 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 30: /* column_def_opt: NOT NULLX PRIMARY KEY  */
+#line 307 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 0;
 			pdef->notnull = NOT_NULLX_PKEY;
-			(yyval) = (LITEM)pdef;
+			yyval = (LITEM)pdef;
 		}
-#line 2083 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2052 "sqlgrammar.tab.c"
     break;
 
-  case 31:
-#line 312 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 31: /* column_def_opt: DEFAULT literal  */
+#line 314 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 1;
 			pdef->pdefault = sql_alloc(default_t);
 			pdef->pdefault->which = 0;
-			pdef->pdefault->pliteral = (literal_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pdef;
+			pdef->pdefault->pliteral = (literal_t*)yyvsp[0];
+			yyval = (LITEM)pdef;
 		}
-#line 2096 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2065 "sqlgrammar.tab.c"
     break;
 
-  case 32:
-#line 321 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 32: /* column_def_opt: DEFAULT NULLX  */
+#line 323 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 1;
 			pdef->pdefault = sql_alloc(default_t);
 			pdef->pdefault->which = 1;
 			pdef->pdefault->nullx = IS_NULLX;
-			(yyval) = (LITEM)pdef;
+			yyval = (LITEM)pdef;
 		}
-#line 2109 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2078 "sqlgrammar.tab.c"
     break;
 
-  case 33:
-#line 330 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 33: /* column_def_opt: DEFAULT USER  */
+#line 332 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 1;
 			pdef->pdefault = sql_alloc(default_t);
 			pdef->pdefault->which = 2;
-			pdef->pdefault->puser = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pdef;
+			pdef->pdefault->puser = (char*)yyvsp[0];
+			yyval = (LITEM)pdef;
 		}
-#line 2122 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2091 "sqlgrammar.tab.c"
     break;
 
-  case 34:
-#line 339 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 34: /* column_def_opt: CHECK '(' search_condition ')'  */
+#line 341 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 2;
-			pdef->psearch = (search_condition_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->psearch = (search_condition_t*)yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2133 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2102 "sqlgrammar.tab.c"
     break;
 
-  case 35:
-#line 346 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 35: /* column_def_opt: REFERENCES table  */
+#line 348 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 3;
 			pdef->preferences = sql_alloc(references_t);
-			pdef->preferences->ptable = (table_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pdef;
+			pdef->preferences->ptable = (table_t*)yyvsp[0];
+			yyval = (LITEM)pdef;
 		}
-#line 2145 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2114 "sqlgrammar.tab.c"
     break;
 
-  case 36:
-#line 354 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 36: /* column_def_opt: REFERENCES table '(' column_commalist ')'  */
+#line 356 "sqlgrammar.y"
+                {
 			sql_declare(column_def_opt_t, pdef);
 			pdef->which = 3;
 			pdef->preferences = sql_alloc(references_t);
-			pdef->preferences->ptable = (table_t*)(yyvsp[-3]);
-			pdef->preferences->pcolumns = (yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->preferences->ptable = (table_t*)yyvsp[-3];
+			pdef->preferences->pcolumns = yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2158 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2127 "sqlgrammar.tab.c"
     break;
 
-  case 37:
-#line 366 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 37: /* table_constraint_def: UNIQUE '(' column_commalist ')'  */
+#line 368 "sqlgrammar.y"
+                {
 			sql_declare(table_constraint_def_t, pdef);
 			pdef->which = 0;
-			pdef->punique = (yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->punique = yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2169 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2138 "sqlgrammar.tab.c"
     break;
 
-  case 38:
-#line 373 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 38: /* table_constraint_def: PRIMARY KEY '(' column_commalist ')'  */
+#line 375 "sqlgrammar.y"
+                {
 			sql_declare(table_constraint_def_t, pdef);
 			pdef->which = 1;
-			pdef->pprimarykeys = (yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->pprimarykeys = yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2180 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2149 "sqlgrammar.tab.c"
     break;
 
-  case 39:
-#line 381 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 39: /* table_constraint_def: FOREIGN KEY '(' column_commalist ')' REFERENCES table  */
+#line 383 "sqlgrammar.y"
+                {
 			sql_declare(table_constraint_def_t, pdef);
 			pdef->which = 2;
 			pdef->pforeignkey = sql_alloc(foreign_key_t);
-			pdef->pforeignkey->pcolumns = (yyvsp[-3]);
+			pdef->pforeignkey->pcolumns = yyvsp[-3];
 			pdef->pforeignkey->preferences = sql_alloc(references_t);
-			pdef->pforeignkey->preferences->ptable = (table_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pdef;
+			pdef->pforeignkey->preferences->ptable = (table_t*)yyvsp[0];
+			yyval = (LITEM)pdef;
 		}
-#line 2194 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2163 "sqlgrammar.tab.c"
     break;
 
-  case 40:
-#line 392 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 40: /* table_constraint_def: FOREIGN KEY '(' column_commalist ')' REFERENCES table '(' column_commalist ')'  */
+#line 394 "sqlgrammar.y"
+                {
 			sql_declare(table_constraint_def_t, pdef);
 			pdef->which = 2;
 			pdef->pforeignkey = sql_alloc(foreign_key_t);
-			pdef->pforeignkey->pcolumns = (yyvsp[-6]);
+			pdef->pforeignkey->pcolumns = yyvsp[-6];
 			pdef->pforeignkey->preferences = sql_alloc(references_t);
-			pdef->pforeignkey->preferences->ptable = (table_t*)(yyvsp[-3]);
-			pdef->pforeignkey->preferences->pcolumns = (yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->pforeignkey->preferences->ptable = (table_t*)yyvsp[-3];
+			pdef->pforeignkey->preferences->pcolumns = yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2209 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2178 "sqlgrammar.tab.c"
     break;
 
-  case 41:
-#line 403 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 41: /* table_constraint_def: CHECK '(' search_condition ')'  */
+#line 405 "sqlgrammar.y"
+                {
 			sql_declare(table_constraint_def_t, pdef);
 			pdef->which = 3;
-			pdef->pcheck = (search_condition_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pdef;
+			pdef->pcheck = (search_condition_t*)yyvsp[-1];
+			yyval = (LITEM)pdef;
 		}
-#line 2220 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2189 "sqlgrammar.tab.c"
     break;
 
-  case 42:
-#line 413 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 42: /* column_commalist: column  */
+#line 415 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2229 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2198 "sqlgrammar.tab.c"
     break;
 
-  case 43:
-#line 418 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-2]);
+  case 43: /* column_commalist: column_commalist ',' column  */
+#line 420 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]); 
+			yyval = yyvsp[-2];
 		}
-#line 2238 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2207 "sqlgrammar.tab.c"
     break;
 
-  case 44:
-#line 427 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 44: /* view_def: CREATE VIEW table opt_column_commalist AS query_spec opt_with_check_option  */
+#line 429 "sqlgrammar.y"
+                {
 			sql_declare(view_def_t, pdef);
-			pdef->ptable = (table_t*)(yyvsp[-4]);
-			pdef->pcolumns = (yyvsp[-3]);
-			pdef->pquery = (query_spec_t*)(yyvsp[-1]);
-			pdef->withcheck = (yyvsp[0]);
+			pdef->ptable = (table_t*)yyvsp[-4];
+			pdef->pcolumns = yyvsp[-3];
+			pdef->pquery = (query_spec_t*)yyvsp[-1];
+			pdef->withcheck = yyvsp[0];
 		}
-#line 2250 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2219 "sqlgrammar.tab.c"
     break;
 
-  case 45:
-#line 438 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = 0;
+  case 45: /* opt_with_check_option: %empty  */
+#line 440 "sqlgrammar.y"
+                {
+			yyval = 0;
 		}
-#line 2258 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2227 "sqlgrammar.tab.c"
     break;
 
-  case 46:
-#line 442 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = 1;
+  case 46: /* opt_with_check_option: WITH CHECK OPTION  */
+#line 444 "sqlgrammar.y"
+                {
+			yyval = 1;
 		}
-#line 2266 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2235 "sqlgrammar.tab.c"
     break;
 
-  case 47:
-#line 449 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 47: /* opt_column_commalist: %empty  */
+#line 451 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 2274 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2243 "sqlgrammar.tab.c"
     break;
 
-  case 48:
-#line 453 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[-1]);
+  case 48: /* opt_column_commalist: '(' column_commalist ')'  */
+#line 455 "sqlgrammar.y"
+                {
+			yyval = yyvsp[-1];
 		}
-#line 2282 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2251 "sqlgrammar.tab.c"
     break;
 
-  case 49:
-#line 461 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 49: /* privilege_def: GRANT privileges ON table TO grantee_commalist opt_with_grant_option  */
+#line 463 "sqlgrammar.y"
+                {
 			sql_declare(privilege_def_t, pdef);
-			pdef->pprivs = (privileges_t*)(yyvsp[-5]);
-			pdef->ptable = (table_t*)(yyvsp[-3]);
-			pdef->pgrantees = (yyvsp[-1]);
-			pdef->withgrant = (yyvsp[0]);
+			pdef->pprivs = (privileges_t*)yyvsp[-5];
+			pdef->ptable = (table_t*)yyvsp[-3];
+			pdef->pgrantees = yyvsp[-1];
+			pdef->withgrant = yyvsp[0];
 		}
-#line 2294 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2263 "sqlgrammar.tab.c"
     break;
 
-  case 50:
-#line 472 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = 0;
+  case 50: /* opt_with_grant_option: %empty  */
+#line 474 "sqlgrammar.y"
+                {
+			yyval = 0;
 		}
-#line 2302 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2271 "sqlgrammar.tab.c"
     break;
 
-  case 51:
-#line 476 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = 1;
+  case 51: /* opt_with_grant_option: WITH GRANT OPTION  */
+#line 478 "sqlgrammar.y"
+                {
+			yyval = 1;
 		}
-#line 2310 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2279 "sqlgrammar.tab.c"
     break;
 
-  case 52:
-#line 483 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 52: /* privileges: ALL PRIVILEGES  */
+#line 485 "sqlgrammar.y"
+                {
 			sql_declare(privileges_t, pprivs);
 			pprivs->which = 0;
 			pprivs->all = 1;
-			(yyval) = (LITEM)pprivs;
+			yyval = (LITEM)pprivs;
 		}
-#line 2321 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2290 "sqlgrammar.tab.c"
     break;
 
-  case 53:
-#line 490 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 53: /* privileges: ALL  */
+#line 492 "sqlgrammar.y"
+                {
 			sql_declare(privileges_t, pprivs);
 			pprivs->which = 0;
 			pprivs->all = 1;
-			(yyval) = (LITEM)pprivs;
+			yyval = (LITEM)pprivs;
 		}
-#line 2332 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2301 "sqlgrammar.tab.c"
     break;
 
-  case 54:
-#line 497 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 54: /* privileges: operation_commalist  */
+#line 499 "sqlgrammar.y"
+                {
 			sql_declare(privileges_t, pprivs);
 			pprivs->which = 1;
-			pprivs->pops = (yyvsp[0]);
-			(yyval) = (LITEM)pprivs;
+			pprivs->pops = yyvsp[0];
+			yyval = (LITEM)pprivs;
 		}
-#line 2343 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2312 "sqlgrammar.tab.c"
     break;
 
-  case 55:
-#line 507 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 55: /* operation_commalist: operation  */
+#line 509 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2352 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2321 "sqlgrammar.tab.c"
     break;
 
-  case 56:
-#line 512 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-2]);
+  case 56: /* operation_commalist: operation_commalist ',' operation  */
+#line 514 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]); 
+			yyval = yyvsp[-2];
 		}
-#line 2361 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2330 "sqlgrammar.tab.c"
     break;
 
-  case 57:
-#line 520 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 57: /* operation: SELECT  */
+#line 522 "sqlgrammar.y"
+                {
 			sql_declare(operation_t, op);
 			op->type = OP_SELECT;	
 		}
-#line 2370 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2339 "sqlgrammar.tab.c"
     break;
 
-  case 58:
-#line 525 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 58: /* operation: INSERT  */
+#line 527 "sqlgrammar.y"
+                {
 			sql_declare(operation_t, op);
 			op->type = OP_INSERT;	
 		}
-#line 2379 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2348 "sqlgrammar.tab.c"
     break;
 
-  case 59:
-#line 530 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 59: /* operation: DELETE2  */
+#line 532 "sqlgrammar.y"
+                {
 			sql_declare(operation_t, op);
 			op->type = OP_DELETE;	
 		}
-#line 2388 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2357 "sqlgrammar.tab.c"
     break;
 
-  case 60:
-#line 535 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 60: /* operation: UPDATE opt_column_commalist  */
+#line 537 "sqlgrammar.y"
+                {
 			sql_declare(operation_t, op);
 			op->type = OP_UPDATE;	
 		}
-#line 2397 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2366 "sqlgrammar.tab.c"
     break;
 
-  case 61:
-#line 540 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 61: /* operation: REFERENCES opt_column_commalist  */
+#line 542 "sqlgrammar.y"
+                {
 			sql_declare(operation_t, op);
 			op->type = OP_REFERENCES;	
-			op->pcolumns = (yyvsp[0]);
+			op->pcolumns = yyvsp[0];
 		}
-#line 2407 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2376 "sqlgrammar.tab.c"
     break;
 
-  case 62:
-#line 550 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 62: /* grantee_commalist: grantee  */
+#line 552 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2416 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2385 "sqlgrammar.tab.c"
     break;
 
-  case 63:
-#line 555 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0])); 
-			(yyval) = (yyvsp[-2]);
+  case 63: /* grantee_commalist: grantee_commalist ',' grantee  */
+#line 557 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]); 
+			yyval = yyvsp[-2];
 		}
-#line 2425 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2394 "sqlgrammar.tab.c"
     break;
 
-  case 64:
-#line 563 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 64: /* grantee: PUBLIC  */
+#line 565 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 2433 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2402 "sqlgrammar.tab.c"
     break;
 
-  case 65:
-#line 567 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 65: /* grantee: user  */
+#line 569 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2441 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2410 "sqlgrammar.tab.c"
     break;
 
-  case 66:
-#line 574 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 66: /* sql: module_def  */
+#line 576 "sqlgrammar.y"
+                {
 			yyerror(root, "Module definition not supported");
 		}
-#line 2449 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2418 "sqlgrammar.tab.c"
     break;
 
-  case 81:
-#line 617 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 81: /* opt_order_by_clause: %empty  */
+#line 619 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 2457 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2426 "sqlgrammar.tab.c"
     break;
 
-  case 82:
-#line 621 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 82: /* opt_order_by_clause: ORDER BY ordering_spec_commalist  */
+#line 623 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2465 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2434 "sqlgrammar.tab.c"
     break;
 
-  case 83:
-#line 629 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 83: /* ordering_spec_commalist: ordering_spec  */
+#line 631 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2474 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2443 "sqlgrammar.tab.c"
     break;
 
-  case 84:
-#line 634 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 84: /* ordering_spec_commalist: ordering_spec_commalist ',' ordering_spec  */
+#line 636 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 2483 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2452 "sqlgrammar.tab.c"
     break;
 
-  case 85:
-#line 643 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 85: /* ordering_spec: column_ref opt_asc_desc  */
+#line 645 "sqlgrammar.y"
+                {
 			sql_declare(ordering_spec_t, spec);
 			spec->colnum = NULL;
-			spec->pcolumn = (column_ref_t*)(yyvsp[-1]);
-			spec->ascdesc = (asc_desc_t)(yyvsp[0]);
-			(yyval) = (LITEM)spec;
+			spec->pcolumn = (column_ref_t*)yyvsp[-1];
+			spec->ascdesc = (asc_desc_t)yyvsp[0];
+			yyval = (LITEM)spec;
 		}
-#line 2495 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2464 "sqlgrammar.tab.c"
     break;
 
-  case 86:
-#line 651 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 86: /* ordering_spec: INTNUM opt_asc_desc  */
+#line 653 "sqlgrammar.y"
+                {
 			sql_declare(ordering_spec_t, spec);
-			spec->colnum = (char*)(yyvsp[-1]);
+			spec->colnum = (char*)yyvsp[-1];
 			spec->pcolumn = NULL;
-			spec->ascdesc = (asc_desc_t)(yyvsp[0]);
-			(yyval) = (LITEM)spec;
+			spec->ascdesc = (asc_desc_t)yyvsp[0];
+			yyval = (LITEM)spec;
 		}
-#line 2507 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2476 "sqlgrammar.tab.c"
     break;
 
-  case 87:
-#line 662 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = ORDER_NOT_SPECIFIED;
+  case 87: /* opt_asc_desc: %empty  */
+#line 664 "sqlgrammar.y"
+                {
+			yyval = ORDER_NOT_SPECIFIED;
 		}
-#line 2515 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2484 "sqlgrammar.tab.c"
     break;
 
-  case 88:
-#line 666 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = ORDER_ASC;
+  case 88: /* opt_asc_desc: ASC  */
+#line 668 "sqlgrammar.y"
+                {
+			yyval = ORDER_ASC;
 		}
-#line 2523 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2492 "sqlgrammar.tab.c"
     break;
 
-  case 89:
-#line 670 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = ORDER_DESC;
+  case 89: /* opt_asc_desc: DESC  */
+#line 672 "sqlgrammar.y"
+                {
+			yyval = ORDER_DESC;
 		}
-#line 2531 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2500 "sqlgrammar.tab.c"
     break;
 
-  case 93:
-#line 687 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 93: /* manipulative_statement_list: manipulative_statement  */
+#line 689 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2540 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2509 "sqlgrammar.tab.c"
     break;
 
-  case 94:
-#line 692 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-1]), (yyvsp[0]));
-			(yyval) = (yyvsp[-1]);
+  case 94: /* manipulative_statement_list: manipulative_statement_list manipulative_statement  */
+#line 694 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-1], yyvsp[0]);
+			yyval = yyvsp[-1];
 		}
-#line 2549 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2518 "sqlgrammar.tab.c"
     break;
 
-  case 99:
-#line 711 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 99: /* sql: manipulative_statement  */
+#line 713 "sqlgrammar.y"
+                {
 			sql_declare(sql_t, psql);
 			psql->which = 2;
-			psql->pstmt = (manipulative_statement_t*)(yyvsp[0]);
-			(yyval) = (LITEM)psql;
+			psql->pstmt = (manipulative_statement_t*)yyvsp[0];
+			yyval = (LITEM)psql;
 		}
-#line 2560 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2529 "sqlgrammar.tab.c"
     break;
 
-  case 100:
-#line 721 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 100: /* manipulative_statement: delete_statement_searched  */
+#line 723 "sqlgrammar.y"
+                {
 			sql_declare(manipulative_statement_t, pstmt);
 			pstmt->which = 0;
-			pstmt->pdelsearched = (delete_statement_searched_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->pdelsearched = (delete_statement_searched_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2571 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2540 "sqlgrammar.tab.c"
     break;
 
-  case 101:
-#line 728 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 101: /* manipulative_statement: insert_statement  */
+#line 730 "sqlgrammar.y"
+                {
 			sql_declare(manipulative_statement_t, pstmt);
 			pstmt->which = 1;
-			pstmt->pinsert = (insert_statement_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->pinsert = (insert_statement_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2582 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2551 "sqlgrammar.tab.c"
     break;
 
-  case 102:
-#line 735 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 102: /* manipulative_statement: select_statement  */
+#line 737 "sqlgrammar.y"
+                {
 			sql_declare(manipulative_statement_t, pstmt);
 			pstmt->which = 2;
-			pstmt->pselect = (select_statement_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->pselect = (select_statement_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2593 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2562 "sqlgrammar.tab.c"
     break;
 
-  case 103:
-#line 742 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 103: /* manipulative_statement: update_statement_searched  */
+#line 744 "sqlgrammar.y"
+                {
 			sql_declare(manipulative_statement_t, pstmt);
 			pstmt->which = 3;
-			pstmt->pupdatesearched = (update_statement_searched_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->pupdatesearched = (update_statement_searched_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2604 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2573 "sqlgrammar.tab.c"
     break;
 
-  case 115:
-#line 773 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 115: /* delete_statement_searched: DELETE2 FROM table opt_where_clause  */
+#line 775 "sqlgrammar.y"
+                {
 			sql_declare(delete_statement_searched_t, pstmt);
-			pstmt->ptable = (table_t*)(yyvsp[-1]);
-			pstmt->pwhere = (where_clause_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->ptable = (table_t*)yyvsp[-1];
+			pstmt->pwhere = (where_clause_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2615 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2584 "sqlgrammar.tab.c"
     break;
 
-  case 116:
-#line 781 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 116: /* delete_statement_searched: DELETE2 table opt_where_clause  */
+#line 783 "sqlgrammar.y"
+                {
 			sql_declare(delete_statement_searched_t, pstmt);
-			pstmt->ptable = (table_t*)(yyvsp[-1]);
-			pstmt->pwhere = (where_clause_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->ptable = (table_t*)yyvsp[-1];
+			pstmt->pwhere = (where_clause_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2626 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2595 "sqlgrammar.tab.c"
     break;
 
-  case 118:
-#line 795 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 118: /* insert_statement: INSERT INTO table opt_column_commalist values_or_query_spec  */
+#line 797 "sqlgrammar.y"
+                {
 			sql_declare(insert_statement_t, pstmt);
-			pstmt->ptable = (table_t*)(yyvsp[-2]);
-			pstmt->pcommalist = (yyvsp[-1]);
-			pstmt->pvalues = (values_or_query_spec_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->ptable = (table_t*)yyvsp[-2];
+			pstmt->pcommalist = yyvsp[-1];
+			pstmt->pvalues = (values_or_query_spec_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2638 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2607 "sqlgrammar.tab.c"
     break;
 
-  case 119:
-#line 806 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 119: /* values_or_query_spec: VALUES '(' insert_atom_commalist ')'  */
+#line 808 "sqlgrammar.y"
+                {
 			sql_declare(values_or_query_spec_t, pvalues);
 			pvalues->which = 0;
-			pvalues->patoms = (yyvsp[-1]);
-			(yyval) = (LITEM)pvalues;
+			pvalues->patoms = yyvsp[-1];
+			yyval = (LITEM)pvalues;
 		}
-#line 2649 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2618 "sqlgrammar.tab.c"
     break;
 
-  case 120:
-#line 813 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 120: /* values_or_query_spec: query_spec  */
+#line 815 "sqlgrammar.y"
+                {
 			sql_declare(values_or_query_spec_t, pvalues);
 			pvalues->which = 1;
-			pvalues->pquery = (query_spec_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pvalues;
+			pvalues->pquery = (query_spec_t*)yyvsp[0];
+			yyval = (LITEM)pvalues;
 		}
-#line 2660 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2629 "sqlgrammar.tab.c"
     break;
 
-  case 121:
-#line 823 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 121: /* insert_atom_commalist: insert_atom  */
+#line 825 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2669 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2638 "sqlgrammar.tab.c"
     break;
 
-  case 122:
-#line 828 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 122: /* insert_atom_commalist: insert_atom_commalist ',' insert_atom  */
+#line 830 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 2678 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2647 "sqlgrammar.tab.c"
     break;
 
-  case 123:
-#line 836 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 123: /* insert_atom: atom  */
+#line 838 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2686 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2655 "sqlgrammar.tab.c"
     break;
 
-  case 124:
-#line 840 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 124: /* insert_atom: NULLX  */
+#line 842 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 2694 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2663 "sqlgrammar.tab.c"
     break;
 
-  case 127:
-#line 857 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 127: /* select_statement: SELECT opt_all_distinct selection INTO target_commalist table_exp  */
+#line 859 "sqlgrammar.y"
+                {
 			sql_declare(select_statement_t, pstmt);
-			pstmt->alldistinct = (yyvsp[-4]);
-			pstmt->pselection = (selection_t*)(yyvsp[-3]);
-			pstmt->pcommalist = (yyvsp[-1]);
-			pstmt->ptable = (table_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pstmt;
+			pstmt->alldistinct = yyvsp[-4];
+			pstmt->pselection = (selection_t*)yyvsp[-3];
+			pstmt->pcommalist = yyvsp[-1];
+			pstmt->ptable = (table_exp_t*)yyvsp[0];
+			yyval = (LITEM)pstmt;
 		}
-#line 2707 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2676 "sqlgrammar.tab.c"
     break;
 
-  case 128:
-#line 869 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = SEL_NOT_SPECIFIED;
+  case 128: /* opt_all_distinct: %empty  */
+#line 871 "sqlgrammar.y"
+                {
+			yyval = SEL_NOT_SPECIFIED;
 		}
-#line 2715 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2684 "sqlgrammar.tab.c"
     break;
 
-  case 129:
-#line 873 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = SEL_ALL;
+  case 129: /* opt_all_distinct: ALL  */
+#line 875 "sqlgrammar.y"
+                {
+			yyval = SEL_ALL;
 		}
-#line 2723 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2692 "sqlgrammar.tab.c"
     break;
 
-  case 130:
-#line 877 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = SEL_DISTINCT;
+  case 130: /* opt_all_distinct: DISTINCT  */
+#line 879 "sqlgrammar.y"
+                {
+			yyval = SEL_DISTINCT;
 		}
-#line 2731 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2700 "sqlgrammar.tab.c"
     break;
 
-  case 133:
-#line 889 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 133: /* assignment_commalist: assignment  */
+#line 891 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2740 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2709 "sqlgrammar.tab.c"
     break;
 
-  case 134:
-#line 894 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 134: /* assignment_commalist: assignment_commalist ',' assignment  */
+#line 896 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 2749 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2718 "sqlgrammar.tab.c"
     break;
 
-  case 135:
-#line 902 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 135: /* assignment: column EQUALS scalar_exp  */
+#line 904 "sqlgrammar.y"
+                {
 			sql_declare(assignment_t, pass);
-			pass->pcolumn = (column_t)(yyvsp[-2]);
-			pass->pscalar = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pass;
+			pass->pcolumn = (column_t)yyvsp[-2];
+			pass->pscalar = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)pass;
 		}
-#line 2760 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2729 "sqlgrammar.tab.c"
     break;
 
-  case 136:
-#line 909 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 136: /* assignment: column EQUALS NULLX  */
+#line 911 "sqlgrammar.y"
+                {
 			sql_declare(assignment_t, pass);
-			pass->pcolumn = (column_t)(yyvsp[-2]);
+			pass->pcolumn = (column_t)yyvsp[-2];
 			pass->pscalar = (scalar_exp_t*)NULL;
-			(yyval) = (LITEM)pass;
+			yyval = (LITEM)pass;
 		}
-#line 2771 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2740 "sqlgrammar.tab.c"
     break;
 
-  case 137:
-#line 919 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 137: /* update_statement_searched: UPDATE table SET assignment_commalist opt_where_clause  */
+#line 921 "sqlgrammar.y"
+                {
 			sql_declare(update_statement_searched_t, pupdate);
-			pupdate->ptable = (table_t*)(yyvsp[-3]);
-			pupdate->plist = (yyvsp[-1]);
-			pupdate->pwhereclause = (where_clause_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pupdate;
+			pupdate->ptable = (table_t*)yyvsp[-3];
+			pupdate->plist = yyvsp[-1];
+			pupdate->pwhereclause = (where_clause_t*)yyvsp[0];
+			yyval = (LITEM)pupdate;
 		}
-#line 2783 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2752 "sqlgrammar.tab.c"
     break;
 
-  case 138:
-#line 930 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 138: /* target_commalist: target  */
+#line 932 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 2792 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2761 "sqlgrammar.tab.c"
     break;
 
-  case 139:
-#line 935 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 139: /* target_commalist: target_commalist ',' target  */
+#line 937 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 2801 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2770 "sqlgrammar.tab.c"
     break;
 
-  case 140:
-#line 943 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 140: /* target: parameter_ref  */
+#line 945 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2809 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2778 "sqlgrammar.tab.c"
     break;
 
-  case 141:
-#line 950 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 141: /* opt_where_clause: %empty  */
+#line 952 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 2817 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2786 "sqlgrammar.tab.c"
     break;
 
-  case 142:
-#line 954 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 142: /* opt_where_clause: where_clause  */
+#line 956 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2825 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2794 "sqlgrammar.tab.c"
     break;
 
-  case 143:
-#line 962 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 143: /* sql: query_spec  */
+#line 964 "sqlgrammar.y"
+                {
 			sql_declare(sql_t, psql);
 			psql->which = 3;
-			psql->pquery = (query_spec_t*)(yyvsp[0]);
-			(yyval) = (LITEM)psql;
+			psql->pquery = (query_spec_t*)yyvsp[0];
+			yyval = (LITEM)psql;
 		}
-#line 2836 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2805 "sqlgrammar.tab.c"
     break;
 
-  case 144:
-#line 972 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 144: /* query_exp: query_term  */
+#line 974 "sqlgrammar.y"
+                {
 			sql_declare(query_exp_t, pquery);
-			pquery->pterm = (query_term_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pquery;
+			pquery->pterm = (query_term_t*)yyvsp[0];
+			yyval = (LITEM)pquery;
 		}
-#line 2846 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2815 "sqlgrammar.tab.c"
     break;
 
-  case 145:
-#line 978 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 145: /* query_exp: query_exp UNION query_term  */
+#line 980 "sqlgrammar.y"
+                {
 			sql_declare(query_exp_t, pquery);
-			pquery->pterm = (query_term_t*)(yyvsp[0]);
-			pquery->pexp = (query_exp_t*)(yyvsp[-2]);
-			(yyval) = (LITEM)pquery;
+			pquery->pterm = (query_term_t*)yyvsp[0];
+			pquery->pexp = (query_exp_t*)yyvsp[-2];
+			yyval = (LITEM)pquery;
 		}
-#line 2857 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2826 "sqlgrammar.tab.c"
     break;
 
-  case 146:
-#line 985 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 146: /* query_exp: query_exp UNION ALL query_term  */
+#line 987 "sqlgrammar.y"
+                {
 			sql_declare(query_exp_t, pquery);
-			pquery->pterm = (query_term_t*)(yyvsp[0]);
-			pquery->pexp = (query_exp_t*)(yyvsp[-3]);
-			(yyval) = (LITEM)pquery;
+			pquery->pterm = (query_term_t*)yyvsp[0];
+			pquery->pexp = (query_exp_t*)yyvsp[-3];
+			yyval = (LITEM)pquery;
 		}
-#line 2868 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2837 "sqlgrammar.tab.c"
     break;
 
-  case 147:
-#line 995 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 147: /* query_term: query_spec  */
+#line 997 "sqlgrammar.y"
+                {
 			sql_declare(query_term_t, pterm);
 			pterm->which = 0;
-			pterm->pspec = (query_spec_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pterm;
+			pterm->pspec = (query_spec_t*)yyvsp[0];
+			yyval = (LITEM)pterm;
 		}
-#line 2879 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2848 "sqlgrammar.tab.c"
     break;
 
-  case 148:
-#line 1002 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 148: /* query_term: '(' query_exp ')'  */
+#line 1004 "sqlgrammar.y"
+                {
 			sql_declare(query_term_t, pterm);
 			pterm->which = 1;
-			pterm->pexp = (void*)(yyvsp[-1]);
-			(yyval) = (LITEM)pterm;
+			pterm->pexp = (void*)yyvsp[-1];
+			yyval = (LITEM)pterm;
 		}
-#line 2890 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2859 "sqlgrammar.tab.c"
     break;
 
-  case 149:
-#line 1013 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 149: /* query_spec: SELECT opt_all_distinct selection table_exp opt_order_by_clause  */
+#line 1015 "sqlgrammar.y"
+                {
 			sql_declare(query_spec_t, pspec);
-			pspec->alldistinct = (yyvsp[-3]);
-			pspec->pselection = (yyvsp[-2]);
-			pspec->pexp = (table_exp_t*)(yyvsp[-1]);
-			pspec->porderby = (yyvsp[0]);
-			(yyval) = (LITEM)pspec;
+			pspec->alldistinct = yyvsp[-3];
+			pspec->pselection = yyvsp[-2];
+			pspec->pexp = (table_exp_t*)yyvsp[-1];
+			pspec->porderby = yyvsp[0];
+			yyval = (LITEM)pspec;
 		}
-#line 2903 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2872 "sqlgrammar.tab.c"
     break;
 
-  case 150:
-#line 1025 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 150: /* selection: scalar_exp_commalist  */
+#line 1027 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 2911 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2880 "sqlgrammar.tab.c"
     break;
 
-  case 151:
-#line 1035 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 151: /* table_exp: from_clause opt_where_clause opt_group_by_clause opt_having_clause  */
+#line 1037 "sqlgrammar.y"
+                {
 			sql_declare(table_exp_t, ptable);
-			ptable->pfrom = (from_clause_t*)(yyvsp[-3]);
-			ptable->pwhere = (void*)(yyvsp[-2]);
-			ptable->pgroup = (yyvsp[-1]);
-			ptable->phaving = (having_clause_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ptable;
+			ptable->pfrom = (from_clause_t*)yyvsp[-3];
+			ptable->pwhere = (void*)yyvsp[-2];
+			ptable->pgroup = yyvsp[-1];
+			ptable->phaving = (having_clause_t*)yyvsp[0];
+			yyval = (LITEM)ptable;
 		}
-#line 2924 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2893 "sqlgrammar.tab.c"
     break;
 
-  case 152:
-#line 1047 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 152: /* from_clause: FROM table_ref_commalist  */
+#line 1049 "sqlgrammar.y"
+                {
 			sql_declare(from_clause_t, pfrom);
 			pfrom->which = 0;
-			pfrom->plist = (yyvsp[0]);
-			(yyval) = (LITEM)pfrom;
+			pfrom->plist = yyvsp[0];
+			yyval = (LITEM)pfrom;
 		}
-#line 2935 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2904 "sqlgrammar.tab.c"
     break;
 
-  case 153:
-#line 1054 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 153: /* from_clause: FROM table_ref join_ref  */
+#line 1056 "sqlgrammar.y"
+                {
 			sql_declare(from_clause_t, pfrom);
 			pfrom->which = 1;
 			pfrom->pjoin = sql_alloc(table_join_t);
-			pfrom->pjoin->ptable = (table_ref_t*)(yyvsp[-1]);
-			pfrom->pjoin->pjoin = (join_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pfrom;
+			pfrom->pjoin->ptable = (table_ref_t*)yyvsp[-1];
+			pfrom->pjoin->pjoin = (join_ref_t*)yyvsp[0];
+			yyval = (LITEM)pfrom;
 		}
-#line 2948 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2917 "sqlgrammar.tab.c"
     break;
 
-  case 154:
-#line 1067 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			join_ref_t *pref = (join_ref_t*)(yyvsp[0]);
+  case 154: /* join_ref: INNER join_ref  */
+#line 1069 "sqlgrammar.y"
+                {
+			join_ref_t *pref = (join_ref_t*)yyvsp[0];
 			pref->type = JOIN_INNER;
-			(yyval) = (LITEM)pref;
+			yyval = (LITEM)pref;
 		}
-#line 2958 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2927 "sqlgrammar.tab.c"
     break;
 
-  case 155:
-#line 1073 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			join_ref_t *pref = (join_ref_t*)(yyvsp[0]);
+  case 155: /* join_ref: LEFT OUTER join_ref  */
+#line 1075 "sqlgrammar.y"
+                {
+			join_ref_t *pref = (join_ref_t*)yyvsp[0];
 			pref->type = JOIN_LEFT_OUTER;
-			(yyval) = (LITEM)pref;
+			yyval = (LITEM)pref;
 		}
-#line 2968 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2937 "sqlgrammar.tab.c"
     break;
 
-  case 156:
-#line 1079 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			join_ref_t *pref = (join_ref_t*)(yyvsp[0]);
+  case 156: /* join_ref: RIGHT OUTER join_ref  */
+#line 1081 "sqlgrammar.y"
+                {
+			join_ref_t *pref = (join_ref_t*)yyvsp[0];
 			pref->type = JOIN_RIGHT_OUTER;
-			(yyval) = (LITEM)pref;
+			yyval = (LITEM)pref;
 		}
-#line 2978 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2947 "sqlgrammar.tab.c"
     break;
 
-  case 157:
-#line 1085 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 157: /* join_ref: JOIN table_ref  */
+#line 1087 "sqlgrammar.y"
+                {
 			sql_declare(join_ref_t, pref);
 			pref->type = JOIN_INNER;
-			pref->ptable = (table_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->ptable = (table_ref_t*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 2989 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2958 "sqlgrammar.tab.c"
     break;
 
-  case 158:
-#line 1092 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 158: /* join_ref: JOIN table_ref join_ref  */
+#line 1094 "sqlgrammar.y"
+                {
 			sql_declare(join_ref_t, pref);
 			pref->type = JOIN_INNER;
-			pref->ptable = (table_ref_t*)(yyvsp[-1]);
-			pref->pjoin = (join_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->ptable = (table_ref_t*)yyvsp[-1];
+			pref->pjoin = (join_ref_t*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3001 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2970 "sqlgrammar.tab.c"
     break;
 
-  case 159:
-#line 1100 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 159: /* join_ref: JOIN table_ref ON search_condition  */
+#line 1102 "sqlgrammar.y"
+                {
 			sql_declare(join_ref_t, pref);
 			pref->type = JOIN_INNER;
-			pref->ptable = (table_ref_t*)(yyvsp[-2]);
-			pref->psearch = (void*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->ptable = (table_ref_t*)yyvsp[-2];
+			pref->psearch = (void*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3013 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2982 "sqlgrammar.tab.c"
     break;
 
-  case 160:
-#line 1108 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 160: /* join_ref: JOIN table_ref ON search_condition join_ref  */
+#line 1110 "sqlgrammar.y"
+                {
 			sql_declare(join_ref_t, pref);
 			pref->type = JOIN_INNER;
-			pref->ptable = (table_ref_t*)(yyvsp[-3]);
-			pref->psearch = (void*)(yyvsp[-1]);
-			pref->pjoin = (join_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->ptable = (table_ref_t*)yyvsp[-3];
+			pref->psearch = (void*)yyvsp[-1];
+			pref->pjoin = (join_ref_t*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3026 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 2995 "sqlgrammar.tab.c"
     break;
 
-  case 161:
-#line 1120 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 161: /* table_ref_commalist: table_ref  */
+#line 1122 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 3035 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3004 "sqlgrammar.tab.c"
     break;
 
-  case 162:
-#line 1125 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 162: /* table_ref_commalist: table_ref_commalist ',' table_ref  */
+#line 1127 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 3044 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3013 "sqlgrammar.tab.c"
     break;
 
-  case 163:
-#line 1133 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 163: /* table_ref: table  */
+#line 1135 "sqlgrammar.y"
+                {
 			sql_declare(table_ref_t, pref);
-			pref->ptable = (table_t*)(yyvsp[0]);
+			pref->ptable = (table_t*)yyvsp[0];
 			pref->which = -1;
-			(yyval) = (LITEM)pref;
+			yyval = (LITEM)pref;
 		}
-#line 3055 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3024 "sqlgrammar.tab.c"
     break;
 
-  case 164:
-#line 1140 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 164: /* table_ref: table NAME  */
+#line 1142 "sqlgrammar.y"
+                {
 			sql_declare(table_ref_t, pref);
-			pref->ptable = (table_t*)(yyvsp[-1]);
+			pref->ptable = (table_t*)yyvsp[-1];
 			pref->which = 0;
-			pref->alias = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->alias = (char*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3067 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3036 "sqlgrammar.tab.c"
     break;
 
-  case 165:
-#line 1148 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 165: /* table_ref: table AS NAME  */
+#line 1150 "sqlgrammar.y"
+                {
 			sql_declare(table_ref_t, pref);
-			pref->ptable = (table_t*)(yyvsp[-2]);
+			pref->ptable = (table_t*)yyvsp[-2];
 			pref->which = 0;
-			pref->alias = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->alias = (char*)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3079 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3048 "sqlgrammar.tab.c"
     break;
 
-  case 166:
-#line 1156 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 166: /* table_ref: table range_variable  */
+#line 1158 "sqlgrammar.y"
+                {
 			sql_declare(table_ref_t, pref);
-			pref->ptable = (table_t*)(yyvsp[-1]);
+			pref->ptable = (table_t*)yyvsp[-1];
 			pref->which = 1;
-			pref->prange = (range_variable_t)(yyvsp[0]);
-			(yyval) = (LITEM)pref;
+			pref->prange = (range_variable_t)yyvsp[0];
+			yyval = (LITEM)pref;
 		}
-#line 3091 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3060 "sqlgrammar.tab.c"
     break;
 
-  case 167:
-#line 1167 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 167: /* where_clause: WHERE search_condition  */
+#line 1169 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3099 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3068 "sqlgrammar.tab.c"
     break;
 
-  case 168:
-#line 1174 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 168: /* opt_group_by_clause: %empty  */
+#line 1176 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 3107 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3076 "sqlgrammar.tab.c"
     break;
 
-  case 169:
-#line 1178 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 169: /* opt_group_by_clause: GROUP BY column_ref_commalist  */
+#line 1180 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3115 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3084 "sqlgrammar.tab.c"
     break;
 
-  case 170:
-#line 1185 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 170: /* column_ref_commalist: column_ref  */
+#line 1187 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 3124 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3093 "sqlgrammar.tab.c"
     break;
 
-  case 171:
-#line 1190 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 171: /* column_ref_commalist: column_ref_commalist ',' column_ref  */
+#line 1192 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 3133 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3102 "sqlgrammar.tab.c"
     break;
 
-  case 172:
-#line 1198 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 172: /* opt_having_clause: %empty  */
+#line 1200 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 3141 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3110 "sqlgrammar.tab.c"
     break;
 
-  case 173:
-#line 1202 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 173: /* opt_having_clause: HAVING search_condition  */
+#line 1204 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3149 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3118 "sqlgrammar.tab.c"
     break;
 
-  case 174:
-#line 1211 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 174: /* search_condition: search_condition OR search_condition  */
+#line 1213 "sqlgrammar.y"
+                {
 			sql_declare(search_condition_t, psearch);
-			psearch->psearch1 = (search_condition_t*)(yyvsp[-2]);
-			psearch->psearch2 = (search_condition_t*)(yyvsp[0]);
+			psearch->psearch1 = (search_condition_t*)yyvsp[-2];
+			psearch->psearch2 = (search_condition_t*)yyvsp[0];
 			psearch->searchop = SEARCHOP_OR;
-			(yyval) = (LITEM)psearch;
+			yyval = (LITEM)psearch;
 		}
-#line 3161 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3130 "sqlgrammar.tab.c"
     break;
 
-  case 175:
-#line 1219 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 175: /* search_condition: search_condition AND search_condition  */
+#line 1221 "sqlgrammar.y"
+                {
 			sql_declare(search_condition_t, psearch);
-			psearch->psearch1 = (search_condition_t*)(yyvsp[-2]);
-			psearch->psearch2 = (search_condition_t*)(yyvsp[0]);
+			psearch->psearch1 = (search_condition_t*)yyvsp[-2];
+			psearch->psearch2 = (search_condition_t*)yyvsp[0];
 			psearch->searchop = SEARCHOP_AND;
-			(yyval) = (LITEM)psearch;
+			yyval = (LITEM)psearch;
 		}
-#line 3173 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3142 "sqlgrammar.tab.c"
     break;
 
-  case 176:
-#line 1227 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 176: /* search_condition: NOT search_condition  */
+#line 1229 "sqlgrammar.y"
+                {
 			sql_declare(search_condition_t, psearch);
-			psearch->psearch2 = (search_condition_t*)(yyvsp[0]);
+			psearch->psearch2 = (search_condition_t*)yyvsp[0];
 			psearch->searchop = SEARCHOP_NOT;
-			(yyval) = (LITEM)psearch;
+			yyval = (LITEM)psearch;
 		}
-#line 3184 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3153 "sqlgrammar.tab.c"
     break;
 
-  case 177:
-#line 1234 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 177: /* search_condition: '(' search_condition ')'  */
+#line 1236 "sqlgrammar.y"
+                {
 			sql_declare(search_condition_t, psearch);
-			psearch->psearch1 = (search_condition_t*)(yyvsp[-1]);
+			psearch->psearch1 = (search_condition_t*)yyvsp[-1];
 			psearch->useparens = 1;
-			(yyval) = (LITEM)psearch;
+			yyval = (LITEM)psearch;
 		}
-#line 3195 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3164 "sqlgrammar.tab.c"
     break;
 
-  case 178:
-#line 1241 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 178: /* search_condition: predicate  */
+#line 1243 "sqlgrammar.y"
+                {
 			sql_declare(search_condition_t, psearch);
-			psearch->ppredicate = (predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)psearch;
+			psearch->ppredicate = (predicate_t*)yyvsp[0];
+			yyval = (LITEM)psearch;
 		}
-#line 3205 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3174 "sqlgrammar.tab.c"
     break;
 
-  case 179:
-#line 1250 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 179: /* predicate: comparison_predicate  */
+#line 1252 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 0;
-			ppred->pcomparison = (comparison_predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pcomparison = (comparison_predicate_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3216 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3185 "sqlgrammar.tab.c"
     break;
 
-  case 180:
-#line 1257 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 180: /* predicate: in_predicate  */
+#line 1259 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 1;
-			ppred->pin = (in_predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pin = (in_predicate_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3227 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3196 "sqlgrammar.tab.c"
     break;
 
-  case 181:
-#line 1264 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 181: /* predicate: test_for_null  */
+#line 1266 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 2;
-			ppred->ptestnull = (test_for_null_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->ptestnull = (test_for_null_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3238 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3207 "sqlgrammar.tab.c"
     break;
 
-  case 182:
-#line 1271 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 182: /* predicate: existence_test  */
+#line 1273 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 3;
-			ppred->pexisttest = (existence_test_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pexisttest = (existence_test_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3249 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3218 "sqlgrammar.tab.c"
     break;
 
-  case 183:
-#line 1278 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 183: /* predicate: between_predicate  */
+#line 1280 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 4;
-			ppred->pbetween = (between_predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pbetween = (between_predicate_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3260 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3229 "sqlgrammar.tab.c"
     break;
 
-  case 184:
-#line 1285 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 184: /* predicate: like_predicate  */
+#line 1287 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 5;
-			ppred->plike = (like_predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->plike = (like_predicate_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3271 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3240 "sqlgrammar.tab.c"
     break;
 
-  case 185:
-#line 1292 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 185: /* predicate: all_or_any_predicate  */
+#line 1294 "sqlgrammar.y"
+                {
 			sql_declare(predicate_t, ppred);
 			ppred->which = 6;
-			ppred->panyorall = (any_or_all_predicate_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->panyorall = (any_or_all_predicate_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3282 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3251 "sqlgrammar.tab.c"
     break;
 
-  case 186:
-#line 1302 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 186: /* comparison_predicate: scalar_exp comparison scalar_exp  */
+#line 1304 "sqlgrammar.y"
+                {
 			sql_declare(comparison_predicate_t, ppred);
-			ppred->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
-			ppred->pcomparison = (char*)(yyvsp[-1]);
-			ppred->pscalar2 = (scalar_exp_t*)(yyvsp[0]);
+			ppred->pscalar1 = (scalar_exp_t*)yyvsp[-2];
+			ppred->pcomparison = (char*)yyvsp[-1];
+			ppred->pscalar2 = (scalar_exp_t*)yyvsp[0];
 			ppred->join_type = JOIN_INNER;
-			(yyval) = (LITEM)ppred;
+			yyval = (LITEM)ppred;
 		}
-#line 3295 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3264 "sqlgrammar.tab.c"
     break;
 
-  case 187:
-#line 1311 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 187: /* comparison_predicate: scalar_exp comparison subquery  */
+#line 1313 "sqlgrammar.y"
+                {
 			sql_declare(comparison_predicate_t, ppred);
-			ppred->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
-			ppred->pcomparison = (char*)(yyvsp[-1]);
-			ppred->psubquery = (subquery_t*)(yyvsp[0]);
+			ppred->pscalar1 = (scalar_exp_t*)yyvsp[-2];
+			ppred->pcomparison = (char*)yyvsp[-1];
+			ppred->psubquery = (subquery_t*)yyvsp[0];
 			ppred->join_type = JOIN_INNER;
-			(yyval) = (LITEM)ppred;
+			yyval = (LITEM)ppred;
 		}
-#line 3308 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3277 "sqlgrammar.tab.c"
     break;
 
-  case 188:
-#line 1323 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 188: /* between_predicate: scalar_exp NOT BETWEEN scalar_exp AND scalar_exp  */
+#line 1325 "sqlgrammar.y"
+                {
 			sql_declare(between_predicate_t, ppred);
-			ppred->pscalar1 = (scalar_exp_t*)(yyvsp[-5]);
+			ppred->pscalar1 = (scalar_exp_t*)yyvsp[-5];
 			ppred->not = 1;
-			ppred->pscalar2 = (scalar_exp_t*)(yyvsp[-2]);
-			ppred->pscalar3 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pscalar2 = (scalar_exp_t*)yyvsp[-2];
+			ppred->pscalar3 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3321 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3290 "sqlgrammar.tab.c"
     break;
 
-  case 189:
-#line 1332 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 189: /* between_predicate: scalar_exp BETWEEN scalar_exp AND scalar_exp  */
+#line 1334 "sqlgrammar.y"
+                {
 			sql_declare(between_predicate_t, ppred);
-			ppred->pscalar1 = (scalar_exp_t*)(yyvsp[-4]);
+			ppred->pscalar1 = (scalar_exp_t*)yyvsp[-4];
 			ppred->not = 0;
-			ppred->pscalar2 = (scalar_exp_t*)(yyvsp[-2]);
-			ppred->pscalar3 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->pscalar2 = (scalar_exp_t*)yyvsp[-2];
+			ppred->pscalar3 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3334 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3303 "sqlgrammar.tab.c"
     break;
 
-  case 190:
-#line 1344 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 190: /* like_predicate: scalar_exp NOT LIKE atom opt_escape  */
+#line 1346 "sqlgrammar.y"
+                {
 			sql_declare(like_predicate_t, ppred);
-			ppred->pscalar = (scalar_exp_t*)(yyvsp[-4]);
+			ppred->pscalar = (scalar_exp_t*)yyvsp[-4];
 			ppred->not = 1;
-			ppred->patom = (atom_t*)(yyvsp[-1]);
-			ppred->pescape = (atom_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->patom = (atom_t*)yyvsp[-1];
+			ppred->pescape = (atom_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3347 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3316 "sqlgrammar.tab.c"
     break;
 
-  case 191:
-#line 1353 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 191: /* like_predicate: scalar_exp LIKE atom opt_escape  */
+#line 1355 "sqlgrammar.y"
+                {
 			sql_declare(like_predicate_t, ppred);
-			ppred->pscalar = (scalar_exp_t*)(yyvsp[-3]);
+			ppred->pscalar = (scalar_exp_t*)yyvsp[-3];
 			ppred->not = 0;
-			ppred->patom = (atom_t*)(yyvsp[-1]);
-			ppred->pescape = (atom_t*)(yyvsp[0]);
-			(yyval) = (LITEM)ppred;
+			ppred->patom = (atom_t*)yyvsp[-1];
+			ppred->pescape = (atom_t*)yyvsp[0];
+			yyval = (LITEM)ppred;
 		}
-#line 3360 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3329 "sqlgrammar.tab.c"
     break;
 
-  case 192:
-#line 1365 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (LITEM)NULL;
+  case 192: /* opt_escape: %empty  */
+#line 1367 "sqlgrammar.y"
+                {
+			yyval = (LITEM)NULL;
 		}
-#line 3368 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3337 "sqlgrammar.tab.c"
     break;
 
-  case 193:
-#line 1369 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 193: /* opt_escape: ESCAPE atom  */
+#line 1371 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3376 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3345 "sqlgrammar.tab.c"
     break;
 
-  case 194:
-#line 1376 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 194: /* test_for_null: column_ref IS NOT NULLX  */
+#line 1378 "sqlgrammar.y"
+                {
 			sql_declare(test_for_null_t, ptest);
-			ptest->pcolumn = (column_ref_t*)(yyvsp[-3]);
+			ptest->pcolumn = (column_ref_t*)yyvsp[-3];
 			ptest->isnull = 0;
-			(yyval) = (LITEM)ptest;
+			yyval = (LITEM)ptest;
 		}
-#line 3387 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3356 "sqlgrammar.tab.c"
     break;
 
-  case 195:
-#line 1383 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 195: /* test_for_null: column_ref IS NULLX  */
+#line 1385 "sqlgrammar.y"
+                {
 			sql_declare(test_for_null_t, ptest);
-			ptest->pcolumn = (column_ref_t*)(yyvsp[-2]);
+			ptest->pcolumn = (column_ref_t*)yyvsp[-2];
 			ptest->isnull = 1;
-			(yyval) = (LITEM)ptest;
+			yyval = (LITEM)ptest;
 		}
-#line 3398 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3367 "sqlgrammar.tab.c"
     break;
 
-  case 196:
-#line 1393 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 196: /* in_predicate: scalar_exp NOT IN2 subquery  */
+#line 1395 "sqlgrammar.y"
+                {
 			sql_declare(in_predicate_t, pin);
-			pin->pscalar = (scalar_exp_t*)(yyvsp[-3]);
+			pin->pscalar = (scalar_exp_t*)yyvsp[-3];
 			pin->not = 1; 
 			pin->which = 0;
-			pin->psubquery = (subquery_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pin;
+			pin->psubquery = (subquery_t*)yyvsp[0];
+			yyval = (LITEM)pin;
 		}
-#line 3411 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3380 "sqlgrammar.tab.c"
     break;
 
-  case 197:
-#line 1402 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 197: /* in_predicate: scalar_exp IN2 subquery  */
+#line 1404 "sqlgrammar.y"
+                {
 			sql_declare(in_predicate_t, pin);
-			pin->pscalar = (scalar_exp_t*)(yyvsp[-2]);
+			pin->pscalar = (scalar_exp_t*)yyvsp[-2];
 			pin->not = 0; 
 			pin->which = 0;
-			pin->psubquery = (subquery_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pin;
+			pin->psubquery = (subquery_t*)yyvsp[0];
+			yyval = (LITEM)pin;
 		}
-#line 3424 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3393 "sqlgrammar.tab.c"
     break;
 
-  case 198:
-#line 1411 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 198: /* in_predicate: scalar_exp NOT IN2 '(' atom_commalist ')'  */
+#line 1413 "sqlgrammar.y"
+                {
 			sql_declare(in_predicate_t, pin);
-			pin->pscalar = (scalar_exp_t*)(yyvsp[-5]);
+			pin->pscalar = (scalar_exp_t*)yyvsp[-5];
 			pin->not = 1; 
 			pin->which = 1;
-			pin->patomlist = (yyvsp[-1]);
-			(yyval) = (LITEM)pin;
+			pin->patomlist = yyvsp[-1];
+			yyval = (LITEM)pin;
 		}
-#line 3437 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3406 "sqlgrammar.tab.c"
     break;
 
-  case 199:
-#line 1420 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 199: /* in_predicate: scalar_exp IN2 '(' atom_commalist ')'  */
+#line 1422 "sqlgrammar.y"
+                {
 			sql_declare(in_predicate_t, pin);
-			pin->pscalar = (scalar_exp_t*)(yyvsp[-4]);
+			pin->pscalar = (scalar_exp_t*)yyvsp[-4];
 			pin->not = 1; 
 			pin->which = 1;
-			pin->patomlist = (yyvsp[-1]);
-			(yyval) = (LITEM)pin;
+			pin->patomlist = yyvsp[-1];
+			yyval = (LITEM)pin;
 		}
-#line 3450 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3419 "sqlgrammar.tab.c"
     break;
 
-  case 200:
-#line 1432 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 200: /* atom_commalist: atom  */
+#line 1434 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 3459 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3428 "sqlgrammar.tab.c"
     break;
 
-  case 201:
-#line 1437 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 201: /* atom_commalist: atom_commalist ',' atom  */
+#line 1439 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 3468 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3437 "sqlgrammar.tab.c"
     break;
 
-  case 202:
-#line 1445 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 202: /* all_or_any_predicate: scalar_exp comparison any_all_some subquery  */
+#line 1447 "sqlgrammar.y"
+                {
 			sql_declare(any_or_all_predicate_t, pall);
-			pall->pscalar = (scalar_exp_t*)(yyvsp[-3]);
-			pall->comparison = (char*)(yyvsp[-2]);
-			pall->anyallsome = (yyvsp[-1]);
-			pall->psubquery = (subquery_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pall;
+			pall->pscalar = (scalar_exp_t*)yyvsp[-3];
+			pall->comparison = (char*)yyvsp[-2];
+			pall->anyallsome = yyvsp[-1];
+			pall->psubquery = (subquery_t*)yyvsp[0];
+			yyval = (LITEM)pall;
 		}
-#line 3481 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3450 "sqlgrammar.tab.c"
     break;
 
-  case 203:
-#line 1457 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = PRED_ANY;
+  case 203: /* any_all_some: ANY  */
+#line 1459 "sqlgrammar.y"
+                {
+			yyval = PRED_ANY;
 		}
-#line 3489 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3458 "sqlgrammar.tab.c"
     break;
 
-  case 204:
-#line 1461 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = PRED_ALL;
+  case 204: /* any_all_some: ALL  */
+#line 1463 "sqlgrammar.y"
+                {
+			yyval = PRED_ALL;
 		}
-#line 3497 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3466 "sqlgrammar.tab.c"
     break;
 
-  case 205:
-#line 1465 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = PRED_SOME;
+  case 205: /* any_all_some: SOME  */
+#line 1467 "sqlgrammar.y"
+                {
+			yyval = PRED_SOME;
 		}
-#line 3505 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3474 "sqlgrammar.tab.c"
     break;
 
-  case 206:
-#line 1472 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 206: /* existence_test: EXISTS subquery  */
+#line 1474 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3513 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3482 "sqlgrammar.tab.c"
     break;
 
-  case 207:
-#line 1479 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[-1]);
+  case 207: /* subquery: '(' query_spec ')'  */
+#line 1481 "sqlgrammar.y"
+                {
+			yyval = yyvsp[-1];
 		}
-#line 3521 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3490 "sqlgrammar.tab.c"
     break;
 
-  case 208:
-#line 1488 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 208: /* scalar_exp: scalar_exp NAME  */
+#line 1490 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-1]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-1];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pscalar->name = tmp;
-			(yyval) = (LITEM)pscalar;
+			yyval = (LITEM)pscalar;
 		}
-#line 3535 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3504 "sqlgrammar.tab.c"
     break;
 
-  case 209:
-#line 1498 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 209: /* scalar_exp: scalar_exp AS NAME  */
+#line 1500 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-2];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pscalar->name = tmp;
-			(yyval) = (LITEM)pscalar;
+			yyval = (LITEM)pscalar;
 		}
-#line 3549 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3518 "sqlgrammar.tab.c"
     break;
 
-  case 210:
-#line 1508 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 210: /* scalar_exp: scalar_exp '+' scalar_exp  */
+#line 1510 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-2];
 			pscalar->mathop = MATHOP_PLUS;
-			pscalar->pscalar2 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pscalar2 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3561 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3530 "sqlgrammar.tab.c"
     break;
 
-  case 211:
-#line 1516 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 211: /* scalar_exp: scalar_exp '-' scalar_exp  */
+#line 1518 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-2];
 			pscalar->mathop = MATHOP_MINUS;
-			pscalar->pscalar2 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pscalar2 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3573 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3542 "sqlgrammar.tab.c"
     break;
 
-  case 212:
-#line 1524 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 212: /* scalar_exp: scalar_exp '*' scalar_exp  */
+#line 1526 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-2];
 			pscalar->mathop = MATHOP_MULT;
-			pscalar->pscalar2 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pscalar2 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3585 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3554 "sqlgrammar.tab.c"
     break;
 
-  case 213:
-#line 1532 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 213: /* scalar_exp: scalar_exp '/' scalar_exp  */
+#line 1534 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-2]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-2];
 			pscalar->mathop = MATHOP_DIVIDE;
-			pscalar->pscalar2 = (scalar_exp_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pscalar2 = (scalar_exp_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3597 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3566 "sqlgrammar.tab.c"
     break;
 
-  case 214:
-#line 1540 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 214: /* scalar_exp: '+' scalar_exp  */
+#line 1542 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[0]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[0];
 			pscalar->mathop = MATHOP_PLUS;
 			pscalar->unary = 1;
-			(yyval) = (LITEM)pscalar;
+			yyval = (LITEM)pscalar;
 		}
-#line 3609 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3578 "sqlgrammar.tab.c"
     break;
 
-  case 215:
-#line 1548 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 215: /* scalar_exp: '-' scalar_exp  */
+#line 1550 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[0]);
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[0];
 			pscalar->mathop = MATHOP_MINUS;
 			pscalar->unary = 1;
-			(yyval) = (LITEM)pscalar;
+			yyval = (LITEM)pscalar;
 		}
-#line 3621 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3590 "sqlgrammar.tab.c"
     break;
 
-  case 216:
-#line 1556 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 216: /* scalar_exp: literal  */
+#line 1558 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pliteral = (literal_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pliteral = (literal_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3631 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3600 "sqlgrammar.tab.c"
     break;
 
-  case 217:
-#line 1562 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 217: /* scalar_exp: column_ref  */
+#line 1564 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pcolumnref = (column_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pcolumnref = (column_ref_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3641 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3610 "sqlgrammar.tab.c"
     break;
 
-  case 218:
-#line 1568 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 218: /* scalar_exp: function_ref  */
+#line 1570 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pfunction_ref = (function_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pfunction_ref = (function_ref_t*)yyvsp[0];
+			yyval = (LITEM)pscalar;
 		}
-#line 3651 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3620 "sqlgrammar.tab.c"
     break;
 
-  case 219:
-#line 1574 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 219: /* scalar_exp: '(' scalar_exp ')'  */
+#line 1576 "sqlgrammar.y"
+                {
 			sql_declare(scalar_exp_t, pscalar);
-			pscalar->pscalar1 = (scalar_exp_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pscalar;
+			pscalar->pscalar1 = (scalar_exp_t*)yyvsp[-1];
+			yyval = (LITEM)pscalar;
 		}
-#line 3661 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3630 "sqlgrammar.tab.c"
     break;
 
-  case 220:
-#line 1583 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = _sql_create_list();
-			_sql_add_tail((yyval), (yyvsp[0]));
+  case 220: /* scalar_exp_commalist: scalar_exp  */
+#line 1585 "sqlgrammar.y"
+                {
+			yyval = _sql_create_list();
+			_sql_add_tail(yyval, yyvsp[0]);
 		}
-#line 3670 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3639 "sqlgrammar.tab.c"
     break;
 
-  case 221:
-#line 1588 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			_sql_add_tail((yyvsp[-2]), (yyvsp[0]));
-			(yyval) = (yyvsp[-2]);
+  case 221: /* scalar_exp_commalist: scalar_exp_commalist ',' scalar_exp  */
+#line 1590 "sqlgrammar.y"
+                {
+			_sql_add_tail(yyvsp[-2], yyvsp[0]);
+			yyval = yyvsp[-2];
 		}
-#line 3679 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3648 "sqlgrammar.tab.c"
     break;
 
-  case 222:
-#line 1596 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 222: /* atom: parameter_ref  */
+#line 1598 "sqlgrammar.y"
+                {
 			sql_declare(atom_t, patom);
 			patom->which = 0;
-			patom->pparam = (parameter_ref_t*)(yyvsp[0]);
-			(yyval) = (LITEM)patom;
+			patom->pparam = (parameter_ref_t*)yyvsp[0];
+			yyval = (LITEM)patom;
 		}
-#line 3690 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3659 "sqlgrammar.tab.c"
     break;
 
-  case 223:
-#line 1603 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 223: /* atom: literal  */
+#line 1605 "sqlgrammar.y"
+                {
 			sql_declare(atom_t, patom);
 			patom->which = 1;
-			patom->pliteral = (literal_t*)(yyvsp[0]);
-			(yyval) = (LITEM)patom;
+			patom->pliteral = (literal_t*)yyvsp[0];
+			yyval = (LITEM)patom;
 		}
-#line 3701 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3670 "sqlgrammar.tab.c"
     break;
 
-  case 224:
-#line 1610 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 224: /* atom: USER  */
+#line 1612 "sqlgrammar.y"
+                {
 			sql_declare(atom_t, patom);
 			patom->which = 2;
 			patom->user = 1;
-			(yyval) = (LITEM)patom;
+			yyval = (LITEM)patom;
 		}
-#line 3712 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3681 "sqlgrammar.tab.c"
     break;
 
-  case 228:
-#line 1626 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 228: /* function_ref: AMMSC '(' '*' ')'  */
+#line 1628 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-3]);
+			pfunc->name = (char*)yyvsp[-3];
 			pfunc->asterisk = 1;
-			(yyval) = (LITEM)pfunc;
+			yyval = (LITEM)pfunc;
 		}
-#line 3723 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3692 "sqlgrammar.tab.c"
     break;
 
-  case 229:
-#line 1633 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 229: /* function_ref: AMMSC '(' DISTINCT column_ref ')'  */
+#line 1635 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-4]);
+			pfunc->name = (char*)yyvsp[-4];
 			pfunc->distinct = 1;
-			pfunc->pcolumn = (column_ref_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pfunc;
+			pfunc->pcolumn = (column_ref_t*)yyvsp[-1];
+			yyval = (LITEM)pfunc;
 		}
-#line 3735 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3704 "sqlgrammar.tab.c"
     break;
 
-  case 230:
-#line 1641 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 230: /* function_ref: AMMSC '(' column_ref ')'  */
+#line 1643 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-3]);
-			pfunc->pcolumn = (column_ref_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pfunc;
+			pfunc->name = (char*)yyvsp[-3];
+			pfunc->pcolumn = (column_ref_t*)yyvsp[-1];
+			yyval = (LITEM)pfunc;
 		}
-#line 3746 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3715 "sqlgrammar.tab.c"
     break;
 
-  case 231:
-#line 1648 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 231: /* function_ref: AMMSC '(' ALL scalar_exp ')'  */
+#line 1650 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-4]);
+			pfunc->name = (char*)yyvsp[-4];
 			pfunc->all = 1;
-			pfunc->pscalar = (column_ref_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pfunc;
+			pfunc->pscalar = (column_ref_t*)yyvsp[-1];
+			yyval = (LITEM)pfunc;
 		}
-#line 3758 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3727 "sqlgrammar.tab.c"
     break;
 
-  case 232:
-#line 1656 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 232: /* function_ref: AMMSC '(' scalar_exp ')'  */
+#line 1658 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-3]);
-			pfunc->pscalar = (column_ref_t*)(yyvsp[-1]);
-			(yyval) = (LITEM)pfunc;
+			pfunc->name = (char*)yyvsp[-3];
+			pfunc->pscalar = (column_ref_t*)yyvsp[-1];
+			yyval = (LITEM)pfunc;
 		}
-#line 3769 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3738 "sqlgrammar.tab.c"
     break;
 
-  case 233:
-#line 1663 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 233: /* function_ref: AMMSC '(' ')'  */
+#line 1665 "sqlgrammar.y"
+                {
 			sql_declare(function_ref_t, pfunc);
-			pfunc->name = (char*)(yyvsp[-2]);
-			(yyval) = (LITEM)pfunc;
+			pfunc->name = (char*)yyvsp[-2];
+			yyval = (LITEM)pfunc;
 		}
-#line 3779 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3748 "sqlgrammar.tab.c"
     break;
 
-  case 234:
-#line 1672 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			(yyval) = (yyvsp[0]);
+  case 234: /* literal: string_literal  */
+#line 1674 "sqlgrammar.y"
+                {
+			yyval = yyvsp[0];
 		}
-#line 3787 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3756 "sqlgrammar.tab.c"
     break;
 
-  case 235:
-#line 1676 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 235: /* literal: INTNUM  */
+#line 1678 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->l = atoi((const char*)(yyvsp[0]));
+			plit->l = atoi((const char*)yyvsp[0]);
 			plit->which = 1;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3798 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3767 "sqlgrammar.tab.c"
     break;
 
-  case 236:
-#line 1683 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 236: /* literal: APPROXNUM  */
+#line 1685 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->d = atof((const char *)(yyvsp[0]));
+			plit->d = atof((const char *)yyvsp[0]);
 			plit->which = 2;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3809 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3778 "sqlgrammar.tab.c"
     break;
 
-  case 237:
-#line 1690 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 237: /* literal: '*'  */
+#line 1692 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->string = (char*)(yyvsp[0]);
+			plit->string = (char*)yyvsp[0];
 			plit->which = 3;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3820 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3789 "sqlgrammar.tab.c"
     break;
 
-  case 238:
-#line 1697 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 238: /* literal: NAME '.' '*'  */
+#line 1699 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->string = (char*)(yyvsp[-2]);
+			plit->string = (char*)yyvsp[-2];
 			plit->which = 4;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3831 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3800 "sqlgrammar.tab.c"
     break;
 
-  case 239:
-#line 1704 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 239: /* literal: DATE_LITERAL  */
+#line 1706 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->string = (char*)(yyvsp[0]);
+			plit->string = (char*)yyvsp[0];
 			plit->which = 5;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3842 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3811 "sqlgrammar.tab.c"
     break;
 
-  case 240:
-#line 1711 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 240: /* literal: TIME_LITERAL  */
+#line 1713 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->string = (char*)(yyvsp[0]);
+			plit->string = (char*)yyvsp[0];
 			plit->which = 6;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3853 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3822 "sqlgrammar.tab.c"
     break;
 
-  case 241:
-#line 1722 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 241: /* string_literal: STRING  */
+#line 1724 "sqlgrammar.y"
+                {
 			sql_declare(literal_t, plit);
-			plit->string = (char*)(yyvsp[0]);
+			plit->string = (char*)yyvsp[0];
 			plit->which = 0;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3864 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3833 "sqlgrammar.tab.c"
     break;
 
-  case 242:
-#line 1730 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-			literal_t *plit = (literal_t*)(yyvsp[-1]);
-			char *tmp = __sql_alloc(strlen((char*)plit->string) + strlen((char*)(yyvsp[0])) + 1);
-			sprintf(tmp, "%s%s", plit->string, (char*)(yyvsp[0]));
+  case 242: /* string_literal: string_literal STRING  */
+#line 1732 "sqlgrammar.y"
+                {
+			literal_t *plit = (literal_t*)yyvsp[-1];
+			char *tmp = __sql_alloc(strlen((char*)plit->string) + strlen((char*)yyvsp[0]) + 1);
+			sprintf(tmp, "%s%s", plit->string, (char*)yyvsp[0]);
 			plit->string = tmp;
-			(yyval) = (LITEM)plit;
+			yyval = (LITEM)plit;
 		}
-#line 3876 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3845 "sqlgrammar.tab.c"
     break;
 
-  case 243:
-#line 1742 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 243: /* table: NAME  */
+#line 1744 "sqlgrammar.y"
+                {
 			sql_declare(table_t, ptable);
-			ptable->table = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)ptable;
+			ptable->table = (char*)yyvsp[0];
+			yyval = (LITEM)ptable;
 		}
-#line 3886 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3855 "sqlgrammar.tab.c"
     break;
 
-  case 244:
-#line 1748 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 244: /* table: NAME '.' NAME  */
+#line 1750 "sqlgrammar.y"
+                {
 			sql_declare(table_t, ptable);
-			ptable->owner = (char*)(yyvsp[-2]);
-			ptable->table = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)ptable;
+			ptable->owner = (char*)yyvsp[-2];
+			ptable->table = (char*)yyvsp[0];
+			yyval = (LITEM)ptable;
 		}
-#line 3897 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3866 "sqlgrammar.tab.c"
     break;
 
-  case 245:
-#line 1758 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 245: /* trigger_name: NAME  */
+#line 1760 "sqlgrammar.y"
+                {
 			trigger_name_t *pname = sql_alloc(trigger_name_t);
-			pname->trigger = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pname;
+			pname->trigger = (char*)yyvsp[0];
+			yyval = (LITEM)pname;
 		}
-#line 3907 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3876 "sqlgrammar.tab.c"
     break;
 
-  case 246:
-#line 1764 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 246: /* trigger_name: NAME '.' NAME  */
+#line 1766 "sqlgrammar.y"
+                {
 			trigger_name_t *pname = sql_alloc(trigger_name_t);
-			pname->trigger = (char*)(yyvsp[-2]);
-			pname->owner = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pname;
+			pname->trigger = (char*)yyvsp[-2];
+			pname->owner = (char*)yyvsp[0];
+			yyval = (LITEM)pname;
 		}
-#line 3918 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3887 "sqlgrammar.tab.c"
     break;
 
-  case 247:
-#line 1774 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 247: /* column_ref: NAME  */
+#line 1776 "sqlgrammar.y"
+                {
 			sql_declare(column_ref_t, pcol);
-			pcol->column = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pcol;
+			pcol->column = (char*)yyvsp[0];
+			yyval = (LITEM)pcol;
 		}
-#line 3928 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3897 "sqlgrammar.tab.c"
     break;
 
-  case 248:
-#line 1780 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 248: /* column_ref: NAME NAME  */
+#line 1782 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(column_ref_t, pcol);
-			pcol->column = (char*)(yyvsp[-1]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pcol->column = (char*)yyvsp[-1];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pcol->alias = tmp;
-			(yyval) = (LITEM)pcol;
+			yyval = (LITEM)pcol;
 		}
-#line 3942 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3911 "sqlgrammar.tab.c"
     break;
 
-  case 249:
-#line 1790 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 249: /* column_ref: NAME AS NAME  */
+#line 1792 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(column_ref_t, pcol);
-			pcol->column = (char*)(yyvsp[-2]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pcol->column = (char*)yyvsp[-2];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pcol->alias = tmp;
-			(yyval) = (LITEM)pcol;
+			yyval = (LITEM)pcol;
 		}
-#line 3956 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3925 "sqlgrammar.tab.c"
     break;
 
-  case 250:
-#line 1800 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 250: /* column_ref: NAME '.' NAME  */
+#line 1802 "sqlgrammar.y"
+                {
 			sql_declare(column_ref_t, pcol);
-			pcol->tablename = (char*)(yyvsp[-2]);
-			pcol->column = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pcol;
+			pcol->tablename = (char*)yyvsp[-2];
+			pcol->column = (char*)yyvsp[0];
+			yyval = (LITEM)pcol;
 		}
-#line 3967 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3936 "sqlgrammar.tab.c"
     break;
 
-  case 251:
-#line 1807 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 251: /* column_ref: NAME '.' NAME NAME  */
+#line 1809 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(column_ref_t, pcol);
-			pcol->tablename = (char*)(yyvsp[-3]);
-			pcol->column = (char*)(yyvsp[-1]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pcol->tablename = (char*)yyvsp[-3];
+			pcol->column = (char*)yyvsp[-1];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pcol->alias = tmp;
-			(yyval) = (LITEM)pcol;
+			yyval = (LITEM)pcol;
 		}
-#line 3982 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3951 "sqlgrammar.tab.c"
     break;
 
-  case 252:
-#line 1818 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 252: /* column_ref: NAME '.' NAME AS NAME  */
+#line 1820 "sqlgrammar.y"
+                {
 			char *tmp;
 			sql_declare(column_ref_t, pcol);
-			pcol->tablename = (char*)(yyvsp[-4]);
-			pcol->column = (char*)(yyvsp[-2]);
-			tmp = __sql_alloc(strlen((char*)(yyvsp[0])) + 3);
-			sprintf(tmp, "%s", (char*)(yyvsp[0]));
+			pcol->tablename = (char*)yyvsp[-4];
+			pcol->column = (char*)yyvsp[-2];
+			tmp = __sql_alloc(strlen((char*)yyvsp[0]) + 3);
+			sprintf(tmp, "%s", (char*)yyvsp[0]);
 			pcol->alias = tmp;
-			(yyval) = (LITEM)pcol;
+			yyval = (LITEM)pcol;
 		}
-#line 3997 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3966 "sqlgrammar.tab.c"
     break;
 
-  case 253:
-#line 1829 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 253: /* column_ref: NAME '.' NAME '.' NAME  */
+#line 1831 "sqlgrammar.y"
+                {
 			sql_declare(column_ref_t, pcol);
-			pcol->tablename = (char*)(yyvsp[-4]);
-			pcol->column = (char*)(yyvsp[-2]);
-			pcol->alias = (char*)(yyvsp[0]);
-			(yyval) = (LITEM)pcol;
+			pcol->tablename = (char*)yyvsp[-4];
+			pcol->column = (char*)yyvsp[-2];
+			pcol->alias = (char*)yyvsp[0];
+			yyval = (LITEM)pcol;
 		}
-#line 4009 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3978 "sqlgrammar.tab.c"
     break;
 
-  case 260:
-#line 1849 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 260: /* data_type: CHARACTER  */
+#line 1851 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_CHAR;
 			ptype->scale = 1;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4020 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 3989 "sqlgrammar.tab.c"
     break;
 
-  case 261:
-#line 1856 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 261: /* data_type: CHARACTER '(' INTNUM ')'  */
+#line 1858 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_CHAR;
-			ptype->scale = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4031 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4000 "sqlgrammar.tab.c"
     break;
 
-  case 262:
-#line 1863 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 262: /* data_type: NUMERIC  */
+#line 1865 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_NUMERIC;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4041 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4010 "sqlgrammar.tab.c"
     break;
 
-  case 263:
-#line 1869 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 263: /* data_type: NUMERIC '(' INTNUM ')'  */
+#line 1871 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_NUMERIC;
-			ptype->scale = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4052 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4021 "sqlgrammar.tab.c"
     break;
 
-  case 264:
-#line 1876 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 264: /* data_type: NUMERIC '(' INTNUM ',' INTNUM ')'  */
+#line 1878 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_NUMERIC;
-			ptype->scale = atoi((char*)(yyvsp[-3]));
-			ptype->precision = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-3]);
+			ptype->precision = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4064 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4033 "sqlgrammar.tab.c"
     break;
 
-  case 265:
-#line 1884 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 265: /* data_type: DECIMAL2  */
+#line 1886 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_DECIMAL;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4074 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4043 "sqlgrammar.tab.c"
     break;
 
-  case 266:
-#line 1890 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 266: /* data_type: DECIMAL2 '(' INTNUM ')'  */
+#line 1892 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_DECIMAL;
-			ptype->scale = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4085 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4054 "sqlgrammar.tab.c"
     break;
 
-  case 267:
-#line 1897 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 267: /* data_type: DECIMAL2 '(' INTNUM ',' INTNUM ')'  */
+#line 1899 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_DECIMAL;
-			ptype->scale = atoi((char*)(yyvsp[-3]));
-			ptype->precision = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-3]);
+			ptype->precision = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4097 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4066 "sqlgrammar.tab.c"
     break;
 
-  case 268:
-#line 1905 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 268: /* data_type: INTEGER  */
+#line 1907 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_INTEGER;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4107 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4076 "sqlgrammar.tab.c"
     break;
 
-  case 269:
-#line 1911 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 269: /* data_type: SMALLINT  */
+#line 1913 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_SMALLINT;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4117 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4086 "sqlgrammar.tab.c"
     break;
 
-  case 270:
-#line 1917 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 270: /* data_type: FLOAT2  */
+#line 1919 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_FLOAT;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4127 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4096 "sqlgrammar.tab.c"
     break;
 
-  case 271:
-#line 1923 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 271: /* data_type: REAL  */
+#line 1925 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_REAL;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4137 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4106 "sqlgrammar.tab.c"
     break;
 
-  case 272:
-#line 1929 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 272: /* data_type: DOUBLE2 PRECISION  */
+#line 1931 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_DOUBLE;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4147 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4116 "sqlgrammar.tab.c"
     break;
 
-  case 273:
-#line 1935 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 273: /* data_type: VARCHAR  */
+#line 1937 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_VARCHAR;
 			ptype->scale = 1;
-			(yyval) = (LITEM)ptype;
+			yyval = (LITEM)ptype;
 		}
-#line 4158 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4127 "sqlgrammar.tab.c"
     break;
 
-  case 274:
-#line 1942 "sqlgrammar.y" /* yacc.c:1646  */
-    {
+  case 274: /* data_type: VARCHAR '(' INTNUM ')'  */
+#line 1944 "sqlgrammar.y"
+                {
 			sql_declare(data_type_t, ptype);
 			ptype->type = DT_VARCHAR;
-			ptype->scale = atoi((char*)(yyvsp[-1]));
-			(yyval) = (LITEM)ptype;
+			ptype->scale = atoi((char*)yyvsp[-1]);
+			yyval = (LITEM)ptype;
 		}
-#line 4169 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4138 "sqlgrammar.tab.c"
     break;
 
-  case 275:
-#line 1953 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 275: /* column: NAME  */
+#line 1955 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4177 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4146 "sqlgrammar.tab.c"
     break;
 
-  case 276:
-#line 1959 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 276: /* cursor: NAME  */
+#line 1961 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4185 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4154 "sqlgrammar.tab.c"
     break;
 
-  case 277:
-#line 1965 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 277: /* module: NAME  */
+#line 1967 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4193 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4162 "sqlgrammar.tab.c"
     break;
 
-  case 278:
-#line 1972 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 278: /* parameter: ':' NAME  */
+#line 1974 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4201 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4170 "sqlgrammar.tab.c"
     break;
 
-  case 279:
-#line 1978 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 279: /* procedure: NAME  */
+#line 1980 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4209 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4178 "sqlgrammar.tab.c"
     break;
 
-  case 280:
-#line 1984 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 280: /* range_variable: NAME  */
+#line 1986 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4217 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4186 "sqlgrammar.tab.c"
     break;
 
-  case 281:
-#line 1990 "sqlgrammar.y" /* yacc.c:1646  */
-    {
-				(yyval) = (yyvsp[0]);
+  case 281: /* user: NAME  */
+#line 1992 "sqlgrammar.y"
+                        {
+				yyval = yyvsp[0];
 			}
-#line 4225 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4194 "sqlgrammar.tab.c"
     break;
 
 
-#line 4229 "sqlgrammar.tab.c" /* yacc.c:1646  */
+#line 4198 "sqlgrammar.tab.c"
+
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -4242,25 +4209,23 @@ yyreduce:
      case of YYERROR or YYBACKUP, subsequent parser actions might lead
      to an incorrect destructor call or verbose syntax error message
      before the lookahead is translated.  */
-  YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
+  YY_SYMBOL_PRINT ("-> $$ =", YY_CAST (yysymbol_kind_t, yyr1[yyn]), &yyval, &yyloc);
 
   YYPOPSTACK (yylen);
   yylen = 0;
-  YY_STACK_PRINT (yyss, yyssp);
 
   *++yyvsp = yyval;
 
   /* Now 'shift' the result of the reduction.  Determine what state
      that goes to, based on the state we popped back to and the rule
      number reduced by.  */
-
-  yyn = yyr1[yyn];
-
-  yystate = yypgoto[yyn - YYNTOKENS] + *yyssp;
-  if (0 <= yystate && yystate <= YYLAST && yycheck[yystate] == *yyssp)
-    yystate = yytable[yystate];
-  else
-    yystate = yydefgoto[yyn - YYNTOKENS];
+  {
+    const int yylhs = yyr1[yyn] - YYNTOKENS;
+    const int yyi = yypgoto[yylhs] + *yyssp;
+    yystate = (0 <= yyi && yyi <= YYLAST && yycheck[yyi] == *yyssp
+               ? yytable[yyi]
+               : yydefgoto[yylhs]);
+  }
 
   goto yynewstate;
 
@@ -4271,49 +4236,13 @@ yyreduce:
 yyerrlab:
   /* Make sure we have latest lookahead translation.  See comments at
      user semantic actions for why this is necessary.  */
-  yytoken = yychar == YYEMPTY ? YYEMPTY : YYTRANSLATE (yychar);
-
+  yytoken = yychar == YYEMPTY ? YYSYMBOL_YYEMPTY : YYTRANSLATE (yychar);
   /* If not already recovering from an error, report this error.  */
   if (!yyerrstatus)
     {
       ++yynerrs;
-#if ! YYERROR_VERBOSE
       yyerror (root, YY_("syntax error"));
-#else
-# define YYSYNTAX_ERROR yysyntax_error (&yymsg_alloc, &yymsg, \
-                                        yyssp, yytoken)
-      {
-        char const *yymsgp = YY_("syntax error");
-        int yysyntax_error_status;
-        yysyntax_error_status = YYSYNTAX_ERROR;
-        if (yysyntax_error_status == 0)
-          yymsgp = yymsg;
-        else if (yysyntax_error_status == 1)
-          {
-            if (yymsg != yymsgbuf)
-              YYSTACK_FREE (yymsg);
-            yymsg = (char *) YYSTACK_ALLOC (yymsg_alloc);
-            if (!yymsg)
-              {
-                yymsg = yymsgbuf;
-                yymsg_alloc = sizeof yymsgbuf;
-                yysyntax_error_status = 2;
-              }
-            else
-              {
-                yysyntax_error_status = YYSYNTAX_ERROR;
-                yymsgp = yymsg;
-              }
-          }
-        yyerror (root, yymsgp);
-        if (yysyntax_error_status == 2)
-          goto yyexhaustedlab;
-      }
-# undef YYSYNTAX_ERROR
-#endif
     }
-
-
 
   if (yyerrstatus == 3)
     {
@@ -4343,12 +4272,11 @@ yyerrlab:
 | yyerrorlab -- error raised explicitly by YYERROR.  |
 `---------------------------------------------------*/
 yyerrorlab:
-
-  /* Pacify compilers like GCC when the user code never invokes
-     YYERROR and the label yyerrorlab therefore never appears in user
-     code.  */
-  if (/*CONSTCOND*/ 0)
-     goto yyerrorlab;
+  /* Pacify compilers when the user code never invokes YYERROR and the
+     label yyerrorlab therefore never appears in user code.  */
+  if (0)
+    YYERROR;
+  ++yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -4365,13 +4293,14 @@ yyerrorlab:
 yyerrlab1:
   yyerrstatus = 3;      /* Each real token shifted decrements this.  */
 
+  /* Pop stack until we find a state that shifts the error token.  */
   for (;;)
     {
       yyn = yypact[yystate];
       if (!yypact_value_is_default (yyn))
         {
-          yyn += YYTERROR;
-          if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYTERROR)
+          yyn += YYSYMBOL_YYerror;
+          if (0 <= yyn && yyn <= YYLAST && yycheck[yyn] == YYSYMBOL_YYerror)
             {
               yyn = yytable[yyn];
               if (0 < yyn)
@@ -4385,7 +4314,7 @@ yyerrlab1:
 
 
       yydestruct ("Error: popping",
-                  yystos[yystate], yyvsp, root);
+                  YY_ACCESSING_SYMBOL (yystate), yyvsp, root);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -4397,7 +4326,7 @@ yyerrlab1:
 
 
   /* Shift the error token.  */
-  YY_SYMBOL_PRINT ("Shifting", yystos[yyn], yyvsp, yylsp);
+  YY_SYMBOL_PRINT ("Shifting", YY_ACCESSING_SYMBOL (yyn), yyvsp, yylsp);
 
   yystate = yyn;
   goto yynewstate;
@@ -4408,26 +4337,30 @@ yyerrlab1:
 `-------------------------------------*/
 yyacceptlab:
   yyresult = 0;
-  goto yyreturn;
+  goto yyreturnlab;
+
 
 /*-----------------------------------.
 | yyabortlab -- YYABORT comes here.  |
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
-  goto yyreturn;
+  goto yyreturnlab;
 
-#if !defined yyoverflow || YYERROR_VERBOSE
-/*-------------------------------------------------.
-| yyexhaustedlab -- memory exhaustion comes here.  |
-`-------------------------------------------------*/
+
+/*-----------------------------------------------------------.
+| yyexhaustedlab -- YYNOMEM (memory exhaustion) comes here.  |
+`-----------------------------------------------------------*/
 yyexhaustedlab:
   yyerror (root, YY_("memory exhausted"));
   yyresult = 2;
-  /* Fall through.  */
-#endif
+  goto yyreturnlab;
 
-yyreturn:
+
+/*----------------------------------------------------------.
+| yyreturnlab -- parsing is finished, clean up and return.  |
+`----------------------------------------------------------*/
+yyreturnlab:
   if (yychar != YYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at
@@ -4443,18 +4376,16 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-                  yystos[*yyssp], yyvsp, root);
+                  YY_ACCESSING_SYMBOL (+*yyssp), yyvsp, root);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
   if (yyss != yyssa)
     YYSTACK_FREE (yyss);
 #endif
-#if YYERROR_VERBOSE
-  if (yymsg != yymsgbuf)
-    YYSTACK_FREE (yymsg);
-#endif
+
   return yyresult;
 }
-#line 1995 "sqlgrammar.y" /* yacc.c:1906  */
+
+#line 1997 "sqlgrammar.y"
 

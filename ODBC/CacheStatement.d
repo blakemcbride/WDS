@@ -40,7 +40,9 @@
 #include <sqlext.h>
 #include <ctype.h>
 #include <string.h>
+#ifndef __WINE__
 #include <malloc.h>
+#endif
 
 #ifdef __WINE__
 #include <sqlucode.h>
@@ -55,7 +57,9 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifndef __WINE__
 #include <io.h>
+#endif
 
 #include "dynsql.h"
 #include "../Windows/demo.h"

@@ -3,37 +3,34 @@
 
 CC = winegcc
 
-
-# Define DYNACE_PATH either through the following variable of an environment
-# variable like "export DYNACE_PATH=..."
-#DYNACE_PATH = ../..
-
-WDS_PATH=../..
+WDS_PATH = ../..
+DYNACE_PATH = /home/blake/Dynace
 
 WINEINCPATH = /usr/include/wine
 
 
-BINDIR = $(DYNACE_PATH)/bin
+BINDIR = $(WDS_PATH)/bin
 LIBDIR = $(WDS_PATH)/lib
 INCDIR = $(WDS_PATH)/include
 DYNINC = $(DYNACE_PATH)/include
+DYNLIB = $(DYNACE_PATH)/lib
 
-WINEINC = -I$(WINEINCPATH)/windows -I$(WINEINCPATH)/msvcrt
+WINEINC = -I$(WINEINCPATH)/windows
 
 
-WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsvcrt -lmsimg32
+WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsimg32
 
 DEBUG = -g
 #DEBUG = -O
 
-CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -fPIC -D_WINDOWS -D_WIN32 -D__WINE__ -fno-builtin
-GFLAGS = -I$(INCDIR) -O -w -fPIC
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS -D_WIN32 -D__WINE__ -std=gnu17 -include $(INCDIR)/winecompat.h
+GFLAGS = -I$(INCDIR) -O -w
 
 TARGET = main
 
 CFILES = main.c
 
-OBJS = $(CFILES:.c=.o) 
+OBJS = $(CFILES:.c=.o)
 
 %.res : %.rc
 	echo '#include <winuser.h>' >temp.rc
@@ -48,7 +45,7 @@ OBJS = $(CFILES:.c=.o)
 
 
 $(TARGET) : $(OBJS) algocorp.ico main.res
-	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(DYNACE_PATH)/lib/dynace.a $(WINELIBS) -lm 
+	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(DYNLIB)/dynace.a $(WINELIBS) -lm
 	mv $(TARGET).exe $(TARGET)
 
 algocorp.ico : ../setup/algocorp.ico

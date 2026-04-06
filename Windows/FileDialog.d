@@ -39,7 +39,9 @@
 #include <windows.h>
 #include <commdlg.h>
 #include <string.h>
+#ifndef __WINE__
 #include <direct.h>
+#endif
 #include <ctype.h>
 #include "logfile.h"
 

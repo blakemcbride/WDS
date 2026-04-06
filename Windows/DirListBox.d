@@ -47,7 +47,9 @@ defclass  DirListBox : ListBox  {
 };
       
 
+#ifndef __WINE__
 #include <direct.h>
+#endif
 #include <ctype.h>
 
 

@@ -39,7 +39,9 @@
 
 #include <stdio.h>
 #include <fcntl.h>
+#ifndef __WINE__
 #include <io.h>
+#endif
 #include <windows.h>
 #include <commdlg.h>
 #include <string.h>

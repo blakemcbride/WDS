@@ -38,7 +38,9 @@ defclass  Scheme {
 
 #include <string.h>
 #include <stdlib.h>
+#ifndef __WINE__
 #include <io.h>
+#endif
 #include "scheme.h"
 #include <ctype.h>  //  for the WEB stuff
 

@@ -661,10 +661,10 @@ imeth	gGetFont()
 // if bool is FALSE, the position of the control in the link object "iControls" becomes the first node 
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-imeth object gPutToMostFront(BOOL bool)
-{ 
+imeth object gPutToMostFront(BOOL toBack)
+{
 	object linkObject=NULL, linkSeq=NULL, link=NULL, obj=NULL;
-	
+
 	linkObject = gGetControls(gGetParent(self));
 	if(!linkObject)
 		return NULL;
@@ -673,7 +673,7 @@ imeth object gPutToMostFront(BOOL bool)
 		obj = gValue(link);
 		if( obj == self) {
 			gRemove(link);
-			if(bool) {
+			if(toBack) {
 				gAddLast(linkObject, self);
 				SetWindowPos(gHandle(self), HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE|SWP_NOSIZE);
 			}

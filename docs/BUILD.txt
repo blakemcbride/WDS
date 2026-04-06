@@ -46,19 +46,22 @@ Go to the appropriate section.
 Windows
 -------
 
-If you are operating With Cygwin under Windows, use the Linux build
+If you are operating with Cygwin under Windows, use the Linux build
 docs below rather than this section.
 
-This procedure will work for 32 and 64 bit builds.
+WDS is built from the command line using the nmake build utility that
+comes with Microsoft Visual C.  Both 32-bit and 64-bit builds are
+supported.
 
-WDS is built from the command line using the nmake build utility that comes
-with Microsoft Visual C.
+Prerequisites:
+
+    - Dynace built and installed
+      See https://github.com/blakemcbride/Dynace
+    - Visual Studio with C/C++ command-line tools
 
 First, make sure that your command line compiler is set up correctly.
-You can do this by using the "Visual Studio Command Prompt" that comes
-with Visual Studio and is located under "Visual Studio Tools".  I
-suggest that you create a "Hello, World" program and compile and link
-it from the command line to be sure it's all set up correctly.
+You can do this by using the "Visual Studio Command Prompt" (sometimes
+called "Developer Command Prompt") that comes with Visual Studio.
 
 All of the following commands should be executed in the root of the
 WDS tree.  For example, you should see sub-directories named
@@ -66,7 +69,7 @@ ODBC, Windows, WinExam, etc. at this level.
 
 1.  Edit the file named "setupenv.bat".  Change the line which sets
     DYNACE_PATH to be correct for your environment.
-    
+
 2.  Setup the build environment by executing the following file:
 
 	setupenv.bat
@@ -75,7 +78,7 @@ ODBC, Windows, WinExam, etc. at this level.
 environment variable explicitly as follows:
 
         set TMP=C:\TEMP
-	
+
 or any other suitable location.  If you need to do this, you may want
 to update setupenv.bat to reflect this change.
 
@@ -94,12 +97,11 @@ You can test the GUI system as follows:
 
 --------------------
 
-Learning the system
+Learning the System
 
-You can also go to WinExam\exam01 through WinExam\exam25 (in order)
+You can go to WinExam\exam01 through WinExam\exam25 (in order)
 and see the readme file for the GUI Development System / ODBC examples
 and tutorial.
-
 
 The complete manuals in PDF format are in the "manual" directory.
 
@@ -116,13 +118,12 @@ build use:
 
 --------------------
 
-
-Setup for normal, day-to-day use of the system
+Setup for Normal Day-to-Day Use
 
 You may want to do the following:
 
-Add DR\include to your compiler's include search path
-Add DR\lib to your linker's library search path
+Add the WDS include directory to your compiler's include search path.
+Add the WDS lib directory to your linker's library search path.
 
 
 
@@ -133,34 +134,33 @@ Linux, Apple Mac, FreeBSD, Solaris, and Cygwin under Windows
 
 WDS uses the WINE library to support the Win32/Win64 API under
 these operating systems.  WINE would have to be installed prior to any
-of this working.
+of this working.  You will need the Wine development headers
+(e.g. wine-devel on Fedora, libwine-dev on Debian/Ubuntu).
 
-Although this port worked in the past, it currently does not for 
-reasons we have not yet discovered.  This effort is ongoing.
+The system builds and runs as a native 64-bit application.
 
-GNU-make, bash and gcc are assumed.
+GNU-make, bash, and gcc are assumed.
 
-1.  Build Dynace (seperate package)
+1.  Build Dynace (separate package)
+    See https://github.com/blakemcbride/Dynace
 
-2.  Set DYNACE_PATH in the file makefile.inc
+2.  Set DYNACE_PATH in the file makefile.inc to point to your
+    Dynace installation directory.
 
-3.  Create generics.h with:
+    Verify WINEINCPATH is correct in makefile.inc (default is
+    /usr/include/wine).
+
+3.  Create generics.h and build the system:
+
 	make makegens
-
-4.  Build the system as follows:
-
 	make
 
-	(use the following under Cygwin instead)
-		make CYGWIN=1
+    (use the following under Cygwin instead)
+	make CYGWIN=1
 
-At this point the language portion of the system is built in the
-portable mode.  You can test it by going into examples/exam03,
-building and running the example using the following commands:
+You can test the GUI system as follows:
 
-
-	export DYNACE_PATH=[full path to Dynace]
-	cd examples/exam03
+	cd WinExam/exam01
 	make
 	./main
 
@@ -178,38 +178,7 @@ See manual/Dynace.pdf
 
 --------------------
 
-Building the Windows Development System (utilizing Wine - the Win32
-API for Linux / Unix / Mac)
-
-Naturally, you should have Wine installed on the system first.  You
-will want the development libraries portion too.
-
-If you now want to build the GUI library under WINE use the following.
-This can only be done after the above steps were followed (although
-switching to STRAT=-S1 doesn't matter.  It works either way.)
-
-At this point, the system has only been tested on 32 bit machines
-(Win32).  If you follow these instructions, the system will be rebuilt
-in 32 bit mode even if operating on a 64 bit machine.  Also, if
-running on a 64 bit machine, the 32 bit libraries and compiler will
-have to be installed.
-
-Make sure the WINEINCPATH is setup correctly in makefile.inc
-
-	cd back to the root of the Dynace tree
-	make WINE=1 newgens
-	make realclean
-	make WINE=1
-
-You can test the GUI system as follows:
-
-	cd WinExam/exam10
-	make
-	./main
-
---------------------
-
-Windows Development System tutorial
+Windows Development System Tutorial
 
 After you have everything built and setup you may want to go to
 WinExam/exam01 through WinExam/exam25 (in order) and see the readme
@@ -221,12 +190,13 @@ See manual/WDS.pdf
 
 --------------------
 
-Dialog editor
+Dialog Editor
 
 The cld directory contains a GUI dialog designer which produces a
 custom resource editor which is loaded at runtime by this system.  To
 build use:
 
+	cd cld
 	make
 
 --------------------
@@ -234,8 +204,6 @@ build use:
 Documentation
 
 The complete manuals in PDF format are in the "manual" directory.
-
-See the section above labeled Language Tutorial
 
 ================================================================================
 

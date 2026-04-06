@@ -75,7 +75,7 @@ cmeth	int	gProcessMessages()
 		setLastTime(&msg);
 		if (msg.message == WM_KEYDOWN  &&  msg.wParam == VK_RETURN)
 			handleReturn(&msg);
-		if (!(GetWindowLong(msg.hwnd, GWL_STYLE) & ES_WANTRETURN))
+		if (!(GetWindowLongPtr(msg.hwnd, GWL_STYLE) & ES_WANTRETURN))
 			for (p = cUsed ; p ; p = p->next)
 				if (IsWindow(p->hwnd)  &&  IsDialogMessage(p->hwnd, &msg))
 					goto next;
@@ -98,7 +98,7 @@ cmeth	int	gProcessModalMessages(int *done, HWND dlg)
 		setLastTime(&msg);
 		if (msg.message == WM_KEYDOWN  &&  msg.wParam == VK_RETURN)
 			handleReturn(&msg);
-		if (!(GetWindowLong(msg.hwnd, GWL_STYLE) & ES_WANTRETURN))
+		if (!(GetWindowLongPtr(msg.hwnd, GWL_STYLE) & ES_WANTRETURN))
 			if (IsDialogMessage(dlg, &msg))
 				goto next;
 		for (p = cUsed ; p ; p = p->next)
@@ -235,7 +235,7 @@ static	void	handleReturn(MSG *msg)
 
 	if (mode) {
 		wnd = gGetObject(HandleCache, WINDOW_HANDLE_CACHE,  msg->hwnd);
-		if (wnd  &&  gIsKindOf(wnd, Control) && !(GetWindowLong(msg->hwnd, GWL_STYLE) & ES_WANTRETURN))
+		if (wnd  &&  gIsKindOf(wnd, Control) && !(GetWindowLongPtr(msg->hwnd, GWL_STYLE) & ES_WANTRETURN))
 			msg->wParam = VK_TAB;
 	}
 }

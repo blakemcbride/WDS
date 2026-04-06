@@ -1,31 +1,33 @@
 #  Makefile designed for use by the GNUMAKE utility and		-*-Makefile-*-
 #  the Wine libraries
 
-CC = winegcc -m32
-GCC = gcc -m32
+CC = winegcc
+GCC = gcc
 
 .SUFFIXES: .d
 
-
-DYNACE_PATH = ../..
+WDS_PATH = ../..
+DYNACE_PATH = /home/blake/Dynace
 
 WINEINCPATH = /usr/include/wine
 
 
-BINDIR = $(DYNACE_PATH)/bin
-LIBDIR = $(DYNACE_PATH)/lib
-INCDIR = $(DYNACE_PATH)/include
+BINDIR = $(WDS_PATH)/bin
+LIBDIR = $(WDS_PATH)/lib
+INCDIR = $(WDS_PATH)/include
+DYNINC = $(DYNACE_PATH)/include
+DYNLIB = $(DYNACE_PATH)/lib
 
-WINEINC = -I$(WINEINCPATH)/windows -I$(WINEINCPATH)/msvcrt
+WINEINC = -I$(WINEINCPATH)/windows
 
 
-WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lwine -lmsvcrt -lmsimg32
+WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsimg32
 
 DEBUG = -g
 #DEBUG = -O
 
-CFLAGS = -I$(INCDIR) $(WINEINC) -D_WINDOWS
-GFLAGS = -I$(INCDIR) $(WINEINC) -D_WINDOWS -D_WIN32 -O -w
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS -D_WIN32 -D__WINE__ -std=gnu17 -include $(INCDIR)/winecompat.h
+GFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS -D_WIN32 -D__WINE__ -std=gnu17 -include $(INCDIR)/winecompat.h -O -w
 
 TARGET = main
 
@@ -51,7 +53,7 @@ OBJS = $(CFILES:.c=.o) $(CLASSES:.d=.o)
 
 
 $(TARGET) : generics.1 algocorp.ico generics.h generics.o $(OBJS) main.res
-	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) generics.o main.res $(LIBDIR)/wds.a $(LIBDIR)/dynace.a $(WINELIBS) -lm 
+	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) generics.o main.res $(LIBDIR)/wds.a $(DYNLIB)/dynace.a $(WINELIBS) -lm
 
 algocorp.ico : ../setup/algocorp.ico
 	cp $^ $@
@@ -63,7 +65,7 @@ generics.c : generics.h
 	$(BINDIR)/dpp -g -c
 
 # generics.c must be compiled with gcc and not winegcc!
-generics.o : generics.c 
+generics.o : generics.c
 	$(GCC) $(GFLAGS) -c $<
 
 generics.1 newgens:

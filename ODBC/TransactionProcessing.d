@@ -48,9 +48,13 @@
 #include <unistd.h>
 #define	O_BINARY	0
 #else
+#ifndef __WINE__
 #include <io.h>
 #endif
+#endif
+#ifndef __WINE__
 #include <sys/locking.h>
+#endif
 #include <stddef.h>
 #include <errno.h>
 #include <ctype.h>

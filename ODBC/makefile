@@ -12,7 +12,7 @@ DPPOPTS += -g $(INCDIR)/generics.h
 YACC = bison
 LEX = flex
 
-CFLAGS += -I$(WINEINCPATH)/msvcrt -fno-builtin
+CFLAGS += -fno-builtin
 
 
 WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lwine -lmsvcrt -lmsimg32
@@ -60,6 +60,7 @@ $(TARGET) : generics.1 generics.h generics.o $(OBJS) main.res
 sqlgrammar.c sqlgrammar.h:	sqlgrammar.y sqlstructs.h
 	$(YACC) -tvd sqlgrammar.y
 	mv sqlgrammar.tab.h sqlgrammar.h
+	cp sqlgrammar.h sqlgrammar.tab.h
 	mv sqlgrammar.tab.c sqlgrammar.c
 	mv sqlgrammar.output sqlgrammar.out
 

@@ -35,7 +35,9 @@
 
 #define	XP_WIN
 
+#ifndef __WINE__
 #include <io.h>
+#endif
 #include "jsapi.h"
 
     /*

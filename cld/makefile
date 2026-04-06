@@ -5,32 +5,35 @@ WINE = 1
 
 include ../makefile.inc
 
-CC = winegcc -m32
+CC = winegcc
+
+WDS_PATH = ..
+DYNACE_PATH = /home/blake/Dynace
+
+BINDIR = $(WDS_PATH)/bin
+LIBDIR = $(WDS_PATH)/lib
+INCDIR = $(WDS_PATH)/include
+DYNINC = $(DYNACE_PATH)/include
+DYNLIB = $(DYNACE_PATH)/lib
+
+WINEINCPATH = /usr/include/wine
+
+WINEINC = -I$(WINEINCPATH)/windows
 
 
-DYNACE_PATH = ..
-
-
-BINDIR = $(DYNACE_PATH)/bin
-LIBDIR = $(DYNACE_PATH)/lib
-INCDIR = $(DYNACE_PATH)/include
-
-WINEINC = -I$(WINEINCPATH)/windows -I$(WINEINCPATH)/msvcrt
-
-
-WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lwine -lmsvcrt -lmsimg32 -lwininet
+WINELIBS = -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lcomctl32 -ladvapi32 -lshell32 -lmpr -lmsimg32 -lwininet
 
 DEBUG = -g
 #DEBUG = -O
 
-CFLAGS = -I$(INCDIR) $(WINEINC) -D_WINDOWS -DINTEGRA
+CFLAGS = -I$(INCDIR) -I$(DYNINC) $(WINEINC) -D_WINDOWS -D_WIN32 -D__WINE__ -DINTEGRA -std=gnu17 -include $(INCDIR)/winecompat.h
 GFLAGS = -I$(INCDIR) -O -w
 
 TARGET = cld
 
 CFILES = main.c flash.c jsfl.c
 
-OBJS = $(CFILES:.c=.o) 
+OBJS = $(CFILES:.c=.o)
 
 %.res : %.rc
 	echo '#include <winuser.h>' >temp.rc
@@ -45,7 +48,7 @@ OBJS = $(CFILES:.c=.o)
 
 
 $(TARGET) : $(OBJS) main.res
-	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(LIBDIR)/dynace.a $(WINELIBS) -lm
+	$(CC) $(DEBUG) -o $(TARGET) $(OBJS) main.res $(LIBDIR)/wds.a $(DYNLIB)/dynace.a $(WINELIBS) -lm
 	mv $(TARGET).exe $(TARGET)
 
 clean:

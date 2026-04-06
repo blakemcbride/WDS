@@ -1585,7 +1585,7 @@ imeth	unsigned     gGetResourceID()
 
 imeth	unsigned     gResourceIDFromFileResource()
 {
-	return (unsigned) (iResource ? (WORD) ((INT_PTR) iResource) : 0);
+	return (unsigned) (iResource && IS_INTRESOURCE(iResource) ? (WORD) ((ULONG_PTR) iResource) : 0);
 }
 
 imeth	gDisableObject(obj)	//  needed by tasklist code

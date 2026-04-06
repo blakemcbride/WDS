@@ -31,6 +31,8 @@
 void	Sleep(DWORD millisecs);
 #endif
 
+#include "winecompat.h"
+
 #include <dynl.h>
 
 /* Standard mask formatting functions in the text control. */

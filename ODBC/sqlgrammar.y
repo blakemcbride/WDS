@@ -14,6 +14,8 @@
 
 #pragma warning (disable:4013)
 
+int yylex(void);
+
 int block_count = 0;
 
 typedef struct __allocated_block_struct

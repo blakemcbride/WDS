@@ -39,7 +39,7 @@ with the application.  There are many things which may be done with a window.
 Typically, a user may move, resize or change a window into an icon.  Actually,
 dialogs and controls (discussed further down) are actually little windows
 located inside bigger windows.  Therefore, it is also possible for a user to
-interact in a very of ways with a specific window.
+interact in a variety of ways with a specific window.
 
 There are many attributes which may be associated with a window.  Each
 window may have a system menu associated with it, a title bar, a
@@ -57,7 +57,7 @@ starts up, the one which acts as the fulcrum for all the facilities of
 the application, and the one which contains the main menu associated with
 the application.  This is also the window which has the application icon
 associated with it.  This is so when the application is iconized the
-appropriate icon will displayed.
+appropriate icon will be displayed.
 
 @subsection Child Window
 In addition to the main window, there are child windows.  A child window
@@ -96,7 +96,7 @@ with information, or obtaining information from, is through dialogs.  A
 dialog is a rectangular region (or more precisely, a window) which
 contains various display information and input fields (controls).
 
-There are two fundamental dialog types: model and modeless.
+There are two fundamental dialog types: modal and modeless.
 
 @subsection Modal Dialogs
 A modal dialog is one which must be completed or canceled prior to
@@ -162,7 +162,7 @@ list may be fully displayed, scrollable or drop down in nature.
 
 @subsection Combo Box
 Combo boxes are a combination of the text control and the list box.
-With combo boxes, a user my select among a list of options or type
+With combo boxes, a user may select among a list of options or type
 in a new item.
 
 @subsection Scroll Bar
@@ -176,7 +176,7 @@ option or within a specific context via the ``F1'' key.  WDS supports
 and makes it easy to use all capabilities of the Windows help system.
 
 @section Cursors
-Cursors are the visual elements which indicate where a users input focus
+Cursors are the visual elements which indicate where a user's input focus
 is or where he wishes it to be.  Cursors can also be used to indicate
 something about the input mode or system status (for example the hour
 glass is used to indicate that the system is busy).  Common cursors are
@@ -209,7 +209,7 @@ They must be designed by the programmer prior to use, but are very
 flexible, easy to design, and help the user identify the application.
 
 @section Fonts
-Fonts are the types (such as Helvetica or times) and size (i.e. 10pt)
+Fonts are the types (such as Helvetica or Times) and size (i.e. 10pt)
 of the characters which appear within an application.  There are
 literally thousands to choose from.  Fortunately, however, the system
 defaults are often sufficient.
@@ -232,7 +232,7 @@ in text and graphics.
 System brushes are those colors which were selected by the user as
 global to their Windows environment.  The programmer may select, for
 example, the color the user chose for background windows.  The
-new brush will then have colors the same colors that the user is used
+new brush will then have the same colors that the user is used
 to seeing in other applications on their system.  System brushes are
 used most often.
 
@@ -252,10 +252,10 @@ a number of Windows defined hatch patterns.
 Pens are used, principally in graphics, for drawing lines or providing
 the outline of a figure.  The attributes associated with a pen includes
 color of the line, width of the line, and its style.  Common styles
-include solid, dashed, doted, etc.
+include solid, dashed, dotted, etc.
 
 @subsection Stock Pens
-Stock pens allows a programmer to select among a few, common, Windows
+Stock pens allow a programmer to select among a few, common, Windows
 defined pens.
 
 @subsection Custom Pens
@@ -352,7 +352,7 @@ The second, and more troublesome, problem associated with DLLs has to do
 with versions.  Lets say you have some app which uses some common DLL.
 Everything is compiled and linked and runs well.  Several months go by
 and you start working on a new project.  While developing the new app
-you decide to use some routine in your common DLL which used by the
+you decide to use some routine in your common DLL which is used by the
 first app.  While using the routine located in the DLL you discover a
 bug or anomaly in the routine, you therefore decide to correct it.
 Now the second app works fine.  A month later you try to use the first

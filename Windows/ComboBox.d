@@ -704,7 +704,7 @@ static	int	makeValue(ivType *iv)
 
 	if (val >= 0)
 		SendMessage(iHCtl, CB_GETLBTEXT, val, (LPARAM) (LPSTR) buf);
-	else  if (CBS_DROPDOWNLIST == (CBS_DROPDOWNLIST & GetWindowLong(iHCtl, GWL_STYLE)))
+	else  if (CBS_DROPDOWNLIST == (CBS_DROPDOWNLIST & GetWindowLongPtr(iHCtl, GWL_STYLE)))
 		*buf = '\0';
 	else {
 		r = SendMessage(iHCtl, WM_GETTEXT, gBufSize(Application), (LPARAM) (LPSTR) buf);

@@ -35,6 +35,7 @@
 #include <tchar.h>
 
 extern	void	saveFlashFile(object wind, char *fname, char *name);
+extern	void	saveFlashDataFile(object wind, char *name);
 extern	void	saveJSFLFile(object wind, char *fname, char *asname);
 
 
@@ -3170,12 +3171,12 @@ static  BOOL modifyStyle(HWND hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
 	if (hWnd==NULL)
 		return FALSE;
 
-	dwStyle = GetWindowLong(hWnd, GWL_STYLE);
+	dwStyle = GetWindowLongPtr(hWnd, GWL_STYLE);
 	dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
 	if (dwStyle == dwNewStyle)
 		return FALSE;
 
-	SetWindowLong(hWnd, GWL_STYLE, dwNewStyle);
+	SetWindowLongPtr(hWnd, GWL_STYLE, dwNewStyle);
 	if (nFlags != 0)
 	{
 		SetWindowPos(hWnd, NULL, 0, 0, 0, 0,

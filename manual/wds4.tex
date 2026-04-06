@@ -472,7 +472,7 @@ m = gGetScalingMode(Application);
 int     m;      /*  scaling mode   */
 @end group
 @end example
-This method is used to get the current scaling mode in affect.
+This method is used to get the current scaling mode in effect.
 See @code{SetScalingMode} for further details.
 @example
 @group
@@ -3268,7 +3268,7 @@ object  tag;    /*  tag               */
 object  r;      /*  previous tag      */
 @end group
 @end example
-This method is used to associated an arbitrary Dynace object with a
+This method is used to associate an arbitrary Dynace object with a
 window object.  This may later be retrieved via the @code{GetTag} method.
 Since WDS passes around the window object to all @code{Window} methods
 this mechanism may be used to pass additional information with the
@@ -3513,7 +3513,7 @@ object  obj;    /*  arbitrary object    */
 object  r;      /*  the object passed   */
 @end group
 @end example
-This method is used as a general purpose mechanism to associated a
+This method is used as a general purpose mechanism to associate a
 number of object types with a window.  @code{obj} may be a @code{Font,
 Icon, Cursor, Menu,} or the background @code{Brush} object.  Those
 objects would have normally been created via their associated classes
@@ -3774,7 +3774,7 @@ This class method is used to create a child window.
 Since this is a class method the first argument must be literally
 @code{ChildWindow}.  @code{prnt} represents the parent window
 object of which the new window will be a child.  @code{rows} and
-@code{cols} determine the initial size of the window in are specified
+@code{cols} determine the initial size of the window are specified
 in increments dictated by @code{SetScalingMode::Application}.
 
 The default style associated with the child window is
@@ -3841,7 +3841,7 @@ This class method is used to create a popup window.  Since this is a
 class method the first argument must be literally @code{PopupWindow}.
 @code{name} represents the window title and will appear in the window's
 top border.  @code{rows} and @code{cols} determine the initial size of
-the window in are specified in increments dictated by
+the window are specified in increments dictated by
 @code{SetScalingMode::Application}.
 
 The default style associated with the popup window is @code{WS_POPUP |
@@ -3883,7 +3883,7 @@ such inherits all of its functionality.
 All methods in the class use an argument referred to as @code{pntr}.
 This will always be the printer object returned by @code{QueryPrinter},
 @code{New} or @code{NewWithHDC} and used to identify the printer
-which is to be effected.
+which is to be affected.
 
 The value returned by all methods which cause text or graphics output is
 very significant.  During normal operation, the printer object passed
@@ -3937,7 +3937,7 @@ currently selected pen object will indicate the thickness and pattern of
 the outline of the shape, and the currently selected brush object will
 be used to determine what pattern the shape will be filled with.  The
 parameters indicate location of the beginning and ending of the shape as
-well as the coordinated of the arc and are in increments dictated by
+well as the coordinates of the arc and are in increments dictated by
 @code{SetScale}.
 
 See the note at the beginning of this section regarding the return value.
@@ -3995,7 +3995,7 @@ currently selected pen object will indicate the thickness and pattern of
 the outline of the shape, and the currently selected brush object will
 be used to determine what pattern the shape will be filled with.  The
 parameters indicate location of the beginning and ending of the shape as
-well as the coordinated of the intersecting line and are in increments
+well as the coordinates of the intersecting line and are in increments
 dictated by @code{SetScale}.
 
 See the note at the beginning of this section regarding the return value.
@@ -4042,8 +4042,7 @@ object  r;      /*  NULL            */
 @end group
 @end example
 This method is used to flush the final output page, close the printer and
-dispose of the printer object.  It must be called when a report is
-is complete and the printer is no longer needed.
+dispose of the printer object.  It must be called when a report is complete and the printer is no longer needed.
 
 The value returned is always @code{NULL} and may be used to null out
 the variable which contained the object being disposed in order to
@@ -4492,7 +4491,7 @@ currently selected pen object will indicate the thickness and pattern of
 the outline of the shape, and the currently selected brush object will
 be used to determine what pattern the shape will be filled with.  The
 parameters indicate location of the beginning and ending of the shape as
-well as the coordinated of the intersecting line and are in increments
+well as the coordinates of the intersecting line and are in increments
 dictated by @code{SetScale}.
 
 See the note at the beginning of this section regarding the return value.
@@ -4892,7 +4891,7 @@ object  obj;    /*  arbitrary object   */
 object  r;      /*  the object passed  */
 @end group
 @end example
-This method is used as a general purpose mechanism to associated a
+This method is used as a general purpose mechanism to associate a
 number of object types with a printer.  @code{obj} may be a @code{Font,
 Brush} or @code{Pen} object.  Those objects would have normally been
 created via their associated classes and then may be associated with a
@@ -5256,7 +5255,7 @@ mode specifies whether the menu is enabled, disabled or grayed.
 
 In the case of external menus, @code{id} is normally a macro created by
 the resource editor while the programmer defines the menu and identifies
-a particular menu option.  In the case of internal menu's, @code{id}
+a particular menu option.  In the case of internal menus, @code{id}
 is the number returned by @code{AddMenuOption::InternalMenu} or
 @code{AddMenuOption::PopupMenu}.
 
@@ -6118,7 +6117,7 @@ int     (*fun)();  /*  completion function  */
 object  r;         /*  dialog object        */
 @end group
 @end example
-This method is used to associated a C function with a dialog such that
+This method is used to associate a C function with a dialog such that
 when the user accepts or aborts the dialog, function @code{fun} will
 get executed by WDS.  The function will get executed prior to any automatic
 disposal of the dialog object.
@@ -7041,7 +7040,7 @@ object  obj;    /*  result object    */
 object  r;      /*  dlg              */
 @end group
 @end example
-This method is used to associated a Dynace short integer object with a
+This method is used to associate a Dynace short integer object with a
 dialog such that when the dialog is completed or canceled by the user,
 the associated object will be set to the dialog's result value.  This
 feature is most often needed in conjunction with modeless dialogs and
@@ -7083,7 +7082,7 @@ object  tag;    /*  tag               */
 object  r;      /*  previous tag      */
 @end group
 @end example
-This method is used to associated an arbitrary Dynace object with a
+This method is used to associate an arbitrary Dynace object with a
 dialog object.  This may later be retrieved via the @code{GetTag} method.
 Since WDS passes around the dialog object to all @code{Dialog} methods
 this mechanism may be used to pass additional information with the
@@ -7354,7 +7353,7 @@ When a new modeless dialog is created, its auto dispose mode is enabled.
 This means that, unless disabled, the object representing the dialog
 will be automatically disposed when the user closes the window.  This
 is done due to the independent nature of modeless dialogs and the need
-to be sure that object no longer needed are disposed.  Note that the
+to be sure that objects no longer needed are disposed.  Note that the
 programmer may specify a function which gets executed prior to the
 disposal of a modeless dialog in order to capture any data.
 
@@ -7392,7 +7391,7 @@ See also:  @code{NewDialogStr, Perform::Dialog, NewDialog::ModalDialog,}
 @sp 2
 @example
 @group
-dlg = gNewDialogStr(ModlessDialog, id, wnd);
+dlg = gNewDialogStr(ModelessDialog, id, wnd);
 
 char      *id;  /*  dialog id      */
 object    wnd;  /*  parent window  */
@@ -7414,7 +7413,7 @@ When a new modeless dialog is created, its auto dispose mode is enabled.
 This means that, unless disabled, the object representing the dialog
 will be automatically disposed when the user closes the window.  This
 is done due to the independent nature of modeless dialogs and the need
-to be sure that object no longer needed are disposed.  Note that the
+to be sure that objects no longer needed are disposed.  Note that the
 programmer may specify a function which gets executed prior to the
 disposal of a modeless dialog in order to capture any data.
 
@@ -7666,7 +7665,7 @@ object  r;        /*  ctl object      */
 This method is used to associate an auxiliary checking function to a control.
 When a dialog is accepted, WDS goes through each control to assure the
 validity of the data associated with each control as defined by the control
-object.  The ability to associated an additional function for validating
+object.  The ability to associate an additional function for validating
 the data associated with a control gives the programmer the ability to perform
 any additional application specific checking against a control's data.
 
@@ -8163,7 +8162,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -8546,7 +8545,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -9141,7 +9140,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -9330,7 +9329,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -9526,7 +9525,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -9850,7 +9849,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -10181,7 +10180,7 @@ instance of the @code{ShortInteger} class or the @code{String} class.
 This object will be automatically updated to reflect the state
 associated with the control.
 
-If @code{val} is an instance of the @code{ShortIntgeger} class it will
+If @code{val} is an instance of the @code{ShortInteger} class it will
 be used to represent the ordinal value of the selected item.  This value
 is a 0 based index from the top of the list to the bottom.  -1 is used
 to represent no valid selection.
@@ -10316,7 +10315,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -10429,7 +10428,7 @@ object  r;      /*  control object  */
 @end example
 This method is used to remove an item from a list box while the dialog
 is active.  @code{idx} is a zero based index of the item to be removed.
-If the operation secceeded @code{ctl} is returned, otherwise @code{NULL}
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
 is returned.
 
 This method may only be used while a dialog is active.  It should not be
@@ -10474,7 +10473,7 @@ object  r;      /*  control object  */
 @end example
 This method is used to remove an item from a list box while the dialog
 is active.  @code{itm} is the string to be removed.
-If the operation secceeded @code{ctl} is returned, otherwise @code{NULL}
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
 is returned.
 
 This method may only be used while a dialog is active.  It should not be
@@ -10701,7 +10700,7 @@ a dialog.  @code{val} should be a Dynace object which is an instance of
 either the @code{String} class or the @code{ShortInteger} class and
 initialized to the value desired for the control.
 
-If @code{val} is an instance of the @code{ShortIntgeger} class it will be
+If @code{val} is an instance of the @code{ShortInteger} class it will be
 used as the ordinal value of the selected item.  This value is a 0 based
 index from the top of the list to the bottom.
 
@@ -11145,7 +11144,7 @@ instance of the @code{ShortInteger} class or the @code{String} class.
 This object will be automatically updated to reflect the state
 associated with the control.
 
-If @code{val} is an instance of the @code{ShortIntgeger} class it will
+If @code{val} is an instance of the @code{ShortInteger} class it will
 be used to represent the ordinal value of the selected item.  This value
 is a 0 based index from the top of the list to the bottom.  -1 is used
 to represent no valid selection.
@@ -11300,7 +11299,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -11386,7 +11385,7 @@ object  r;      /*  control object  */
 @end example
 This method is used to remove an item from a combo box while the dialog
 is active.  @code{idx} is a zero based index of the item to be removed.
-If the operation secceeded @code{ctl} is returned, otherwise @code{NULL}
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
 is returned.
 
 This method may only be used while a dialog is active.  It should not be
@@ -11431,7 +11430,7 @@ object  r;      /*  control object  */
 @end example
 This method is used to remove an item from a combo box while the dialog
 is active.  @code{itm} is the string to be removed.
-If the operation secceeded @code{ctl} is returned, otherwise @code{NULL}
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
 is returned.
 
 This method may only be used while a dialog is active.  It should not be
@@ -11675,7 +11674,7 @@ a dialog.  @code{val} should be a Dynace object which is an instance of
 either the @code{String} class or the @code{ShortInteger} class and
 initialized to the value desired for the control.
 
-If @code{val} is an instance of the @code{ShortIntgeger} class it will be
+If @code{val} is an instance of the @code{ShortInteger} class it will be
 used as the ordinal value of the selected item.  This value is a 0 based
 index from the top of the list to the bottom.
 
@@ -11979,7 +11978,7 @@ object   ctl;   /*  control object  */
 This method is used to create a new control object to be identified as
 @code{id} (see section ``Standard Control Method Arguments'').  This
 method is mainly used internally.  A programmer would more often
-use @code{AddControl::Dialog} to create controls and associated them
+use @code{AddControl::Dialog} to create controls and associate them
 to a dialog.
 @example
 @group
@@ -13960,7 +13959,7 @@ The @code{HelpSystem} class is used to support the standard Windows
 help system.  In addition to being able to support arbitrary evocation
 of help messages, this class is used by other WDS classes in order to
 provide complete support for context sensitive help to any level.
-Each class provides mechanisms in order to associated context sensitive
+Each class provides mechanisms in order to associate context sensitive
 help text to windows, dialogs, menus or controls.
 
 Most classes which provide context sensitive help support have a method
