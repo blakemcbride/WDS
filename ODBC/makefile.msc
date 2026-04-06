@@ -79,7 +79,7 @@ curlib.nm : $(OBJS)
 !ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib $?
 !ENDIF
-	rm -zq *.obj
+	-del /q *.obj 2>nul
 	echo Done >$@
 
 main.obj : resource.h
@@ -107,15 +107,15 @@ makegens:
 
 sqlgrammar.c sqlgrammar.h: sqlgrammar.y sqlstructs.h
 	$(YACC) -tvd sqlgrammar.y
-	mv sqlgrammar.tab.h sqlgrammar.h
-	mv sqlgrammar.tab.c sqlgrammar.c
-	mv sqlgrammar.output sqlgrammar.out
+	move /y sqlgrammar.tab.h sqlgrammar.h
+	move /y sqlgrammar.tab.c sqlgrammar.c
+	move /y sqlgrammar.output sqlgrammar.out
 
 sqlparser.obj : sqlparser.c sqlgrammar.c sqlstructs.h
 
 sqltokens.c:	sqltokens.l sqlgrammar.h
 	$(LEX) -i sqltokens.l
-	mv lex.yy.c sqltokens.c
+	move /y lex.yy.c sqltokens.c
 
 sqltokens.obj : sqltokens.c
 	$(CC) $(CFLAGS) -D_CRT_SECURE_NO_DEPRECATE -D_POSIX_ $**
@@ -125,30 +125,30 @@ sqlgrammar.obj : sqlgrammar.c
 
 	
 clean:
-	rm -zq sqlgrammar.out
-	rm -zq *.obj
-	rm -zq *.exe
-	rm -zq *.ex1
-	rm -zq *.res
-	rm -zq *.aps
-	rm -zq *.pdb
-	rm -zq *.wsp
-	rm -zq *.ilk
-	rm -zq *.bsc
-	rm -zq *.vcp
-	rm -zq *.pch *.idb
-	rm -zq *.sbr
-	rm -zq *.vcw
-	rm -zq *.map *.ncb
-	rm -zqr WinDebug
-	rm -zqr WinRel
-	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	-del /q sqlgrammar.out 2>nul
+	-del /q *.obj 2>nul
+	-del /q *.exe 2>nul
+	-del /q *.ex1 2>nul
+	-del /q *.res 2>nul
+	-del /q *.aps 2>nul
+	-del /q *.pdb 2>nul
+	-del /q *.wsp 2>nul
+	-del /q *.ilk 2>nul
+	-del /q *.bsc 2>nul
+	-del /q *.vcp 2>nul
+	-del /q *.pch *.idb 2>nul
+	-del /q *.sbr 2>nul
+	-del /q *.vcw 2>nul
+	-del /q *.map *.ncb 2>nul
+	-rmdir /s /q WinDebug 2>nul
+	-rmdir /s /q WinRel 2>nul
+	-del /q *.~ *.?~ *.??~ *.{* *.bak #*.* 2>nul
 #	rm -zq sqlgrammar.c
 #	rm -zq sqlgrammar.h
 #	rm -zq sqltokens.c
 
 
 realclean: clean
-	rm -zq curlib.* allok.* generics.c generics.h generics.1
-	rm -zq $(CLASS_SRC:.d=.c)
+	-del /q curlib.* allok.* generics.c generics.h generics.1 2>nul
+	-del /q $(CLASS_SRC:.d=.c) 2>nul
 

@@ -73,8 +73,8 @@ curlib.nm : $(OBJS)
 !ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib @lib
 !ENDIF
-	rm lib
-	rm -zq *.obj
+	-del /q lib 2>nul
+	-del /q *.obj 2>nul
 	echo Done >$@
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
@@ -84,7 +84,7 @@ CheckBox.obj ComboBox.obj DateControl.obj ListBox.obj NumericControl.obj PushBut
       StaticTextControl.obj TextControl.obj Window.obj : ctlsave.h
 
 printdib.c : printdib.d
-	cp $** $@
+	copy /y $** $@
 
 JavaScript.obj : JavaScript.c
 	$(CC) $(CFLAGS) -c -I$(JS_IPATH) $**
@@ -103,9 +103,9 @@ makegens:
 
 
 clean:
-	rm -zq *.obj *.o *.exe *.err *.pdb
-	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	-del /q *.obj *.o *.exe *.err *.pdb 2>nul
+	-del /q *.~ *.?~ *.??~ *.{* *.bak #*.* 2>nul
 
 realclean: clean
-	rm -zq curlib.* allok.* *.c generics.h generics.1
+	-del /q curlib.* allok.* *.c generics.h generics.1 2>nul
 

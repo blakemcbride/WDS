@@ -51,7 +51,7 @@ curlib.nm : $(OBJS)
 !ELSE
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib $?
 !ENDIF
-	rm -zq *.obj
+	-del /q *.obj 2>nul
 	echo Done >$@
 
 $(INCDIR)\generics.h : $(CLASS_SRC)
@@ -66,9 +66,9 @@ makegens:
 
 
 clean:
-	rm -zq *.obj *.o *.exe *.err *.pdb
-	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	-del /q *.obj *.o *.exe *.err *.pdb 2>nul
+	-del /q *.~ *.?~ *.??~ *.{* *.bak #*.* 2>nul
 
 realclean: clean
-	rm -zq curlib.* allok.* generics.h generics.1
+	-del /q curlib.* allok.* generics.h generics.1 2>nul
 

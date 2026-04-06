@@ -20,15 +20,15 @@ CFLAGS = -I$(INCDIR) -I$(DYNACE_PATH)\include -nologo -Oityb1 -Gs -Gy $(CFEXTRA)
 !ENDIF
 
 curlib.cm : $(INCDIR)\generics.h
-	dpp $(STRAT) -C -g $(INCDIR)\generics.h -c -h
+	$(DYNACE_PATH)\bin\dpp $(STRAT) -C -g $(INCDIR)\generics.h -c -h
 	$(CC) -c $(CFLAGS) generics.c
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib generics.obj
-	rm -zq *.obj generics.*
+	-del /q *.obj generics.* 2>nul
 	echo Done >$@
 
 clean:
-	rm -zq *.obj generics.* *.o *.pdb *.err
-	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	-del /q *.obj generics.* *.o *.pdb *.err 2>nul
+	-del /q *.~ *.?~ *.??~ *.{* *.bak #*.* 2>nul
 
 realclean : clean
-	rm -zq curlib.*
+	-del /q curlib.* 2>nul

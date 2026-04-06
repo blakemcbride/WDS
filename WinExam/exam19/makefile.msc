@@ -93,25 +93,25 @@ newgens:
 
 
 clean:
-	rm -zq $(CLASS_SRC:.d=.c)
-	rm -zq *.obj
-	rm -zq *.exe
-	rm -zq *.ex1
-	rm -zq *.res
-	rm -zq *.aps
-	rm -zq *.pdb
-	rm -zq *.wsp
-	rm -zq *.ilk
-	rm -zq *.bsc
-	rm -zq *.vcp
-	rm -zq *.pch
-	rm -zq *.sbr
-	rm -zq *.vcw
-	rm -zq *.map
-	rm -zq generics.*
-	rm -zqr WinDebug
-	rm -zqr WinRel
-	rm -zq *.idb *.mdp *.ncb
-	rm -zq *.dsw *.opt *.plg
-	rm -zq *.dsp
+	-del /q $(CLASS_SRC:.d=.c) 2>nul
+	-del /q *.obj 2>nul
+	-del /q *.exe 2>nul
+	-del /q *.ex1 2>nul
+	-del /q *.res 2>nul
+	-del /q *.aps 2>nul
+	-del /q *.pdb 2>nul
+	-del /q *.wsp 2>nul
+	-del /q *.ilk 2>nul
+	-del /q *.bsc 2>nul
+	-del /q *.vcp 2>nul
+	-del /q *.pch 2>nul
+	-del /q *.sbr 2>nul
+	-del /q *.vcw 2>nul
+	-del /q *.map 2>nul
+	-del /q generics.* 2>nul
+	-rmdir /s /q WinDebug 2>nul
+	-rmdir /s /q WinRel 2>nul
+	-del /q *.idb *.mdp *.ncb 2>nul
+	-del /q *.dsw *.opt *.plg 2>nul
+	-del /q *.dsp 2>nul
 

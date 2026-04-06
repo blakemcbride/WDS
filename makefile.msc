@@ -5,14 +5,14 @@ DPP = $(DYNACE_PATH)\bin\dpp
 
 DPPOPTS = -C $(STRAT)
 
-TOUCH = touch
+TOUCH = copy /b
 
 
 MAKEFILE=makefile.msc
 
 
 
-all : # setup.win
+all :
 	cd generics
 	echo Entering generics
 	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
@@ -66,7 +66,9 @@ all-scratch :
 	@rem
 	cd ..\ODBC
 	echo Entering ODBC
-	$(TOUCH) sqlgrammar.c sqlgrammar.h sqltokens.c 
+	$(TOUCH) sqlgrammar.c+,, sqlgrammar.c >nul
+	$(TOUCH) sqlgrammar.h+,, sqlgrammar.h >nul
+	$(TOUCH) sqltokens.c+,, sqltokens.c >nul
 	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS) newgens
  	$(MAKE) /nologo /f $(MAKEFILE) $(MAKEMACROS)
 	@rem
@@ -137,8 +139,8 @@ clean :
 	cd ..\..
 
 realclean : 
-	rm -zq include\generics.h
-	rm -zq lib\dwdsnm.lib
+	-del /q include\generics.h 2>nul
+	-del /q lib\dwdsnm.lib 2>nul
 	@rem
 	cd Registry
 	echo Entering Registry
@@ -178,7 +180,7 @@ realclean :
 	cd ..\..
 
 dist:
-	rm -zq dynace*.zip
+	-del /q dynace*.zip 2>nul
 	zip -r dynace README msc.dm makefile.unx makefile.inc change.log
 	zip dynace docs\* generics\* lib\*
 	zip dynace include\* Windows\* ODBC\* Resources\*
@@ -189,15 +191,15 @@ makegens :
 	cd Windows
 	$(DPP) $(DPPOPTS) -h -i -g %DYNACE_PATH%\include\generics.h -s *.d
 	if errorlevel 1 goto done
-	mv generics.h ../include/generics.h
+	move /y generics.h ..\include\generics.h
 	@rem
 	cd ..\ODBC
-	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
-	mv generics.h ../include/generics.h
+	$(DPP) $(DPPOPTS) -h -i -g ..\include\generics.h -s *.d
+	move /y generics.h ..\include\generics.h
 	@rem
 	cd ..\OLE
-	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
-	mv generics.h ../include/generics.h
+	$(DPP) $(DPPOPTS) -h -i -g ..\include\generics.h -s *.d
+	move /y generics.h ..\include\generics.h
 	@rem
 	@rem	cd ..\Widgets
 	@rem	$(DPP) $(DPPOPTS) -h -i -g ../include/generics.h -s *.d
@@ -303,12 +305,4 @@ java-realclean :
 	@rem
 	cd ..\..
 
-setup.win :
-	touch kernel\*.c
-	touch class\*.c
-	touch threads\*.c
-	touch dpp\*.c
-	touch dpp\generics.*
-	pause
-	touch include\generics.h
 

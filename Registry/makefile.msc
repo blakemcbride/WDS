@@ -30,7 +30,7 @@ OBJ = $(CLASSES:.d=.obj) regutil.obj regutil2.obj
 
 curlib.cm : $(OBJ)
 	lib /nologo /out:$(LIBDIR)\dwdsnm.lib $(LIBDIR)\dwdsnm.lib $?
-	rm -zq *.obj
+	-del /q *.obj 2>nul
 	echo Done >$@
 
 newgens:
@@ -38,11 +38,11 @@ newgens:
 
 regutl32.exe : regutil.c
 	cl -nologo -Zi -Od -DMAIN $< advapi32.lib user32.lib -Fe$@
-	rm -zq *.obj 
+	-del /q *.obj  2>nul
 
 clean :
-	rm -zq *.obj generics.* *.o *.pdb *.err
-	rm -zq *.~ *.?~ *.??~ *.{* *.bak #*.*
+	-del /q *.obj generics.* *.o *.pdb *.err 2>nul
+	-del /q *.~ *.?~ *.??~ *.{* *.bak #*.* 2>nul
 
 realclean : clean
-	rm -zq curlib.*
+	-del /q curlib.* 2>nul
