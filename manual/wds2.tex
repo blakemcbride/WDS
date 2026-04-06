@@ -303,10 +303,10 @@ Finally, the compiled resource file is combined with the executable file
 at link time.
 
 Resource editors and compilers are included and documented along with
-your C compiler package.  The resource editor associated with
-Microsoft's Visual C++ is called @emph{App Studio}.  WATCOM calls theirs
-the @emph{WATCOM Resource Editor} and Borland calls theirs
-@emph{Resource Workshop}.
+your C compiler package.  The resource editor included with
+Microsoft Visual Studio can be used to create and edit standard
+@code{.rc} files.  Any resource editor that produces standard Windows
+resource files will work with WDS.
 
 
 
@@ -366,52 +366,11 @@ This scenario is more common and troublesome than it may appear!
 
 
 
-@section Win16, Win32, Win32s
-Microsoft has two independent but similar models in which an application
-may run.  Each model has an associated application program interface
-(API) or library which it links with and uses in order to interface with
-the OS.  The two APIs are called Win16 and Win32.
-
-Win16 is a 16 bit interface designed to run on Windows 3.1.  All common
-Windows 3.1 apps are created using this API.  This API has the advantage
-of being portable to the most environments.  Although it will only
-support 16 bit applications, these apps will run on Windows 3.1, Windows
-'95 and Windows NT.
-
-Win32 on the other hand is a full featured 32 bit API.  The syntax of
-this API is very similar but not exactly the same as Win16.  The main
-differences have to do with the fact that in a 32 bit environment
-@code{int}'s are 32 bits instead of 16.  Win32 and Win16 are similar
-enough, however, that with a little planning, it is not difficult to
-create apps which are compile time portable between Win16 and Win32.
-Windows NT is the primary host for Win32 applications, however,
-these 32 bit applications may run on 16 bit Windows 3.1 as follows.
-
-In order to bridge the gulf between Win16 and Win32 and allow 32 bit
-applications to run under Windows 3.1, Microsoft created Win32s.  Win32s
-is a large subset of Win32 which supports the same syntax as Win32,
-supports 32 bit apps, and will run on Windows 3.1 and NT.  In order to
-run on 16 bit Windows 3.1 it is necessary to install some 32 bit
-extensions to Windows 3.1.  These extensions come with the C compiler
-packages and are freely redistributable.  Win32s apps will run in true
-32 bit mode under Windows 3.1 or Windows NT using the same executable.
-
-It is important to note that there is no difference between creating a
-Win32 or Win32s application.  Both use the same compiler, compiler
-flags, linker, linker flags and libraries.  The exact same executable
-is built.  There is no way to specifically tell the system which type of
-application you wish.  The @emph{only} difference between the two is
-which specific APIs your application calls.
-
-If your application only calls those APIs which are common to Win32
-and Win32s then your application will run as a Win32 application under
-NT and a Win32s under Windows 3.1.  However, if your application makes
-any API calls which are specific to Win32 then those calls will not
-work under Windows 3.1.
-
-WDS supports Win16 and Win32.  In addition, WDS only uses those APIs
-which are available under Win32s, therefore, WDS applications will
-run fine under Win32s.
+@section Windows API
+WDS targets the Windows API (64-bit) and builds as a native 64-bit
+application on Windows using MSVC.  WDS is also portable to Linux and
+macOS via the Wine library, where it likewise builds and runs as a
+64-bit application using GCC/winegcc.
 
 @section Message Passing Architecture
 Most character based applications are pretty simple in the sense that

@@ -31,186 +31,110 @@
 This chapter, in concert with the WDS examples, describes the tools and
 actual steps necessary to create WDS application programs.  The best
 method of learning is to go through the example programs located under
-the @code{\DYNACE\WINEXAM} directory in the order in which they appear.
+the @code{WinExam} directory in the order in which they appear.
 
-@section Build Modes
-There are two principal modes of building WDS applications.  You can
-either use the Integrated Development Environment (IDE) which comes
-with your compiler or you can use the included DMAKE command line
-make utility along with the other command line facilities of your
-compiler.
+@section Build Methods
+There are two supported build methods for WDS applications:
 
-Use of the IDE is recommended since it provides a convenient environment
-for editing, building, debugging and executing your application.  However,
-the DMAKE method is required both for building the WDS libraries from
-scratch (if you have the source edition) or to build WDS applications
-which contain new Dynace classes.  This is required because the build
-procedure necessary for Dynace classes is too complex for the IDEs.
+@itemize @bullet
+@item
+@strong{Linux/macOS:} GNU Make with GCC/winegcc (via Wine).
+@item
+@strong{Windows:} NMAKE with Microsoft Visual C++ (MSVC).
+@end itemize
 
-Note, however, that creating new Dynace classes is not required in
-order to build full featured WDS applications.
+Both methods are command-line based.  WDS builds as a native 64-bit
+application on both platforms.
 
-In addition, only the DMAKE mode is supported when initially building
-the Dynace and WDS systems from scratch.
+@section Build Environment Setup
+
+@subsection Linux / macOS (Wine)
+The following must be in place before building:
+
+@enumerate
+@item
+Install Wine and the Wine development headers (e.g.@: @code{wine-devel}
+on Fedora, @code{libwine-dev} on Debian/Ubuntu).
+@item
+Build Dynace (a separate package).
+See @code{https://github.com/blakemcbride/Dynace}.
+@item
+Edit the file @code{makefile.inc} in the WDS root directory and set
+@code{DYNACE_PATH} to point to your Dynace installation directory.
+Verify @code{WINEINCPATH} is correct (default is
+@code{/usr/include/wine}).
+@end enumerate
+
+@subsection Windows (MSVC)
+The following must be in place before building:
+
+@enumerate
+@item
+Install Visual Studio with C/C++ command-line tools.
+@item
+Build Dynace (a separate package).
+See @code{https://github.com/blakemcbride/Dynace}.
+@item
+Edit the file @code{setupenv.bat} in the WDS root directory and set
+@code{DYNACE_PATH} to point to your Dynace installation directory.
+@item
+Run @code{setupenv.bat} from a Visual Studio Developer Command Prompt.
+@end enumerate
 
 
-@section IDE Build Setup
-Prior to building any of the examples using the IDE, a few configuration
-options within the IDE need to be set.
+@section Building WDS From Scratch
+The procedure used to build WDS from scratch is fully described
+in @code{docs/BUILD.txt}.  A brief summary follows.
 
-@subsection Microsoft IDE
-Configure the correct directories for include files and libraries.
-This can be done via the tools / options / directories menu item.
-
-Configure the IDE such that it will look under the
-@code{\DYNACE\INCLUDE} directory (in addition to whatever is already
-set) for include files.
-
-Additionally, configure the IDE such that it
-will look under the @code{\DYNACE\LIB} directory (in addition to
-whatever is already set) for library files.
-
-
-@subsection Borland IDE
-Configure the correct directories for include files and libraries.
-Since the Borland IDE associates these directories directly with
-each project, this information will have to be adjusted separately
-for each of the two @code{.IDE} files which come with Dynace.
-These files are under the @code{\DYNACE\WINEXAM\SETUP} directory
-and are called @code{WIN16.IDE} and @code{WIN32.IDE}.
-This can be done via the options / project / directories menu item
-after loading one of the @code{IDE} files.  You must then save the
-change by using the project / close project menu option.  Repeat this
-procedure for both @code{IDE} files.
-
-Configure the IDE such that it will look under the
-@code{\DYNACE\INCLUDE} directory (in addition to whatever is already
-set) for include files.
-
-Additionally, configure the IDE such that it will look under the
-@code{\DYNACE\LIB} directory (in addition to whatever is already set)
-for library files.
-
-@subsection Symantec IDE
-Symantec compiler versions 7.2 and prior do not work due to bugs in
-their compiler.  A patched 7.2 compiler did work but was a little
-flaky.  Version 7.21 seemed to work fine but was not extensively
-tested.
-
-@section DMAKE Build Setup
-This section lists environment variables which must be set if the
-DMAKE build mode is used.  If the IDE build mode is used
-see the IDE Build Setup section for setup details.
-
-The @code{\DYANCE\BIN} directory should be part of the search path used
-by your system for executable programs (the @code{PATH} environment
-variable).
-
-The following environment variables should be set as follows (modify as
-appropriate):
+@subsection Linux / macOS
+From the WDS root directory:
 @example
-@group
-set MAKESTARTUP=c:\dynace\utils\startup.mk
-set TMPDIR=c:\tmp
-set DOS4G=quiet
-set DOS16M=:4M
-@end group
+make makegens
+make
 @end example
 
-The @code{DOS4G} and @code{DOS16M} environment variables are only necessary
-when running the 32 bit DOS version of @code{dpp.exe} which has been
-compiled with the WATCOM compiler.  Win32 or other versions of @code{dpp}
-do not require these variables.
-
-Although not required by the example programs, Microsoft users may find
-it convenient to add @code{\DYNACE\INCLUDE} and @code{\DYNACE\LIB} to
-your compiler's include and library search paths respectively.
-
-Borland users will need to adjust the @code{BORLAND_HOME} path setting
-in the @code{B16.DM} and @code{B32.DM} makefiles located in the
-@code{\DYNACE\WINEXAM\SETUP} and Dynace source code directories.  In
-addition, the Borland resource compiler requires that the @code{INCLUDE}
-environment variable be set to where the Borland include files are
-located, for example:
-
+@subsection Windows
+From the WDS root directory (in a Developer Command Prompt after
+running @code{setupenv.bat}):
 @example
-set INCLUDE=d:\bc45\include
+nmake -f makefile.msc makegens
+nmake -f makefile.msc all-scratch
 @end example
-
-
-@section Building Dynace & WDS From Scratch
-The procedure used to build Dynace & WDS from scratch is fully described
-in 
-@iftex
-@hfil @break 
-@end iftex
-@code{\DYNACE\DOCS\BUILD.txt}.  See that file for build
-instructions.
 
 New users will want to read all the files in the @code{docs} directory.
 
 
 @section Examples Setup
-All examples are buildable under all supported environments and build
-procedures, including IDE or DMAKE builds, as well as 16 bit Windows or
-32 bit Win32 (NT, Win32s, Windows 95).  The only difference is the build
-procedures or associated makefiles.
 
-In order to avoid having all supported build procedures cluttering up
-the example directories, the example directories are shipped
-without any build procedures installed.  All the build procedures
-are located in the @code{\DYNACE\WINEXAM\SETUP} directory along
-with batch files used to install the specific build procedures you
-need.
+@subsection Linux / macOS
+Each example directory contains a GNU @code{makefile}.  Simply
+@code{cd} into the example directory and run @code{make}.
 
-The following table lists the commands available in order to configure
-the example programs.  Note that each command must be executed from the
-@code{\DYNACE\WINEXAM\SETUP} directory unless otherwise indicated.
-There is no harm in configuring the examples for more than one
-configuration at the same time.
+@subsection Windows
+The Windows NMAKE makefiles (@code{makefile.msc}) are not installed in
+the example directories by default.  To install them, run the following
+from the @code{WinExam\setup} directory:
+
+@example
+windows
+@end example
+
+This copies the appropriate @code{makefile.msc} into each example
+directory.  You can then build any example with:
+
+@example
+nmake -f makefile.msc
+@end example
+
+The @code{WinExam\setup} directory also contains:
 
 @table @asis
-@item M16IDE
-IDE build with Microsoft Visual C 16 bit
+@item clean
+Deletes build artifacts from all example directories.
 
-@item M16DM
-DMAKE build with Microsoft Visual C 16 bit
-
-@item M32IDE
-IDE build with Microsoft Visual C 32 bit
-
-@item M32DM
-DMAKE build with Microsoft Visual C 32 bit
-
-@item B16IDE
-IDE build with Borland C 16 bit
-
-@item B16DM
-DMAKE build with Borland C 16 bit
-
-@item B32IDE
-IDE build with Borland C 32 bit
-
-@item B32DM
-DMAKE build with Borland C 32 bit
-
-@item S32IDE
-IDE build with Symantec C 32 bit
-
-@item S32DM
-DMAKE build with Symantec C 32 bit
-
-@item CLEANALL
-Used to delete all files produced by builds in all examples
-
-@item REALCLN
-Used to delete all files produced by builds and all build configuration
-files (basically to go back to an as-shipped state)
-
-@item CLEAN
-Used to delete all files produced by a build for a single example
-(execute from the particular example's directory)
-
+@item cleanxx
+Removes the installed @code{makefile.msc} files from all example
+directories (returns to as-shipped state).
 @end table
 
 
@@ -221,104 +145,68 @@ This section documents the files which are contained in each example
 program.
 
 @table @asis
-@item README
-This file describes the object of the example.  It should be read
+@item readme
+This file describes the purpose of the example.  It should be read
 first.
 
-@item MAIN.C
+@item main.c
 This file is the complete source code to the example program.
 
-@item MAIN.TXT
-This is a fully commented version of MAIN.C.  It describes all aspects
-of the current example which are unique.
+@item main.txt
+This is a fully commented version of @code{main.c}.  It describes all
+aspects of the current example which are unique.
 
-@item MAIN.RC
-This is the resource script describing the resources used by the application.
-It is created and edited via the indigenous resource editor.
+@item main.rc
+This is the resource script describing the resources used by the
+application.  It is created and edited via a resource editor.
 
-@item RESOURCE.H
-This is another file created by the resource editor.  It is used by the
-application code to associate resources defined in MAIN.RC to macro names.
+@item resource.h
+This file is created by the resource editor.  It is used by the
+application code to associate resources defined in @code{main.rc} to
+macro names.
 
-@item ALGOCORP.ICO
-An icon picturing the Algorithms Corporation logo.
+@item makefile
+GNU makefile for building under Linux/macOS (Wine).
 
-@item MAIN.DEF
-Link definition file.  Only needed for Windows 3.1 applications.
-
-@end table
-
-
-In addition to the above, the following build/system specific make or
-project files are used.
-
-@table @asis
-@item MAIN.MAK
-Project file for Microsoft Visual C 16 bit
-
-@item M16.DM
-DMAKE makefile for Microsoft Visual C 16 bit
-
-@item WIN32.MAK
-Project file for Microsoft Visual C 32 bit
-
-@item M32.DM
-DMAKE makefile for Microsoft Visual C 32 bit
-
-@item WIN16.IDE
-Project file for Borland C 16 bit
-
-@item B16.DM
-DMAKE makefile for Borland C 16 bit
-
-@item WIN32.IDE
-Project file for Borland C 32 bit
-
-@item B32.DM
-DMAKE makefile for Borland C 32 bit
-
-@item S32.PRJ & S32.OPN
-Project files for Symantec C 32 bit
-(requires version 7.21 or later)
-
-@item S32.DM
-DMAKE makefile for Symantec C 32 bit
-(requires version 7.21 or later)
+@item makefile.msc
+NMAKE makefile for building under Windows (MSVC).  Installed by
+running @code{WinExam\setup\windows} (see Examples Setup above).
 
 @end table
 
 
 Once an application is built, the only file needed to run it is
-@code{MAIN.EXE}.
+@code{main} (Linux) or @code{main.exe} (Windows).
 
 
 
 @section Building The Examples
-In order to build an example with an IDE, simply open the appropriate
-project file and select build.
-
-In order to build with the DMAKE command line utility execute the
-following command.
+To build an example under Linux/macOS, @code{cd} into the example
+directory and run:
 
 @example
-dmake -f MAKEFILE.DM
+make
 @end example
 
-where @code{MAKEFILE.DM} is one of the DMAKE makefiles listed above.
-
-Alternatively, you can use the following command to create a debug
-version of the example:
+To build a debug version:
 
 @example
-dmake -f MAKEFILE.DM  DEBUG=1
+make DEBUG=1
+@end example
+
+To build an example under Windows, @code{cd} into the example
+directory and run:
+
+@example
+nmake -f makefile.msc
 @end example
 
 
 
-@section Debugging With The IDE
-Due to the fact that the WDS is the first thing which Windows sees
-when it executes an application and the fact that WDS is not shipped
-with debugging information, the following procedure will make it
+@section Debugging
+Due to the fact that WDS is the first thing which Windows sees
+when it executes an application and the fact that WDS is not normally
+built with debugging information, the following procedure will make it
 easier to debug your application code.
 
 First compile your application with debugging information.  Then when you
@@ -327,8 +215,8 @@ can then debug your application by telling the debugger to run to the first
 break point.  You will then see the initial function of your application
 and may debug as usual from that point.
 
-If, however, you purchased the WDS source code, you may compile it
-with full debugging information and debug through the WDS code
+Since WDS comes with full source code, you may compile it
+with debugging information and debug through the WDS code
 as well as your application specific code.
 
 
@@ -342,12 +230,6 @@ application, it would be best for you to start with the WDS example
 which illustrates the creation of a Dynace class along with the WDS
 application.  This example has the appropriate make file logic to
 handle custom classes along with a WDS application.
-
-@section DMAKE
-DMAKE is a very powerful, portable and enhanced make utility developed
-by Dennis Vadura.  It is freely distributable and not owned by
-Algorithms Corporation or Blake McBride.  Complete documentation for this utility
-is contained in @code{\DYNACE\DOCS\DMAKE.MAN}.
 
 @section DPP
 @code{DPP} is the pre-processor used by Dynace to convert class definition

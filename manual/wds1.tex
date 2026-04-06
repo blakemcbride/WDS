@@ -43,8 +43,8 @@ with WDS it takes four lines of code!  Fully functional menus and
 dialogs can be implemented with WDS in a handful of lines instead of the
 hundreds it takes using the Windows API or other available tools.
 
-WDS applications are portable across Win32 which is the Windows GUI API.
-It is also portable to Linux and Mac via the Wine system.
+WDS applications are portable across 64-bit Windows and Linux/macOS
+via Wine.
 
 Dynace (pronounced @emph{d@=i-ne-s@=e}), what WDS is based upon, stands
 for a ``DYNAmic C language Extension''.  It is an object oriented
@@ -162,8 +162,7 @@ Development System (WDS).
 @item Drastically reduces the learning curve associated with Windows
 development
 @item Drastically reduces the lines of code necessary to build Windows apps
-@item Applications are portable between Windows 3.1 (Win16), Win32s,
-Windows 95 and Windows NT
+@item Applications are portable across 64-bit Windows and Linux/macOS via Wine
 @item Applications are easier to debug, enhance and pass off to new programmers
 since it is straight C and so few lines
 @item Full support for main, popup and child windows, menus,
@@ -175,8 +174,8 @@ modal and modeless dialogs, cursors, icons, fonts, brushes, and pens
 runs FAST!
 @item Full support for the Windows help system at all levels of context
 @item Support for external DLL access
-@item Access of full source code to WDS
-@item Applications are royalty free (with the appropriate license)
+@item Full source code to WDS is included
+@item Applications are royalty free
 @end itemize
 
 @section Reasons to use WDS
@@ -201,8 +200,8 @@ Drastically reduce the time necessary to debug, maintain and enhance the
 app since it's so few lines of code.
 
 @item
-Write apps which are portable to 16 and 32 bit environments including
-Windows 3.1 (Win16), Win32s, other Windows (Win32).
+Write apps which are portable across 64-bit Windows and Linux/macOS
+via Wine.
 
 @item
 Be much less dependent on a few ``expert'' programmers since the code
@@ -233,86 +232,80 @@ encapsulates much of the message-driven architecture associated with
 Windows programming.
 
 @item
-WDS applications are royalty free (with the appropriate license).
+WDS applications are royalty free.
 
 @end enumerate
 
 
 @section Installation
-The diskette(s) distributed with Dynace are standard DOS formatted
-diskette(s).  The files on the diskette(s) have been compressed in order
-to reduce the quantity of diskettes. 
-
-See the file @code{README}, located on the first disk, for
-installation instructions.
+WDS is available from the GitHub repository at
+@code{https://github.com/blakemcbride/WDS}.  Clone the repository and
+follow the build instructions in @code{docs/BUILD.txt}.
 
 
 
 @section Contents
 Once the system has been installed there will exist a series of
-directories under the @code{dynace} directory.  The system will contain
+directories under the WDS root directory.  The system will contain
 the following directories:
 
 
 @table @asis
-@item \DYNACE
-This is the root of the Dynace system.
+@item Windows
+Source code to the Windows GUI class library (the core of WDS).
 
-@item \DYNACE\LIB
-This is the location of all the Dynace libraries.  You may wish to add
-this directory to the list of paths your linker searches.
+@item ODBC
+Source code to the ODBC/SQL class library.
 
-@item \DYNACE\INCLUDE
-This is the location of the include files necessary to compile Dynace
-applications.  You may need to add this directory to the path your
-compiler uses to search include files.
+@item Resources
+Source code to the resource compilation library.
 
-@item \DYNACE\BIN
-Executable files necessary for development with the Dynace system.
-This directory should be added to your normal search path for executable
-programs.
+@item Registry
+Source code to Windows registry access.
 
-@item \DYNACE\EXAMPLES
-Example programs used to learn & demonstrate the Dynace object oriented
-extension to C.
+@item generics
+Generic function infrastructure.
 
-@item \DYNACE\WINEXAM
-Example programs used to learn & demonstrate WDS.
+@item cld
+Source to a GUI resource editor and dialog designer.
 
-@item \DYNACE\DOCS
-Misc. documentation files.
+@item include
+Header files required by WDS applications (@code{dynwin.h},
+@code{generics.h}, etc.).
 
-@item \DYNACE\MANUAL
-The Dynace and WDS manuals.
+@item lib
+Built WDS libraries.
 
-@item \DYNACE\KERNAL
-Complete source to the Dynace kernel.
+@item bin
+Various executables and utilities associated with the system.
 
-@item \DYNACE\CLASS
-Source to all of the Dynace base classes.
+@item WinExam
+GUI examples and tutorial (exam01 through exam25).
 
-@item \DYNACE\THREADS
-Complete source to the multi-threader, pipes and semaphores.
+@item examples
+Dynace language tutorial examples (not required for WDS).
 
-@item \DYNACE\GENERICS
-Files necessary to build the system generics files from scratch.
+@item Java
+Source to a Java/Dynace interface.
 
-@item \DYNACE\DPP
-Complete source to the @code{dpp} utility.
+@item OLE
+COM/OLE integration.
 
-@item \DYNACE\WINDOWS
-Complete source to the Dynace WDS library.
+@item scheme
+Runtime source files for the MzScheme/Dynace interface.
 
-@item \DYNACE\UTILS
-Complete source to the utility programs.
+@item docs
+Various documentation files to help orient a new user.
+
+@item manual
+WDS manuals along with source to them.
 
 @end table
 
 
-
-The only files that are absolutely necessary for a developer are those
-located in the @code{\DYNACE\LIB, \DYNACE\INCLUDE} and @code{\DYNACE\BIN}
-directories and @code{\DYNACE\UTILS\STARTUP.MK}.
+WDS depends on Dynace, which must be built separately.  The
+@code{include} and @code{lib} directories contain the files needed
+to compile and link WDS applications.
 
 
 
@@ -359,8 +352,8 @@ documented in a separate manual.
 @section Examples & Tutorial
 The WDS system includes a series of examples which serve both as a Quick
 Start and a Tutorial.  These examples are located under the
-@code{\DYNACE\WINEXAM} directory.  The examples located under the
-@code{\DYNACE\EXAMPLES} directory are strictly for the Dynace object
+@code{WinExam} directory.  The examples located under the
+@code{examples} directory are strictly for the Dynace object
 oriented extension to C and are not needed to use WDS.
 
 Each example is contained in its entirety in an independent directory.
@@ -461,7 +454,7 @@ application.
 
 @end table
 
-See the file @code{\DYNACE\WINEXAM\LIST} for the most up-to-date list
+See the file @code{WinExam/list} for the most up-to-date list
 of example programs.
 
 
@@ -496,21 +489,17 @@ of all classes, methods, and macros described in chapter 4.
 
 
 @section Support, Contact & Upgrades
-We will respond to all questions or comments submitted by registered
-users (see @code{REGISTER.DOC}).  We will also notify all registered
-users of bug fixes and enhancements via e-mail.
-
-In addition, it is our hope to hold a public forum concerning Dynace on
-the internet news group comp.lang.misc.  If traffic becomes significant
-we'd also like to create a comp.lang.dynace news group.
+WDS is open source software hosted at
+@code{https://github.com/blakemcbride/WDS}.  Bug reports, questions,
+and feature requests may be submitted via the GitHub issue tracker.
 
 @table @asis
 
-@c @item Voice
-@c 615--791--1636
-
 @item Internet
 blake@@mcbride.name
+
+@item GitHub
+@code{https://github.com/blakemcbride/WDS}
 
 @end table
 
