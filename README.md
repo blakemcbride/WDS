@@ -11,10 +11,8 @@ commercial applications for nearly 20 years.
 
 WDS was used commercially under 32-bit Win32 on Windows for about 15
 years.  It has been updated and now builds and runs as a 64-bit
-application under Wine on Linux (tested on Fedora 42 with GCC 15 and
-Wine 10.x).  The native Windows build (MSVC/NMAKE) has not been
-retested recently but should be unaffected since all Wine-specific
-changes are conditionally compiled.
+application on both native Windows (MSVC/NMAKE) and Linux under Wine
+(tested on Fedora 42 with GCC 15 and Wine 10.x).
 
 Dynace (the system WDS is built upon) is current and works fine in all
 of those environments.
