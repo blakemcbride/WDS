@@ -162,10 +162,10 @@ avoiding the extra return.  The DPP strategy controls which method is
 employed.
 
 Lastly, due to the above, the overhead of Dynace is typically
-negligible - far less then 5%.  There is, however, one area which
+negligible - far less than 5%.  There is, however, one area which
 cause a far more significant overhead.  Perhaps as much as 20%.
 
-Every time a generic is called, Dynace validates it's first argument
+Every time a generic is called, Dynace validates its first argument
 to be sure it is a valid Dynace object.  The beauty of this is that if
 there is a program error and that first argument is not a Dynace
 object (class or instance), Dynace is able to display an appropriate
@@ -186,8 +186,7 @@ data structures.  It is very generic and very portable.
 On top of Dynace, there are a set of Windows specific classes used to
 make the task of creating a Windows GUI application significantly easier
 than other libraries such as MFC.  This set of classes is called WDS.
-These classes are portable to Mac & Linux through the WINE project
-which is a WIN32 API layer.
+These classes are portable to Mac and Linux through the Wine project.
 
 --
 
@@ -205,9 +204,8 @@ Dynace is well documented.  Dynace comes with a 350 page detailed user
 manual and reference.  It has been kept up to date fairly well and
 should be fairly accurate.
 
-WDS has an additional 250 page manual.  Unfortunately, however, it has
-not been kept up to date and is fairly out-dated.  It is, however, a
-good overview and a good starting point.
+WDS has an additional 250 page manual.  It is a good overview and
+reference.
 
 	
 Blake McBride

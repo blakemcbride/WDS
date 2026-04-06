@@ -16,16 +16,15 @@ add facilities previously only available in languages such as Smalltalk
 and CLOS without all the overhead normally associated with those
 environments.
 
-Dynace comes with full C source and is portable Linux, macos, all
-versions of Windows, as well as 16 bit DOS, BSD, and many other unix,
-and VMS.  Dynace can link with pre-existing C/C++ libraries and can be
+Dynace comes with full C source and is portable to Linux, macOS, and
+Windows.  Dynace can link with pre-existing C/C++ libraries and can be
 easily added to pre-existing C/C++ code in order to incrementally add
 Dynace's features.
 
 The benefits of Dynace are 1) it is much easier to manage large projects
-with then C++, 2) it offers much more powerful OO facilities (such as
-metaclass based from the ground up, garbage collection, etc) then C++,
-3) it adds little to the C syntax and is therefore easier to learn then C++.
+with than C++, 2) it offers much more powerful OO facilities (such as
+metaclass based from the ground up, garbage collection, etc.) than C++,
+3) it adds little to the C syntax and is therefore easier to learn than C++.
 
 Dynace is totally independent of WDS.  What this means is that Dynace is
 built independently of WDS and then WDS is built on top of it.  Dynace
@@ -48,9 +47,8 @@ with WDS it takes four lines of code!  Fully functional menus and
 dialogs can be implemented with WDS in a handful of lines instead of the
 hundreds it takes using the Windows API or other available tools.
 
-WDS applications are portable across Windows 3.1 (Win16), Win32s,
-Windows (Win32), and Linux / WINE.  (Win16 hasn't been tested in many
-years.)
+WDS applications run natively on Windows and are also portable to
+Linux and macOS via the Wine library.
 
 The benefits of WDS are 1) the learning curve associated with Windows
 development is drastically reduced, 2) the development time is drastically
@@ -72,69 +70,21 @@ easily.  This system has been tested and used a lot.
 Broadly speaking, this system has two primary components as follows:
 
 1. The Dynace language
-2. The Win32 GUI Development classes
-
+2. The Windows GUI Development classes
 
 The Dynace language is very portable and includes:
 
-* the kernel (provided the OO features and other langage-level facilities)
+* the kernel (provides the OO features and other language-level facilities)
 * DPP (the Dynace pre-processor)
 * class library (collection of generic Dynace classes)
 
 The Dynace language stands on its own and is documented in the file named
-manual/Dynace.pdf.  It does not require the Win32 GUI classes.
+manual/Dynace.pdf.  It does not require the Windows GUI classes.
 
-The Win32 GUI Development classes are a set of Dynace classes that make
-developping Windows GUI appications very easy.  These classes are, 
-theoretically, portable to Linux and Mac via the Wine API.
+The Windows GUI Development classes are a set of Dynace classes that make
+developing Windows GUI applications very easy.  These classes are portable
+to Linux and macOS via the Wine library.
 
-These classes were used for many years by commercial Windows applications.
-However, they have not been maintained through the switch to 64 bit machines.
-It is believed that getting all this to work on Win64 would not be a bit deal.
-I just haven't had the time or motivation for it.
-
-Regardless, the Dynace language is portable and works fine on 64 bit machines.
-
-CONCERNS
-
-There are two areas I'd look out for whan porting the Dynace langage as 
-follows:
-
-A. Threads
-B. Garbage collector
-
-Dynace has two threading models it supports:
-
-I. Green threads
-II. Native threads
-
-Green threads is where a single CPU or process thread is used.  Dynace time
-slices that single thread.
-
-Native threads is where real OS threads are used across multiple threads.
-
-Both are complete and tested but not extensively.  Neither
-has been used in a production environment.  So, I am not 100%
-confident about them.
-
-In terms of the garbage collector, Dynace has been designed to support two 
-models:
-
-1. Dynace comes with a mark & sweep collector.  It is designed not to take
-a lot of stack space regardless of the structure it is marking.  It also
-handles recurrent data structires just fine.
-
-2. The second model utilizes the Boehm-Demers-Weiser GC.
-
-Both are complete and have been tested but not extensively.  Neither
-has been used in production.  I would feel more comfortable with the
-one that comes with Dynace.
-
-There is a major portability concern with the Dynace GC.  In order to mark
-all areas, Dynace must have access to the registers and the global roots.
-There is no portable way to do this in C.  Dynace includes inline assembler
-for some of the major platforms for this.  On the other hand, I presume the
-Boehm-Demers-Weiser GC already handles this.
-
-I have some concerns with the interaction of native threads and the GC.
-
+These classes have been used for many years by commercial Windows
+applications and have been updated for 64-bit on both native Windows
+and Wine.
