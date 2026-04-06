@@ -16,12 +16,12 @@ CFEXTRA += -DNATIVE_THREADS
 !ENDIF
 
 !IFDEF DEBUG
-CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) $(WINVER)
-#GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
-GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(WINVER)
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) $(WINVER)
+#GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Od -D_WINDOWS -Zi -Fd$(LIBDIR)\dynm32.pdb $(WINVER)
 !ELSE
-CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS -DWIN32 $(CFEXTRA) $(WINVER)
-GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS -DWIN32 $(WINVER)
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS $(CFEXTRA) $(WINVER)
+GFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -Oityb1 -Gs -Gy -D_WINDOWS $(WINVER)
 !ENDIF
 
 !IFDEF LASTDATE

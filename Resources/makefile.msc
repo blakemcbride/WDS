@@ -26,9 +26,9 @@ CFEXTRA = -DNATIVE_THREADS
 	$(CC) $(CFLAGS) $*.c
 
 !IFDEF DEBUG
-CFLAGS = -nologo -c -I$(INCDIR -I$(DYNINC)) -Od -D_WINDOWS -DWIN32 -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) -I$(WDIR) -I..\windows $(CFEXTRA)
+CFLAGS = -nologo -c -I$(INCDIR -I$(DYNINC)) -Od -D_WINDOWS -Zi -Fd$(LIBDIR)\dynm32.pdb $(CFEXTRA) -I$(WDIR) -I..\windows $(CFEXTRA)
 !ELSE
-CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS -DWIN32 $(CFEXTRA) -I$(WDIR) -I..\windows $(CFEXTRA)
+CFLAGS = -nologo -c -I$(INCDIR) -I$(DYNINC) -O2 -D_WINDOWS $(CFEXTRA) -I$(WDIR) -I..\windows $(CFEXTRA)
 !ENDIF
 
 !IFDEF DEMO
