@@ -1,33 +1,32 @@
 @echo off
-..\..\bin\rm -zq *.obj
-..\..\bin\rm -zq *.exe
-..\..\bin\rm -zq *.map
-..\..\bin\rm -zq *.aps
-..\..\bin\rm -zq *.pdb
-..\..\bin\rm -zq *.wsp
-..\..\bin\rm -zq *.ilk
-..\..\bin\rm -zq *.bsc
-..\..\bin\rm -zq *.vcp
-..\..\bin\rm -zq *.pch *.sln
-..\..\bin\rm -zq *.sbr
-..\..\bin\rm -zq *.vcw
-..\..\bin\rm -zq *.map
-..\..\bin\rm -zq generics.*
-..\..\bin\rm -zq class*.c
-..\..\bin\rm -zqr WinDebug
-..\..\bin\rm -zqr WinRel
-..\..\bin\rm -zq *.~ *.?~ *.??~ *.bak
+del /q *.obj 2>nul
+del /q *.exe 2>nul
+del /q *.map 2>nul
+del /q *.aps 2>nul
+del /q *.pdb 2>nul
+del /q *.wsp 2>nul
+del /q *.ilk 2>nul
+del /q *.bsc 2>nul
+del /q *.vcp 2>nul
+del /q *.pch *.sln 2>nul
+del /q *.sbr 2>nul
+del /q *.vcw 2>nul
+del /q generics.* 2>nul
+del /q class*.c 2>nul
+rmdir /s /q WinDebug 2>nul
+rmdir /s /q WinRel 2>nul
+del /q *.~ *.?~ *.??~ *.bak 2>nul
 if exist --linux-.--- del --linux-.---
 
 rem From Borland
-..\..\bin\rm -zq *.rws
-..\..\bin\rm -zq *.~re
-..\..\bin\rm -zq *.csm
-..\..\bin\rm -zq *.dsw
-..\..\bin\rm -zq *.~de
+del /q *.rws 2>nul
+del /q *.~re 2>nul
+del /q *.csm 2>nul
+del /q *.dsw 2>nul
+del /q *.~de 2>nul
 
 rem Unix
-..\..\bin\rm -zq main *.o
+del /q main *.o 2>nul
 
 rem WATCOM
-..\..\bin\rm -zq *.err
+del /q *.err 2>nul

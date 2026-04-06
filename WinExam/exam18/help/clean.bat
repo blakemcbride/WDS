@@ -1,3 +1,3 @@
 @echo off
 
-rm -zq *.hlp *.ph
+del /q *.hlp *.ph 2>nul

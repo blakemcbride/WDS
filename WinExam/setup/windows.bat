@@ -1,2 +1,2 @@
 @echo off
-call doall cp ../setup/makefile.msc ../setup/algocorp.ico .
+call doall copy /y ..\setup\makefile.msc ..\setup\algocorp.ico .

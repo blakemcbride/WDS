@@ -1,13 +1,13 @@
 @echo off
-rm -zq *.bak
-rm -zq *.ckp
-rm -zq *.bk2
-rm -zq emacsmem
-rm -zq *.~
-rm -zq *.?~
-rm -zq *.??~
-rm -zq #*.*
-rm -zq *.obj curlib.*
+del /q *.bak 2>nul
+del /q *.ckp 2>nul
+del /q *.bk2 2>nul
+del /q emacsmem 2>nul
+del /q *.~ 2>nul
+del /q *.?~ 2>nul
+del /q *.??~ 2>nul
+del /q #*.* 2>nul
+del /q *.obj curlib.* 2>nul
 if exist --linux-.--- del --linux-.---
-rm -zq *.{*
-rm -zq allok.*
+del /q *.{* 2>nul
+del /q allok.* 2>nul
