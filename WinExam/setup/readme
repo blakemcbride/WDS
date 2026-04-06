@@ -1,30 +1,38 @@
-All examples are buildable under supported environments and build
-procedures.
-
-On Windows, run the WINDOWS command from the WINEXAM\SETUP directory
-to install the NMAKE makefiles and icons into each example directory.
-Then build individual examples with:
-
-    nmake -f makefile.msc
+The WinExam directory contains 25 example programs (exam01 through
+exam25) that serve as both a quick start and a tutorial for the
+Windows Development System.
 
 On Linux/macOS (with Wine), each example directory already contains a
-GNU makefile.  Build with:
+GNU makefile.  Build individual examples with:
 
     make
 
-The following utility commands are available from the WINEXAM\SETUP
-directory:
+On Windows (NMAKE), the example directories do not ship with NMAKE
+makefiles installed.  You must first run the WINDOWS batch file from
+the WinExam\setup directory to copy the necessary makefile.msc and
+icon files into each example directory:
+
+    cd WinExam\setup
+    windows
+
+Then build individual examples with:
+
+    cd WinExam\exam10
+    nmake -f makefile.msc
+
+The following batch files are available in the WinExam\setup directory:
 
 WINDOWS
-Install NMAKE makefiles and icons into all example directories.
+Copies makefile.msc and algocorp.ico into all example directories.
+Must be run before building examples with NMAKE.
 
 CLEANALL
-Delete all files produced by builds in all examples.
+Deletes all files produced by builds in all example directories.
 
 REALCLN
-Delete all files produced by builds and all build configuration
-files (return to an as-shipped state).
+Deletes all build products and configuration files from all example
+directories (returns to an as-shipped state).
 
 CLEAN
-Delete all files produced by a build for a single example
-(execute from the particular example's directory).
+Deletes all files produced by a build for a single example.
+Run from the particular example's directory.
