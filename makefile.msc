@@ -1,7 +1,7 @@
 
 # NMAKE makefile for Microsoft C
 
-DPP = dpp
+DPP = $(DYNACE_PATH)\bin\dpp
 
 DPPOPTS = -C $(STRAT)
 
