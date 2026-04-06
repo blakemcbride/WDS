@@ -1,0 +1,8275 @@
+@section Dialogs
+The @code{Dialog} class implements all the functionality which is common
+to the @code{ModalDialog} and @code{ModelessDialog} classes, and although
+this class is not used directly, most of their functionality is documented
+in this section.
+
+@subsection  Standard Dialog Method Arguments
+
+Since all dialog instance methods have the dialog object as the first
+argument (referred to as @code{dlg}), this argument will not be described
+each time.  It always refers to the dialog object which you wish to
+perform the desired operation on.
+
+Many of the methods associated with this class take an argument
+identified as @code{id}.  This is a macro defined by the programmer via
+the resource editor when the dialog is being defined and is used to
+uniquely identify a particular control within the dialog.  Due to the
+fact that this argument has the same meaning for every method which
+uses it, it will not be defined each time.
+
+The variable @code{ctl} will always refer to a control object.  Each
+control object represents a unique control within a dialog.  Each
+control object will be an instance of one of the subclasses of the
+@code{Control} class (such as @code{TextControl} or
+@code{NumericControl}).
+
+
+
+@subsection Dialog Methods
+
+
+
+
+
+
+@deffn {AddActivateFunctionAfter} AddActivateFunctionAfter::Dialog
+@sp 2
+@example
+@group
+r = gAddActivateFunctionAfter(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called when the dialog
+is activated (receives focus).  The new function is added after any existing
+activation handlers.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_activate(object dlg)
+@{
+        /*  handle activation  */
+        return 0;
+@}
+
+gAddActivateFunctionAfter(dlg, my_activate);
+@end group
+@end example
+@sp 1
+See also:  @code{AddActivateFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {AddActivateFunctionBefore} AddActivateFunctionBefore::Dialog
+@sp 2
+@example
+@group
+r = gAddActivateFunctionBefore(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called when the dialog
+is activated (receives focus).  The new function is added before any existing
+activation handlers.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_activate(object dlg)
+@{
+        /*  handle activation  */
+        return 0;
+@}
+
+gAddActivateFunctionBefore(dlg, my_activate);
+@end group
+@end example
+@sp 1
+See also:  @code{AddActivateFunctionAfter}
+@end deffn
+
+
+
+
+@deffn {AddCompletionFunctionAfter} AddCompletionFunctionAfter::Dialog
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionAfter(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called when the dialog
+completes (when the user accepts or cancels the dialog).  The new function
+is added after any existing completion handlers.
+
+This is similar to @code{CompletionFunction} but allows multiple handlers
+and controls the execution order.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_completion(object dlg)
+@{
+        /*  process completion  */
+        return 0;
+@}
+
+gAddCompletionFunctionAfter(dlg, my_completion);
+@end group
+@end example
+@sp 1
+See also:  @code{AddCompletionFunctionBefore, CompletionFunction}
+@end deffn
+
+
+
+
+@deffn {AddCompletionFunctionBefore} AddCompletionFunctionBefore::Dialog
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionBefore(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called when the dialog
+completes (when the user accepts or cancels the dialog).  The new function
+is added before any existing completion handlers.
+
+This is similar to @code{CompletionFunction} but allows multiple handlers
+and controls the execution order.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_completion(object dlg)
+@{
+        /*  process completion  */
+        return 0;
+@}
+
+gAddCompletionFunctionBefore(dlg, my_completion);
+@end group
+@end example
+@sp 1
+See also:  @code{AddCompletionFunctionAfter, CompletionFunction}
+@end deffn
+
+
+
+
+@deffn {AddControl} AddControl::Dialog
+@sp 2
+@example
+@group
+ctl = mAddControl(dlg, ctlClass, id);
+
+object  dlg;       /*  a dialog object   */
+object  ctlClass;  /*  class of control  */
+unsigned  id;      /*  control id        */
+object  ctl;       /*  control object    */
+@end group
+@end example
+This method is used to create a new control object and associate it to
+a control defined in the dialog.  @code{ctlClass} must be literally
+one of the subclasses of the @code{Control} class (such as
+@code{TextControl}, @code{CheckBox}, @code{RadioButton}, etc).
+See the class hierarchy for a complete list.
+
+@code{id} identifies which control within dialog @code{dlg} to associate
+the new control object with.
+
+The value returned (@code{ctl}) is the new control object created and
+will be an instance of the class indicated by the @code{ctlClass}
+argument.  This object can be configured and queried via the protocol
+defined by its class.  See that section for available options.  Setting
+various options associated with this object will control default values
+associated with the control and how this control functions within the
+dialog.
+@example
+@group
+@exdent Example:
+
+object  dlg, ctl;
+
+ctl = mAddControl(dlg, TextControl, PERSONS_NAME);
+@end group
+@end example
+@sp 1
+See also:  @code{GetControl}
+@end deffn
+
+
+
+
+
+
+@deffn {AddDlgHandlerAfter} AddDlgHandlerAfter::Dialog
+@sp 2
+@example
+@group
+r = gAddDlgHandlerAfter(dlg, msg, func);
+
+object   dlg;      /*  a dialog object  */
+unsigned msg;      /*  message          */
+BOOL    (*func)(); /*  function pointer */
+object  r;         /*  the dialog obj   */
+@end group
+@end example
+This method is used to associate function @code{func} with Windows dialog
+message @code{msg} for dialog @code{dlg}.  Whenever dialog @code{dlg}
+receives message @code{msg}, @code{func} will be called.
+
+@code{dlg} is the dialog object who's messages you wish to process.
+@code{msg} is the particular message you wish to trap.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+
+@code{func} is the function which gets called whenever the specified
+message gets received and takes the following form:
+@example
+@group
+BOOL    func(object     dlg,
+             HWND       hdlg, 
+             UINT       mMsg, 
+             WPARAM     wParam, 
+             LPARAM     lParam)
+@{
+        .
+        .
+        .
+        return FALSE;  /* or whatever is appropriate  */
+@}
+@end group
+@end example
+Where @code{dlg} is the dialog being sent the message.  The remaining
+arguments and return value is fully documented in the Windows documentation
+under the @code{DialogProc} function and the Windows Messages documentation.
+
+WDS keeps a list of functions associated with each message associated
+with each dialog.  When a particular message is received the appropriate
+list of handler functions gets executed sequentially.
+@code{AddDlgHandlerAfter} appends the new function to the end of this list,
+and @code{AddDlgHandlerBefore} adds the new function to the beginning of
+the list.
+
+Windows will only see the return value of the last message handler executed.
+@example
+@group
+@exdent Example:
+
+int     hSize, vSize;
+
+static  BOOL    process_wm_size(object  dlg, 
+                                HWND    hwnd, 
+                                UINT    mMsg, 
+                                WPARAM  wParam, 
+                                LPARAM  lParam)
+@{
+        hSize = LOWORD(lParam);
+        vSize = HIWORD(lParam);
+        return 0L;
+@}
+
+        .
+        .
+        gAddDlgHandlerAfter(dlg, (unsigned) WM_SIZE,
+                                      process_wm_size);
+        .
+        .
+@end group
+@end example
+@sp 1
+See also:  @code{AddDlgHandlerBefore}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddDlgHandlerBefore} AddDlgHandlerBefore::Dialog
+@sp 2
+@example
+@group
+r = gAddDlgHandlerBefore(dlg, msg, func);
+
+object   dlg;     /*  a dialog object  */
+unsigned msg;      /*  message          */
+BOOL    (*func)(); /*  function pointer */
+object  r;         /*  the dialog obj   */
+@end group
+@end example
+This function is fully documented under @code{AddDlgHandlerAfter}.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddDlgHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddInitFunctionAfter} AddInitFunctionAfter::Dialog
+@sp 2
+@example
+@group
+r = gAddInitFunctionAfter(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called after the dialog
+has been initialized.  The new function is added after any existing
+initialization handlers.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_init(object dlg)
+@{
+        /*  perform initialization  */
+        return 0;
+@}
+
+gAddInitFunctionAfter(dlg, my_init);
+@end group
+@end example
+@sp 1
+See also:  @code{AddInitFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {AddInitFunctionBefore} AddInitFunctionBefore::Dialog
+@sp 2
+@example
+@group
+r = gAddInitFunctionBefore(dlg, fun);
+
+object  dlg;        /*  a dialog object   */
+int     (*fun)();   /*  function pointer  */
+object  r;          /*  the dialog obj    */
+@end group
+@end example
+This method is used to add a function which will be called before the dialog
+has been initialized.  The new function is added before any existing
+initialization handlers.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+static int  my_init(object dlg)
+@{
+        /*  perform initialization  */
+        return 0;
+@}
+
+gAddInitFunctionBefore(dlg, my_init);
+@end group
+@end example
+@sp 1
+See also:  @code{AddInitFunctionAfter}
+@end deffn
+
+
+
+
+@deffn {AutoDispose} AutoDispose::Dialog
+@sp 2
+@example
+@group
+pflg = gAutoDispose(dlg, flg);
+
+object  dlg;    /*  a dialog object    */
+int     flg;    /*  desired mode       */
+int     pflg;   /*  previous mode set  */
+@end group
+@end example
+This method is used to control the auto disposal facility associated with
+a given dialog.  The default is disabled for modal dialogs and enabled
+for modeless dialogs.
+
+If enabled, the auto dispose feature will cause the dialog object
+(@code{dlg}) to be automatically disposed of whenever the user accepts
+or aborts the dialog.  If disabled, the application may continue to use
+the object (for querying control values for example) after the dialog
+has been terminated.  If the auto dispose feature is disabled the
+application must explicitly dispose of the object when it is no longer
+needed.
+
+Note that if the auto dispose feature is used, the @code{gCompletionFunction}
+method may be used to access the control values immediately prior to
+the object's automatic disposal.
+
+Set @code{flg} to 1 to enable the feature and 0 to disable it.  The
+previous state will be returned.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gAutoDispose(dlg, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{CompletionFunction, Perform, SetResult}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {BackBrush} BackBrush::Dialog
+@sp 2
+@example
+@group
+r = gBackBrush(dlg, brsh);
+
+object  dlg;    /*  a dialog object   */
+object  brsh;   /*  brush object      */
+object  r;      /*  dlg               */
+@end group
+@end example
+This method is used to set the brush object which is used for the
+background of the dialog.  Any previously associated brush object will
+be disposed.  This brush object will also be automatically disposed when
+the dialog is disposed.
+
+The dialog passed is returned.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gBackBrush(dlg, vNew(SolidBrush, 0, 255, 0));
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush, SetBackBrush::Application}
+        and the @code{Brush} classes
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Center} Center::Dialog
+@sp 2
+@example
+@group
+r = gCenter(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to center the dialog on its parent window.  If the
+dialog is currently active, it is centered immediately.  If the dialog
+is not yet visible, it will be centered when it is shown.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gCenter(dlg);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {CheckValue} CheckValue::Dialog
+@sp 2
+@example
+@group
+r = gCheckValue(dlg);
+
+object  dlg;   /*  a dialog object   */
+int     r;     /*  validation result  */
+@end group
+@end example
+This method is used to validate all controls in the dialog.  Each control's
+check function (if any) is called to verify its current value.
+
+The value returned is 0 if all controls pass validation, or 1 if any
+control has a validation error.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+if (gCheckValue(dlg))
+        /*  handle validation error  */
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {CompletionFunction} CompletionFunction::Dialog
+@sp 2
+@example
+@group
+r = gCompletionFunction(dlg, fun);
+
+object  dlg;       /*  dialog object        */
+int     (*fun)();  /*  completion function  */
+object  r;         /*  dialog object        */
+@end group
+@end example
+This method is used to associate a C function with a dialog such that
+when the user accepts or aborts the dialog, function @code{fun} will
+get executed by WDS.  The function will get executed prior to any automatic
+disposal of the dialog object.
+
+The completion function facility is best used in conjunction with
+modeless dialogs and the auto dispose facility in order to process
+control values when the user accepts the dialog and prior to the
+automatic disposal of the dialog object.
+
+The format of @code{fun} is as follows:
+@example
+@group
+r = fun(dlg, res);
+
+object  dlg;    /*  the dialog object  */
+int     res;    /*  result status of the dialog  */
+int     r;      /*  result for gPerform  */
+@end group
+@end example
+Where @code{res} will be @code{TRUE} if the user accepted the dialog or
+@code{FALSE} if the user canceled the dialog.  @code{r} is the value
+which will become the result of the dialog which is returned by @code{gPerform}
+(if it was a modal dialog).  @code{r} will normally be @code{res}.
+@example
+@group
+@exdent Example:
+
+static  int     fun(object dlg, int res)
+@{
+        .
+        .
+        return res;
+@}
+
+        gCompletionFunction(dlg, fun);
+@end group
+@end example
+@sp 1
+See also:  @code{AutoDispose, Perform, SetTag, SetResult}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlDoubleValue} CtlDoubleValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlDoubleValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+double  val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a C double.  For example, if the control
+was a numeric control and the user entered ``3.141'', then this method
+would return a double ``3.141''.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+double  val;
+
+val = mCtlDoubleValue(dlg, PI_VALUE);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlStringValue, CtlShortValue, ...}
+        @code{CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlLongValue} CtlLongValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlLongValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+long    val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a C long.  For example, if the control
+was a numeric control and the user entered ``6'', then this method
+would return a long ``6''.
+
+In the case of date controls, the value returned will be in the
+form YYYYMMDD.  For example November 24, 1956 would be
+19561124.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+long    val;
+
+val = mCtlLongValue(dlg, PERSONS_AGE);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlStringValue, CtlShortValue, ...}
+        @code{CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlShortValue} CtlShortValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlShortValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+short   val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a C short.  For example, if the control
+was a numeric control and the user entered ``6'', then this method
+would return a short ``6''.
+
+In the case of a list box or combo box the value returned will be in
+terms of an ordinal value. This value returned is a zero based index
+from top to bottom indicating the selection made by the user.  If no
+selection was made negative value will be returned.  
+
+In the case of check boxes and radio buttons this method will return
+0 if the button is not selected, 1 if the button is selected, and
+2 if the button is grayed.
+
+In the case of scroll bars, this method will return a short value
+between the minimum and maximum set for the control which indicates
+where the control was set to.
+
+@code{mCtlLongValue} should be used for date controls.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+short   val;
+
+val = mCtlShortValue(dlg, PERSONS_AGE);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlStringValue, CtlLongValue, ...}
+        @code{CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlStringValue} CtlStringValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlStringValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+char    *val;   /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a C character string.  For example, if the control
+was a text control and the user entered ``Miami'', then this method
+would return a pointer to the C string ``Miami''.
+
+If the control being accessed is a list box or combo box, the value
+returned will be a string representation of the text associated with the
+choice made by the user.  See @code{CtlShortValue} or @code{IndexValue}
+to get an ordinal value for this control type.
+
+The character pointer returned will not be valid once the dialog or
+control has been disposed.  Therefore, the value should be kept by
+some other means if it is desired past the life of the dialog.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+char    *val;
+
+val = mCtlStringValue(dlg, PERSONS_NAME);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlShortValue, CtlLongValue, ...}
+        @code{CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlUnsignedShortValue} CtlUnsignedShortValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlUnsignedShortValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+unsigned short  val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a C unsigned short.  For example, if the control
+was a numeric control and the user entered ``6'', then this method
+would return a unsigned short ``6''.
+
+@code{mCtlLongValue} should be used for date controls.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+unsigned short  val;
+
+val = mCtlUnsignedShortValue(dlg, PERSONS_AGE);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlStringValue, CtlLongValue, ...}
+        @code{CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CtlValue} CtlValue::Dialog
+@sp 2
+@example
+@group
+val = mCtlValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+object  val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to the value associated with a
+particular control as a Dynace object.  For example, if the control
+was a text control and user entered ``Miami'', then this method
+would return a Dynace string object (not a normal C string) which
+represents the value typed in.  This returned value may be used
+and accessed like any other Dynace object using the appropriate
+interface mechanism.
+
+If the control being accessed is a list box or combo box, the value
+returned will be a representation of the text associated with the choice
+made by the user.  See @code{IndexValue} or @code{CtlShortValue} to get
+a numeric representation for this control type.
+
+The object returned will be automatically disposed when the dialog is
+disposed, therefore, a copy (via @code{gCopy}) should be made of it if
+its existence is required subsequent to the dialog's disposal.
+
+WDS also provides several methods to obtain normal C data types directly.
+@example
+@group
+@exdent Example:
+
+object  dlg, val;
+
+val = mCtlValue(dlg, PERSONS_NAME);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlStringValue, CtlShortValue, CtlLongValue, ...}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Dialog
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Disable} Disable::Dialog
+@sp 2
+@example
+@group
+r = gDisable(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to disable the dialog window, preventing user input.
+A disabled dialog will not respond to mouse or keyboard events until
+it is re-enabled with @code{gEnable}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gDisable(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{Enable}
+@end deffn
+
+
+
+
+@deffn {DisableAll} DisableAll::Dialog
+@sp 2
+@example
+@group
+r = gDisableAll(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to disable all controls contained within the dialog,
+preventing user input to any of them.  Individual controls or all controls
+can be re-enabled with @code{gEnableAll}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gDisableAll(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{EnableAll}
+@end deffn
+
+
+
+
+@deffn {Dispose} Dispose::Dialog
+@sp 2
+@example
+@group
+r = gDispose(dlg);
+
+object  dlg;   /*  a dialog object   */
+object  r;     /*  NULL              */
+@end group
+@end example
+This method is used to remove and dispose of a dialog object when it
+is no longer needed.  This method should be called on all dialogs
+when they are no longer needed.  In addition to disposing of the dialog,
+this method will also dispose of all the control objects associated
+with the dialog.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+dlg = gDispose(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{AutoDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Enable} Enable::Dialog
+@sp 2
+@example
+@group
+r = gEnable(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to enable the dialog window for user input.  A dialog
+that has been previously disabled with @code{gDisable} can be re-enabled
+with this method.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gEnable(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{Disable}
+@end deffn
+
+
+
+
+@deffn {EnableAll} EnableAll::Dialog
+@sp 2
+@example
+@group
+r = gEnableAll(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to enable all controls contained within the dialog.
+This is useful for re-enabling all controls after a previous call to
+@code{gDisableAll}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gEnableAll(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{DisableAll}
+@end deffn
+
+
+
+
+@deffn {GetBackBrush} GetBackBrush::Dialog
+@sp 2
+@example
+@group
+brsh = gGetBackBrush(dlg);
+
+object  dlg;    /*  dialog object  */
+object  brsh;   /*  brush object   */
+@end group
+@end example
+This method is used to obtain the background brush object which has been
+associated with the dialog.  If no specific background brush was
+associated with the dialog this method will return the application
+default background brush, which is what the dialog uses when no specific
+brush is specified.
+@example
+@group
+@exdent Example:
+
+object  dlg, brsh;
+
+brsh = gGetBackBrush(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{BackBrush, GetTextBrush, GetBackBrush::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {GetControl} GetControl::Dialog
+@sp 2
+@example
+@group
+ctl = mGetControl(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+object  ctl;    /*  control object   */
+@end group
+@end example
+This method is used to gain access to a control object which has been
+previously associated with a particular control via its associated
+control id.  The control object is returned.
+@example
+@group
+@exdent Example:
+
+object  dlg, ctl;
+
+ctl = mGetControl(dlg, PERSONS_NAME);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetParent} GetParent::Dialog
+@sp 2
+@example
+@group
+prnt = gGetParent(dlg);
+
+object  dlg;    /*  dialog object         */
+object  prnt;   /*  parent window object  */
+@end group
+@end example
+This method is used to obtain the parent window object associated
+with dialog @code{dlg}.  This parent window would have established
+when the dialog object was created.
+@example
+@group
+@exdent Example:
+
+object  dlg, parentWind;
+
+parentWind = gGetParent(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialog::ModalDialog, NewDialog::ModelessDialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetPosition} GetPosition::Dialog
+@sp 2
+@example
+@group
+r = gGetPosition(dlg, y, x);
+
+object  dlg;   /*  a dialog object     */
+int     *y;    /*  vertical position   */
+int     *x;    /*  horizontal position */
+object  r;     /*  the dialog obj      */
+@end group
+@end example
+This method is used to obtain the current screen position of the dialog.
+The position is returned in the current scaling mode through the
+@code{y} and @code{x} pointer arguments.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+int     yPos, xPos;
+
+gGetPosition(dlg, &yPos, &xPos);
+@end group
+@end example
+@sp 1
+See also:  @code{GetSize}
+@end deffn
+
+
+
+
+@deffn {GetResourceID} GetResourceID::Dialog
+@sp 2
+@example
+@group
+r = gGetResourceID(dlg);
+
+object    dlg;   /*  a dialog object   */
+unsigned  r;     /*  resource ID       */
+@end group
+@end example
+This method is used to obtain the resource identifier associated with the
+dialog.  The resource ID is the value used when the dialog was created.
+
+The value returned is the dialog's resource identifier.
+@example
+@group
+@exdent Example:
+
+object    dlg;
+unsigned  id;
+
+id = gGetResourceID(dlg);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {GetSize} GetSize::Dialog
+@sp 2
+@example
+@group
+r = gGetSize(dlg, y, x);
+
+object  dlg;   /*  a dialog object   */
+int     *y;    /*  vertical size     */
+int     *x;    /*  horizontal size   */
+object  r;     /*  the dialog obj    */
+@end group
+@end example
+This method is used to obtain the current size of the dialog.
+The size is returned in the current scaling mode through the
+@code{y} and @code{x} pointer arguments.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+int     height, width;
+
+gGetSize(dlg, &height, &width);
+@end group
+@end example
+@sp 1
+See also:  @code{GetPosition}
+@end deffn
+
+
+
+
+@deffn {GetTag} GetTag::Dialog
+@sp 2
+@example
+@group
+r = gGetTag(dlg);
+
+object  dlg;   /*  dialog object  */
+object  r;     /*  tag            */
+@end group
+@end example
+This method is used to obtain a Dynace object which has been associated
+with a dialog via @code{SetTag}.  The value return is the object which has
+been associated with the dialog object @code{dlg}.  If there is no object
+associated with the dialog, @code{NULL} will be returned.
+@example
+@group
+@exdent Example:
+
+object  dlg, someObj;
+
+someObj = gGetTag(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTag, SetTag::Window}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {GetTask} GetTask::Dialog
+@sp 2
+@example
+@group
+r = gGetTask(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  Task object      */
+@end group
+@end example
+This method is used to obtain the Task object associated with the dialog.
+If no Task has been associated, @code{NULL} is returned.
+
+The value returned is the associated Task object or @code{NULL}.
+@example
+@group
+@exdent Example:
+
+object  dlg, task;
+
+task = gGetTask(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTask}
+@end deffn
+
+
+
+
+@deffn {GetTextBrush} GetTextBrush::Dialog
+@sp 2
+@example
+@group
+brsh = gGetTextBrush(dlg);
+
+object  dlg;    /*  dialog object  */
+object  brsh;   /*  brush object   */
+@end group
+@end example
+This method is used to obtain the text brush object which has been associated
+with the dialog.  If no specific text brush was associated with the dialog
+this method will return the application default text brush, which is what
+the dialog uses when no specific brush is specified.
+@example
+@group
+@exdent Example:
+
+object  dlg, brsh;
+
+brsh = gGetTextBrush(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush, GetBackBrush, GetTextBrush::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetTopic} GetTopic::Dialog
+@sp 2
+@example
+@group
+r = gGetTopic(dlg);
+
+object  dlg;   /*  a dialog object   */
+char    *r;    /*  help topic string */
+@end group
+@end example
+This method is used to obtain the help topic string associated with the
+dialog.  If no topic has been set, @code{NULL} is returned.
+
+The value returned is a pointer to the help topic string or @code{NULL}.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+char    *topic;
+
+topic = gGetTopic(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTopic}
+@end deffn
+
+
+
+
+@deffn {Handle} Handle::Dialog
+@sp 2
+@example
+@group
+h = gHandle(dlg);
+
+object  dlg;    /*  dialog object   */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a dialog object.  It will only return a valid handle while the dialog
+is being performed via @code{gPerform}.  @code{NULL} will be returned
+otherwise.
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+HANDLE  h;
+
+h = gHandle(dlg);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{Message}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {IndexValue} IndexValue::Dialog
+@sp 2
+@example
+@group
+val = mIndexValue(dlg, id);
+
+object  dlg;    /*  a dialog object  */
+unsigned id;    /*  control id       */
+object  val;    /*  control value    */
+@end group
+@end example
+This method is used to gain access to a Dynace object (as opposed to a
+normal C integer) representing the value associated with a list box or
+combo box in terms of an ordinal value. This value returned is a zero
+based index from top to bottom indicating the selection made by the
+user.  If no selection was made the object will represent a negative
+value.  This returned value may be used and accessed like any other
+Dynace object using the appropriate interface mechanisms.
+
+The object returned will be automatically disposed when the dialog is
+disposed, therefore, a copy (via @code{gCopy}) should be made of it if
+its existence is required subsequent to the dialog's disposal.
+
+WDS also provides several methods to obtain normal C data types directly.
+@example
+@group
+@exdent Example:
+
+object  dlg, val;
+
+val = mIndexValue(dlg, SOME_LISTBOX);
+@end group
+@end example
+@sp 1
+See also:  @code{CtlShortValue, CtlValue}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {InDialog} InDialog::Dialog
+@sp 2
+@example
+@group
+flg = gInDialog(dlg);
+
+object  dlg;    /*  a dialog object  */
+int     flg;    /*  in dialog flag   */
+@end group
+@end example
+This method is used to determine whether a given dialog is currently
+being ``performed'' via @code{gPerform}.  Prior and subsequent to
+performing a dialog this method will return 0.  A 1 will be returned
+if the dialog is currently being performed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+int     flg;
+
+flg = gInDialog(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Message} Message::Dialog
+@sp 2
+@example
+@group
+r = gMessage(dlg, msg);
+
+object  dlg;    /*  dialog object  */
+char    *msg;   /*  message        */
+object  r;      /*  dialog object  */
+@end group
+@end example
+This method is used to open up a temporary informational window.  The
+window will contain the message given by @code{msg} and the user must
+acknowledge the window prior to continuing by hitting an OK button.
+
+This method may only be used either while the dialog is being performed
+or at any time if it has an associated parent window.
+
+The value returned is the dialog passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gMessage(dlg, "Press OK to continue.");
+@end group
+@end example
+@sp 1
+See also:  @code{MessageWithTopic}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MessageWithTopic} MessageWithTopic::Dialog
+@sp 2
+@example
+@group
+r = gMessageWithTopic(dlg, msg, tpc);
+
+object  dlg;    /*  dialog object  */
+char    *msg;   /*  message        */
+char    *tpc;   /*  help topic     */
+object  r;      /*  dialog object  */
+@end group
+@end example
+This method is used to open up a temporary informational dialog.  The
+dialog will contain the message given by @code{msg} and the user must
+acknowledge the dialog prior to continuing by hitting an OK button.
+
+If the user hits the @code{F1} key while presented with the message,
+the help topic identified by @code{tpc} will get displayed via the Windows
+help system.
+
+This method may only be used either while the dialog is being performed
+or at any time if it has an associated parent window.
+
+The value returned is the dialog passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gMessageWithTopic(dlg, "Press OK to continue.", "mytopic");
+@end group
+@end example
+@sp 1
+See also:  @code{Message} and the @code{HelpSystem} class.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MoveToTop} MoveToTop::Dialog
+@sp 2
+@example
+@group
+r = gMoveToTop(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to bring the dialog to the top of the Z-order,
+making it the foremost window.  This is a convenience method equivalent
+to calling @code{gSetZOrder} with @code{HWND_TOP}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gMoveToTop(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{SetZOrder}
+@end deffn
+
+
+
+
+@deffn {Perform} Perform::Dialog
+@sp 2
+@example
+@group
+r = gPerform(dlg);
+
+object  dlg;    /*  a dialog object  */
+int     r;      /*  result           */
+@end group
+@end example
+Once a dialog is created and fully specified, this method is used to
+actually display the dialog and allow the user to interact with it.
+The dialog will remain active until the user pushes the push buttons
+with the label @code{IDOK} or @code{IDCANCEL}.
+
+What occurs after calling @code{gPerform} depends on whether the dialog
+was a modal or modeless dialog.
+
+Control initial values should be set prior to calling @code{gPerform}.
+
+MODAL DIALOGS
+
+If the dialog being performed is a modal, then once @code{gPerform} is
+evoked the user will be able to interact with the dialog and @code{gPerform}
+will not return until the user either accepts or aborts the entire dialog.
+This, in effect, will prevent the user from switching to any other window
+or dialog within the application until the dialog is completed.
+
+Finally, the value returned by @code{gPerform} will be the Windows
+constant @code{FALSE} if the user canceled the dialog, the Windows
+constant @code{TRUE} if the user accepted the dialog, or the
+value returned by any completion function which was attached to the
+dialog (via @code{CompletionFunction}).
+
+Once @code{gPerform} returns, the dialog object may be queried in
+order to obtain the final values associated with each control.
+
+Unless the auto dispose feature is manually set for a modal dialog,
+the dialog object is not automatically disposed and must be when
+no longer needed.
+
+MODELESS DIALOGS
+
+Modeless dialogs operate different from modal dialogs.  When
+@code{gPerform} is evoked on a modeless dialog, @code{gPerform} returns
+immediately with a 0 value.  At that point the user is presented with the
+dialog and allowed to edit it.  During that time your program would typically
+return to the menu and wait for further user selections.  The user may
+continue with the current dialog, abort it, or switch to another window
+within the application with the ability to return at any point.  All the
+user interaction is automatically handled by Windows and WDS.
+
+Since the application code has gone on about its business after a call
+to @code{gPerform} two things are left to be completed whenever the user
+finally accepts or aborts the dialog.  First, the application will
+typically want to do something with the data the user has entered on the
+dialog.  And second, the dialog object will need to be disposed when
+it's no longer needed.
+
+When using modeless dialogs the programmer normally attaches a completion
+function to the dialog via @code{gCompletionFunction}.  What this does
+is cause the completion function to be executed whenever the user
+accepts or aborts the dialog.  This application specific function can be
+used to perform the final processing of the dialog's data.  See
+@code{gCompletionFunction} for complete details.
+
+By default, the auto dispose flag associated with modeless dialogs is
+normally enabled.  This causes WDS to automatically dispose of a dialog
+object and all associated controls immediately subsequent to executing
+the completion function.  This way everything is cleaned up automatically.
+This feature may be disabled via @code{gAutoDispose}, in which case the
+application must be sure to dispose of the unneeded object.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+int     r;
+
+r = gPerform(dlg);
+@end group
+@end example
+@sp 1
+See also:  @code{CompletionFunction, AutoDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {PressButton} PressButton::Dialog
+@sp 2
+@example
+@group
+r = gPressButton(dlg, id);
+
+object    dlg;   /*  a dialog object   */
+unsigned  id;    /*  button control id */
+object    r;     /*  the dialog obj    */
+@end group
+@end example
+This method is used to programmatically simulate clicking a button control
+within the dialog.  The @code{id} argument identifies the button by its
+resource id.  If no button with the given id is found, @code{NULL} is
+returned.
+
+The value returned is the dialog object passed, or @code{NULL} if the
+button was not found.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gPressButton(dlg, IDOK);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetCursor} SetCursor::Dialog
+@sp 2
+@example
+@group
+r = gSetCursor(dlg, cursor);
+
+object  dlg;      /*  a dialog object  */
+object  cursor;   /*  cursor object    */
+object  r;        /*  the dialog obj   */
+@end group
+@end example
+This method is used to set the cursor for the dialog and all of its
+controls.  Pass @code{NULL} for @code{cursor} to restore the default
+cursor.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg, cur;
+
+gSetCursor(dlg, cur);
+gSetCursor(dlg, NULL);  /*  restore default  */
+@end group
+@end example
+@sp 1
+See also:  @code{WaitCursor}
+@end deffn
+
+
+
+
+@deffn {SetFocus} SetFocus::Dialog
+@sp 2
+@example
+@group
+r = gSetFocus(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to set the keyboard input focus to the dialog window.
+This is useful when the dialog needs to regain focus after another window
+has been activated.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetFocus(dlg);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {SetResult} SetResult::Dialog
+@sp 2
+@example
+@group
+r = gSetResult(dlg, obj);
+
+object  dlg;    /*  a dialog object  */
+object  obj;    /*  result object    */
+object  r;      /*  dlg              */
+@end group
+@end example
+This method is used to associate a Dynace short integer object with a
+dialog such that when the dialog is completed or canceled by the user,
+the associated object will be set to the dialog's result value.  This
+feature is most often needed in conjunction with modeless dialogs and
+the auto dispose feature.  It can be used to find out what happened to a
+dialog subsequent to the dialog object being disposed.
+
+The object associated with the dialog will never be disposed by WDS
+and must be manually disposed when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  dlg, obj;
+
+gSetResult(dlg, obj = gNewWithInt(ShortInteger, -1));
+@end group
+@end example
+@sp 1
+See also:  @code{AutoDispose, Perform, SetTag}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetState} SetState::Dialog
+@sp 2
+@example
+@group
+r = gSetState(dlg, state);
+
+object  dlg;     /*  a dialog object  */
+int     state;   /*  show state       */
+object  r;       /*  the dialog obj   */
+@end group
+@end example
+This method is used to set the display state of the dialog window.
+The @code{state} argument uses the standard Windows show state constants
+such as @code{SW_SHOW}, @code{SW_HIDE}, @code{SW_MINIMIZE},
+@code{SW_MAXIMIZE}, and @code{SW_RESTORE}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetState(dlg, SW_HIDE);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {SetTag} SetTag::Dialog
+@sp 2
+@example
+@group
+r = gSetTag(dlg, tag);
+
+object  dlg;   /*  a dialog object   */
+object  tag;    /*  tag               */
+object  r;      /*  previous tag      */
+@end group
+@end example
+This method is used to associate an arbitrary Dynace object with a
+dialog object.  This may later be retrieved via the @code{GetTag} method.
+Since WDS passes around the dialog object to all @code{Dialog} methods
+this mechanism may be used to pass additional information with the
+dialog.  And since Dynace treats all objects in a uniform manner, this
+information attached to the dialog may be arbitrarily complex.
+
+WDS does not dispose of the tag when the dialog object is disposed.
+This method returns any previous object associated with the dialog or
+@code{NULL}.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetTag(dlg, gNewWithInt(ShortInteger, 17));
+@end group
+@end example
+@sp 1
+See also:  @code{GetTag, SetTag::Window}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetTask} SetTask::Dialog
+@sp 2
+@example
+@group
+r = gSetTask(dlg, task);
+
+object  dlg;    /*  a dialog object  */
+object  task;   /*  Task object      */
+object  r;      /*  the dialog obj   */
+@end group
+@end example
+This method is used to associate a Task object with the dialog.  The
+Task object can subsequently be retrieved with @code{gGetTask}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg, task;
+
+gSetTask(dlg, task);
+@end group
+@end example
+@sp 1
+See also:  @code{GetTask}
+@end deffn
+
+
+
+
+@deffn {SetTitle} SetTitle::Dialog
+@sp 2
+@example
+@group
+r = gSetTitle(dlg, title);
+
+object  dlg;     /*  a dialog object    */
+char    *title;  /*  new title string   */
+object  r;       /*  the dialog obj     */
+@end group
+@end example
+This method is used to set or change the text displayed in the dialog's
+title bar.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetTitle(dlg, "Customer Entry");
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {SetTopic} SetTopic::Dialog
+@sp 2
+@example
+@group
+pt = gSetTopic(dlg, tpc);
+
+object  dlg;    /*  dialog object         */
+char    *tpc;   /*  help topic            */
+char    *pt;    /*  previous help topic   */
+@end group
+@end example
+This method is used to associate help text with dialog @code{dlg}.
+The help text is defined using the Windows help system and labeled
+with the topic indicated by @code{tpc}.  Then, if the user hits
+the F1 key while in the dialog, WDS will automatically bring up
+the Windows help system and find the indicated topic.
+
+WDS also supports window and control specific topics.  See the appropriate
+sections.
+
+This method returns any previous topic associated with the dialog.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetTopic(dlg, "myDialogHelp");
+@end group
+@end example
+@sp 1
+See also:  The @code{HelpSystem} class and @code{SetTopic::Control} 
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetZOrder} SetZOrder::Dialog
+@sp 2
+@example
+@group
+r = gSetZOrder(dlg, m);
+
+object  dlg;   /*  a dialog object  */
+HWND    m;     /*  Z-order flag     */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to set the Z-order position of the dialog window.
+The @code{m} argument specifies the position and can be one of the
+standard Windows constants such as @code{HWND_TOP}, @code{HWND_TOPMOST},
+@code{HWND_BOTTOM}, or @code{HWND_NOTOPMOST}.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gSetZOrder(dlg, HWND_TOPMOST);
+@end group
+@end example
+@sp 1
+See also:  @code{MoveToTop}
+@end deffn
+
+
+
+
+@deffn {TextBrush} TextBrush::Dialog
+@sp 2
+@example
+@group
+r = gTextBrush(dlg, brsh);
+
+object  dlg;    /*  a dialog object   */
+object  brsh;   /*  brush object      */
+object  r;      /*  dlg               */
+@end group
+@end example
+This method is used to set the brush object which is used for foreground
+text which is displayed.  Any previously associated brush object will
+be disposed.  This brush object will also be automatically disposed when the
+dialog is disposed.
+
+The dialog passed is returned.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gTextBrush(dlg, vNew(SolidBrush, 255, 0, 0));
+@end group
+@end example
+@sp 1
+See also:  @code{BackBrush, SetTextBrush::Application}
+        and the @code{Brush} classes
+@end deffn
+
+
+@deffn {Update} Update::Dialog
+@sp 2
+@example
+@group
+r = gUpdate(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method causes all controls in the dialog to push their current
+values to their associated data objects.  This is useful when you need
+to transfer control values to the underlying data without closing the
+dialog.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gUpdate(dlg);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {UseDefault} UseDefault::Dialog
+@sp 2
+@example
+@group
+r = gUseDefault(dlg);
+
+object  dlg;   /*  a dialog object  */
+object  r;     /*  the dialog obj   */
+@end group
+@end example
+This method is used to reset all controls in the dialog to their
+default values.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gUseDefault(dlg);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {WaitCursor} WaitCursor::Dialog
+@sp 2
+@example
+@group
+r = gWaitCursor(dlg, wait);
+
+object  dlg;    /*  a dialog object  */
+int     wait;   /*  1=show, 0=hide   */
+object  r;      /*  the dialog obj   */
+@end group
+@end example
+This method is used to show or hide the hourglass (wait) cursor for the
+dialog.  A reference counting mechanism is used so that nested calls
+work correctly --- each call with @code{wait} set to 1 must be balanced
+by a corresponding call with @code{wait} set to 0.
+
+The value returned is the dialog object passed.
+@example
+@group
+@exdent Example:
+
+object  dlg;
+
+gWaitCursor(dlg, 1);
+/*  long operation  */
+gWaitCursor(dlg, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{SetCursor}
+@end deffn
+
+
+
+
+@subsection Modal Dialogs
+Modal dialogs are created with the methods described in this section.
+However, since the @code{ModalDialog} class is a subclass of @code{Dialog},
+and the @code{Dialog} class implements all the functionality common to
+both the @code{ModalDialog} and @code{ModelessDialog} classes, the
+majority of the functionality is inherited from and documented in
+the @code{Dialog} class.  Therefore, see the @code{Dialog} class
+for documentation on additional functionality available to this class.
+
+
+
+@deffn {NewDialog} NewDialog::ModalDialog
+@sp 2
+@example
+@group
+dlg = mNewDialog(ModalDialog, id, wnd);
+
+unsigned  id;   /*  dialog id      */
+object    wnd;  /*  parent window  */
+object    dlg;  /*  dialog object  */
+@end group
+@end example
+@code{mNewDialog} is a macro (defined in @code{dynwin.h}) that expands
+to a call to @code{gNewDialog} on the @code{Dialog} base class.
+
+This method is used to create a new modal dialog.  The dialog must have
+been previously laid out using the resource editor.  The @code{id}
+is a macro generated by the resource editor while the programmer defines
+the dialog.  This id uniquely identifies a particular dialog.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.  If you do specify a parent window, the dialog will
+iconize when the window is iconized and will be disposed if the window
+is disposed.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = mNewDialog(ModalDialog, MY_DIALOG, wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialogStr, NewDialogFromFile, Perform::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{NewDialog::ModelessDialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {NewDialogStr} NewDialogStr::ModalDialog
+@sp 2
+@example
+@group
+dlg = gNewDialogStr(ModalDialog, id, wnd);
+
+char      *id;  /*  dialog id      */
+object    wnd;  /*  parent window  */
+object    dlg;  /*  dialog object  */
+@end group
+@end example
+This method is used to create a new modal dialog.  The dialog must have
+been previously laid out using the resource editor.  The @code{id} is
+the string name associated with the dialog.  This id uniquely identifies
+a particular dialog.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.  If you do specify a parent window, the dialog will
+iconize when the window is iconized and will be disposed if the window
+is disposed.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = gNewDialogStr(ModalDialog, "mydialog", wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialog, NewDialogFromFile, Perform::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{NewDialogStr::ModelessDialog}
+@end deffn
+
+
+
+
+@deffn {NewDialogFromFile} NewDialogFromFile::ModalDialog
+@sp 2
+@example
+@group
+dlg = gNewDialogFromFile(ModalDialog, file, res, wnd);
+
+char      *file;  /*  CLD file name  */
+unsigned  res;    /*  resource id    */
+object    wnd;    /*  parent window  */
+object    dlg;    /*  dialog object  */
+@end group
+@end example
+This method is used to create a new modal dialog from a CLD resource
+file rather than from a compiled Windows resource.  @code{file} is the
+path to the CLD file and @code{res} is the resource identifier within
+that file.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = gNewDialogFromFile(ModalDialog, "dialogs.cld", 100, wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialog, NewDialogStr, Perform::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Modeless Dialogs
+Modeless dialogs are created with the methods described in this section.
+However, since the @code{ModelessDialog} class is a subclass of
+@code{Dialog}, and the @code{Dialog} class implements all the
+functionality common to both the @code{ModalDialog} and
+@code{ModelessDialog} classes, the majority of the functionality is
+inherited from and documented in the @code{Dialog} class.  Therefore,
+see the @code{Dialog} class for documentation on additional
+functionality available to this class.
+
+
+
+
+@deffn {NewDialog} NewDialog::ModelessDialog
+@sp 2
+@example
+@group
+dlg = mNewDialog(ModelessDialog, id, wnd);
+
+unsigned  id;   /*  dialog id      */
+object    wnd;  /*  parent window  */
+object    dlg;  /*  dialog object  */
+@end group
+@end example
+@code{mNewDialog} is a macro (defined in @code{dynwin.h}) that expands
+to a call to @code{gNewDialog} on the @code{Dialog} base class.
+
+This method is used to create a new modeless dialog.  The dialog must have
+been previously laid out using the resource editor.  The @code{id}
+is a macro generated by the resource editor while the programmer defines
+the dialog.  This id uniquely identifies a particular dialog.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.  If you do specify a parent window, the dialog will
+iconize when the window is iconized and will be disposed if the window
+is disposed.
+
+When a new modeless dialog is created, its auto dispose mode is enabled.
+This means that, unless disabled, the object representing the dialog
+will be automatically disposed when the user closes the window.  This
+is done due to the independent nature of modeless dialogs and the need
+to be sure that objects no longer needed are disposed.  Note that the
+programmer may specify a function which gets executed prior to the
+disposal of a modeless dialog in order to capture any data.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = mNewDialog(ModelessDialog, MY_DIALOG, wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialogStr, NewDialogFromFile, Perform::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{NewDialog::ModalDialog, CompletionFunction::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{AutoDispose::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewDialogStr} NewDialogStr::ModelessDialog
+@sp 2
+@example
+@group
+dlg = gNewDialogStr(ModelessDialog, id, wnd);
+
+char      *id;  /*  dialog id      */
+object    wnd;  /*  parent window  */
+object    dlg;  /*  dialog object  */
+@end group
+@end example
+This method is used to create a new modeless dialog.  The dialog must have
+been previously laid out using the resource editor.  The @code{id} is
+the string name associated with the dialog.  This id uniquely identifies
+a particular dialog.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.  If you do specify a parent window, the dialog will
+iconize when the window is iconized and will be disposed if the window
+is disposed.
+
+When a new modeless dialog is created, its auto dispose mode is enabled.
+This means that, unless disabled, the object representing the dialog
+will be automatically disposed when the user closes the window.  This
+is done due to the independent nature of modeless dialogs and the need
+to be sure that objects no longer needed are disposed.  Note that the
+programmer may specify a function which gets executed prior to the
+disposal of a modeless dialog in order to capture any data.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = gNewDialogStr(ModelessDialog, "mydialog", wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialog, NewDialogFromFile, Perform::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{NewDialogStr::ModalDialog, CompletionFunction::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{AutoDispose::Dialog}
+@end deffn
+
+
+
+
+@deffn {NewDialogFromFile} NewDialogFromFile::ModelessDialog
+@sp 2
+@example
+@group
+dlg = gNewDialogFromFile(ModelessDialog, file, res, wnd);
+
+char      *file;  /*  CLD file name  */
+unsigned  res;    /*  resource id    */
+object    wnd;    /*  parent window  */
+object    dlg;    /*  dialog object  */
+@end group
+@end example
+This method is used to create a new modeless dialog from a CLD resource
+file rather than from a compiled Windows resource.  @code{file} is the
+path to the CLD file and @code{res} is the resource identifier within
+that file.
+
+@code{wnd} allows the specification of the parent window object associated
+with the new dialog.  This is an optional parameter and may be @code{NULL}
+if it not desired.
+
+When a new modeless dialog is created, its auto dispose mode is enabled.
+This means that, unless disabled, the object representing the dialog
+will be automatically disposed when the user closes the window.
+
+The object returned represents the new dialog created and may be
+used to further control the dialog.
+@example
+@group
+@exdent Example:
+
+object  wind, dlg;
+
+dlg = gNewDialogFromFile(ModelessDialog, "dialogs.cld", 100, wind);
+@end group
+@end example
+@sp 1
+See also:  @code{NewDialog, NewDialogStr, Perform::Dialog,}
+@iftex
+@hfil @break @hglue .63in
+@end iftex
+@code{CompletionFunction::Dialog, AutoDispose::Dialog}
+@end deffn
+
+
+
+
+
+
+@section Controls
+The @code{Control} class is never used directly.  It is used to group
+functionality common to all the control types which are all subclasses
+of this class.  Therefore, this section documents all the methods which
+are accessible to all subclasses of this class.
+
+
+Control instances are normally created via @code{AddControl::Dialog}
+and may be subsequently accessed via @code{GetControl::Dialog}.
+
+
+
+@subsection  Standard Control Method Arguments
+
+Since all control instance methods have the control object as their
+first argument (referred to as @code{ctl}), this argument will not be
+described each time.  It always refers to the control object which you
+wish to perform the desired operation on.  Each control object will be
+an instance of one of the subclasses of the @code{Control} class (such
+as @code{TextControl} or @code{NumericControl}).
+
+
+Many of the methods associated with this class take an argument
+identified as @code{id}.  This is a macro defined by the programmer via
+the resource editor when the dialog is being defined and is used to
+uniquely identify a particular control within the dialog.  Due to the
+fact that this argument has the same meaning for every method which
+uses it, it will not be defined each time.
+
+
+@subsection Control Methods
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddHandlerAfter} AddHandlerAfter::Control
+@sp 2
+@example
+@group
+r = gAddHandlerAfter(ctl, msg, func);
+
+object   ctl;      /*  a control object  */
+unsigned msg;      /*  message           */
+long    (*func)(); /*  function pointer  */
+object  r;         /*  the control obj   */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+
+This method is used to associate function @code{func} with Windows control
+message @code{msg} for control @code{ctl}.  Whenever control @code{ctl}
+receives message @code{msg}, @code{func} will be called.
+
+@code{ctl} is the control object who's messages you wish to process.
+@code{msg} is the particular message you wish to trap.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+
+@code{func} is the function which gets called whenever the specified
+message gets received and takes the following form:
+@example
+@group
+long    func(object     ctl,
+             HWND       hwnd, 
+             UINT       mMsg, 
+             WPARAM     wParam, 
+             LPARAM     lParam)
+@{
+        .
+        .
+        .
+        return 0L;  /* or whatever is appropriate  */
+@}
+@end group
+@end example
+Where @code{ctl} is the control being sent the message.  The remaining
+arguments and return value is fully documented in the Windows documentation
+under the @code{WindowProc} function and the Windows Messages documentation.
+
+WDS keeps a list of functions associated with each message associated
+with each control.  When a particular message is received the appropriate
+list of handler functions gets executed sequentially.
+@code{AddHandlerAfter} appends the new function to the end of this list,
+and @code{AddHandlerBefore} adds the new function to the beginning of
+the list.
+
+WDS may also, and optionally, execute the Windows default procedure
+associated with a given message either before or after the user added
+list of functions.  This behavior may be controlled via
+@code{DefaultProcessingMode}.
+
+Windows will only see the return value of the last message handler executed
+including, if applicable, the default.
+@example
+@group
+@exdent Example:
+
+int     hSize, vSize;
+
+static  long    process_wm_size(object  ctl, 
+                                HWND    hwnd, 
+                                UINT    mMsg, 
+                                WPARAM  wParam, 
+                                LPARAM  lParam)
+@{
+        hSize = LOWORD(lParam);
+        vSize = HIWORD(lParam);
+        return 0L;
+@}
+
+        .
+        .
+        gAddHandlerAfter(ctl, (unsigned) WM_SIZE, process_wm_size);
+        .
+        .
+@end group
+@end example
+@sp 1
+See also:  @code{DefaultProcessingMode, AddHandlerBefore, CallDefaultProc}
+@end deffn
+
+
+
+
+
+
+@deffn {AddHandlerBefore} AddHandlerBefore::Control
+@sp 2
+@example
+@group
+r = gAddHandlerBefore(ctl, msg, func);
+
+object   ctl;      /*  a control object  */
+unsigned msg;      /*  message           */
+long    (*func)(); /*  function pointer  */
+object  r;         /*  the control obj   */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+It is fully documented under @code{AddHandlerAfter}.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {AutoAttach} AutoAttach::Control
+@sp 2
+@example
+@group
+prev = gAutoAttach(ctl, mode);
+
+object  ctl;    /*  control object  */
+int     mode;   /*  auto-attach mode (0 or 1)  */
+int     prev;   /*  previous mode   */
+@end group
+@end example
+This method sets whether the control automatically attaches to
+associated database fields.  A non-zero @code{mode} enables
+auto-attach; zero disables it.
+
+The value returned is the previous auto-attach mode.
+@end deffn
+
+
+
+@deffn {CallDefaultProc} CallDefaultProc::Control
+@sp 2
+@example
+@group
+r = gCallDefaultProc(ctl, msg, wp, lp)
+
+object   ctl;   /*  a control object  */
+unsigned msg;   /*  message           */
+WPARAM   wp;    /*  wParam value      */
+LPARAM   lp;    /*  lParam value      */
+long     r;     /*  result of call    */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+
+This method is used to explicitly call the default Windows message handler
+associated with message @code{msg}.  This method is normally called from
+within a programmer defined message handler (see @code{AddHandlerAfter})
+which is provided with the @code{wp} and @code{lp} parameters.  These
+parameters are fully documented in the Windows Messages documentation
+and relate directly to the particular message.
+
+@code{msg} is the particular message you wish to affect.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+@example
+@group
+@exdent Example:
+
+gCallDefaultProc(ctl, msg, wParam, lParam);
+@end group
+@end example
+@sp 1
+See also:  @code{DefaultProcessingMode, AddHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CheckFunction} CheckFunction::Control
+@sp 2
+@example
+@group
+r = gCheckFunction(ctl, fun);
+
+object  ctl;      /*  control object  */
+int     (*fun)(); /*  check function  */
+object  r;        /*  ctl object      */
+@end group
+@end example
+This method is implemented by all control subclasses (not in the
+@code{Control} base class itself).
+
+This method is used to associate an auxiliary checking function to a control.
+When a dialog is accepted, WDS goes through each control to assure the
+validity of the data associated with each control as defined by the control
+object.  The ability to associate an additional function for validating
+the data associated with a control gives the programmer the ability to perform
+any additional application specific checking against a control's data.
+
+The auxiliary checking function takes the following form:
+@example
+@group
+int     fun(object ctl, object val, char *buf)
+@{
+        ....
+@}
+@end group
+@end example
+Where @code{ctl} is the control object, and @code{val} is a Dynace object which
+represents the value the control has associated with it.  @code{buf} is a
+pointer to a buffer area which @code{fun} must set to an appropriate error
+message if an error occurs.  @code{fun} returns a 1 if an error occurs and
+0 otherwise.
+
+All controls support this feature except the @code{PushButton} class,
+because it is an immediate action control with no associated value.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gCheckFunction(ctl, fun);
+@end group
+@end example
+@sp 1
+See also:  @code{GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {CheckValue} CheckValue::Control
+@sp 2
+@example
+@group
+r = gCheckValue(ctl)
+
+object   ctl;   /*  a control object  */
+int      r;     /*  result of call    */
+@end group
+@end example
+This method is used to explicitly cause all error checking functions and
+parameters associated with control @code{ctl} to be checked.  If an error
+is encountered an appropriate error message will be displayed and a 1
+will be returned.  If no error is encountered a 0 is returned.
+
+This method is implemented by all subclasses of @code{Control} and mainly
+used internally when the dialog is accepted.
+@example
+@group
+@exdent Example:
+
+gCheckValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{CheckFunction::Control}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Control
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {DefaultProcessingMode} DefaultProcessingMode::Control
+@sp 2
+@example
+@group
+r = gDefaultProcessingMode(ctl, msg, mode);
+
+object   ctl;   /*  a control object         */
+unsigned msg;   /*  message                  */
+int      mode;  /*  default processing mode  */
+object   r;     /*  the control obj          */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+
+This method is used to determine when or if the Windows default message
+procedure is processed for a given message (@code{msg}) associated with
+a particular control (@code{ctl}).
+
+WDS allows a programmer to specify an arbitrary number of functions
+to be executed whenever a control receives a specific message (via
+@code{AddHandlerAfter} and @code{AddHandlerBefore}).  Windows has
+default procedures associated with many control messages.  At times
+it is necessary to replace or augment this default functionality.
+@code{DefaultProcessingMode} gives the programmer control over when and
+if this default Windows functionality.  @code{mode} is used to specify
+the desired mode.  The following table indicates the valid modes:
+
+@table @code
+@item 0
+Do not execute the Windows default processing
+@item 1
+Execute default processing @emph{after} programmer defined handlers
+@item 2
+Execute default processing @emph{before} programmer defined handlers
+@end table
+
+Note that the default mode is always @code{1}, and must be explicitly
+changed, if desired, for each message associated with each control.
+
+@code{msg} is the particular message you wish to affect.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+@example
+@group
+@exdent Example:
+
+gDefaultProcessingMode(ctl, (unsigned) WM_SIZE, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{CallDefaultProc, AddHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Disable} Disable::Control
+@sp 2
+@example
+@group
+r = gDisable(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method disables the control, graying it out so the user cannot
+interact with it.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {Display} Display::Control
+@sp 2
+@example
+@group
+r = gDisplay(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method shows a previously hidden control, making it visible again.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{Hide}
+@end deffn
+
+
+
+@deffn {Dispose} Dispose::Control
+@sp 2
+@example
+@group
+r = gDispose(ctl);
+
+object  ctl;   /*  a control object  */
+object  r;     /*  NULL              */
+@end group
+@end example
+This method is used to remove and dispose of a control object when it
+is no longer needed.  This method is rarely needed due to the fact that
+when a dialog is disposed it automatically calls this method on each of
+its associated controls.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = gDispose(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Enable} Enable::Control
+@sp 2
+@example
+@group
+r = gEnable(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method enables the control, making it active and available for user
+interaction.  The control may remain disabled if security restrictions
+are in effect.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {GetFont} GetFont::Control
+@sp 2
+@example
+@group
+font = gGetFont(ctl);
+
+object  ctl;    /*  control object  */
+object  font;   /*  Font object or NULL  */
+@end group
+@end example
+This method returns the @code{Font} object associated with the control,
+or @code{NULL} if no font has been set.
+@sp 1
+See also:  @code{SetFont}
+@end deffn
+
+
+
+@deffn {GetResourceID} GetResourceID::Control
+@sp 2
+@example
+@group
+id = gGetResourceID(ctl);
+
+object    ctl;   /*  control object    */
+unsigned  id;    /*  resource identifier  */
+@end group
+@end example
+This method returns the resource identifier associated with the control.
+@end deffn
+
+
+
+@deffn {GetTabOrder} GetTabOrder::Control
+@sp 2
+@example
+@group
+t = gGetTabOrder(ctl);
+
+object  ctl;   /*  control object    */
+int     t;     /*  tab order index   */
+@end group
+@end example
+This method returns the current tab order index for the control.
+@sp 1
+See also:  @code{SetTabOrder}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Control
+@sp 2
+@example
+@group
+h = gHandle(ctl);
+
+object  ctl;    /*  control object   */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+
+This method is used to obtain the Windows internal handle associated with
+a control object.  It will only return a valid handle while the dialog
+is being performed via @code{gPerform}.  @code{NULL} will be returned
+otherwise.
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+HANDLE  h;
+
+h = gHandle(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Hide} Hide::Control
+@sp 2
+@example
+@group
+r = gHide(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method hides the control so that it is not visible on the dialog.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{Display}
+@end deffn
+
+
+
+@deffn {SetFocus} SetFocus::Control
+@sp 2
+@example
+@group
+r = gSetFocus(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method sets the keyboard focus to the specified control.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {SetFont} SetFont::Control
+@sp 2
+@example
+@group
+r = gSetFont(ctl, font);
+
+object  ctl;    /*  control object  */
+object  font;   /*  Font object     */
+object  r;      /*  ctl             */
+@end group
+@end example
+This method sets the display font used by the control.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{GetFont}
+@end deffn
+
+
+
+@deffn {SetName} SetName::Control
+@sp 2
+@example
+@group
+r = gSetName(ctl, name);
+
+object  ctl;    /*  control object   */
+char    *name;  /*  control name     */
+object  r;      /*  ctl              */
+@end group
+@end example
+This method sets the name of the control.  The name is used for
+programmatic lookup of controls within a dialog.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {SetTabOrder} SetTabOrder::Control
+@sp 2
+@example
+@group
+prev = gSetTabOrder(ctl, t);
+
+object  ctl;    /*  control object     */
+int     t;      /*  tab order index    */
+int     prev;   /*  previous index     */
+@end group
+@end example
+This method sets the tab order index for the control.  The tab order
+determines the sequence in which controls receive focus when the user
+presses the Tab key.
+
+The value returned is the previous tab order index.
+@sp 1
+See also:  @code{GetTabOrder}
+@end deffn
+
+
+
+@deffn {SetTopic} SetTopic::Control
+@sp 2
+@example
+@group
+pt = gSetTopic(ctl, tpc);
+
+object  ctl;    /*  control object        */
+char    *tpc;   /*  help topic            */
+char    *pt;    /*  previous help topic   */
+@end group
+@end example
+This method is inherited from the @code{Window} class.
+
+This method is used to associate help text with specific control @code{ctl}.
+The help text is defined using the Windows help system and labeled
+with the topic indicated by @code{tpc}.  Then, if the user hits
+the F1 key while in the control, WDS will automatically bring up
+the Windows help system and find the indicated topic.  If no control
+specific help is specified, WDS will use any help associated with the
+dialog as a whole.
+
+WDS also supports dialog and control specific topics.  See the appropriate
+sections.
+
+This method returns any previous topic associated with the control.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetTopic(ctl, "myControlHelp");
+@end group
+@end example
+@sp 1
+See also:  The @code{HelpSystem} class and @code{SetTopic::Dialog}
+@end deffn
+
+
+
+@deffn {Update} Update::Control
+@sp 2
+@example
+@group
+r = gUpdate(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method pushes the control's current value to its associated
+data object.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {UseDefault} UseDefault::Control
+@sp 2
+@example
+@group
+r = gUseDefault(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method resets the control to its default value.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@subsection Text Control
+The @code{TextControl} class is a control which enables the user to
+enter arbitrary alphanumeric data on a single line.  This control
+has numerous facilities to control the length and type of input the
+user is allowed to enter.
+
+The @code{TextControl} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::TextControl
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+value associated with a control object.  @code{val} should be an
+instance of the @code{String} class and will be automatically updated
+to reflect the value associated with the control.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNew(String);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, StringValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Capitalize} Capitalize::TextControl
+@sp 2
+@example
+@group
+r = gCapitalize(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to enable the auto-capitalize feature of the text
+control.  If enabled, all alpha entry made by the user will be converted
+to upper case both on the display and internally to the control.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gCapitalize(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{TextRange}
+@end deffn
+
+
+
+@deffn {GetMinLength} GetMinLength::TextControl
+@sp 2
+@example
+@group
+len = gGetMinLength(ctl);
+
+object  ctl;   /*  control object        */
+int     len;   /*  minimum input length  */
+@end group
+@end example
+This method returns the minimum required input length for the control.
+@sp 1
+See also:  @code{MinLength}
+@end deffn
+
+
+
+@deffn {HideData} HideData::TextControl
+@sp 2
+@example
+@group
+prev = gHideData(ctl, flag);
+
+object  ctl;    /*  control object  */
+int     flag;   /*  hide data flag  */
+int     prev;   /*  previous flag   */
+@end group
+@end example
+This method sets whether the data displayed in the control is hidden.
+A non-zero @code{flag} hides the data; zero shows it.
+
+The value returned is the previous hide data flag.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MaxLength} MaxLength::TextControl
+@sp 2
+@example
+@group
+r = gMaxLength(ctl, len);
+
+object  ctl;   /*  control object  */
+int     len;   /*  maximum length  */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to set the maximum number of characters the user may
+enter into a text control.  If the user attempts to enter more than
+@code{len} characters, including spaces, the system will just beep.  If
+the number of characters exceeds the field display width, the display
+will scroll.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gMaxLength(ctl, 25);
+@end group
+@end example
+@sp 1
+See also:  @code{MinLength, TextRange, Capitalize, CheckFunction::Control}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MinLength} MinLength::TextControl
+@sp 2
+@example
+@group
+r = gMinLength(ctl, len);
+
+object  ctl;   /*  control object  */
+int     len;   /*  minimum length  */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to set the minimum number of characters the user must
+enter into a text control.  If the user attempts to accept the dialog
+without entering @code{len} characters, including spaces, WDS will
+issue an error message and return the user to the incomplete field.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gMinLength(ctl, 5);
+@end group
+@end example
+@sp 1
+See also:  @code{MaxLength, TextRange, Capitalize, CheckFunction::Control}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::TextControl
+@sp 2
+@example
+@group
+ctl = mNewCtl(TextControl, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(TextControl, PERSON_NAME);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+@deffn {PasswordFlag} PasswordFlag::TextControl
+@sp 2
+@example
+@group
+flag = gPasswordFlag(ctl);
+
+object  ctl;    /*  control object      */
+int     flag;   /*  current password flag  */
+@end group
+@end example
+This method returns the current password flag for the control.
+@sp 1
+See also:  @code{SetPasswordFlag}
+@end deffn
+
+
+
+@deffn {Select} Select::TextControl
+@sp 2
+@example
+@group
+r = gSelect(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method selects (highlights) all text in the control.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {SetMask} SetMask::TextControl
+@sp 2
+@example
+@group
+r = gSetMask(ctl, mask);
+
+object  ctl;    /*  control object  */
+char    *mask;  /*  input mask pattern or NULL  */
+object  r;      /*  ctl             */
+@end group
+@end example
+This method sets an input mask pattern for the control.  The mask
+defines the format of allowable input.  For example,
+@code{"(###) ###-####"} would be used for a phone number field, where
+@code{#} represents a digit.  Passing @code{NULL} clears the mask.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {SetPasswordFlag} SetPasswordFlag::TextControl
+@sp 2
+@example
+@group
+prev = gSetPasswordFlag(ctl, flag);
+
+object  ctl;    /*  control object     */
+int     flag;   /*  password mode flag */
+int     prev;   /*  previous flag      */
+@end group
+@end example
+This method sets password entry mode for the control.  When enabled
+(non-zero @code{flag}), characters typed by the user are displayed as
+asterisks.
+
+The value returned is the previous password flag.
+@sp 1
+See also:  @code{PasswordFlag}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetStringValue} SetStringValue::TextControl
+@sp 2
+@example
+@group
+r = gSetStringValue(ctl, val);
+
+object  ctl;    /*  control object  */
+char    *val;   /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a pointer to a character string which represents
+the desired value for the control.
+
+Any previously associated value object will be disposed when the new
+value is set.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetStringValue(ctl, "Some value");
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, StringValue}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::TextControl
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of the
+@code{String} class and initialized to the value desired for the control.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithStr(String, "Some value"));
+@end group
+@end example
+@sp 1
+See also:  @code{SetStringValue, Value, Attach}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {StringValue} StringValue::TextControl
+@sp 2
+@example
+@group
+val = gStringValue(ctl);
+
+object  ctl;   /*  control object  */
+char    *val;  /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C character pointer which represents the
+value associated with the control.  This pointer will not be valid
+after the control or associated dialog are disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+char    *val;
+
+val = gStringValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetStringValue, CtlStringValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {TextRange} TextRange::TextControl
+@sp 2
+@example
+@group
+r = gTextRange(ctl, min, max);
+
+object  ctl;   /*  control object  */
+int     min;   /*  minimum length  */
+int     max;   /*  maximum length  */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to set the minimum number of characters the user must
+enter into a text control as well as the maximum number of characters
+allowed.
+
+If the user attempts to enter more than @code{max} characters, including
+spaces, the system will just beep.  If the number of characters exceeds
+the field display width, the display will scroll.
+
+If the user attempts to accept the dialog without entering @code{min}
+characters, including spaces, WDS will issue an error message and return
+the user to the incomplete field.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gTextRange(ctl, 5, 25);
+@end group
+@end example
+@sp 1
+See also:  @code{MaxLength, MinLength, Capitalize, CheckFunction::Control}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::TextControl
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{String} class.  This object will be disposed by WDS when the
+control object or associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{StringValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+@subsection Numeric Control
+The @code{NumericControl} class is a control which enables the user to
+enter arbitrary numeric data.  This control has numerous facilities to
+control the range and type of input the user is allowed to enter.
+
+The @code{NumericControl} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::NumericControl
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+value associated with a control object.  @code{val} should be an
+instance of one of the Dynace numeric classes which are subclasses of
+the @code{Number} class, such as @code{ShortInteger} or
+@code{DoubleFloat}.  This numeric object will be automatically updated
+to reflect the value associated with the control.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithDouble(DoubleFloat, 0.0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, DoubleValue, ShortValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DoubleValue} DoubleValue::NumericControl
+@sp 2
+@example
+@group
+val = gDoubleValue(ctl);
+
+object  ctl;   /*  control object  */
+double  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C double which represents the
+value associated with the control.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+double  val;
+
+val = gDoubleValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetDoubleValue, CtlDoubleValue::Dialog}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{UnsignedShortValue, ShortValue, LongValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LongValue} LongValue::NumericControl
+@sp 2
+@example
+@group
+val = gLongValue(ctl);
+
+object  ctl;   /*  control object  */
+long    val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C long integer which represents the
+value associated with the control.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+long    val;
+
+val = gLongValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetLongValue, CtlLongValue::Dialog}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{UnsignedShortValue, ShortValue, DoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::NumericControl
+@sp 2
+@example
+@group
+ctl = mNewCtl(NumericControl, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(NumericControl, PERSON_AGE);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {NumericRange} NumericRange::NumericControl
+@sp 2
+@example
+@group
+r = gNumericRange(ctl, min, max, dp);
+
+object  ctl;   /*  control object  */
+double  min;   /*  minimum value   */
+double  max;   /*  maximum value   */
+int     dp;    /*  decimal places  */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to set the minimum and maximum allowable values
+the control will accept from the user.  It also sets the number of
+digits to the right of the decimal point the control will accept.
+
+If the user enters a number outside the specified range, WDS will
+issue an error message and prompt the user for an acceptable value.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gNumericRange(ctl, 5.0, 25.0, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{CheckFunction::Control}
+@end deffn
+
+
+
+@deffn {Select} Select::NumericControl
+@sp 2
+@example
+@group
+r = gSelect(ctl);
+
+object  ctl;   /*  control object  */
+object  r;     /*  ctl             */
+@end group
+@end example
+This method selects (highlights) all text in the numeric control.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {SetDefaultDouble} SetDefaultDouble::NumericControl
+@sp 2
+@example
+@group
+r = gSetDefaultDouble(ctl, val);
+
+object  ctl;    /*  control object   */
+double  val;    /*  default value    */
+object  r;      /*  ctl              */
+@end group
+@end example
+This method sets the default double value for the numeric control.
+This value is used when the control is reset via @code{UseDefault}.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{UseDefault, SetDefaultLong}
+@end deffn
+
+
+
+@deffn {SetDefaultLong} SetDefaultLong::NumericControl
+@sp 2
+@example
+@group
+r = gSetDefaultLong(ctl, val);
+
+object  ctl;   /*  control object   */
+long    val;   /*  default value    */
+object  r;     /*  ctl              */
+@end group
+@end example
+This method sets the default long integer value for the numeric control.
+This value is used when the control is reset via @code{UseDefault}.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{UseDefault, SetDefaultDouble}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetDoubleValue} SetDoubleValue::NumericControl
+@sp 2
+@example
+@group
+r = gSetDoubleValue(ctl, val);
+
+object  ctl;    /*  control object  */
+double  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired value for
+the control.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetDoubleValue(ctl, 3.14159265358979);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, DoubleValue, CtlDoubleValue::Dialog, SetUShortValue,}
+@iftex
+@hfil @break @hglue .64in   
+@end iftex
+@code{SetShortValue, SetLongValue}
+@end deffn
+
+
+
+@deffn {SetFormat} SetFormat::NumericControl
+@sp 2
+@example
+@group
+r = gSetFormat(ctl, fmt, wth);
+
+object  ctl;    /*  control object          */
+char    *fmt;   /*  printf-style format     */
+int     wth;    /*  display width           */
+object  r;      /*  ctl                     */
+@end group
+@end example
+This method sets the display format and width for the numeric control.
+@code{fmt} is a @code{printf}-style format string (e.g., @code{"%%.2f"})
+and @code{wth} specifies the display width.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetLongValue} SetLongValue::NumericControl
+@sp 2
+@example
+@group
+r = gSetLongValue(ctl, val);
+
+object  ctl;    /*  control object  */
+long    val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired value for
+the control.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetLongValue(ctl, 66L);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, LongValue, CtlLongValue::Dialog, SetUShortValue,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{SetShortValue, SetDoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::NumericControl
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired value for
+the control.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 66);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, ShortValue, CtlShortValue::Dialog, SetUShortValue,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{SetLongValue, SetDoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetUShortValue} SetUShortValue::NumericControl
+@sp 2
+@example
+@group
+r = gSetUShortValue(ctl, val);
+
+object    ctl;  /*  control object  */
+unsigned  val;  /*  ctl value       */
+object    r;    /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired value for
+the control.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetUShortValue(ctl, 66);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, UnsignedShortValue, CtlUnsignedShortValue::Dialog}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{SetShortValue, SetLongValue, SetDoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::NumericControl
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of one of the
+subclasses of the @code{Number} class and initialized to the value
+desired for the control.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithDouble(DoubleFloat, 3.141));
+@end group
+@end example
+@sp 1
+See also:  @code{Value, SetShortValue, SetUShortValue}
+        @code{SetLongValue, SetDoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::NumericControl
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short integer which represents the
+value associated with the control.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetShortValue, CtlShortValue::Dialog}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{UnsignedShortValue, LongValue, DoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {UnsignedShortValue} UnsignedShortValue::NumericControl
+@sp 2
+@example
+@group
+val = gUnsignedShortValue(ctl);
+
+object  ctl;           /*  control object  */
+unsigned short  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C unsigned short integer which represents the
+value associated with the control.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+unsigned short  val;
+
+val = gUnsignedShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetUShortValue, CtlUnsignedShortValue::Dialog}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{ShortValue, LongValue, DoubleValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::NumericControl
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+one of the subclasses of the @code{Number} class.  This object will be
+disposed by WDS when the control object or associated dialog is
+disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, DoubleValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Date Control
+The @code{DateControl} class is a control which enables the user to
+enter date information.  The user enters dates in the form mm/dd/yy
+or mm/dd/yyyy, and when the user leaves the field it changes to the
+form MMM DD, YYYY.  For example, the user would enter 6/8/59 and
+when the field is accepted it will be changed to display Jun 8, 1959.
+
+Dates are stored internally as C longs in the form YYYYMMDD so that
+6/8/59 would be represented as the long 19590608.  This control has
+numerous facilities to control the range and type of input the user is
+allowed to enter.
+
+The @code{DateControl} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::DateControl
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+value associated with a control object.  @code{val} should be an
+instance of the @code{Date} class.  This date object will be
+automatically updated to reflect the value associated with the control.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = vNew(Date, 0L);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, LongValue, SetValue, SetLongValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DateRange} DateRange::DateControl
+@sp 2
+@example
+@group
+r = gDateRange(ctl, min, max, an);
+
+object  ctl;   /*  control object  */
+long    min;   /*  minimum value   */
+long    max;   /*  maximum value   */
+int     an;    /*  allow none      */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to set the minimum and maximum allowable values
+the control will accept from the user.  It also controls whether
+or not the control will accept no date.
+
+@code{min} and @code{max} are of the form YYYYMMDD.  For example
+6/8/59 would be represented as 19590608.  If @code{an} is 0
+the user must enter a valid date between @code{min} and @code{max}.
+If, however, @code{an} is 1, the user must either enter a valid
+date between the given ranges or may also leave the field blank.
+If the user does not enter a date the field value will be 0L.
+
+If the user enters an invalid date or one outside the specified range,
+WDS will issue an error message and prompt the user for an acceptable
+value.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gDateRange(ctl, 19990101L, 19991231L, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{CheckFunction::Control}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {LongValue} LongValue::DateControl
+@sp 2
+@example
+@group
+val = gLongValue(ctl);
+
+object  ctl;   /*  control object  */
+long    val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C long integer which represents the
+value associated with the control.  It will be in the form YYYYMMDD.
+For example 6/8/59 would be represented as 19590608.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+long    val;
+
+val = gLongValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetLongValue, CtlLongValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::DateControl
+@sp 2
+@example
+@group
+ctl = mNewCtl(DateControl, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(DateControl, PERSON_BD);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetLongValue} SetLongValue::DateControl
+@sp 2
+@example
+@group
+r = gSetLongValue(ctl, val);
+
+object  ctl;    /*  control object  */
+long    val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired value for
+the control of the form YYYYMMDD.  For example 6/8/59 would be
+19590608.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetLongValue(ctl, 19990101L);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, LongValue, CtlLongValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::DateControl
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of the
+@code{Date} class and initialized to the value desired for the control.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, vNew(Date, 19940101L));
+@end group
+@end example
+@sp 1
+See also:  @code{SetLongValue, Value}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::DateControl
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{Date} class.  This object will be disposed by WDS when the
+control object or associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{LongValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@subsection Push Buttons
+The @code{PushButton} class represents a control which allows the user
+to perform an immediate action.  That means that there is no particular
+data associated with the control.  The user pushes the button and an
+associated action gets performed at that point.  The @code{PushButton}
+class allows the programmer to associate a C function to the control
+such that whenever the user clicks on the button the specified function
+will be evoked.
+
+The @code{PushButton} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+@deffn {Click} Click::PushButton
+@sp 2
+@example
+@group
+r = gClick(ctl);
+
+object  ctl;   /*  push button object  */
+object  r;     /*  ctl                 */
+@end group
+@end example
+This method programmatically simulates a button click, causing the
+button's associated function to be executed as if the user had
+clicked it.
+
+The value returned is the control object passed.
+@end deffn
+
+
+
+@deffn {GetExitType} GetExitType::PushButton
+@sp 2
+@example
+@group
+type = gGetExitType(ctl);
+
+object  ctl;    /*  push button object  */
+int     type;   /*  exit type           */
+@end group
+@end example
+This method returns the button's current exit type.
+@sp 1
+See also:  @code{SetExitType}
+@end deffn
+
+
+
+@deffn {NewCtl} NewCtl::PushButton
+@sp 2
+@example
+@group
+ctl = mNewCtl(PushButton, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(PushButton, MY_BUTTON);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Perform} Perform::PushButton
+@sp 2
+@example
+@group
+r = gPerform(ctl);
+
+object  ctl;      /*  control object  */
+int     r;        /*  result          */
+@end group
+@end example
+This method is used to manually evoke the function a programmer associated 
+with a push button.  The value returned is the result of the function
+attached to the button.
+
+This method is seldom needed because WDS automatically evokes the function
+when the user clicks the button.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gPerform(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{SetFunction}
+@end deffn
+
+
+
+@deffn {SetExitType} SetExitType::PushButton
+@sp 2
+@example
+@group
+r = gSetExitType(ctl, type);
+
+object  ctl;    /*  push button object  */
+int     type;   /*  exit type           */
+object  r;      /*  ctl                 */
+@end group
+@end example
+This method sets the exit type for the button, which determines the
+dialog close behavior when the button is pressed.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{GetExitType}
+@end deffn
+
+
+
+
+
+
+@deffn {SetFunction} SetFunction::PushButton
+@sp 2
+@example
+@group
+r = gSetFunction(ctl, fun);
+
+object  ctl;      /*  control object           */
+int     (*fun)(); /*  function pointer         */
+ofun    r;        /*  previous function        */
+@end group
+@end example
+This method is inherited from the @code{Control} class.
+
+This method is used to associate a C function to a push button such that
+if the user clicks the button the C function will immediately get
+evoked.  The value returned is the previous function, if any, associated
+with the control.
+
+The C function takes the following form:
+@example
+@group
+int     fun(object ctl, object dlg)
+@{
+        ....
+@}
+@end group
+@end example
+Where @code{ctl} is the control object, and @code{dlg} is the object
+representing the dialog the control is associated with.  The value
+returned by @code{fun} only has meaning if the button was either
+@code{IDOK} or @code{IDCANCEL} (the ones normally used to exit the
+dialog).  If the return value is 1 then the dialog will exit like normal.
+If the return value is 0 then the dialog will not exit.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetFunction(ctl, fun);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+@deffn {SetStringValue} SetStringValue::PushButton
+@sp 2
+@example
+@group
+r = gSetStringValue(ctl, val);
+
+object  ctl;    /*  push button object  */
+char    *val;   /*  display text        */
+object  r;      /*  ctl                 */
+@end group
+@end example
+This method sets the display text shown on the button.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{StringValue}
+@end deffn
+
+
+
+@deffn {StringValue} StringValue::PushButton
+@sp 2
+@example
+@group
+val = gStringValue(ctl);
+
+object  ctl;    /*  push button object   */
+char    *val;   /*  current display text  */
+@end group
+@end example
+This method returns the button's current display text.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@subsection Check Boxes
+The @code{CheckBox} class represents a control which allows the user
+to select or de-select a particular option.  Unlike radio buttons,
+check boxes are not mutually exclusive.
+
+The @code{CheckBox} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::CheckBox
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+state associated with a control object.  @code{val} should be an
+instance of the @code{ShortInteger} class.  This object will be
+automatically updated to reflect the state associated with the control.
+
+The object will represent 0 if the box is not checked, 1 if it is
+checked, or 2 if the box is grayed.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithInt(ShortInteger, 0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, ShortValue, SetValue, SetShortValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::CheckBox
+@sp 2
+@example
+@group
+ctl = mNewCtl(CheckBox, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(CheckBox, MY_CHECKBOX);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::CheckBox
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired state associated
+with the check box.
+
+@code{val} should be set to 0 to uncheck the box, 1 to check it, or 2 to
+gray the box (only work on 3-state boxes).
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, ShortValue, CtlShortValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::CheckBox
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of the
+@code{ShortInteger} class and initialized to the value desired for the
+control.
+
+@code{val} should represent 0 to uncheck the box, 1 to check it, or 2 to
+gray the box (only work on 3-state boxes).
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithInt(ShortInteger, 1));
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, Value}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::CheckBox
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short integer which represents the
+state associated with the control.  The returned integer will be 0 if
+the box is not checked, 1 if it is checked, or 2 if the box is grayed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetShortValue, CtlShortValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::CheckBox
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{ShortInteger} class.  The returned object will represent 0 if
+the box is not checked, 1 if it is checked, or 2 if the box is grayed.
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@subsection Radio Buttons
+The @code{RadioButton} class represents a control which allows the user
+to select or de-select a particular option.  Unlike check boxes, however,
+radio buttons are mutually exclusive within a group - similar to the
+buttons on old fashioned radios, when one button gets selected all the
+other ones in the group get de-selected.
+
+When using radio buttons, be sure to use the @code{Group} function in order
+to tell WDS which radio buttons should be grouped together.
+
+The @code{RadioButton} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+@deffn {Attach} Attach::RadioButton
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+state associated with a control object.  @code{val} should be an
+instance of the @code{ShortInteger} class.  This object will be
+automatically updated to reflect the state associated with the control.
+
+The object will represent 0 if the button is not selected, 1 if it is
+selected, or 2 if the button is grayed.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithInt(ShortInteger, 0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, ShortValue, SetValue, SetShortValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Group} Group::RadioButton
+@sp 2
+@example
+@group
+r = mGroup(ctl, id1, id2);
+
+object  ctl;    /*  control object   */
+unsigned id1;   /*  starting ctl id  */
+unsigned id2;   /*  ending ctl id    */
+object  r;      /*  control object   */
+@end group
+@end example
+This method is used to tell WDS which radio buttons are to be considered
+part of the same mutually exclusive group.  @code{id1} and @code{id2}
+are the resource editor defined id's associated with the beginning and
+end of the group.  WDS uses this information to automatically de-select
+all radio buttons which are part of a group when one of the buttons is
+selected.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+mGroup(ctl, FIRST_RB, LAST_RB);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+@deffn {GroupShortValue} GroupShortValue::RadioButton
+@sp 2
+@example
+@group
+idx = gGroupShortValue(ctl);
+
+object  ctl;   /*  radio button object  */
+int     idx;   /*  0-based index or -1  */
+@end group
+@end example
+This method returns the zero-based index of the currently selected
+radio button within the group.  Returns -1 if no button is selected.
+@sp 1
+See also:  @code{GroupStringValue, SetGroupShortValue}
+@end deffn
+
+
+
+@deffn {GroupStringValue} GroupStringValue::RadioButton
+@sp 2
+@example
+@group
+name = gGroupStringValue(ctl);
+
+object  ctl;    /*  radio button object  */
+char    *name;  /*  name of selected button  */
+@end group
+@end example
+This method returns the control name of the currently selected radio
+button within the group.
+@sp 1
+See also:  @code{GroupShortValue, SetGroupStringValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::RadioButton
+@sp 2
+@example
+@group
+ctl = mNewCtl(RadioButton, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(RadioButton, MY_RADIOBUTTON);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog, Group}
+@end deffn
+
+
+
+@deffn {SetGroupShortValue} SetGroupShortValue::RadioButton
+@sp 2
+@example
+@group
+r = gSetGroupShortValue(ctl, index);
+
+object  ctl;    /*  radio button object  */
+int     index;  /*  0-based index        */
+object  r;      /*  ctl                  */
+@end group
+@end example
+This method selects the radio button at the given zero-based index
+within the group.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{GroupShortValue, SetGroupStringValue}
+@end deffn
+
+
+
+@deffn {SetGroupStringValue} SetGroupStringValue::RadioButton
+@sp 2
+@example
+@group
+r = gSetGroupStringValue(ctl, name);
+
+object  ctl;    /*  radio button object  */
+char    *name;  /*  control name         */
+object  r;      /*  ctl                  */
+@end group
+@end example
+This method selects the radio button within the group that has the
+specified control name.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{GroupStringValue, SetGroupShortValue}
+@end deffn
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::RadioButton
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired state associated
+with the radio button.
+
+@code{val} should be set to 0 to de-select the button, 1 to select it, or 2 to
+gray the button (only work on 3-state buttons).
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, ShortValue, CtlShortValue::Dialog, Group}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::RadioButton
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of the
+@code{ShortInteger} class and initialized to the value desired for the
+control.
+
+@code{val} should represent 0 to de-select the button, 1 to select it, or 2 to
+gray the button (only work on 3-state buttons).
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithInt(ShortInteger, 1));
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, Value, Group}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::RadioButton
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short integer which represents the
+state associated with the control.  The returned integer will be 0 if
+the button is not selected, 1 if it is selected, or 2 if the button is grayed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetShortValue, CtlShortValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::RadioButton
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{ShortInteger} class.  The returned object will represent 0 if
+the button is not selected, 1 if it is selected, or 2 if the button is grayed.
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@subsection List Boxes
+The @code{ListBox} class represents a control which allows the user
+to select from a list of choices.  These choices are presented in
+a vertical, possibly drop down, list of text choices.  This control
+supports access to the user's choice via the text option selected or
+an ordinal value.
+
+The application specifies, at runtime, the choices located in the list box.
+
+The main difference between list boxes and combo boxes is that with list
+boxes the user can only select from the available choices, however, in
+addition, combo boxes allow the user to enter a choice independent of
+the available options.
+
+The @code{ListBox} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddOption} AddOption::ListBox
+@sp 2
+@example
+@group
+r = gAddOption(ctl, op);
+
+object  ctl;    /*  control object  */
+char    *op;    /*  new option      */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to append a new option to the list of options associated
+with a list box.  This method may be used prior to or during the execution
+(via @code{gPerform}) of a dialog.
+
+@code{op} may also be a Dynace object, an instance of the @code{String}
+class, representing the new choice.  If a Dynace object is used, it must
+be typecast to a string and it will be disposed when the control or
+associated dialog are disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gAddOption(ctl, "The first choice");
+gAddOption(ctl, "The second choice");
+@end group
+@end example
+@sp 1
+See also:  @code{Alphabetize::ListBox, AddOptionAt::ListBox}
+@end deffn
+
+
+
+@deffn {AddOptionAt} AddOptionAt::ListBox
+@sp 2
+@example
+@group
+r = gAddOptionAt(ctl, pos, ops);
+
+object  ctl;    /*  list box object   */
+int     pos;    /*  insertion position (0-based)  */
+char    *ops;   /*  option text       */
+object  r;      /*  ctl               */
+@end group
+@end example
+This method inserts an option at position @code{pos} in the list box.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{AddOption, RemoveAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Alphabetize} Alphabetize::ListBox
+@sp 2
+@example
+@group
+r = gAlphabetize(ctl);
+
+object  ctl;    /*  control object  */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to cause the automatic alphabetization of all
+options added via the @code{AddOption} method.  In order to function
+properly, @code{Alphabetize} must be called prior to any calls to
+@code{AddOption}.  This method simply returns the object passed.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddOption::ListBox}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::ListBox
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+state associated with a control object.  @code{val} should be an
+instance of the @code{ShortInteger} class or the @code{String} class.
+This object will be automatically updated to reflect the state
+associated with the control.
+
+If @code{val} is an instance of the @code{ShortInteger} class it will
+be used to represent the ordinal value of the selected item.  This value
+is a 0 based index from the top of the list to the bottom.  -1 is used
+to represent no valid selection.
+
+If @code{val} is an instance of the @code{String} class it will be used
+to represent the string represented by the user's choice.  If no choice is
+made it will represent "".
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithInt(ShortInteger, 0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, ShortValue, StringValue}
+@end deffn
+
+
+
+@deffn {DeselectLine} DeselectLine::ListBox
+@sp 2
+@example
+@group
+r = gDeselectLine(ctl, line);
+
+object  ctl;    /*  list box object  */
+int     line;   /*  0-based line index  */
+object  r;      /*  ctl              */
+@end group
+@end example
+This method deselects the specified line in a multi-selection list box.
+@code{line} is a zero-based index.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{SelectLine, GetSelections}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetSelections} GetSelections::ListBox
+@sp 2
+@example
+@group
+ary = gGetSelections(ctl);
+
+object  ctl;   /*  control object       */
+object  ary;   /*  array of selections  */
+@end group
+@end example
+This method is used to obtain an array representing the items selected
+by the user.  It is most useful with list boxes which have multi-selection
+enabled.  The array returned is an instance of the @code{IntegerArray} class
+and @emph{must} be explicitly disposed when no longer needed.  Each element
+of the array represents a zero based index of one of the user's selections,
+and the size of the array represents the number of items selected.
+
+This method may only be used while a dialog is active and will return
+@code{NULL} otherwise.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{ValueAt, NumbSelected, Value, ListIndex}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ListIndex} ListIndex::ListBox
+@sp 2
+@example
+@group
+val = gListIndex(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{ShortInteger} class.  The returned object will represent the
+ordinal value of the choice made by the user.  This ordinal value is a
+zero based index from top to bottom.  -1 indicates that no choice was
+made.
+
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gListIndex(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Value, StringValue, GetSelections, SetValue}
+@end deffn
+
+
+
+
+@deffn {NewCtl} NewCtl::ListBox
+@sp 2
+@example
+@group
+ctl = mNewCtl(ListBox, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(ListBox, MY_LISTBOX);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog, AddOption}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NumbSelected} NumbSelected::ListBox
+@sp 2
+@example
+@group
+n = gNumbSelected(ctl);
+
+object  ctl;    /*  control object   */
+int     n;      /*  number selected  */
+@end group
+@end example
+This method is used to obtain the number of list box items the user
+has selected.  It is mainly used with multi-selection list boxes.
+This method should only be used while the dialog is active and
+will return -1 otherwise.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{GetSelections}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveAll} RemoveAll::ListBox
+@sp 2
+@example
+@group
+r = gRemoveAll(ctl);
+
+object  ctl;    /*  control object  */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove all items from a list box.  It may be used
+prior to or during the execution of a dialog.  The control object passed
+is returned.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{RemoveStr, RemoveInt}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveInt} RemoveInt::ListBox
+@sp 2
+@example
+@group
+r = gRemoveInt(ctl, idx);
+
+object  ctl;    /*  control object  */
+int     idx;    /*  index           */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove an item from a list box while the dialog
+is active.  @code{idx} is a zero based index of the item to be removed.
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
+is returned.
+
+This method may only be used while a dialog is active.  It should not be
+used prior to performing (via @code{gPerform}) a dialog or after the user
+has accepted or canceled the dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRemoveInt(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{RemoveStr, RemoveAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveStr} RemoveStr::ListBox
+@sp 2
+@example
+@group
+r = gRemoveStr(ctl, itm);
+
+object  ctl;    /*  control object  */
+char   *itm;    /*  item            */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove an item from a list box while the dialog
+is active.  @code{itm} is the string to be removed.
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
+is returned.
+
+This method may only be used while a dialog is active.  It should not be
+used prior to performing (@code{gPerform}) a dialog or after the user
+has accepted or canceled the dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRemoveStr(ctl, "Some Option");
+@end group
+@end example
+@sp 1
+See also:  @code{RemoveInt, FindMode}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Required} Required::ListBox
+@sp 2
+@example
+@group
+r = gRequired(ctl, mode);
+
+object  ctl;    /*  control object  */
+int     mode;   /*  required mode   */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to determine whether or not the user is required to
+make a valid selection prior to WDS allowing the acceptance of the dialog.
+If it is required and the user does not make a valid selection, WDS
+will issue an error message and return them to the control.
+
+@code{mode} is 1 to make it required and 0 otherwise.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRequired(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{CheckFunction::Control, CheckValue::Control}
+@end deffn
+
+
+
+@deffn {SelectLine} SelectLine::ListBox
+@sp 2
+@example
+@group
+r = gSelectLine(ctl, line);
+
+object  ctl;    /*  list box object  */
+int     line;   /*  0-based line index  */
+object  r;      /*  ctl              */
+@end group
+@end example
+This method selects the specified line in a multi-selection list box.
+@code{line} is a zero-based index.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{DeselectLine, GetSelections}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {SetFunction} SetFunction::ListBox
+@sp 2
+@example
+@group
+r = gSetFunction(ctl, fun);
+
+object  ctl;      /*  control object           */
+int     (*fun)(); /*  function pointer         */
+ofun    r;        /*  previous function        */
+@end group
+@end example
+This method is inherited from the @code{Control} class.
+
+This method is used to associate a C function to a list box such that if
+the user double clicks an item in the list box the C function will
+immediately get evoked.  The value returned by this method is the
+function, if any, which was previously associated with the control.
+
+The C function takes the following form:
+@example
+@group
+int     fun(object ctl, object dlg)
+@{
+        ....
+@}
+@end group
+@end example
+Where @code{ctl} is the control object, and @code{dlg} is the object
+representing the dialog the control is associated with.  The value
+returned by @code{fun} is ignored.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetFunction(ctl, fun);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, SetChgFunction}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::ListBox
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.
+
+@code{val} will be used as the ordinal value of the selected item.  This
+value is a 0 based index from the top of the list to the bottom.
+
+Any previously associated object (via @code{Value}) will be disposed
+when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{SetStringValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {SetStringValue} SetStringValue::ListBox
+@sp 2
+@example
+@group
+r = gSetStringValue(ctl, val);
+
+object  ctl;    /*  control object  */
+char    *val;   /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.  
+
+@code{val} will be used to select the option which matches the string.
+
+Any previously associated object (via @code{val}) will be disposed when
+the new value is set.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetStringValue(ctl, "The choice");
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::ListBox
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.  @code{val} should be a Dynace object which is an instance of
+either the @code{String} class or the @code{ShortInteger} class and
+initialized to the value desired for the control.
+
+If @code{val} is an instance of the @code{ShortInteger} class it will be
+used as the ordinal value of the selected item.  This value is a 0 based
+index from the top of the list to the bottom.
+
+If @code{val} is an instance of the @code{String} class it will be used
+to select the option which matches the string represented by @code{val}.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithInt(ShortInteger, 1));
+        or
+gSetValue(ctl, gNewWithStr(String, "The choice"));
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, SetStringValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::ListBox
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short which represents the value
+associated with the control.  The returned value will represent the
+ordinal value of the choice made by the user.  This ordinal value is a
+zero based index from top to bottom.  -1 indicates that no choice was
+made.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ListIndex, Value, GetSelections, StringValue, SetValue}
+@end deffn
+
+
+
+@deffn {Size} Size::ListBox
+@sp 2
+@example
+@group
+n = gSize(ctl);
+
+object  ctl;   /*  list box object   */
+int     n;     /*  number of items   */
+@end group
+@end example
+This method returns the number of items in the list box.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {StringValue} StringValue::ListBox
+@sp 2
+@example
+@group
+val = gStringValue(ctl);
+
+object  ctl;   /*  control object  */
+char    *val;  /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a character string pointer which
+represents the value associated with the control.  The returned pointer
+will represent the text associated with the user selected choices.
+It will point to "" if the user had not made a valid selection.
+
+The returned pointer will not be valid once the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+char    *val;
+
+val = gStringValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Value, ListIndex, GetSelections, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::ListBox
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{String} class.  The returned object will represent the text
+associated with the user selected choices.  If no selection was made
+the object will represent "".
+
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, StringValue, ValueAt, ListIndex, GetSelections, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {ValueAt} ValueAt::ListBox
+@sp 2
+@example
+@group
+val = gValueAt(ctl, idx);
+
+object  ctl;   /*  control object  */
+int     idx;   /*  index           */
+object  val;   /*  value at idx    */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the text
+associated with the line indexed by the zero based index @code{idx}.
+The object returned will be an instance of the @code{String} class.  If
+the index is out of range this method will return @code{NULL}.
+
+This method may only be called when the dialog is active.  The object
+returned @emph{must} be explicitly disposed when no longer needed.
+@c @example
+@c @group
+@c @exdent Example:
+@c
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{ShortValue, Value, ListIndex, GetSelections, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+@subsection Combo Boxes
+The @code{ComboBox} class represents a control which allows the user to
+select from a list of choices or enter an alternate text string.  These
+choices are presented in a vertical, possibly drop down, list of text
+choices.  This control supports access to the user's choice via the text
+option selected or an ordinal value.
+
+The application specifies, at runtime, the choices located in the list box.
+
+The main difference between list boxes and combo boxes is that with list
+boxes the user can only select from the available choices, however, in
+addition, combo boxes allow the user to enter a choice independent of
+the available options.
+
+The @code{ComboBox} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+@deffn {AddEdtHandlerAfter} AddEdtHandlerAfter::ComboBox
+@sp 2
+@example
+@group
+r = gAddEdtHandlerAfter(ctl, msg, func);
+
+object   ctl;      /*  a control object  */
+unsigned msg;      /*  message           */
+long    (*func)(); /*  function pointer  */
+object  r;         /*  the control obj   */
+@end group
+@end example
+This method is used to associate function @code{func} with the text
+entry window portion of the combo box, message @code{msg} for
+control @code{ctl}.  Whenever the text entry window of control
+@code{ctl} receives message @code{msg}, @code{func} will be called.
+
+@code{ctl} is the control object who's text window messages you wish to
+process.  @code{msg} is the particular message you wish to trap.  These
+messages are fully documented in the Windows documentation in the
+Messages section.  They normally begin with @code{WM_}.
+
+@code{func} is the function which gets called whenever the specified
+message gets received and takes the following form:
+@example
+@group
+long    func(object     ctl,
+             HWND       hwnd, 
+             UINT       mMsg, 
+             WPARAM     wParam, 
+             LPARAM     lParam)
+@{
+        .
+        .
+        .
+        return 0L;  /* or whatever is appropriate  */
+@}
+@end group
+@end example
+Where @code{ctl} is the control being sent the message.  The remaining
+arguments and return value is fully documented in the Windows documentation
+under the @code{WindowProc} function and the Windows Messages documentation.
+
+WDS keeps a list of functions associated with each message associated
+with each control.  When a particular message is received the appropriate
+list of handler functions gets executed sequentially.
+@code{AddEdtHandlerAfter} appends the new function to the end of this list,
+and @code{AddEdtHandlerBefore} adds the new function to the beginning of
+the list.
+
+WDS may also, and optionally, execute the Windows default procedure
+associated with a given message either before or after the user added
+list of functions.  This behavior may be controlled via
+@code{DefaultEdtProcessingMode}.
+
+Windows will only see the return value of the last message handler executed
+including, if applicable, the default.
+@example
+@group
+@exdent Example:
+
+int     hSize, vSize;
+
+static  long    process_wm_size(object  ctl, 
+                                HWND    hwnd, 
+                                UINT    mMsg, 
+                                WPARAM  wParam, 
+                                LPARAM  lParam)
+@{
+        hSize = LOWORD(lParam);
+        vSize = HIWORD(lParam);
+        return 0L;
+@}
+
+        .
+        .
+        gAddEdtHandlerAfter(ctl, (unsigned) WM_SIZE,
+                                       process_wm_size);
+        .
+        .
+@end group
+@end example
+@sp 1
+See also:  @code{DefaultProcessingMode, AddEdtHandlerBefore,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{AddHandlerAfter::Control}
+@end deffn
+
+
+
+
+
+
+@deffn {AddEdtHandlerBefore} AddEdtHandlerBefore::ComboBox
+@sp 2
+@example
+@group
+r = gAddEdtHandlerBefore(ctl, msg, func);
+
+object   ctl;      /*  a control object  */
+unsigned msg;      /*  message           */
+long    (*func)(); /*  function pointer  */
+object  r;         /*  the control obj   */
+@end group
+@end example
+This function is fully documented under @code{AddEdtHandlerAfter}.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddEdtHandlerAfter, AddHandlerAfter::Control}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddOption} AddOption::ComboBox
+@sp 2
+@example
+@group
+r = gAddOption(ctl, op);
+
+object  ctl;    /*  control object  */
+char    *op;    /*  new option      */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to append a new option to the list of options associated
+with a combo box.  This method may be used prior to or during the execution
+(via @code{gPerform}) of a dialog.
+
+@code{op} may also be a Dynace object, an instance of the @code{String}
+class, representing the new choice.  If a Dynace object is used, it must
+be typecast to a string and it will be disposed when the control or
+associated dialog are disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gAddOption(ctl, "The first choice");
+gAddOption(ctl, "The second choice");
+@end group
+@end example
+@sp 1
+See also:  @code{Alphabetize::ComboBox, AddOptionAt::ComboBox}
+@end deffn
+
+
+
+@deffn {AddOptionAt} AddOptionAt::ComboBox
+@sp 2
+@example
+@group
+r = gAddOptionAt(ctl, pos, ops);
+
+object  ctl;    /*  combo box object  */
+int     pos;    /*  insertion position (0-based)  */
+char    *ops;   /*  option text       */
+object  r;      /*  ctl               */
+@end group
+@end example
+This method inserts an option at position @code{pos} in the combo box.
+
+The value returned is the control object passed.
+@sp 1
+See also:  @code{AddOption, RemoveAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Alphabetize} Alphabetize::ComboBox
+@sp 2
+@example
+@group
+r = gAlphabetize(ctl);
+
+object  ctl;    /*  control object  */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to cause the automatic alphabetization of all
+options added via the @code{AddOption} method.  In order to function
+properly, @code{Alphabetize} must be called prior to any calls to
+@code{AddOption}.  This method simply returns the object passed.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddOption::ComboBox}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::ComboBox
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+state associated with a control object.  @code{val} should be an
+instance of the @code{ShortInteger} class or the @code{String} class.
+This object will be automatically updated to reflect the state
+associated with the control.
+
+If @code{val} is an instance of the @code{ShortInteger} class it will
+be used to represent the ordinal value of the selected item.  This value
+is a 0 based index from the top of the list to the bottom.  -1 is used
+to represent no valid selection.
+
+If @code{val} is an instance of the @code{String} class it will be used
+to represent the string represented by the user's choice.  If no choice is
+made it will represent "".
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithInt(ShortInteger, 0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, ShortValue, StringValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DefaultEdtProcessingMode} DefaultEdtProcessingMode::ComboBox
+@sp 2
+@example
+@group
+r = gDefaultEdtProcessingMode(ctl, msg, mode);
+
+object   ctl;   /*  a control object         */
+unsigned msg;   /*  message                  */
+int      mode;  /*  default processing mode  */
+object   r;     /*  the control obj          */
+@end group
+@end example
+This method is used to determine when or if the Windows default message
+procedure is processed for a given message (@code{msg}) associated with
+the text entry window portion of control (@code{ctl}).
+
+WDS allows a programmer to specify an arbitrary number of functions to
+be executed whenever the text entry portion of a combo box control
+receives a specific message (via @code{AddEdtHandlerAfter} and
+@code{AddEdtHandlerBefore}).  Windows has default procedures associated
+with many control messages.  At times it is necessary to replace or
+augment this default functionality.  @code{DefaultEdtProcessingMode}
+gives the programmer control over when and if this default Windows
+functionality.  @code{mode} is used to specify the desired mode.  The
+following table indicates the valid modes:
+
+@table @code
+@item 0
+Do not execute the Windows default processing
+@item 1
+Execute default processing @emph{after} programmer defined handlers
+@item 2
+Execute default processing @emph{before} programmer defined handlers
+@end table
+
+Note that the default mode is always @code{1}, and must be explicitly
+changed, if desired, for each message associated with each control.
+
+@code{msg} is the particular message you wish to affect.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+@example
+@group
+@exdent Example:
+
+gDefaultEdtProcessingMode(ctl, (unsigned) WM_SIZE, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{AddEdtHandlerAfter}
+@end deffn
+
+
+
+@deffn {FindIndex} FindIndex::ComboBox
+@sp 2
+@example
+@group
+idx = gFindIndex(ctl, choice);
+
+object  ctl;      /*  combo box object  */
+char    *choice;  /*  text to find      */
+int     idx;      /*  0-based index or -1  */
+@end group
+@end example
+This method returns the zero-based index of @code{choice} in the
+combo box's option list, or -1 if the choice is not found.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ListIndex} ListIndex::ComboBox
+@sp 2
+@example
+@group
+val = gListIndex(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{ShortInteger} class.  The returned object will represent the
+ordinal value of the choice made by the user.  This ordinal value is a
+zero based index from top to bottom.  -1 indicates that no choice was
+made.
+
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gListIndex(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Value, StringValue, Attach, SetValue}
+@end deffn
+
+
+
+
+@deffn {NewCtl} NewCtl::ComboBox
+@sp 2
+@example
+@group
+ctl = mNewCtl(ComboBox, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(ComboBox, MY_COMBOBOX);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog, AddOption}
+@end deffn
+
+
+
+@deffn {NumbSelected} NumbSelected::ComboBox
+@sp 2
+@example
+@group
+n = gNumbSelected(ctl);
+
+object  ctl;   /*  combo box object  */
+int     n;     /*  1 if selected, 0 otherwise  */
+@end group
+@end example
+This method returns 1 if an item is currently selected in the combo
+box, or 0 if no item is selected.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveAll} RemoveAll::ComboBox
+@sp 2
+@example
+@group
+r = gRemoveAll(ctl);
+
+object  ctl;    /*  control object  */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove all items from a combo box.  It may be used
+prior to or during the execution of a dialog.  The control object passed
+is returned.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{RemoveStr, RemoveInt}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveInt} RemoveInt::ComboBox
+@sp 2
+@example
+@group
+r = gRemoveInt(ctl, idx);
+
+object  ctl;    /*  control object  */
+int     idx;    /*  index           */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove an item from a combo box while the dialog
+is active.  @code{idx} is a zero based index of the item to be removed.
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
+is returned.
+
+This method may only be used while a dialog is active.  It should not be
+used prior to performing (@code{gPerform}) a dialog or after the user
+has accepted or canceled the dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRemoveInt(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{RemoveStr, RemoveAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RemoveStr} RemoveStr::ComboBox
+@sp 2
+@example
+@group
+r = gRemoveStr(ctl, itm);
+
+object  ctl;    /*  control object  */
+char   *itm;    /*  item            */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to remove an item from a combo box while the dialog
+is active.  @code{itm} is the string to be removed.
+If the operation succeeded @code{ctl} is returned, otherwise @code{NULL}
+is returned.
+
+This method may only be used while a dialog is active.  It should not be
+used prior to performing (@code{gPerform}) a dialog or after the user
+has accepted or canceled the dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRemoveStr(ctl, "Some Option");
+@end group
+@end example
+@sp 1
+See also:  @code{RemoveInt::ComboBox, FindMode::ComboBox}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Required} Required::ComboBox
+@sp 2
+@example
+@group
+r = gRequired(ctl, mode);
+
+object  ctl;    /*  control object  */
+int     mode;   /*  required mode   */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to determine whether or not the user is required to
+make a valid selection prior to WDS allowing the acceptance of the dialog.
+If it is required and the user does not make a valid selection, WDS
+will issue an error message and return them to the control.
+
+@code{mode} is 1 to make it required and 0 otherwise.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gRequired(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{CheckFunction::Control, CheckValue::Control}
+@end deffn
+
+
+
+@deffn {SetChgFunction} SetChgFunction::ComboBox
+@sp 2
+@example
+@group
+ofun = gSetChgFunction(ctl, fun);
+
+object  ctl;         /*  combo box object     */
+int     (*fun)();    /*  change callback      */
+int     (*ofun)();   /*  previous callback    */
+@end group
+@end example
+This method sets the function to be called when the user changes the
+selection in the combo box.
+
+The value returned is the previous change function.
+@sp 1
+See also:  @code{SetFunction}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetFunction} SetFunction::ComboBox
+@sp 2
+@example
+@group
+r = gSetFunction(ctl, fun);
+
+object  ctl;      /*  control object           */
+int     (*fun)(); /*  function pointer         */
+ofun    r;        /*  previous function        */
+@end group
+@end example
+This method is inherited from the @code{Control} class.
+
+This method is used to associate a C function to a combo box such that if
+the user double clicks an item in the combo box the C function will
+immediately get evoked.  The value returned by this method is the
+function, if any, which was previously associated with the control.
+
+The C function takes the following form:
+@example
+@group
+int     fun(object ctl, object dlg)
+@{
+        ....
+@}
+@end group
+@end example
+Where @code{ctl} is the control object, and @code{dlg} is the object
+representing the dialog the control is associated with.  The value
+returned by @code{fun} is ignored.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetFunction(ctl, fun);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, SetChgFunction}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::ComboBox
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.
+
+@code{val} will be used as the ordinal value of the selected item.  This
+value is a 0 based index from the top of the list to the bottom.
+
+Any previously associated object (via @code{Value}) will be disposed
+when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{SetStringValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {SetStringValue} SetStringValue::ComboBox
+@sp 2
+@example
+@group
+r = gSetStringValue(ctl, val);
+
+object  ctl;    /*  control object  */
+char    *val;   /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.  
+
+@code{val} will be used to select the option which matches the string.
+
+Any previously associated object (via @code{val}) will be disposed when
+the new value is set.  
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetStringValue(ctl, "The choice");
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::ComboBox
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the default selection associated with the
+control.  It is often used to set the initial value prior to performing
+a dialog.  @code{val} should be a Dynace object which is an instance of
+either the @code{String} class or the @code{ShortInteger} class and
+initialized to the value desired for the control.
+
+If @code{val} is an instance of the @code{ShortInteger} class it will be
+used as the ordinal value of the selected item.  This value is a 0 based
+index from the top of the list to the bottom.
+
+If @code{val} is an instance of the @code{String} class it will be used
+to select the option which matches the string represented by @code{val}.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithInt(ShortInteger, 1));
+        or
+gSetValue(ctl, gNewWithStr(String, "The choice"));
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, SetStringValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::ComboBox
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short which represents the value
+associated with the control.  The returned value will represent the
+ordinal value of the choice made by the user.  This ordinal value is a
+zero based index from top to bottom.  -1 indicates that no choice was
+made.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ListIndex, Value, StringValue, Attach, SetValue}
+@end deffn
+
+
+
+@deffn {Size} Size::ComboBox
+@sp 2
+@example
+@group
+n = gSize(ctl);
+
+object  ctl;   /*  combo box object  */
+int     n;     /*  number of items   */
+@end group
+@end example
+This method returns the number of items in the combo box.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {StringValue} StringValue::ComboBox
+@sp 2
+@example
+@group
+val = gStringValue(ctl);
+
+object  ctl;   /*  control object  */
+char    *val;  /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a character string pointer which
+represents the value associated with the control.  The returned pointer
+will represent the text associated with the user selected choices.
+It will point to "" if the user had not made a valid selection.
+
+The returned pointer will not be valid once the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+char    *val;
+
+val = gStringValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Value, ListIndex, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::ComboBox
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{String} class.  The returned object will represent the text
+associated with the user selected choices.  If no selection was made
+the object will represent "".
+
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, StringValue, ValueAt, ListIndex, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+@deffn {ValueAt} ValueAt::ComboBox
+@sp 2
+@example
+@group
+val = gValueAt(ctl, idx);
+
+object  ctl;   /*  control object  */
+int     idx;   /*  index           */
+object  val;   /*  value at idx    */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the text
+associated with the line indexed by the zero based index @code{idx}.
+The object returned will be an instance of the @code{String} class.  If
+the index is out of range this method will return @code{NULL}.
+
+This method may only be called when the dialog is active.  The object
+returned @emph{must} be explicitly disposed when no longer needed.
+@c @example
+@c @group
+@c @exdent Example:
+@c 
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{ShortValue, Value, ListIndex, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Scroll Bars
+The @code{ScrollBar} class represents a control which allows the user to
+select a number between two ranges via a linear, visually intuitive
+control.  The range defaults to 0 to 100 and may be controlled via
+@code{ScrollBarRange}.
+
+The @code{ScrollBar} class is a subclass of @code{Control} and as such
+inherits all the functionality associated with that class.  This section
+only documents functionality particular to this class.
+
+Standard control arguments are documented in the section entitled
+``Standard Control Method Arguments''.
+
+
+
+
+
+
+
+
+
+
+@deffn {Attach} Attach::ScrollBar
+@sp 2
+@example
+@group
+r = gAttach(ctl, val);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to associate an independent Dynace object with the
+state associated with a control object.  @code{val} should be an
+instance of the @code{ShortInteger} class.  This object will be
+automatically updated to reflect the position of the scroll bar.
+
+This object (@code{val}) will never be disposed by WDS, even after
+the control or associated dialog are disposed.  Therefore, this
+is one way of gaining access to a control's value after the life
+of the control.  It is the programmer's responsibility to dispose of
+the object when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gNewWithInt(ShortInteger, 0);
+gAttach(ctl, val);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, ShortValue, SetValue, SetShortValue,}
+        @code{ScrollBarRange}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Increment} Increment::ScrollBar
+@sp 2
+@example
+@group
+r = gIncrement(ctl, val);
+
+object  ctl;   /*  control object  */
+int     val;   /*  increment value */
+object  r;     /*  control object  */
+@end group
+@end example
+This method is used to increment the position of the scroll bar
+@code{val} points from its current position.  @code{val} may
+be negative or positive, which will determine the direction of movement.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gIncrement(ctl, 10);
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, SetValue, ScrollBarRange}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewCtl} NewCtl::ScrollBar
+@sp 2
+@example
+@group
+ctl = mNewCtl(ScrollBar, id);
+
+unsigned  id;   /*  control id      */
+object   ctl;   /*  control object  */
+@end group
+@end example
+@code{mNewCtl} is a macro (defined in @code{dynwin.h}) that expands to
+a call to @code{vNew}.
+
+This method is used to create a new control object to be identified as
+@code{id} (see section ``Standard Control Method Arguments'').  This
+method is mainly used internally.  A programmer would more often
+use @code{AddControl::Dialog} to create controls and associate them
+to a dialog.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+ctl = mNewCtl(ScrollBar, MY_SCROLLBAR);
+@end group
+@end example
+@sp 1
+See also:  @code{AddControl::Dialog, GetControl::Dialog}
+@end deffn
+
+
+
+
+
+
+@deffn {ScrollBarRange} ScrollBarRange::ScrollBar
+@sp 2
+@example
+@group
+r = gScrollBarRange(ctl, min, max, pginc, lininc)
+
+object  ctl;    /*  control object  */
+int     min;    /*  minimum range   */
+int     max;    /*  maximum range   */
+int     pginc;  /*  page increment  */
+int     lineinc;/*  line increment  */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to control the range and scrolling characteristics
+associated with a given scroll bar control.
+
+@code{min} and @code{max} are used to determine the range of the
+control.  These are the values which are returned when the control
+is at either end of its extremes.  The default values are 0 and
+100 respectively.
+
+@code{pginc} is used to control exactly how much the position of the
+scroll bar will change when the user clicks the control in such a way
+as to cause a page jump in the position.  This is normally done by
+clicking in the area on either side of position indicating element of the
+control.  The default value for the variable is 10.  It must be less than
+the difference between @code{max} and @code{min}, and is normally larger
+than @code{lineinc}.
+
+@code{lineinc} us used to control exactly how much the position of the
+scroll bar will change when the user clicks the line increment arrows
+located on the extreme ends of the control.  The default value of this
+control is 2.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gScrollBarRange(ctl, 0, 100, 10, 2);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetShortValue} SetShortValue::ScrollBar
+@sp 2
+@example
+@group
+r = gSetShortValue(ctl, val);
+
+object  ctl;    /*  control object  */
+int     val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be the value which represents the desired
+position of the scroll bar.  It must be between the minimum and
+maximum range associated with the control.
+
+Any previously associated value object (associated via @code{SetValue})
+will be disposed when the new value is set.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetShortValue(ctl, 50);
+@end group
+@end example
+@sp 1
+See also:  @code{SetValue, Increment, CtlShortValue::Dialog,}
+        @code{ScrollBarRange}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetValue} SetValue::ScrollBar
+@sp 2
+@example
+@group
+r = gSetValue(ctl, val);
+
+object  ctl;    /*  control object  */
+object  val;    /*  ctl value       */
+object  r;      /*  control object  */
+@end group
+@end example
+This method is used to set the value associated with a control.  It is
+often used to set the initial value prior to performing a dialog.
+@code{val} should be a Dynace object which is an instance of the
+@code{ShortInteger} class and initialized to the value desired for the
+control.
+
+@code{val} must represent a number between the minimum and maximum range
+associated with the scroll bar.
+
+Any previously associated object will be disposed when the new value is set.
+Also, @code{val} will automatically be disposed when the control or associated
+dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+
+gSetValue(ctl, gNewWithInt(ShortInteger, 50));
+@end group
+@end example
+@sp 1
+See also:  @code{SetShortValue, Increment, Value, ScrollBarRange}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ShortValue} ShortValue::ScrollBar
+@sp 2
+@example
+@group
+val = gShortValue(ctl);
+
+object  ctl;   /*  control object  */
+short   val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a C short integer which represents the
+position of the scroll bar.  The returned value will represent the
+position of the scroll bar control.  This number will be between the
+minimum and maximum range associated with the control via
+@code{ScrollBarRange}.
+@example
+@group
+@exdent Example:
+
+object  ctl;
+short   val;
+
+val = gShortValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{Value, Attach, SetShortValue, CtlShortValue::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Value} Value::ScrollBar
+@sp 2
+@example
+@group
+val = gValue(ctl);
+
+object  ctl;   /*  control object  */
+object  val;   /*  ctl value       */
+@end group
+@end example
+This method is used to obtain a Dynace object which represents the value
+associated with the control.  The object returned will be an instance of
+the @code{ShortInteger} class.  The returned object will represent
+the position of the scroll bar control.  This number will be between
+the minimum and maximum range associated with the control via
+@code{ScrollBarRange}.
+
+This object will be disposed by WDS when the control object or
+associated dialog is disposed.
+@example
+@group
+@exdent Example:
+
+object  ctl, val;
+
+val = gValue(ctl);
+@end group
+@end example
+@sp 1
+See also:  @code{ShortValue, Attach, SetValue}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Custom Controls
+
+

@@ -1,0 +1,5163 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 1996 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+@chapter Library Reference
+
+This chapter gives a detailed description of each WDS class.  It is
+organized by facility so that in order to look something up, you would
+first go to the section which deals with the facility you are interested
+in.  And then the functions are in alphabetical order.
+
+There is a naming convention used with Dynace generics.  All generics
+start with either a lower case ``g'', ``v'' or ``m'', and are always
+followed by an upper case letter.  The ones which start with ``g'' are
+normal generics and may be treated like normal C functions.  The ones
+which begin with ``v'' use the variable argument facilities of C and
+you should, therefore, take a bit extra care when using them since
+there is no compile time argument checking being done with these functions.
+
+Since all generics start with either ``g'', ``v'' or ``m'' and in order to
+avoid the difficulty associated with grouping all the generics under
+three letters, the first letter is dropped for indexing or heading
+purposes.  Therefore if you are looking up a generic, it will always
+appear in the index or header with its first letter missing.  The syntax
+description and example code, however, will show the entire name.
+
+There is one thing about Dynace which you must be aware of, however.
+Dynace generic functions (which is what most of these functions are)
+allow the same function to be called in many circumstances.  These
+generic functions dynamically dispatch to the appropriate procedures
+based on the type of the first argument to the generic function (or
+``generic'' for short).  So even though you are calling the same
+function name, entirely different functionality may occur based on the
+type of the first argument.  This fact is seldom, if ever, a problem
+since you know whether you are dealing with an icon or a dialog, for
+example, at any given point.  Just be sure to look up the generic in
+the appropriate section.
+
+
+@section A Note To Dynace Language Users
+In an effort to hide unnecessary details associated with class vs.
+instance methods from WDS users who don't care about the differences,
+these differences are not discussed or grouped as they are in the
+Dynace manual.  You can always distinguish between the two by what
+the method takes as its first argument.  If it's a class, then you
+have a class method, otherwise it's an instance method.
+
+If you are a WDS user with interest in the Dynace object oriented
+extension to C, it is fully documented in its associated manual.
+
+
+
+
+@section Class Hierarchy
+This Dynace Windows Development System contains the following class
+hierarchy:
+
+@c @example
+@c @group
+@iftex
+@break
+
+@input wdscls1.tex
+
+
+@end iftex
+@c @end group
+@c @end example
+
+
+
+
+
+@section Application
+The @code{Application} class is the class used to control application
+wide defaults such as fonts, cursors, brushes and so on.  It is also
+the class which gets executed by Windows first and executes your
+application specific @code{start} function.
+
+There are no instance methods associated with the @code{Application} class.
+All access to this class is through class methods via the global class
+object @code{Application}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddGlobal} AddGlobal::Application
+@sp 2
+@example
+@group
+r = gAddGlobal(Application, key, val);
+
+char    *key;   /*  dictionary key     */
+object  val;    /*  value to store     */
+object  r;      /*  val on success, NULL if key exists  */
+@end group
+@end example
+This class method adds an object to the application-wide global
+dictionary under @code{key}.  If @code{key} already exists, the call
+fails and returns @code{NULL}; the existing entry is not modified.
+@example
+@group
+@exdent Example:
+
+gAddGlobal(Application, "config", configObj);
+@end group
+@end example
+@sp 1
+See also:  @code{GetGlobal, ChangeGlobal, RemoveGlobal, DisposeGlobal}
+@end deffn
+
+
+
+@deffn {ChangeGlobal} ChangeGlobal::Application
+@sp 2
+@example
+@group
+r = gChangeGlobal(Application, key, val);
+
+char    *key;   /*  dictionary key       */
+object  val;    /*  new value to store   */
+object  r;      /*  result               */
+@end group
+@end example
+This class method replaces the value associated with an existing
+@code{key} in the application-wide global dictionary.  The previous
+value is not disposed.
+@example
+@group
+@exdent Example:
+
+gChangeGlobal(Application, "config", newConfigObj);
+@end group
+@end example
+@sp 1
+See also:  @code{AddGlobal, GetGlobal, RemoveGlobal, DisposeGlobal}
+@end deffn
+
+
+
+@deffn {CheckMessages} CheckMessages::Application
+@sp 2
+@example
+@group
+r = gCheckMessages(Application);
+
+object  r;      /*  Application  */
+@end group
+@end example
+This class method pumps the Windows message queue for timer, cursor,
+and paint messages.  This is useful during long-running operations to
+keep the UI responsive.
+@example
+@group
+@exdent Example:
+
+gCheckMessages(Application);
+@end group
+@end example
+@end deffn
+
+
+
+@deffn {CmdLine} CmdLine::Application
+@sp 2
+@example
+@group
+cl = gCmdLine(Application);
+
+char    *cl;    /*  command line   */
+@end group
+@end example
+This method is used to gain access to command line which was used when
+the application was launched.
+@example
+@group
+@exdent Example:
+
+int     cl;
+
+cl = gCmdLine(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{Instance, Show, PrevInstance}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@c Error::Application removed — gError is a Dynace Object method, not
+@c an Application method.  Use gErrorMessage(Application, msg) instead.
+
+
+
+@deffn {DisallowMultipleInstances} DisallowMultipleInstances::Application
+@sp 2
+@example
+@group
+r = gDisallowMultipleInstances(Application, tag, msg);
+
+char    *tag;   /*  unique application identifier  */
+char    *msg;   /*  message to show, or NULL       */
+int     r;      /*  non-zero if another instance is running  */
+@end group
+@end example
+This class method checks whether another instance of the application
+is already running, using @code{tag} as a system-wide identifier.
+If another instance is found and @code{msg} is non-NULL, the message
+is displayed.  Returns non-zero if a duplicate is detected.
+@example
+@group
+@exdent Example:
+
+if (gDisallowMultipleInstances(Application, "MyApp", "Already running."))
+    return 1;
+@end group
+@end example
+@end deffn
+
+
+
+@deffn {DisposeAtExit} DisposeAtExit::Application
+@sp 2
+@example
+@group
+r = gDisposeAtExit(Application, obj);
+
+object  obj;    /*  object to dispose at exit  */
+object  r;      /*  Application                */
+@end group
+@end example
+This class method registers @code{obj} to be automatically disposed
+when the application exits.
+@example
+@group
+@exdent Example:
+
+gDisposeAtExit(Application, myResource);
+@end group
+@end example
+@sp 1
+See also:  @code{RemoveAtExit}
+@end deffn
+
+
+
+@deffn {DisposeGlobal} DisposeGlobal::Application
+@sp 2
+@example
+@group
+r = gDisposeGlobal(Application, key);
+
+char    *key;   /*  dictionary key  */
+object  r;      /*  Application on success, NULL if not found  */
+@end group
+@end example
+This class method removes an entry from the application-wide global
+dictionary and deep-disposes both the key and the value object.
+@example
+@group
+@exdent Example:
+
+gDisposeGlobal(Application, "config");
+@end group
+@end example
+@sp 1
+See also:  @code{AddGlobal, GetGlobal, ChangeGlobal, RemoveGlobal}
+@end deffn
+
+
+
+@deffn {ErrorMessage} ErrorMessage::Application
+@sp 2
+@example
+@group
+r = gErrorMessage(Application, msg);
+
+char    *msg;   /*  error message text  */
+object  r;      /*  Application         */
+@end group
+@end example
+This class method displays @code{msg} in a modal error message box.
+@example
+@group
+@exdent Example:
+
+gErrorMessage(Application, "File not found.");
+@end group
+@end example
+@sp 1
+See also:  @code{Message, MessageMode}
+@end deffn
+
+
+
+@deffn {GetArg} GetArg::Application
+@sp 2
+@example
+@group
+s = gGetArg(Application, num);
+
+int     num;    /*  argument index (0-based)  */
+char    *s;     /*  argument string           */
+@end group
+@end example
+This class method returns the command-line argument at index
+@code{num} (0-based).  Returns an empty string if @code{num} is out
+of range.
+@example
+@group
+@exdent Example:
+
+char *prog = gGetArg(Application, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{NumArgs}
+@end deffn
+
+
+
+@deffn {GetBackBrush} GetBackBrush::Application
+@sp 2
+@example
+@group
+bo = gGetBackBrush(Application);
+
+object  bo;     /*  brush object  */
+@end group
+@end example
+This method is used to obtain a copy of the default background brush
+object associated with the application.  The returned object will be an
+instance of one of the subclasses of the @code{Brush} class.
+
+The object returned must, either explicitly or implicitly, be
+disposed when it is no longer needed.  This is normally done
+automatically by WDS when it is associated with a window.
+
+See the @code{Brush} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+object  bo;
+
+bo = gGetBackBrush(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{GetTextBrush, SetBackBrush}
+@end deffn
+
+
+
+@deffn {GetColorTheme} GetColorTheme::Application
+@sp 2
+@example
+@group
+r = gGetColorTheme(Application, rp, gp, bp);
+
+int     *rp;    /*  pointer to receive red value    */
+int     *gp;    /*  pointer to receive green value  */
+int     *bp;    /*  pointer to receive blue value   */
+int     r;      /*  non-zero if a theme is active   */
+@end group
+@end example
+This class method retrieves the current color theme RGB values.
+Returns non-zero if a color theme has been set.
+@example
+@group
+@exdent Example:
+
+int r, g, b;
+if (gGetColorTheme(Application, &r, &g, &b))
+    /* theme is active */;
+@end group
+@end example
+@sp 1
+See also:  @code{SetColorTheme}
+@end deffn
+
+
+
+@deffn {GetCursor} GetCursor::Application
+@sp 2
+@example
+@group
+co = gGetCursor(Application);
+
+object  co;     /*  cursor object  */
+@end group
+@end example
+This method is used to obtain a copy of the default cursor object
+associated with the application.  The returned object will be an
+instance of one of the subclasses of the @code{Cursor} class.
+
+The object returned must, either explicitly or implicitly, be
+disposed when it is no longer needed.  This is normally done
+automatically by WDS when it is associated with a window.
+
+See the @code{Cursor} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+object  co;
+
+co = gGetCursor(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetCursor}
+@end deffn
+
+
+
+@deffn {GetFont} GetFont::Application
+@sp 2
+@example
+@group
+fo = gGetFont(Application);
+
+object  fo;     /*  font object  */
+@end group
+@end example
+This method is used to obtain a copy of the default font object
+associated with the application.  The returned object will be an
+instance of one of the subclasses of the @code{Font} class.
+
+The object returned must, either explicitly or implicitly, be
+disposed when it is no longer needed.  This is normally done
+automatically by WDS when it is associated with a window.
+
+See the @code{Font} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+object  fo;
+
+fo = gGetFont(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetFont}
+@end deffn
+
+
+
+@deffn {GetGlobal} GetGlobal::Application
+@sp 2
+@example
+@group
+r = gGetGlobal(Application, key);
+
+char    *key;   /*  dictionary key  */
+object  r;      /*  stored object, or NULL  */
+@end group
+@end example
+This class method retrieves an object previously stored in the
+application-wide global dictionary under @code{key}.  Returns
+@code{NULL} if @code{key} is not found.
+@example
+@group
+@exdent Example:
+
+object cfg = gGetGlobal(Application, "config");
+@end group
+@end example
+@sp 1
+See also:  @code{AddGlobal, ChangeGlobal, RemoveGlobal, DisposeGlobal}
+@end deffn
+
+
+
+@deffn {GetIcon} GetIcon::Application
+@sp 2
+@example
+@group
+io = gGetIcon(Application);
+
+object  io;     /*  icon object  */
+@end group
+@end example
+This method is used to obtain a copy of the default icon object
+associated with the application.  The returned object will be an
+instance of one of the subclasses of the @code{Icon} class.
+
+The object returned must, either explicitly or implicitly, be
+disposed when it is no longer needed.  This is normally done
+automatically by WDS when it is associated with a window.
+
+See the @code{Icon} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+object  io;
+
+io = gGetIcon(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetIcon}
+@end deffn
+
+
+
+@deffn {GetName} GetName::Application
+@sp 2
+@example
+@group
+nm = gGetName(Application);
+
+char    *nm;    /*  application name  */
+@end group
+@end example
+This method is used to obtain the global name associated with the application.
+@example
+@group
+@exdent Example:
+
+char    *nm;
+
+nm = gGetName(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetName}
+@end deffn
+
+
+
+@deffn {GetScalingMode} GetScalingMode::Application
+@sp 2
+@example
+@group
+m = gGetScalingMode(Application);
+
+int     m;      /*  scaling mode   */
+@end group
+@end example
+This method is used to get the current scaling mode in effect.
+See @code{SetScalingMode} for further details.
+@example
+@group
+@exdent Example:
+
+int     mode;
+
+mode = gGetScalingMode(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode, ScaleToPixels, ScaleToCurrentMode}
+@end deffn
+
+
+
+@deffn {GetSize} GetSize::Application
+@sp 2
+@example
+@group
+r = gGetSize(Application, vert, horz);
+
+int    *vert;   /*  vertical size    */
+int    *horz;   /*  horizontal size  */
+object  r;      /*  Application      */
+@end group
+@end example
+This method is used to get the total size of the user's screen.
+@code{vert} and @code{horz} are in increments dictated by the
+mode selected by @code{SetScalingMode}.  
+@example
+@group
+@exdent Example:
+
+int     y, x;
+
+gGetSize(Application, &y, &x);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode, GetSize::Window}
+@end deffn
+
+
+
+@deffn {GetTextBrush} GetTextBrush::Application
+@sp 2
+@example
+@group
+bo = gGetTextBrush(Application);
+
+object  bo;     /*  brush object  */
+@end group
+@end example
+This method is used to obtain a copy of the default text brush object
+associated with the application.  The returned object will be an
+instance of one of the subclasses of the @code{Brush} class.
+
+The object returned must, either explicitly or implicitly, be
+disposed when it is no longer needed.  This is normally done
+automatically by WDS when it is associated with a window.
+
+See the @code{Brush} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+object  bo;
+
+bo = gGetTextBrush(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{GetBackBrush, SetTextBrush}
+@end deffn
+
+
+
+@deffn {Instance} Instance::Application
+@sp 2
+@example
+@group
+ins = gInstance(Application);
+
+HINSTANCE  ins;    /*  instance handle   */
+@end group
+@end example
+This method is used to gain access to the Windows instance handle
+associated with the application.  This handle is mainly used internally
+by Windows and WDS, and should not normally be needed by a WDS
+programmer.
+@example
+@group
+@exdent Example:
+
+HINSTANCE  h;
+
+h = gInstance(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{PrevInstance, CmdLine, Show}
+@end deffn
+
+
+
+@deffn {IsExiting} IsExiting::Application
+@sp 2
+@example
+@group
+r = gIsExiting(Application);
+
+int     r;      /*  1 if exiting, 0 otherwise  */
+@end group
+@end example
+This class method returns 1 if the application is in the process of
+exiting, 0 otherwise.
+@example
+@group
+@exdent Example:
+
+if (gIsExiting(Application))
+    return;
+@end group
+@end example
+@end deffn
+
+
+
+@deffn {Language} Language::Application
+@sp 2
+@example
+@group
+lang = gLanguage(Application);
+
+int     lang;   /*  current language index  */
+@end group
+@end example
+This class method returns the current language index previously set
+by @code{SetLanguage}.  The default is 0 (English).
+@example
+@group
+@exdent Example:
+
+int lang = gLanguage(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{SetLanguage}
+@end deffn
+
+
+
+@deffn {Message} Message::Application
+@sp 2
+@example
+@group
+r = gMessage(Application, msg);
+
+char    *msg;   /*  message text  */
+object  r;      /*  Application   */
+@end group
+@end example
+This class method displays @code{msg} in a message box, provided
+message mode is enabled.  If message mode is disabled, no dialog
+appears.
+@example
+@group
+@exdent Example:
+
+gMessage(Application, "Operation complete.");
+@end group
+@end example
+@sp 1
+See also:  @code{ErrorMessage, MessageMode}
+@end deffn
+
+
+
+@deffn {MessageMode} MessageMode::Application
+@sp 2
+@example
+@group
+prev = gMessageMode(Application, mode);
+
+int     mode;   /*  >= 0 to set, < 0 to query  */
+int     prev;   /*  previous mode value         */
+@end group
+@end example
+This class method gets or sets whether @code{gMessage} shows a
+message box.  Pass a non-negative value to set the mode, or a
+negative value to query without changing it.  Returns the previous
+mode.
+@example
+@group
+@exdent Example:
+
+int old = gMessageMode(Application, 0);  /* disable messages */
+@end group
+@end example
+@sp 1
+See also:  @code{Message, ErrorMessage}
+@end deffn
+
+
+
+@deffn {NumArgs} NumArgs::Application
+@sp 2
+@example
+@group
+n = gNumArgs(Application);
+
+int     n;      /*  number of command-line arguments  */
+@end group
+@end example
+This class method returns the number of command-line arguments
+passed to the application.
+@example
+@group
+@exdent Example:
+
+int n = gNumArgs(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{GetArg}
+@end deffn
+
+
+
+@deffn {OpenURL} OpenURL::Application
+@sp 2
+@example
+@group
+r = gOpenURL(Application, url);
+
+char    *url;   /*  URL or file path  */
+object  r;      /*  Application       */
+@end group
+@end example
+This class method opens a URL or file using the system default
+handler via @code{ShellExecute}.  Control returns immediately.
+@example
+@group
+@exdent Example:
+
+gOpenURL(Application, "https://example.com");
+@end group
+@end example
+@sp 1
+See also:  @code{OpenURLWait}
+@end deffn
+
+
+
+@deffn {OpenURLWait} OpenURLWait::Application
+@sp 2
+@example
+@group
+r = gOpenURLWait(Application, url);
+
+char    *url;   /*  URL or file path  */
+object  r;      /*  Application       */
+@end group
+@end example
+This class method opens a URL or file using the system default
+handler and blocks until the spawned process finishes.
+@example
+@group
+@exdent Example:
+
+gOpenURLWait(Application, "report.pdf");
+@end group
+@end example
+@sp 1
+See also:  @code{OpenURL}
+@end deffn
+
+
+
+@deffn {PrevInstance} PrevInstance::Application
+@sp 2
+@example
+@group
+ins = gPrevInstance(Application);
+
+HINSTANCE  ins;    /*  instance handle   */
+@end group
+@end example
+This method is used to gain access to the Windows instance handle
+associated with the previous instance of this application, should more
+than one be running.  This handle is mainly used internally by Windows
+and WDS, and should not normally be needed by a WDS programmer.
+
+This value will always be @code{NULL} under Windows NT.
+@example
+@group
+@exdent Example:
+
+HINSTANCE  h;
+
+h = gPrevInstance(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{Instance, CmdLine, Show}
+@end deffn
+
+
+
+@deffn {QuitApplication} QuitApplication::Application
+@sp 2
+@example
+@group
+r = gQuitApplication(Application, ret);
+
+int     ret;    /*  app return value  */
+object  r;      /*  Application       */
+@end group
+@end example
+This method is used to terminate an application.  The value passed will
+be used as the return value of the application.
+@example
+@group
+@exdent Example:
+
+gQuitApplication(Application, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{Error}
+@end deffn
+
+
+
+@deffn {RemoveAtExit} RemoveAtExit::Application
+@sp 2
+@example
+@group
+r = gRemoveAtExit(Application, obj);
+
+object  obj;    /*  object to remove from exit set  */
+object  r;      /*  Application                     */
+@end group
+@end example
+This class method removes @code{obj} from the set of objects that
+will be disposed at application exit.  The object itself is not
+disposed.
+@example
+@group
+@exdent Example:
+
+gRemoveAtExit(Application, myResource);
+@end group
+@end example
+@sp 1
+See also:  @code{DisposeAtExit}
+@end deffn
+
+
+
+@deffn {RemoveGlobal} RemoveGlobal::Application
+@sp 2
+@example
+@group
+r = gRemoveGlobal(Application, key);
+
+char    *key;   /*  dictionary key  */
+object  r;      /*  Application on success, NULL if not found  */
+@end group
+@end example
+This class method removes an entry from the application-wide global
+dictionary without disposing the value object.  Use this when you
+want to retain the value after removal.
+@example
+@group
+@exdent Example:
+
+gRemoveGlobal(Application, "config");
+@end group
+@end example
+@sp 1
+See also:  @code{AddGlobal, GetGlobal, ChangeGlobal, DisposeGlobal}
+@end deffn
+
+
+
+@deffn {ReturnAsTab} ReturnAsTab::Application
+@sp 2
+@example
+@group
+prev = gReturnAsTab(Application, mode);
+
+int     mode;   /*  >= 0 to set, < 0 to query  */
+int     prev;   /*  previous mode value         */
+@end group
+@end example
+This class method gets or sets whether the Return key acts like the
+Tab key for dialog navigation.  Pass a non-negative value to set
+the mode, or a negative value to query without changing it.  Returns
+the previous mode.
+@example
+@group
+@exdent Example:
+
+gReturnAsTab(Application, 1);  /* enable Return-as-Tab */
+@end group
+@end example
+@end deffn
+
+
+
+@deffn {ScaleToCurrentMode} ScaleToCurrentMode::Application
+@sp 2
+@example
+@group
+r = gScaleToCurrentMode(Application, y, x, fnt);
+
+int     *y;     /*  row position         */
+int     *x;     /*  column position      */
+object  fnt;    /*  current font object  */
+object  r;      /*  Application          */
+@end group
+@end example
+This method is used to convert coordinates from pixels to the current
+scaling mode.  It is mainly used internally by WDS in order to
+convert Window's standard pixel positions into the current scaling mode.
+
+On entry @code{x} and @code{y} point to values which are coordinates in
+terms of pixels.  After this method returns, their value will be changed
+to be in terms of the current scaling mode (see @code{SetScalingMode}).
+
+@code{fnt} is a font object which is used only if the current scaling
+mode is relative to a font.  If so, the font it will be related to
+will be the one passed.
+@example
+@group
+@exdent Example:
+
+int     y, x;
+object  fnt;
+
+y = some position;
+x = some position;
+fnt = some font object;
+gScaleToCurrentMode(Application, &y, &x, fnt);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode, GetScalingMode, ScaleToPixels}
+@end deffn
+
+
+
+@deffn {ScaleToPixels} ScaleToPixels::Application
+@sp 2
+@example
+@group
+r = gScaleToPixels(Application, y, x, fnt);
+
+int     *y;     /*  row position         */
+int     *x;     /*  column position      */
+object  fnt;    /*  current font object  */
+object  r;      /*  Application          */
+@end group
+@end example
+This method is used to convert coordinates from the current scaling mode
+to pixels.  It is mainly used internally by WDS in order to convert
+your coordinates into standard pixel positions.
+
+On entry @code{x} and @code{y} point to values which are coordinates
+in terms of the current scaling mode (see @code{SetScalingMode}).
+After this method returns, their value will be changed to be in terms
+of pixels.
+
+@code{fnt} is a font object which is used only if the current scaling
+mode is relative to a font.  If so, the font it will be related to
+will be the one passed.
+@example
+@group
+@exdent Example:
+
+int     y, x;
+object  fnt;
+
+y = some position;
+x = some position;
+fnt = some font object;
+gScaleToPixels(Application, &y, &x, fnt);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode, GetScalingMode, ScaleToCurrentMode}
+@end deffn
+
+
+
+@deffn {SetBackBrush} SetBackBrush::Application
+@sp 2
+@example
+@group
+r = gSetBackBrush(Application, bo);
+
+object  bo;     /*  brush object         */
+object  r;      /*  brush object passed  */
+@end group
+@end example
+This method is used to set the application wide default background
+brush.  This is the brush used to color everything except the text that
+appears on windows and dialogs.  @code{bo} must be an instance of one of
+the subclasses of @code{Brush}.  All windows and dialogs will use the
+application wide default brush which is in effect when they are created
+unless a specific brush object is specified for a particular window.
+
+When a new default brush object is set, any previous default object
+will be disposed.  If no default is set, WDS uses the system brush
+identified as @code{COLOR_WINDOW}.
+
+See the @code{Brush} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+gSetBackBrush(Application, vNew(SystemBrush, COLOR_WINDOW));
+@end group
+@end example
+@sp 1
+See also:  @code{GetBackBrush, SetTextBrush}
+@end deffn
+
+
+
+@deffn {SetColorTheme} SetColorTheme::Application
+@sp 2
+@example
+@group
+gSetColorTheme(Application, r, g, b);
+
+int     r;      /*  red component (0-255)    */
+int     g;      /*  green component (0-255)  */
+int     b;      /*  blue component (0-255)   */
+@end group
+@end example
+This class method sets the application background color theme using
+RGB values.
+@example
+@group
+@exdent Example:
+
+gSetColorTheme(Application, 220, 220, 255);
+@end group
+@end example
+@sp 1
+See also:  @code{GetColorTheme}
+@end deffn
+
+
+
+@deffn {SetCursor} SetCursor::Application
+@sp 2
+@example
+@group
+r = gSetCursor(Application, co);
+
+object  co;     /*  cursor object         */
+object  r;      /*  cursor object passed  */
+@end group
+@end example
+This method is used to set the application wide default cursor.
+@code{co} must be an instance of one of the subclasses of @code{Cursor}.
+All windows will use the application wide default cursor which is in
+effect when they are created unless a specific cursor object is
+specified for a particular window.
+
+When a new default cursor object is set, any previous default object
+will be disposed.  If no default is set, WDS uses the system cursor
+identified as @code{IDC_ARROW}.
+
+See the @code{Cursor} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+gSetCursor(Application, gLoadSys(SystemCursor, IDC_ARROW));
+@end group
+@end example
+@sp 1
+See also:  @code{GetCursor, LoadSys::SystemCursor, Load::ExternalCursor}
+@end deffn
+
+
+
+@deffn {SetFont} SetFont::Application
+@sp 2
+@example
+@group
+r = gSetFont(Application, fo);
+
+object  fo;     /*  font object         */
+object  r;      /*  font object passed  */
+@end group
+@end example
+This method is used to set the application wide default font.
+@code{fo} must be an instance of one of the subclasses of @code{Font}.
+All windows will use the application wide default font which is in
+effect when they are created unless a specific font object is
+specified for a particular window.
+
+When a new default font object is set, any previous default object
+will be disposed.  If no default is set, WDS uses the system font
+identified as @code{SYSTEM_FONT}.
+
+See the @code{Font} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+gSetFont(Application, vNew(SystemFont, SYSTEM_FONT));
+@end group
+@end example
+@sp 1
+See also:  @code{GetFont, Load::SystemFont, New::ExternalFont}
+@end deffn
+
+
+
+@deffn {SetIcon} SetIcon::Application
+@sp 2
+@example
+@group
+r = gSetIcon(Application, io);
+
+object  io;     /*  icon object         */
+object  r;      /*  icon object passed  */
+@end group
+@end example
+This method is used to set the application wide default icon.  An icon
+associated to a window is the one which is displayed when the window is
+iconized.  @code{io} must be an instance of one of the subclasses of
+@code{Icon}.  All windows will use the application wide default icon
+which is in effect when they are created unless a specific icon object
+is specified for a particular window.
+
+When a new default icon object is set, any previous default object
+will be disposed.  If no default is set, WDS uses the system icon
+identified as @code{IDI_APPLICATION}.
+
+See the @code{Icon} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+gSetIcon(Application, gLoadSys(SystemIcon, IDI_APPLICATION));
+@end group
+@end example
+@sp 1
+See also:  @code{GetIcon, LoadSys::SystemIcon, Load::ExternalIcon}
+@end deffn
+
+
+
+@deffn {SetLanguage} SetLanguage::Application
+@sp 2
+@example
+@group
+r = gSetLanguage(Application, lang);
+
+int     lang;   /*  language index (0 = English)  */
+object  r;      /*  Application                   */
+@end group
+@end example
+This class method sets the current application language.  Language
+index 0 is English; other indices are application-defined.
+@example
+@group
+@exdent Example:
+
+gSetLanguage(Application, 1);  /* Spanish */
+@end group
+@end example
+@sp 1
+See also:  @code{Language}
+@end deffn
+
+
+
+@deffn {SetName} SetName::Application
+@sp 2
+@example
+@group
+gSetName(Application, nm);
+
+char    *nm;    /*  application name  */
+@end group
+@end example
+This method is used to give the application a globally accessible name.
+This name is accessible via @code{GetName}.  There is no other use
+made of this information.
+@example
+@group
+@exdent Example:
+
+gSetName(Application, "My App");
+@end group
+@end example
+@sp 1
+See also:  @code{GetName}
+@end deffn
+
+
+
+@deffn {SetScalingMode} SetScalingMode::Application
+@sp 2
+@example
+@group
+r = gSetScalingMode(Application, m);
+
+int     m;      /*  scaling mode   */
+int     r;      /*  previous mode  */
+@end group
+@end example
+This method is used to set the scaling mode used by all other WDS methods
+which take coordinate positions.  Valid modes are as follows:
+@table @code
+@item SM_1_PER_CHAR
+This mode causes each position to be in increments determined by the
+size of the current font.  For example row 7 would mean 7 times the
+height of the current font.  Similar to line positions.
+@item SM_10_PER_SYSCHAR
+This mode causes each position to be in increments determined by one
+tenth the size of the system font declared globally to the user's
+Windows environment.  For example row 70 would mean 7 times the height
+of the Windows global system font.  This allows positioning relative
+to a scaling factor determined by the user.
+@item SM_PIXELS
+This mode performs no conversion.  The application is able to use
+pixel coordinated directly.
+@end table
+
+The default value is @code{SM_1_PER_CHAR}.
+
+The value returned is the mode which was previously set.
+@example
+@group
+@exdent Example:
+
+gSetScalingMode(Application, SM_PIXELS);
+@end group
+@end example
+@sp 1
+See also:  @code{GetScalingMode, ScaleToPixels, ScaleToCurrentMode}
+@end deffn
+
+
+
+@deffn {SetTextBrush} SetTextBrush::Application
+@sp 2
+@example
+@group
+r = gSetTextBrush(Application, bo);
+
+object  bo;     /*  brush object         */
+object  r;      /*  brush object passed  */
+@end group
+@end example
+This method is used to set the application wide default text brush.
+This is the brush used by all text output (or foreground) to windows or
+dialogs.  @code{bo} must be an instance of one of the subclasses of
+@code{Brush}.  All windows and dialogs will use the application wide
+default brush which is in effect when they are created unless a specific
+brush object is specified for a particular window.
+
+When a new default brush object is set, any previous default object
+will be disposed.  If no default is set, WDS uses the system brush
+identified as @code{COLOR_WINDOWTEXT}.
+
+See the @code{Brush} class and its subclasses for further details.
+@example
+@group
+@exdent Example:
+
+gSetTextBrush(Application, vNew(SystemBrush, COLOR_WINDOWTEXT));
+@end group
+@end example
+@sp 1
+See also:  @code{GetTextBrush, SetBackBrush}
+@end deffn
+
+
+
+@deffn {Show} Show::Application
+@sp 2
+@example
+@group
+sv = gShow(Application);
+
+int     sv;     /*  show value   */
+@end group
+@end example
+This method is used to gain access to the show value supplied by Windows
+when an application starts.  It is normally used to determine how an
+initial application's main window should be shown.  The available
+options are Windows macros which begin with @code{SW_} and are fully
+documented by the Windows documentation under the @code{WinMain}
+function.
+@example
+@group
+@exdent Example:
+
+int     sv;
+
+sv = gShow(Application);
+@end group
+@end example
+@sp 1
+See also:  @code{Instance, CmdLine, PrevInstance}
+@end deffn
+
+
+
+@section Windows
+This section documents the @code{Window} class which contains all the
+functionality which is common to Main, Child, and Popup windows.  See
+chapter 2 of this manual for a description of the different window
+types.
+
+
+
+
+
+
+@deffn {AddCompletionFunctionAfter} AddCompletionFunctionAfter::Window
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionAfter(wind, fun);
+
+object  wind;      /*  a window object     */
+int    (*fun)();   /*  completion function  */
+object  r;         /*  wind                */
+@end group
+@end example
+This method adds a completion function @code{fun} to the end of the
+list of completion functions associated with window @code{wind}.
+The completion function is called when the window is closed.
+@code{fun} receives the window object as its argument and should
+return 0 to cancel the close or non-zero to allow it.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gAddCompletionFunctionAfter(myWind, my_cleanup);
+@end group
+@end example
+@sp 1
+See also:  @code{CompletionFunction, AddCompletionFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {AddCompletionFunctionBefore} AddCompletionFunctionBefore::Window
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionBefore(wind, fun);
+
+object  wind;      /*  a window object     */
+int    (*fun)();   /*  completion function  */
+object  r;         /*  wind                */
+@end group
+@end example
+This method adds a completion function @code{fun} to the beginning of
+the list of completion functions associated with window @code{wind}.
+See @code{AddCompletionFunctionAfter} for full details.
+
+The window object passed is returned.
+@sp 1
+See also:  @code{CompletionFunction, AddCompletionFunctionAfter}
+@end deffn
+
+
+
+
+@deffn {AddHandlerAfter} AddHandlerAfter::Window
+@sp 2
+@example
+@group
+r = gAddHandlerAfter(wind, msg, func);
+
+object   wind;     /*  a window object  */
+unsigned msg;      /*  message          */
+long    (*func)(); /*  function pointer */
+object  r;         /*  the window obj   */
+@end group
+@end example
+This method is used to associate function @code{func} with Windows window
+message @code{msg} for window @code{wind}.  Whenever window @code{wind}
+receives message @code{msg}, @code{func} will be called.
+
+@code{wind} is the window object who's messages you wish to process.
+@code{msg} is the particular message you wish to trap.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+
+@code{func} is the function which gets called whenever the specified
+message gets received and takes the following form:
+@example
+@group
+long    func(object     wind,
+             HWND       hwnd, 
+             UINT       mMsg, 
+             WPARAM     wParam, 
+             LPARAM     lParam)
+@{
+        .
+        .
+        .
+        return 0L;  /* or whatever is appropriate  */
+@}
+@end group
+@end example
+Where @code{wind} is the window being sent the message.  The remaining
+arguments and return value is fully documented in the Windows documentation
+under the @code{WindowProc} function and the Windows Messages documentation.
+
+WDS keeps a list of functions associated with each message associated
+with each window.  When a particular message is received the appropriate
+list of handler functions gets executed sequentially.
+@code{AddHandlerAfter} appends the new function to the end of this list,
+and @code{AddHandlerBefore} adds the new function to the beginning of
+the list.
+
+WDS may also, and optionally, execute the Windows default procedure
+associated with a given message either before or after the user added
+list of functions.  This behavior may be controlled via
+@code{DefaultProcessingMode}.
+
+Windows will only see the return value of the last message handler executed
+including, if applicable, the default.
+@example
+@group
+@exdent Example:
+
+int     hSize, vSize;
+
+static  long    process_wm_size(object  wind, 
+                                HWND    hwnd, 
+                                UINT    mMsg, 
+                                WPARAM  wParam, 
+                                LPARAM  lParam)
+@{
+        hSize = LOWORD(lParam);
+        vSize = HIWORD(lParam);
+        return 0L;
+@}
+
+        .
+        .
+        gAddHandlerAfter(wind, (unsigned) WM_SIZE, process_wm_size);
+        .
+        .
+@end group
+@end example
+@sp 1
+See also:  @code{DefaultProcessingMode, AddHandlerBefore}
+@end deffn
+
+
+
+
+
+
+@deffn {AddHandlerBefore} AddHandlerBefore::Window
+@sp 2
+@example
+@group
+r = gAddHandlerBefore(wind, msg, func);
+
+object   wind;     /*  a window object  */
+unsigned msg;      /*  message          */
+long    (*func)(); /*  function pointer */
+object  r;         /*  the window obj   */
+@end group
+@end example
+This function is fully documented under @code{AddHandlerAfter}.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+@deffn {AddInitFunctionAfter} AddInitFunctionAfter::Window
+@sp 2
+@example
+@group
+r = gAddInitFunctionAfter(wind, fun);
+
+object  wind;      /*  a window object       */
+int    (*fun)();   /*  initialization function */
+object  r;         /*  wind                  */
+@end group
+@end example
+This method adds an initialization function @code{fun} to the end of
+the list of init functions associated with window @code{wind}.
+Init functions are called when the window is initialized.
+@code{fun} receives the window object as its argument.
+
+The window object passed is returned.
+@sp 1
+See also:  @code{InitFunction, AddInitFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {AddInitFunctionBefore} AddInitFunctionBefore::Window
+@sp 2
+@example
+@group
+r = gAddInitFunctionBefore(wind, fun);
+
+object  wind;      /*  a window object       */
+int    (*fun)();   /*  initialization function */
+object  r;         /*  wind                  */
+@end group
+@end example
+This method adds an initialization function @code{fun} to the beginning of
+the list of init functions associated with window @code{wind}.
+See @code{AddInitFunctionAfter} for full details.
+
+The window object passed is returned.
+@sp 1
+See also:  @code{InitFunction, AddInitFunctionAfter}
+@end deffn
+
+
+
+
+@deffn {AddTimer} AddTimer::Window
+@sp 2
+@example
+@group
+r = gAddTimer(wind, interval, fun);
+
+object  wind;      /*  a window object         */
+int     interval;  /*  timer interval in ms    */
+int    (*fun)();   /*  timer callback function */
+int     r;         /*  timer ID                */
+@end group
+@end example
+This method adds a recurring timer to window @code{wind}.
+The function @code{fun} will be called every @code{interval}
+milliseconds.  The value returned is a timer ID which can be
+passed to @code{KillTimer} to remove the timer.
+@example
+@group
+@exdent Example:
+
+int  timerID;
+
+timerID = gAddTimer(myWind, 1000, my_timer_func);
+@end group
+@end example
+@sp 1
+See also:  @code{KillTimer}
+@end deffn
+
+
+
+
+@deffn {Associate} Associate::Window
+@sp 2
+@example
+@group
+r = mAssociate(wind, itm, fun);
+
+object  wind;   /*  a window object     */
+int     itm;    /*  menu item           */
+long    (*fun)();  /*  function         */
+object   r;        /*  the menu         */
+@end group
+@end example
+This method is used to associate an application specific function
+(@code{fun}) with a menu item (@code{itm}) associated with the current
+menu attached to window @code{wind}.  Once this is done, if the user selects
+the menu option identified by @code{itm}, then the function @code{fun}
+will be executed.
+
+@code{itm} is a programmer defined macro which identifies one particular
+choice among those available within the menu which is currently attached
+to window @code{wind}.  This macro is defined while the programmer defines
+the entire menu using the resource editor.
+
+@code{fun} is the function which will be executed when the user selects
+menu option @code{itm} and has the following form:
+@example
+@group
+long    fun(object wind, unsigned id)
+@{
+        .
+        .
+        .
+        return 0L;
+@}
+@end group
+@end example
+The function executed (@code{fun}) is passed the window object and
+the specific menu id which the user selected and
+returns a long.  The return value is documented in the Windows documentation
+under the message named @code{WM_COMMAND}.  It should normally be @code{0L}.
+@example
+@group
+@exdent Example:
+
+static  long    file_message(object wind)
+@{
+        gMessage(wind, "File_Message");
+        return 0L;
+@}
+
+        .
+        .
+        mLoadMenu(win, IDR_MENU1);
+        mAssociate(win, ID_FILE_MESSAGE, file_message);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadMenu, MenuItemMode}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AutoDispose} AutoDispose::Window
+@sp 2
+@example
+@group
+r = gAutoDispose(wind, mode);
+
+object   wind;     /*  a window object    */
+int      mode;     /*  auto dispose mode  */
+int      r;        /*  previous value     */
+@end group
+@end example
+This method is used to enable or disable the auto dispose mechanism
+associated with a window.  This feature, when enabled, causes WDS to
+automatically dispose of the WDS object associated with a window
+whenever the user closes the window (@code{wind}).  Normally, when
+this feature is disabled, if the user closes a window, WDS removes
+the window from the display, but the WDS object remains intact until
+the program manually disposes of the window object (via @code{Dispose}).
+This feature is most commonly used with asynchronous, popup windows.
+
+Note that it is invalid to attempt to use a WDS object subsequent to it
+being disposed, and each unneeded WDS object must be deleted.
+
+@code{mode} is set to @code{1} to enable the feature and @code{0}
+to disable it.  The value returned is the prior mode.
+@example
+@group
+@exdent Example:
+
+gAutoDispose(wind, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AutoShow} AutoShow::Window
+@sp 2
+@example
+@group
+r = gAutoShow(wind, mode);
+
+object   wind;     /*  a window object    */
+int      mode;     /*  auto show mode     */
+int      r;        /*  previous value     */
+@end group
+@end example
+This method is used to enable or disable the auto show mechanism
+associated with a window.  This feature, when enabled, causes WDS to
+automatically display (execute @code{Show}) on a window which is written
+to.  This enables the programmer to create a window which will automatically
+popup the first time the program displays text to it.
+
+@code{mode} is set to @code{1} to enable the feature and @code{0}
+to disable it.  The value returned is the prior mode.
+@example
+@group
+@exdent Example:
+
+gAutoShow(wind, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{Show}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {BackBrush} BackBrush::Window
+@sp 2
+@example
+@group
+r = gBackBrush(wind, brsh);
+
+object  wind;   /*  a window object   */
+object  brsh;   /*  brush object      */
+object  r;      /*  wind              */
+@end group
+@end example
+This method is used to determine what brush object is used for the
+background of window @code{wind} and performs the same function as the
+@code{Use} method when used with a @code{Brush} object.  Any previously
+associated brush object will be disposed.  This brush object will also
+be automatically disposed when the window is disposed.
+
+The window passed is returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gBackBrush(myWind, vNew(SolidBrush, 0, 0, 255));
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush, Use, SetTextBrush::Application}
+        and the @code{Brush} classes
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Center} Center::Window
+@sp 2
+@example
+@group
+r = gCenter(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method centers window @code{wind} on the screen.  If the
+window is already shown, it is centered immediately; otherwise
+it will be centered when shown.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "My App");
+gCenter(myWind);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+@deffn {CompletionFunction} CompletionFunction::Window
+@sp 2
+@example
+@group
+r = gCompletionFunction(wind, fun);
+
+object  wind;      /*  a window object     */
+int    (*fun)();   /*  completion function  */
+object  r;         /*  wind                */
+@end group
+@end example
+This method sets the completion function associated with window
+@code{wind} to @code{fun}.  The completion function is called
+when the window is closed.  @code{fun} receives the window
+object as its argument and should return 0 to cancel the
+close or non-zero to allow it.
+
+Any previously set completion function is replaced.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+static  int  my_completion(object wind)
+@{
+        /* perform cleanup */
+        return 1;  /* allow close */
+@}
+
+        .
+        .
+        gCompletionFunction(myWind, my_completion);
+@end group
+@end example
+@sp 1
+See also:  @code{AddCompletionFunctionAfter, AddCompletionFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {DefaultProcessingMode} DefaultProcessingMode::Window
+@sp 2
+@example
+@group
+r = gDefaultProcessingMode(wind, msg, mode);
+
+object   wind;     /*  a window object          */
+unsigned msg;      /*  message                  */
+int      mode;     /*  default processing mode  */
+object   r;        /*  the window obj           */
+@end group
+@end example
+This method is used to determine when or if the Windows default message
+procedure is processed for a given message (@code{msg}) associated with
+a particular window (@code{wind}).
+
+WDS allows a programmer to specify an arbitrary number of functions
+to be executed whenever a window receives a specific message (via
+@code{AddHandlerAfter} and @code{AddHandlerBefore}).  Windows has
+default procedures associated with many window messages.  At times
+it is necessary to replace or augment this default functionality.
+@code{DefaultProcessingMode} gives the programmer control over when and
+if this default Windows functionality.  @code{mode} is used to specify
+the desired mode.  The following table indicates the valid modes:
+
+@table @code
+@item 0
+Do not execute the Windows default processing
+@item 1
+Execute default processing @emph{after} programmer defined handlers
+@item 2
+Execute default processing @emph{before} programmer defined handlers
+@end table
+
+Note that the default mode is always @code{1}, and must be explicitly
+changed, if desired, for each message associated with each window.
+
+@code{msg} is the particular message you wish to affect.  These messages
+are fully documented in the Windows documentation in the Messages
+section.  They normally begin with @code{WM_}.
+@example
+@group
+@exdent Example:
+
+gDefaultProcessingMode(wind, (unsigned) WM_SIZE, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{AddHandlerAfter}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {Disable} Disable::Window
+@sp 2
+@example
+@group
+r = gDisable(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method disables window @code{wind} for user input.  A
+disabled window is grayed out and does not accept keyboard or
+mouse input.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gDisable(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{Enable}
+@end deffn
+
+
+
+
+@deffn {DisableAll} DisableAll::Window
+@sp 2
+@example
+@group
+r = gDisableAll(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method disables all controls contained within window
+@code{wind}.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gDisableAll(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{EnableAll, Disable}
+@end deffn
+
+
+
+
+@deffn {Dispose} Dispose::Window
+@sp 2
+@example
+@group
+r = gDispose(wind);
+
+object  wind;   /*  a window object    */
+object  r;      /*  NULL               */
+@end group
+@end example
+This method is used to remove and dispose of a window object when it
+is no longer needed.  This method should be called on all windows
+when they are no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = gDispose(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{AutoDispose, New::ChildWindow, New::PopupWindow}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {DrawText} DrawText::Window
+@sp 2
+@example
+@group
+r = gDrawText(wind, str, rect, fmt);
+
+object  wind;   /*  a window object    */
+char   *str;    /*  text to draw       */
+RECT   *rect;   /*  bounding rectangle */
+int     fmt;    /*  format flags       */
+object  r;      /*  wind               */
+@end group
+@end example
+This method draws text @code{str} in window @code{wind} at the
+position and size specified by @code{rect}.  The @code{fmt}
+argument specifies formatting flags as defined by the Windows
+@code{DrawText} API (e.g.@: @code{DT_CENTER}, @code{DT_WORDBREAK}).
+@example
+@group
+@exdent Example:
+
+RECT  rc = @{10, 10, 200, 50@};
+
+gDrawText(myWind, "Hello", &rc, DT_CENTER);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+@deffn {Enable} Enable::Window
+@sp 2
+@example
+@group
+r = gEnable(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method enables window @code{wind} for user input, reversing
+a prior call to @code{Disable}.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gEnable(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{Disable}
+@end deffn
+
+
+
+
+@deffn {EnableAll} EnableAll::Window
+@sp 2
+@example
+@group
+r = gEnableAll(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method enables all controls contained within window
+@code{wind}.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gEnableAll(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{DisableAll, Enable}
+@end deffn
+
+
+
+
+@deffn {Erase} Erase::Window
+@sp 2
+@example
+@group
+r = gErase(wind, brow, erow, bcol, ecol);
+
+object  wind;   /*  a window object     */
+int     brow;   /*  beginning row       */
+int     erow;   /*  ending row          */
+int     bcol;   /*  beginning column    */
+int     ecol;   /*  ending column       */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to delete all text vectors which intersect the
+rectangle defined by the parameters.  These parameters are adjusted
+according to the current scaling mode (set with
+@code{SetScalingMode::Application}.  All coordinates are measured from
+the upper left hand corner of the window and start with @code{0,0}.
+
+The object returned is the window object passed.
+@example
+@group
+@exdent Example:
+
+gErase(win, 3, 10, 0, 200);
+@end group
+@end example
+@sp 1
+See also:  @code{EraseLines, EraseAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {EraseAll} EraseAll::Window
+@sp 2
+@example
+@group
+r = gEraseAll(wind);
+
+object  wind;   /*  a window object     */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to erase all text lines associated with a window.
+
+The object returned is the window object passed.
+@example
+@group
+@exdent Example:
+
+gEraseAll(win);
+@end group
+@end example
+@sp 1
+See also:  @code{EraseLines, Erase}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {EraseLines} EraseLines::Window
+@sp 2
+@example
+@group
+r = gEraseLines(wind, blin, elin);
+
+object  wind;   /*  a window object     */
+int     blin;   /*  beginning line      */
+int     elin;   /*  ending line         */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to delete all text lines from a starting line number
+(@code{blin}) to an ending line number (@code{elin}). All lines are
+measured from the upper left hand corner of the window and start with
+@code{0,0}.  Lines positions are calculated based on the current font.
+
+The object returned is the window object passed.
+@example
+@group
+@exdent Example:
+
+gEraseLines(win, 3, 10);
+@end group
+@end example
+@sp 1
+See also:  @code{Erase, EraseAll}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Getch} Getch::Window
+@sp 2
+@example
+@group
+ch = gGetch(wind);
+
+object  wind;   /*  a window object   */
+int     ch;     /*  character read    */
+@end group
+@end example
+This method is used to obtain the next input character struck by the
+user.  The @code{SetBlock} method may be used to determine whether or not
+@code{Getch} waits if a character is not available.  The value returned
+is the character struck by the user or 0 if no character was available
+and the input was non-blocking.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+int     ch;
+
+ch = gGetch(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{Kbhit, SetBlock, Gets}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetParent} GetParent::Window
+@sp 2
+@example
+@group
+prnt = gGetParent(wind);
+
+object  wind;   /*  child window object   */
+object  prnt;   /*  parent window object  */
+@end group
+@end example
+This method is used to obtain the parent window object associated
+with window @code{wind}.
+@example
+@group
+@exdent Example:
+
+object  myWind, parentWind;
+
+parentWind = gGetParent(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetParent, New::ChildWindow}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetPosition} GetPosition::Window
+@sp 2
+@example
+@group
+r = gGetPosition(wind, vert, horz);
+
+object  wind;   /*  a window object     */
+int    *vert;   /*  vertical position   */
+int    *horz;   /*  horizontal position */
+object  r;      /*  wind arg passed     */
+@end group
+@end example
+This method is used to get the current position of a window.
+@code{vert} and @code{horz} are in increments dictated by the
+mode selected by @code{SetScalingMode::Application}.  The window
+object passed is returned.
+@example
+@group
+@exdent Example:
+
+int     y, x;
+
+gGetPosition(myWind, &y, &x);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode::Application, GetSize, SetPosition}
+@end deffn
+
+
+
+
+
+
+
+@deffn {Gets} Gets::Window
+@sp 2
+@example
+@group
+r = gGets(wind, buf, len);
+
+object   wind;  /*  a window object       */
+char    *buf;   /*  input buffer          */
+unsigned len;   /*  length of buffer      */
+char    *r;     /*  buf                   */
+@end group
+@end example
+This method is used to read (accept) a single line of text from a user
+until a return is hit or @code{len}-1 key strokes have been entered
+and place them in @code{buf}.
+
+This method returns a pointer to the buffer passed unless there is an
+error, in which case @code{NULL} is returned.
+The input accepted will a return terminated line entered by the user
+up to @code{len}-1 characters.  However, the number of characters
+may be less if non-blocking
+io is selected (via @code{SetBlock}) and there aren't enough characters
+available.  @code{SetRaw} may also be used to control whether backspace
+processing will be performed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+char    buf[80];
+
+gGets(myWind, buf, sizeof(buf));
+@end group
+@end example
+@sp 1
+See also:  @code{SetBlock, SetRaw, Gets, Getch}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetSize} GetSize::Window
+@sp 2
+@example
+@group
+r = gGetSize(wind, vert, horz);
+
+object  wind;   /*  a window object     */
+int    *vert;   /*  vertical size       */
+int    *horz;   /*  horizontal size     */
+object  r;      /*  wind arg passed     */
+@end group
+@end example
+This method is used to get the current size of a window.
+@code{vert} and @code{horz} are in increments dictated by the
+mode selected by @code{SetScalingMode::Application}.  The window
+object passed is returned.
+@example
+@group
+@exdent Example:
+
+int     y, x;
+
+gGetSize(myWind, &y, &x);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode::Application, GetPosition, SetSize,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{GetSize::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {GetStyle} GetStyle::Window
+@sp 2
+@example
+@group
+r = gGetStyle(wind);
+
+object  wind;   /*  a window object   */
+DWORD   r;      /*  current style     */
+@end group
+@end example
+This method returns the current Win32 window style associated with
+window @code{wind}.  The style values are as defined by the Windows
+documentation under @code{CreateWindow}.
+@example
+@group
+@exdent Example:
+
+DWORD  style;
+
+style = gGetStyle(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetStyle}
+@end deffn
+
+
+
+
+@deffn {GetTag} GetTag::Window
+@sp 2
+@example
+@group
+r = gGetTag(wind);
+
+object  wind;   /*  a window object   */
+object  r;      /*  tag               */
+@end group
+@end example
+This method is used to obtain a Dynace object which has been associated
+with a window via @code{SetTag}.  The value return is the object which has
+been associated with the window object @code{wind}.  If there is no object
+associated with the window, @code{NULL} will be returned.
+@example
+@group
+@exdent Example:
+
+object  myWind, someObj;
+
+someObj = gGetTag(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTag, SetTag::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetTask} GetTask::Window
+@sp 2
+@example
+@group
+r = gGetTask(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  task object      */
+@end group
+@end example
+This method returns the Task object associated with window
+@code{wind}, or @code{NULL} if no task has been set.
+@example
+@group
+@exdent Example:
+
+object  task;
+
+task = gGetTask(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTask}
+@end deffn
+
+
+
+
+@deffn {GetTopic} GetTopic::Window
+@sp 2
+@example
+@group
+r = gGetTopic(wind);
+
+object  wind;   /*  a window object  */
+char   *r;      /*  help topic       */
+@end group
+@end example
+This method returns the help topic string associated with window
+@code{wind}, or @code{NULL} if no topic has been set.
+@example
+@group
+@exdent Example:
+
+char  *topic;
+
+topic = gGetTopic(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetTopic}
+@end deffn
+
+
+
+
+@deffn {Handle} Handle::Window
+@sp 2
+@example
+@group
+h = gHandle(wind);
+
+object  wind;   /*  window object  */
+HANDLE  h;      /*  Windows handle */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a window object.  Note that this will be @code{0} prior to executing
+@code{Show} on the window because that is the point where Windows creates
+the handle.
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+HANDLE  h;
+
+h = gHandle(myWind);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{Message}
+@end deffn
+
+
+
+
+
+
+@deffn {InitFunction} InitFunction::Window
+@sp 2
+@example
+@group
+r = gInitFunction(wind, fun);
+
+object  wind;      /*  a window object         */
+int    (*fun)();   /*  initialization function  */
+object  r;         /*  wind                    */
+@end group
+@end example
+This method sets the initialization function associated with window
+@code{wind} to @code{fun}.  The init function is called when the
+window is initialized.  @code{fun} receives the window object as
+its argument.
+
+Any previously set init function is replaced.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+static  int  my_init(object wind)
+@{
+        /* perform initialization */
+        return 0;
+@}
+
+        .
+        .
+        gInitFunction(myWind, my_init);
+@end group
+@end example
+@sp 1
+See also:  @code{AddInitFunctionAfter, AddInitFunctionBefore}
+@end deffn
+
+
+
+
+@deffn {IsIconic} IsIconic::Window
+@sp 2
+@example
+@group
+r = gIsIconic(wind);
+
+object  wind;   /*  a window object  */
+int     r;      /*  1 if minimized   */
+@end group
+@end example
+This method returns 1 if window @code{wind} is currently minimized
+(iconic), or 0 otherwise.
+@example
+@group
+@exdent Example:
+
+if (gIsIconic(myWind))
+        /* window is minimized */
+@end group
+@end example
+@sp 1
+See also:  @code{IsMaximized, IsNormal}
+@end deffn
+
+
+
+
+@deffn {IsMaximized} IsMaximized::Window
+@sp 2
+@example
+@group
+r = gIsMaximized(wind);
+
+object  wind;   /*  a window object  */
+int     r;      /*  1 if maximized   */
+@end group
+@end example
+This method returns 1 if window @code{wind} is currently maximized,
+or 0 otherwise.
+@example
+@group
+@exdent Example:
+
+if (gIsMaximized(myWind))
+        /* window is maximized */
+@end group
+@end example
+@sp 1
+See also:  @code{IsIconic, IsNormal}
+@end deffn
+
+
+
+
+@deffn {IsNormal} IsNormal::Window
+@sp 2
+@example
+@group
+r = gIsNormal(wind);
+
+object  wind;   /*  a window object    */
+int     r;      /*  1 if normal state  */
+@end group
+@end example
+This method returns 1 if window @code{wind} is in the normal
+(restored) state --- that is, neither minimized nor maximized.
+@example
+@group
+@exdent Example:
+
+if (gIsNormal(myWind))
+        /* window is in normal state */
+@end group
+@end example
+@sp 1
+See also:  @code{IsIconic, IsMaximized}
+@end deffn
+
+
+
+
+@deffn {Kbhit} Kbhit::Window
+@sp 2
+@example
+@group
+r = gKbhit(wind);
+
+object  wind;   /*  a window object   */
+int     r;      /*  characters ready  */
+@end group
+@end example
+This method is used to determine if and how many characters are waiting
+in the character input queue.  This method is used in an attempt to
+provide a familiar character based user input mechanism.
+
+The value returned is the number of characters ready for input or
+zero if none are available.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+int     n;
+
+n = gKbhit(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{Getch, SetBlock, Gets}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {KillTimer} KillTimer::Window
+@sp 2
+@example
+@group
+r = gKillTimer(wind, timerID);
+
+object  wind;      /*  a window object  */
+int     timerID;   /*  timer ID         */
+int     r;         /*  result           */
+@end group
+@end example
+This method removes a timer previously created with @code{AddTimer}.
+@code{timerID} is the value returned by @code{AddTimer}.
+@example
+@group
+@exdent Example:
+
+gKillTimer(myWind, timerID);
+@end group
+@end example
+@sp 1
+See also:  @code{AddTimer}
+@end deffn
+
+
+
+
+@deffn {LoadCursor} LoadCursor::Window
+@sp 2
+@example
+@group
+r = mLoadCursor(wind, csr);
+
+object   wind;  /*  a window object    */
+unsigned csr;   /*  cursor identifier  */
+object   r;     /*  cursor object      */
+@end group
+@end example
+This method is used to load a programmer defined cursor and associate it
+with window @code{wind}.  The cursor would then be displayed any time
+the pointer was placed in the window.
+
+@code{csr} is a programmer defined unsigned integer which identifies
+the cursor.  This identifier is normally a macro and defined through the
+resource editor.  The cursor object will be automatically destroyed
+whenever the window is destroyed or if a new cursor is loaded.
+
+The value returned is an object representing the cursor loaded, or
+@code{NULL} if the cursor was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+mLoadCursor(myWind, MY_CURSOR);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemCursor, Load::ExternalCursor, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadFont} LoadFont::Window
+@sp 2
+@example
+@group
+r = gLoadFont(wind, fname, sz);
+
+object   wind;  /*  a window object  */
+char    *fname; /*  font name        */
+int      sz;    /*  point size       */
+object   r;     /*  font object      */
+@end group
+@end example
+This method is used to load an arbitrary font by name at any point size
+and associate it as the default font for future text output to window
+@code{wind}.  @code{fname} is the full name of the font as it appears
+when you list the available fonts via the control-panel / fonts Windows
+utility, minus the font type in parentheses.  @code{sz} indicates the
+desired point size.
+
+All font objects associated with a window will be automatically
+destroyed whenever the window is destroyed.
+
+The value returned is an object representing the font loaded, or
+@code{NULL} if the font was not found.
+
+Note that @code{fname} may also be a Dynace object cast as a (@code{char *}).
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gLoadFont(myWind, "Times New Roman", 12);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemFont, Indirect::ExternalFont, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {LoadIcon} LoadIcon::Window
+@sp 2
+@example
+@group
+r = mLoadIcon(wind, icn);
+
+object   wind;  /*  a window object  */
+unsigned icn;   /*  icon identifier  */
+object   r;     /*  icon object      */
+@end group
+@end example
+This method is used to load a programmer defined icon and associate it
+with window @code{wind}.  The icon would then be displayed if window
+@code{wind} was iconized.
+
+@code{icn} is a programmer defined unsigned integer which identifies
+the icon.  This identifier is normally a macro and defined through the
+resource editor.  The icon object will be automatically destroyed
+whenever the window is destroyed or if a new icon is loaded.
+
+The value returned is an object representing the icon loaded, or
+@code{NULL} if the icon was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+mLoadIcon(myWind, ALGOCORP_ICON);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemIcon, Load::ExternalIcon, Use}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {LoadMenu} LoadMenu::Window
+@sp 2
+@example
+@group
+r = mLoadMenu(wind, mnu);
+
+object   wind;  /*  a window object  */
+unsigned mnu;   /*  menu identifier  */
+object   r;     /*  menu object      */
+@end group
+@end example
+This method is used to load a programmer defined menu and associate it
+with window @code{wind}.  The menu would be displayed at the top
+of the window.
+
+@code{mnu} is a programmer defined unsigned integer which identifies the
+menu.  This identifier is normally a macro and defined through the
+resource editor.  Any menu previously associated with the window is
+pushed on a stack so that previous menus may be easily returned to in a
+last-in-first-out basis using the @code{PopMenu} method.  All menus
+associated with a window will be destroyed when the window is destroyed.
+
+The value returned is an object representing the menu loaded, or
+@code{NULL} if the menu was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+mLoadMenu(myWind, MY_MENU);
+@end group
+@end example
+@sp 1
+See also:  @code{Associate, PopMenu, LoadMenuStr, Load::ExternalMenu, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadMenuStr} LoadMenuStr::Window
+@sp 2
+@example
+@group
+r = gLoadMenuStr(wind, mnu);
+
+object   wind;  /*  a window object  */
+char    *mnu;   /*  menu identifier  */
+object   r;     /*  menu object      */
+@end group
+@end example
+This method is used to load a programmer defined menu and associate it
+with window @code{wind}.  The menu would be displayed at the top
+of the window.
+
+@code{mnu} is a programmer defined name which identifies the menu.  This
+name is defined through the resource editor.  Any menu previously associated
+with the window is pushed on a stack so that previous menus may be easily
+returned to in a last-in-first-out basis using the @code{PopMenu} method.
+All menus associated with a window will be destroyed when the window
+is destroyed.
+
+Note that the @code{LoadMenu} method is used more frequently since the
+resource editors assign macros to each menu name.
+
+The value returned is an object representing the menu loaded, or
+@code{NULL} if the menu was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gLoadMenuStr(myWind, "mymenu");
+@end group
+@end example
+@sp 1
+See also:  @code{Associate, LoadMenu, LoadStr::ExternalMenu, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSystemCursor} LoadSystemCursor::Window
+@sp 2
+@example
+@group
+r = gLoadSystemCursor(wind, csr);
+
+object   wind;  /*  a window object    */
+LPCSTR   csr;   /*  cursor identifier  */
+object   r;     /*  cursor object      */
+@end group
+@end example
+This method is used to load a Windows predefined cursor and associate it
+with window @code{wind}.  The cursor would then be displayed if the pointer
+was positioned over the window.
+
+@code{csr} is a Windows defined macro which identifies the cursor.  The
+available options are defined in the Windows documentation under the
+function named @code{LoadCursor} and normally begin with @code{IDC_}.  The
+cursor object will be automatically destroyed whenever the window is
+destroyed or if a new cursor is loaded.
+
+The value returned is an object representing the cursor loaded, or
+@code{NULL} if the cursor was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gLoadSystemCursor(myWind, IDC_CROSS);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadCursor, LoadSys::SystemCursor, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSystemFont} LoadSystemFont::Window
+@sp 2
+@example
+@group
+r = gLoadSystemFont(wind, fnt);
+
+object   wind;  /*  a window object  */
+unsigned fnt;   /*  font identifier  */
+object   r;     /*  font object      */
+@end group
+@end example
+This method is used to load a Windows predefined font and associate it
+with window @code{wind}.  The last font associated with a window is the
+one which will be used when any text is output to the window.
+
+@code{fnt} is a Windows defined macro which identifies the font.  The
+available options are defined in the Windows documentation under the
+function named @code{GetStockObject} and normally end with @code{_FONT}.
+The font object will be automatically destroyed whenever the window is
+destroyed.
+
+The value returned is an object representing the font, or
+@code{NULL} if the font was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gLoadSystemFont(myWind, SYSTEM_FONT);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont, Load::SystemFont, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSystemIcon} LoadSystemIcon::Window
+@sp 2
+@example
+@group
+r = gLoadSystemIcon(wind, icn);
+
+object   wind;  /*  a window object  */
+LPCSTR   icn;   /*  icon identifier  */
+object   r;     /*  icon object      */
+@end group
+@end example
+This method is used to load a Windows predefined icon and associate it
+with window @code{wind}.  The icon would then be displayed if window
+@code{wind} was iconized.
+
+@code{icn} is a Windows defined macro which identifies the icon.  The
+available options are defined in the Windows documentation under the
+function named @code{LoadIcon} and normally begin with @code{IDI_}.  The
+icon object will be automatically destroyed whenever the window is
+destroyed or if a new icon is loaded.
+
+The value returned is an object representing the icon loaded, or
+@code{NULL} if the icon was not found.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gLoadSystemIcon(myWind, IDI_APPLICATION);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadIcon, LoadSys::SystemIcon, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Maximize} Maximize::Window
+@sp 2
+@example
+@group
+r = gMaximize(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method maximizes window @code{wind} so that it fills the
+entire screen.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gMaximize(myWind);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+@deffn {Menu} Menu::Window
+@sp 2
+@example
+@group
+r = gMenu(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  menu object      */
+@end group
+@end example
+This method returns the menu object associated with window
+@code{wind}, or @code{NULL} if no menu has been loaded.
+@example
+@group
+@exdent Example:
+
+object  menu;
+
+menu = gMenu(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadMenu, LoadMenuStr}
+@end deffn
+
+
+
+
+@deffn {MenuItemMode} MenuItemMode::Window
+@sp 2
+@example
+@group
+r = mMenuItemMode(wind, itm, mod);
+
+object  wind;   /*  a window object     */
+unsigned itm;   /*  menu item           */
+unsigned mod;   /*  menu item mode      */
+object   r;        /*  the menu         */
+@end group
+@end example
+This method is used to set the mode associated with a particular item
+in the menu which is currently attached to window @code{wind}.
+
+@code{itm} is a programmer defined macro which identifies one particular
+choice among those available within the menu which is currently attached
+to window @code{wind}.  This macro is defined while the programmer defines
+the entire menu using the resource editor.
+
+@code{mod} may be one of @code{MF_DISABLED}, @code{MF_ENABLED} or
+@code{MF_GRAYED} and is documented in the Windows documentation under
+the function @code{EnableMenuItem}.
+
+The menu object associated with the window is returned.
+@example
+@group
+@exdent Example:
+
+mMenuItemMode(win, ID_FILE_MESSAGE, MF_GRAYED);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadMenu, Associate}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Message} Message::Window
+@sp 2
+@example
+@group
+r = gMessage(wind, msg);
+
+object  wind;   /*  window object  */
+char    *msg;   /*  message        */
+object  r;      /*  window object  */
+@end group
+@end example
+This method is used to open up a temporary informational window.  The
+window will contain the message given by @code{msg} and the user must
+acknowledge the window prior to continuing by hitting an OK button.
+
+
+The value returned is the window passed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gMessage(myWind, "Press OK to continue.");
+@end group
+@end example
+@sp 1
+See also:  @code{MessageWithTopic}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MessageWithTopic} MessageWithTopic::Window
+@sp 2
+@example
+@group
+r = gMessageWithTopic(wind, msg, tpc);
+
+object  wind;   /*  window object  */
+char    *msg;   /*  message        */
+char    *tpc;   /*  help topic     */
+object  r;      /*  window object  */
+@end group
+@end example
+This method is used to open up a temporary informational window.  The
+window will contain the message given by @code{msg} and the user must
+acknowledge the window prior to continuing by hitting an OK button.
+
+If the user hits the @code{F1} key while presented with the message,
+the help topic identified by @code{tpc} will get displayed via the Windows
+help system.
+
+The value returned is the window passed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gMessageWithTopic(myWind, "Press OK to continue.", "mytopic");
+@end group
+@end example
+@sp 1
+See also:  @code{Message} and the @code{HelpSystem} class.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {MoveToTop} MoveToTop::Window
+@sp 2
+@example
+@group
+r = gMoveToTop(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method brings window @code{wind} to the top of the Z-order,
+making it the foreground window.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gMoveToTop(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{SetZOrder}
+@end deffn
+
+
+
+
+@deffn {New} New::Window
+@sp 2
+@example
+@group
+r = vNew(Window);
+
+object  r;      /*  new window  */
+@end group
+@end example
+This class method is used to create a basic window object.  It is used
+by all the subclasses of @code{Window} and would not normally be
+used by a programmer.
+
+The value returned is the new window created.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(Window);
+@end group
+@end example
+@sp 1
+See also:  @code{New::MainWindow, New::ChildWindow, New::PopupWindow, Show}
+@iftex
+@hfil @break @hglue .63in   
+@end iftex
+@code{Dispose}
+@end deffn
+
+
+
+
+
+
+
+@deffn {NewBuiltIn} NewBuiltIn::Window
+@sp 2
+@example
+@group
+r = gNewBuiltIn(Window, class, parent);
+
+char    *class; /*  Windows built in class designation  */
+object  parent; /*  parent window object                */
+object  r;      /*  new child window                    */
+@end group
+@end example
+This class method is used to create a child window which is used as a
+Windows-built-in control.  @code{Window} represents the @code{Window}
+class and is typed in as shown.  @code{class} is a string representing
+one of the window classes build into Windows.  This string is defined
+and documented by Windows under the function named @code{CreateWindow}.
+@code{parent} represents the parent window object and must be specified.
+
+The value returned is the new child window (control) created.
+@example
+@group
+@exdent Example:
+
+object  myWind, ctl;
+
+myWind = vNew(MainWindow, "App Name");
+ctl = gNewBuiltIn(Window, "button", myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{New::ButtonWindow}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NextControl} NextControl::Window
+@sp 2
+@example
+@group
+r = gNextControl(wind, ctl);
+
+object  wind;   /*  a window object      */
+object  ctl;    /*  current control      */
+object  r;      /*  next control or NULL */
+@end group
+@end example
+This method returns the next focusable control in window @code{wind}
+after control @code{ctl}.  If @code{ctl} is @code{NULL}, the first
+focusable control in the window is returned.
+@example
+@group
+@exdent Example:
+
+object  next;
+
+next = gNextControl(myWind, NULL);  /* get first */
+@end group
+@end example
+@sp 1
+See also:  @code{PreviousControl}
+@end deffn
+
+
+
+
+@deffn {Perform} Perform::Window
+@sp 2
+@example
+@group
+r = gPerform(wind);
+
+object  wind;   /*  a window object  */
+int     r;      /*  result           */
+@end group
+@end example
+This method sets up controls and shows window @code{wind} in a
+non-blocking manner.  Control returns to the caller immediately.
+The window remains visible and active until closed by the user or
+programmatically.
+@example
+@group
+@exdent Example:
+
+gPerform(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{PerformModal, Show}
+@end deffn
+
+
+
+
+@deffn {PerformModal} PerformModal::Window
+@sp 2
+@example
+@group
+r = gPerformModal(wind);
+
+object  wind;   /*  a window object  */
+int     r;      /*  result           */
+@end group
+@end example
+This method shows window @code{wind} modally, blocking the caller
+until the window is closed.
+@example
+@group
+@exdent Example:
+
+int  result;
+
+result = gPerformModal(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+
+@deffn {PopMenu} PopMenu::Window
+@sp 2
+@example
+@group
+r = gPopMenu(wind);
+
+object   wind;  /*  a window object  */
+object   r;     /*  menu object      */
+@end group
+@end example
+This method is used to remove and destroy the current menu associated
+with window @code{wind} and restore the previous menu associated with
+the window.  A last-in-first-out list of menus associated with a window
+may be established via the @code{LoadMenu}, @code{LoadMenuStr} or
+@code{Use} methods.
+
+All function associations and modes previously associated with the
+new menu will be restored.
+
+The object returned is the new menu object.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gPopMenu(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadMenu, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {PreviousControl} PreviousControl::Window
+@sp 2
+@example
+@group
+r = gPreviousControl(wind, ctl);
+
+object  wind;   /*  a window object          */
+object  ctl;    /*  current control          */
+object  r;      /*  previous control or NULL */
+@end group
+@end example
+This method returns the previous focusable control in window
+@code{wind} before control @code{ctl}.  If @code{ctl} is
+@code{NULL}, the last focusable control in the window is returned.
+@example
+@group
+@exdent Example:
+
+object  prev;
+
+prev = gPreviousControl(myWind, currentCtl);
+@end group
+@end example
+@sp 1
+See also:  @code{NextControl}
+@end deffn
+
+
+
+
+@deffn {Printf} Printf::Window
+@sp 2
+@example
+@group
+r = vPrintf(wind, fmt, ...);
+
+object   wind;  /*  a window object       */
+char    *fmt;   /*  format string         */
+int      r;     /*  length of output      */
+@end group
+@end example
+This method is used to display a string of text (@code{str}) in a sequential
+fashion on window @code{wind}.  It is analogous to the standard C library
+function @code{fprintf}.  All of the standard features of your C library
+@code{fprintf} function are supported and that documentation should be
+consulted for full documentation on the arguments.
+
+This method is used to support the standard streams interface, is
+actually defined by the @code{Stream} class, and is documented here for
+convenience.
+
+Note that this method begins with ``v'' since it takes variable arguments.
+The length of the resulting output will be returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+int     age = 32;
+
+vPrintf(myWind, "My age =- %d\n", age);
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut, Puts, Write}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {PrintScreen} PrintScreen::Window
+@sp 2
+@example
+@group
+r = gPrintScreen(wind, printerObj);
+
+object  wind;        /*  a window object           */
+object  printerObj;  /*  printer object or NULL     */
+object  r;           /*  wind                      */
+@end group
+@end example
+This method prints the contents of window @code{wind} to the printer
+specified by @code{printerObj}.  If @code{printerObj} is @code{NULL},
+the default printer is used.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gPrintScreen(myWind, NULL);  /* print to default printer */
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+@deffn {Puts} Puts::Window
+@sp 2
+@example
+@group
+r = gPuts(wind, str);
+
+object   wind;  /*  a window object       */
+char    *str;   /*  string to be output   */
+int      r;     /*  length of str         */
+@end group
+@end example
+This method is used to display a string of text (@code{str}) in a sequential
+fashion on window @code{wind}.  This method is used to support the standard
+streams interface, is actually defined by the @code{Stream} class, and
+is documented here for convenience.
+
+@code{str} is the text to be displayed. Text @code{str} will be
+displayed on window @code{wind} and its length will be returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gPuts(myWind, "Hello World\n");
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut, Printf, Write}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Read} Read::Window
+@sp 2
+@example
+@group
+r = gRead(wind, buf, len);
+
+object   wind;  /*  a window object       */
+char    *buf;   /*  input buffer          */
+unsigned len;   /*  length of buffer      */
+int      r;     /*  bytes read            */
+@end group
+@end example
+This method is used to read (accept) @code{len} key strokes from the user
+and place them in @code{buf}.
+
+Since the @code{Window} class is a subclass of @code{Stream}, this
+method is mainly provided to support the standard interface dictated by
+the @code{Stream} class.
+
+This method returns the number of characters actually accepted.  It will
+not be more than @code{len}, but may be less if non-blocking io is selected
+(via @code{SetBlock}) and there aren't enough characters available.
+@code{SetRaw} may also be used to control whether backspace processing will
+be performed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+char    buf[80];
+
+gRead(myWind, buf, sizeof(buf)-1);
+@end group
+@end example
+@sp 1
+See also:  @code{SetBlock, SetRaw, Gets, Getch}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RedrawMenu} RedrawMenu::Window
+@sp 2
+@example
+@group
+r = gRedrawMenu(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method redraws the menu bar of window @code{wind}.  This is
+useful after programmatically modifying menu items.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gRedrawMenu(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{RedrawWindow, LoadMenu}
+@end deffn
+
+
+
+
+@deffn {RedrawWindow} RedrawWindow::Window
+@sp 2
+@example
+@group
+r = gRedrawWindow(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method invalidates the entire client area of window @code{wind},
+causing Windows to send a repaint message.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gRedrawWindow(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{RedrawMenu}
+@end deffn
+
+
+
+
+@deffn {ScrollHorz} ScrollHorz::Window
+@sp 2
+@example
+@group
+r = gScrollHorz(wind, cols);
+
+object  wind;   /*  a window object     */
+int     cols;   /*  columns to scroll   */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to perform a horizontal scrolling of the text in
+window @code{wind}.  This has the same effect as if the user caused
+horizontal scrolling via the horizontal scroll bar at the bottom
+of the window.  No text is lost, a different portion of the text is
+displayed.
+
+@code{wind} is the window which is to be affected, and @code{cols} is the
+number of columns to scroll.  If @code{cols} is positive the scroll moves
+the text to the left, and negative moves the text to the right.
+
+The scaling factor associated with @code{cols} is set by
+@code{SetScalingMode::Application}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gScrollHorz(myWind, 2);
+@end group
+@end example
+@sp 1
+See also:  @code{ScrollVert, SetScalingMode::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {ScrollVert} ScrollVert::Window
+@sp 2
+@example
+@group
+r = gScrollVert(wind, rows);
+
+object  wind;   /*  a window object     */
+int     rows;   /*  rows to scroll      */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to perform a vertical scrolling of the text in
+window @code{wind}.  This has the same effect as if the user caused
+vertical scrolling via the vertical scroll bar at the right side
+of the window.  No text is lost, a different portion of the text is
+displayed.
+
+@code{wind} is the window which is to be affected, and @code{rows} is the
+number of rows to scroll.  If @code{rows} is positive the scroll moves
+the text up, and negative moves the text down.
+
+The scaling factor associated with @code{rows} is set by
+@code{SetScalingMode::Application}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gScrollVert(myWind, 2);
+@end group
+@end example
+@sp 1
+See also:  @code{ScrollHorz, VertShift, SetScalingMode::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {SetBlock} SetBlock::Window
+@sp 2
+@example
+@group
+r = gSetBlock(wind, flag);
+
+object  wind;   /*  a window object     */
+int     flag;   /*  enable/disable flag */
+int     r;      /*  previous flag       */
+@end group
+@end example
+This method is used to set the blocking mode associated with keyboard
+IO.  It only has effect on @code{Read}, @code{Gets}, and @code{Getch}.
+If flag is 1, blocking is enabled, and 0 disables blocking.  When a
+new window is created it defaults to blocking enabled.
+
+If blocking is turned on and a keyboard entry is requested (via
+@code{Read}, @code{Gets} or @code{Getch}), the keyboard entry function
+will not return until the request can be satisfied.  If, however,
+blocking is disabled, a keyboard request is made, and insufficient
+characters are available, then the input function will return immediately
+with a return value indicating the result was short.
+
+The value returned by this method is the previous blocking mode.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gSetBlock(myWind, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{Getch, SetRaw, Gets}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetCursor} SetCursor::Window
+@sp 2
+@example
+@group
+r = gSetCursor(wind, cursor);
+
+object  wind;     /*  a window object      */
+object  cursor;   /*  cursor object or NULL */
+object  r;        /*  wind                 */
+@end group
+@end example
+This method sets a custom cursor for window @code{wind}.
+Pass @code{NULL} for @code{cursor} to restore the default cursor.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gSetCursor(myWind, myCursor);
+gSetCursor(myWind, NULL);  /* restore default */
+@end group
+@end example
+@sp 1
+See also:  @code{WaitCursor, LoadCursor}
+@end deffn
+
+
+
+
+@deffn {SetFocus} SetFocus::Window
+@sp 2
+@example
+@group
+r = gSetFocus(wind);
+
+object  wind;   /*  a window object  */
+object  r;      /*  wind             */
+@end group
+@end example
+This method sets the keyboard input focus to window @code{wind}.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gSetFocus(myWind);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+@deffn {SetMaxLines} SetMaxLines::Window
+@sp 2
+@example
+@group
+r = gSetMaxLines(wind, rows);
+
+object  wind;   /*  a window object     */
+int     rows;   /*  max rows            */
+int     r;      /*  previous max rows   */
+@end group
+@end example
+This method is used to set or obtain the maximum number of lines of text
+which may be associated to a window.  This includes all lines associated
+with a window, including lines not being displayed because they are
+scrolled off the screen.  Whenever @code{rows} number of lines are
+exceeded, WDS automatically and permanently removes the lines at the
+logical top of the internal buffer in order to make room for new
+lines.
+
+WDS keeps a buffer which holds a programmer definable number of lines of
+text.  The user is then able to scroll through this text.  If the
+application attempts to display more lines than this maximum (via
+@code{vPrintf} for example) the system will automatically call
+@code{gVertShift} in order to eliminate the top line and make room for
+the new line being appended.
+
+@code{wind} is the window which is to be affected, and @code{rows} is the
+maximum number of rows to retain.  If @code{rows} is zero or negative,
+the value associated with the window will not be changed.  This is used
+to obtain the current value without changing it.
+
+The value returned is the previous value associated with the window.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gSetMaxLines(myWind, 60);
+@end group
+@end example
+@sp 1
+See also:  @code{VertShift}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetParent} SetParent::Window
+@sp 2
+@example
+@group
+r = gSetParent(wind, prnt);
+
+object  wind;   /*  child window object   */
+object  prnt;   /*  parent window object  */
+object  r;      /*  wind                  */
+@end group
+@end example
+This method is used to create a child / parent window relationship.
+This relationship is automatically established when a child window is
+created.  However, this method is provided for increased flexibility.
+
+Whenever the parent window is disposed, WDS will automatically dispose
+of all its children windows.  This relationship should normally be
+established prior to the child window being @code{Shown}.
+
+The value returned is the child window passed.
+@example
+@group
+@exdent Example:
+
+object  myWind, parentWind;
+
+gSetParent(myWind, parentWind);
+@end group
+@end example
+@sp 1
+See also:  @code{GetParent}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetPosition} SetPosition::Window
+@sp 2
+@example
+@group
+r = gSetPosition(wind, vert, horz);
+
+object  wind;   /*  a window object     */
+int     vert;   /*  vertical position   */
+int     horz;   /*  horizontal position */
+object  r;      /*  wind arg passed     */
+@end group
+@end example
+This method is used to set the initial position of a window.
+@code{vert} and @code{horz} are in increments dictated by the
+mode selected by @code{SetScalingMode::Application}.  The window
+object passed is returned.
+
+If this function is not called, Windows will automatically set it to a
+reasonable default.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "App Name");
+gSetPosition(myWind, 3, 10);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode::Application, SetSize, GetPosition}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetRaw} SetRaw::Window
+@sp 2
+@example
+@group
+r = gSetRaw(wind, flag);
+
+object  wind;   /*  a window object     */
+int     flag;   /*  enable/disable flag */
+int     r;      /*  previous flag       */
+@end group
+@end example
+This method is used to set the raw mode associated with keyboard
+IO.  It only has effect on @code{Read}, @code{Gets}, and @code{Getch}.
+If flag is 1, raw mode is enabled, and 0 disables raw mode.  The
+default is raw mode disabled.
+
+Normally, with raw mode disabled, when a user enters keyboard data,
+they are able to correct mistakes by using the backspace and reentering
+the correct data.  The resulting data the program receives is the
+final, corrected input.
+
+When raw mode is enabled, every key the user hits gets returned.  This
+includes backspaces.  Therefore, with raw mode enabled, if the user types
+``ABD'' followed by backspace and then ``C'', the program will receive all
+five characters hit.  However, with raw mode disabled, the program would
+only receive the resulting string, ``ABC''.
+
+The value returned by this method is the previous raw mode.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gSetRaw(myWind, 1);
+@end group
+@end example
+@sp 1
+See also:  @code{Getch, SetBlock, Gets}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetSize} SetSize::Window
+@sp 2
+@example
+@group
+r = gSetSize(wind, vert, horz);
+
+object  wind;   /*  a window object     */
+int     vert;   /*  vertical size       */
+int     horz;   /*  horizontal size     */
+object  r;      /*  wind arg passed     */
+@end group
+@end example
+This method is used to set the initial size of a window.
+@code{vert} and @code{horz} are in increments dictated by the
+mode selected by @code{SetScalingMode::Application}.  The window
+object passed is returned.
+
+If this function is not called, Windows will automatically set it to a
+reasonable default.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "App Name");
+gSetSize(myWind, 10, 40);
+@end group
+@end example
+@sp 1
+See also:  @code{SetScalingMode::Application, SetPosition, GetSize}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {SetStyle} SetStyle::Window
+@sp 2
+@example
+@group
+r = gSetStyle(wind, sty);
+
+object  wind;   /*  a window object             */
+DWORD   sty;    /*  the window style to use     */
+object  r;      /*  returns wind                */
+@end group
+@end example
+This method is used to set the window style associated with window
+@code{wind} to style @code{sty}.  The @code{DWORD} data type and valid 
+styles are defined by Windows and fully documented by the Windows
+documentation.  See the Windows documentation for the function called
+@code{CreateWindow}.  The style types normally begin with @code{WS_}
+and would be or'ed together to form the selected style.
+Note that WDS automatically assigns reasonable defaults to a window
+style when it is created.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "App Name");
+gSetStyle(myWind, WS_OVERLAPPEDWINDOW | WS_VSCROLL | WS_HSCROLL);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {SetTag} SetTag::Window
+@sp 2
+@example
+@group
+r = gSetTag(wind, tag);
+
+object  wind;   /*  a window object   */
+object  tag;    /*  tag               */
+object  r;      /*  previous tag      */
+@end group
+@end example
+This method is used to associate an arbitrary Dynace object with a
+window object.  This may later be retrieved via the @code{GetTag} method.
+Since WDS passes around the window object to all @code{Window} methods
+this mechanism may be used to pass additional information with the
+window.  And since Dynace treats all objects in a uniform manner, this
+information attached to the window may be arbitrarily complex.
+
+WDS does not dispose of the tag when the window object is disposed.
+This method returns any previous object associated with the window or
+@code{NULL}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gSetTag(myWind, gNewWithInt(ShortInteger, 17));
+@end group
+@end example
+@sp 1
+See also:  @code{GetTag, SetTag::Dialog}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetTask} SetTask::Window
+@sp 2
+@example
+@group
+r = gSetTask(wind, task);
+
+object  wind;   /*  a window object  */
+object  task;   /*  task object      */
+object  r;      /*  wind             */
+@end group
+@end example
+This method associates a Task object @code{task} with window
+@code{wind}.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gSetTask(myWind, myTask);
+@end group
+@end example
+@sp 1
+See also:  @code{GetTask}
+@end deffn
+
+
+
+
+@deffn {SetTitle} SetTitle::Window
+@sp 2
+@example
+@group
+r = gSetTitle(wind, title);
+
+object  wind;    /*  a window object     */
+char    *title;  /*  the new title       */
+object  r;       /*  wind arg passed     */
+@end group
+@end example
+This method is used to set the title displayed at the top of window
+@code{wind}, if it has a title bar.  @code{title} may also be a Dynace
+string @code{object} typecast to a (@code{char *}).  The value returned
+is the window (@code{wind}) object passed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "Old Title");
+gSetTitle(myWind, "New Title");
+@end group
+@end example
+@sp 1
+See also:  @code{New::MainWindow}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetTopic} SetTopic::Window
+@sp 2
+@example
+@group
+pt = gSetTopic(wind, tpc);
+
+object  wind;   /*  child window object   */
+char    *tpc;   /*  help topic            */
+char    *pt;    /*  previous help topic   */
+@end group
+@end example
+This method is used to associate help text with window @code{wind}.
+The help text is defined using the Windows help system and labeled
+with the topic indicated by @code{tpc}.  Then, if the user hits
+the F1 key while in the window, WDS will automatically bring up
+the Windows help system and find the indicated topic.
+
+WDS also supports dialog and control specific topics.  See the appropriate
+sections.
+
+This method returns any previous topic associated with the window.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gSetTopic(myWind, "myWindHelp");
+@end group
+@end example
+@sp 1
+See also:  The @code{HelpSystem} class.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetZOrder} SetZOrder::Window
+@sp 2
+@example
+@group
+r = gSetZOrder(wind, m);
+
+object  wind;   /*  a window object     */
+HWND    m;      /*  Z-order position    */
+object  r;      /*  wind                */
+@end group
+@end example
+This method sets the Z-order position of window @code{wind}.
+@code{m} specifies the position and can be @code{HWND_TOP},
+@code{HWND_TOPMOST}, @code{HWND_BOTTOM}, or @code{HWND_NOTOPMOST}
+as defined by the Windows API.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gSetZOrder(myWind, HWND_TOPMOST);
+@end group
+@end example
+@sp 1
+See also:  @code{MoveToTop}
+@end deffn
+
+
+
+
+@deffn {Show} Show::Window
+@sp 2
+@example
+@group
+r = gShow(wind);
+
+object  wind;   /*  a window object     */
+int     r;      /*  always 0            */
+@end group
+@end example
+Once a window object is created (via @code{vNew}) and its various attributes
+set, @code{gShow} is called in order to actually create the Windows window,
+with the selected attributes, and display (show) it.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(PopupWindow, "Name", 10, 40);
+gShow(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{AutoShow, ProcessMessages::MainWindow}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {TextBrush} TextBrush::Window
+@sp 2
+@example
+@group
+r = gTextBrush(wind, brsh);
+
+object  wind;   /*  a window object   */
+object  brsh;   /*  brush object      */
+object  r;      /*  wind              */
+@end group
+@end example
+This method is used to determine what brush object is used for foreground
+text which is displayed.  Any previously associated brush object will
+be disposed.  This brush object will also be automatically disposed when the
+window is disposed.
+
+The window passed is returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gTextBrush(myWind, vNew(SolidBrush, 255, 0, 0));
+@end group
+@end example
+@sp 1
+See also:  @code{BackBrush, Use, SetBackBrush::Application}
+        and the @code{Brush} classes
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {TextOut} TextOut::Window
+@sp 2
+@example
+@group
+r = gTextOut(wind, row, col, txt);
+
+object  wind;   /*  a window object          */
+int     row;    /*  row number of output     */
+int     col;    /*  column number of output  */
+char    *txt;   /*  string to be output      */
+object  r;      /*  wind                     */
+@end group
+@end example
+This method is used to display a string of text (@code{txt}) at row
+@code{row} and column @code{col}.  @code{row} and @code{col} have their
+origin in the upper left hand corner of the window and are scaled as
+dictated by the @code{SetScalingMode::Application} method.
+Their index origin is 0.
+
+This method returns the window argument passed.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gTextOut(myWind, 10, 30, "Hello World");
+@end group
+@end example
+@sp 1
+See also:  @code{Write, Puts, Printf}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Update} Update::Window
+@sp 2
+@example
+@group
+r = gUpdate(wind);
+
+object  wind;   /*  a window object     */
+object  r;      /*  wind                */
+@end group
+@end example
+This method is used to explicitly update the display with changes the program
+may have made to window @code{wind}.  WDS normally handles this need, however,
+this method is available in case the programmer performs special processing
+and wishes to update the entire window at one time.
+
+This method returns the window argument passed.
+@code{Update::MainWindow}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gUpdate(myWind);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Use} Use::Window
+@sp 2
+@example
+@group
+r = gUse(wind, obj);
+
+object  wind;   /*  a window object     */
+object  obj;    /*  arbitrary object    */
+object  r;      /*  the object passed   */
+@end group
+@end example
+This method is used as a general purpose mechanism to associate a
+number of object types with a window.  @code{obj} may be a @code{Font,
+Icon, Cursor, Menu,} or the background @code{Brush} object.  Those
+objects would have normally been created via their associated classes
+and then may be associated with a window via this method.
+
+Note that the same object should not be associated with more than one
+window.  The problem is that if one window is deleted, WDS would delete
+all the objects associated with that window and then the other window
+would reference objects which have been deleted.  The way around this is
+to use the @code{Copy} method in order to make a copy of an object prior
+to associating with a new window.  This way there would be two
+independent objects such that if one is deleted the other would still
+exist.
+
+Note also that the @code{Application} class may be used to set application
+wide defaults for these types of objects.
+
+The value returned is the object passed.
+@example
+@group
+@exdent Example:
+
+object  myWind, myOtherWind, someFont;
+
+someFont = vNew(ExternalFont, "Times New Roman", 12);
+if (someFont)  @{
+        gUse(myWind, someFont);
+        gUse(myOtherWind, gCopy(someFont));
+@}
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont, LoadIcon, LoadCursor, LoadMenu,}
+        @code{TextBrush, BackBrush}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {VertShift} VertShift::Window
+@sp 2
+@example
+@group
+r = gVertShift(wind, rows);
+
+object  wind;   /*  a window object     */
+int     rows;   /*  rows to shift       */
+object  r;      /*  the window object   */
+@end group
+@end example
+This method is used to perform a vertical shift of the text in the
+memory buffer which is being displayed in the window.  WDS keeps
+a buffer which holds a programmer definable number of lines of text.
+The user is then able to scroll through this text.  If the application
+attempts to display more lines than this maximum (via @code{vPrintf}
+for example) the system will automatically call @code{gVertShift} in
+order to eliminate the top line and make room for the new line being
+appended.  This method is mainly used internally.
+
+@code{wind} is the window which is to be affected, and @code{rows} is the
+number of rows to scroll.  If @code{rows} is positive the scroll moves
+the text up, and negative moves the text down.  Scrolling up permanently
+destroys lines at the beginning of the buffer and scrolling down
+permanently destroys lines at the end of the buffer.
+
+The scaling factor associated with @code{rows} is set by
+@code{SetScalingMode::Application} and the maximum lines associated with
+a window may be set with @code{SetMaxLines}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gVertShift(myWind, 2);
+@end group
+@end example
+@sp 1
+See also:  @code{ScrollVert, SetMaxLines}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {WaitCursor} WaitCursor::Window
+@sp 2
+@example
+@group
+r = gWaitCursor(wind, wait);
+
+object  wind;   /*  a window object  */
+int     wait;   /*  show/hide flag   */
+object  r;      /*  wind             */
+@end group
+@end example
+This method shows or hides the hourglass (wait) cursor for window
+@code{wind} using reference counting.  Pass a non-zero value for
+@code{wait} to show the wait cursor.  Pass 0 to hide it.  The
+reference counting ensures that nested calls work correctly ---
+the cursor is restored only when the count reaches zero.
+
+The window object passed is returned.
+@example
+@group
+@exdent Example:
+
+gWaitCursor(myWind, 1);  /* show hourglass  */
+/* ... long operation ... */
+gWaitCursor(myWind, 0);  /* restore cursor  */
+@end group
+@end example
+@sp 1
+See also:  @code{SetCursor}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Write} Write::Window
+@sp 2
+@example
+@group
+r = gWrite(wind, txt, len);
+
+object   wind;  /*  a window object       */
+char    *txt;   /*  string to be output   */
+unsigned len;   /*  length of string      */
+int      r;     /*  bytes written         */
+@end group
+@end example
+This method is used to display a string of text (@code{txt}) in a sequential
+fashion on window @code{wind}.  Since the @code{Window} class is a subclass
+of @code{Stream}, this method is mainly provided to support the standard
+interface dictated by the @code{Stream} class.  By providing this method,
+the @code{Window} class automatically inherits the @code{Puts} and
+@code{Printf} capability.
+
+@code{txt} is the text to be displayed and @code{len} is the length of that
+string.  Text @code{txt} will be displayed on window @code{wind} and
+@code{len} will be returned.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+gWrite(myWind, "Hello World\n", 12);
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut, Puts, Printf}
+@end deffn
+
+
+
+@subsection Main Window
+This class, named @code{MainWindow}, is used to create and manipulate an
+application's main window.  There is normally one main window associated
+with each application and this is the first window created.
+
+This class is a subclass of the @code{Window} class and therefore
+inherits all of the @code{Window} class's functionality.  The methods
+documented in this subsection are only those which are particular
+to the @code{MainWindow} class.
+
+
+
+@deffn {New} New::MainWindow
+@sp 2
+@example
+@group
+r = vNew(MainWindow, ttl);
+
+char    *ttl;   /*  window title  */
+object  r;      /*  new window    */
+@end group
+@end example
+This class method is used to create the main application window.
+Since this is a class method the first argument must be literally
+@code{MainWindow}.  The window title (@code{ttl}) will appear at
+the top of the window.
+
+The value returned is the new window created.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "My Application");
+@end group
+@end example
+@sp 1
+See also:  @code{New::ChildWindow, New::PopupWindow,}
+      @code{Show, Dispose::Window}
+@end deffn
+
+
+
+
+
+
+
+@deffn {ProcessMessages} ProcessMessages::MainWindow
+@sp 2
+@example
+@group
+r = gProcessMessages(wind);
+
+object  wind;   /*  a window object       */
+int     r;      /*  final message result  */
+@end group
+@end example
+Once the main application window is created (via @code{vNew}) and
+its various attributes set, @code{gProcessMessages} is called in order
+to actually create the Windows window, with the selected attributes,
+display (show) it, and process the application's messages.  Processing
+the application's messages is what allows the user to interact with the
+application.
+
+The value returned is the return value specified when the application is
+terminated.  This can be specified via @code{QuitApplication::Application}.
+@example
+@group
+@exdent Example:
+
+object  myWind;
+
+myWind = vNew(MainWindow, "Application Name");
+gProcessMessages(myWind);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Show::Window, ProcessMessages::MessageDispatcher}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@subsection Child Windows
+The Child Window class, called @code{ChildWindow}, is used in the creation
+of windows which are children of other windows.  As such, they can not
+be positioned outside of their parent window, and they get iconized along
+with their parent window.
+
+
+This class is a subclass of the @code{Window} class and therefore
+inherits all of the @code{Window} class's functionality.  The methods
+documented in this subsection are only those which are particular
+to the @code{ChildWindow} class.
+
+
+
+
+
+@deffn {New} New::ChildWindow
+@sp 2
+@example
+@group
+r = vNew(ChildWindow, prnt, rows, cols);
+
+object  prnt;   /*  parent window object  */
+int     rows;   /*  length of window      */
+int     cols;   /*  width of window       */
+object  r;      /*  new window            */
+@end group
+@end example
+This class method is used to create a child window.
+Since this is a class method the first argument must be literally
+@code{ChildWindow}.  @code{prnt} represents the parent window
+object of which the new window will be a child.  @code{rows} and
+@code{cols} determine the initial size of the window are specified
+in increments dictated by @code{SetScalingMode::Application}.
+
+The default style associated with the child window is
+@code{WS_CHILD | WS_VISIBLE} and may be changed with @code{SetStyle::Window}.
+The position may be set with 
+@iftex
+@hfil @break 
+@end iftex
+@code{SetPosition::Window}.
+
+The value returned is the new window created.
+@example
+@group
+@exdent Example:
+
+object  myWind, mainWind;
+
+myWind = vNew(ChildWindow, mainWind, 10, 45);
+@end group
+@end example
+@sp 1
+See also:  @code{New::MainWindow, New::PopupWindow,}
+      @code{Show, Dispose::Window}
+@end deffn
+
+
+
+
+
+
+
+
+@subsection Popup Windows
+The @code{PopupWindow} class is used to create arbitrary windows which
+function independently of other windows.  That is, they may overlap or
+be moved outside of other windows and iconized independently of other
+windows.  If, however, a popup window is associated with a parent window
+(via @code{SetParent::Window}) then it may move outside the parent but
+will be iconized with it.
+
+This class is a subclass of the @code{Window} class and therefore
+inherits all of the @code{Window} class's functionality.  The methods
+documented in this subsection are only those which are particular
+to the @code{PopupWindow} class.
+
+
+
+
+
+
+@deffn {New} New::PopupWindow
+@sp 2
+@example
+@group
+r = vNew(PopupWindow, name, rows, cols);
+
+char    *name;  /*  window title      */
+int     rows;   /*  length of window  */
+int     cols;   /*  width of window   */
+object  r;      /*  new window        */
+@end group
+@end example
+This class method is used to create a popup window.  Since this is a
+class method the first argument must be literally @code{PopupWindow}.
+@code{name} represents the window title and will appear in the window's
+top border.  @code{rows} and @code{cols} determine the initial size of
+the window are specified in increments dictated by
+@code{SetScalingMode::Application}.
+
+The default style associated with the popup window is @code{WS_POPUP |
+WS_VISIBLE | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX |
+WS_MAXIMIZEBOX | WS_SYSMENU} 
+@iftex
+@hfil @break 
+@end iftex
+and may be changed with
+@code{SetStyle::Window}.  The position may be set with
+@iftex
+@break 
+@end iftex
+@code{SetPosition::Window}.
+
+The value returned is the new window created.
+@example
+@group
+@exdent Example:
+
+object  myWind, mainWind;
+
+myWind = vNew(PopupWindow, "Window Title", 10, 45);
+@end group
+@end example
+@sp 1
+See also:  @code{New::MainWindow, New::ChildWindow,}
+      @code{Show, Dispose::Window}
+@end deffn
+
+
+
+

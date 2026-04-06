@@ -478,3 +478,795 @@ will cause the data to be entered into the associated data field.
 This method should only be used subsequent to a @code{gDBSelect}, @code{gDBSelectOne}, or
 a @code{gInsert}.
 @end deffn
+
+
+
+@section Error Handling
+
+The following methods provide access to error information when a
+database or statement operation fails.
+
+
+@deffn {GetErrorMessage} GetErrorMessage::Database
+@findex gGetErrorMessage::Database
+@sp 2
+@example
+@group
+s = gGetErrorMessage(DB);
+
+object  DB;    /*  database object          */
+char    *s;    /*  error message or NULL    */
+@end group
+@end example
+Returns the error message string from the most recent database
+operation, or @code{NULL} if no error occurred.
+@end deffn
+
+
+
+@deffn {GetErrorMessage} GetErrorMessage::Statement
+@findex gGetErrorMessage::Statement
+@sp 2
+@example
+@group
+s = gGetErrorMessage(stmt);
+
+object  stmt;   /*  statement object         */
+char    *s;     /*  error message or NULL    */
+@end group
+@end example
+Returns the error message string from the most recent statement
+operation, or @code{NULL} if no error occurred.
+@end deffn
+
+
+
+@deffn {GetErrorCode} GetErrorCode::Database
+@findex gGetErrorCode::Database
+@sp 2
+@example
+@group
+code = gGetErrorCode(DB);
+
+object  DB;     /*  database object  */
+int     code;   /*  error code       */
+@end group
+@end example
+Returns the error code from the most recent database operation.
+@end deffn
+
+
+
+@deffn {GetErrorCode} GetErrorCode::Statement
+@findex gGetErrorCode::Statement
+@sp 2
+@example
+@group
+code = gGetErrorCode(stmt);
+
+object  stmt;   /*  statement object  */
+int     code;   /*  error code        */
+@end group
+@end example
+Returns the error code from the most recent statement operation.
+@end deffn
+
+
+
+@deffn {GetErrorState} GetErrorState::Statement
+@findex gGetErrorState
+@sp 2
+@example
+@group
+s = gGetErrorState(stmt);
+
+object  stmt;   /*  statement object    */
+char    *s;     /*  ODBC SQLSTATE code  */
+@end group
+@end example
+Returns the ODBC SQLSTATE error code string from the most recent
+statement operation.
+@end deffn
+
+
+
+@deffn {GetNativeErrorCode} GetNativeErrorCode::Statement
+@findex gGetNativeErrorCode
+@sp 2
+@example
+@group
+code = gGetNativeErrorCode(stmt);
+
+object  stmt;   /*  statement object      */
+int     code;   /*  native error code     */
+@end group
+@end example
+Returns the native database-specific error code from the most recent
+statement operation.
+@end deffn
+
+
+
+@section Extended Field Operations
+
+In addition to the basic field get and set methods described earlier,
+the following methods provide access to additional field types and
+operations.
+
+
+@deffn {FldGetDateTime} FldGetDateTime::Statement
+@findex gFldGetDateTime
+@sp 2
+@example
+@group
+stmt = gFldGetDateTime(stmt, fld, dt, tm);
+
+object  stmt;   /*  statement object         */
+char    *fld;   /*  field name               */
+long    *dt;    /*  pointer to date (YYYYMMDD) */
+long    *tm;    /*  pointer to time (HHMMSS)   */
+@end group
+@end example
+Retrieves a date/time field as two separate long values: a date in
+@code{YYYYMMDD} format and a time in @code{HHMMSS} format.
+@sp 1
+See also:  @code{FldSetDateTime}
+@end deffn
+
+
+
+@deffn {FldGetPointer} FldGetPointer::Statement
+@findex gFldGetPointer
+@sp 2
+@example
+@group
+p = gFldGetPointer(stmt, fld);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+void    *p;     /*  pointer value     */
+@end group
+@end example
+Returns a pointer to the internal field data.
+@end deffn
+
+
+
+@deffn {FldGetStringNoStrip} FldGetStringNoStrip::Statement
+@findex gFldGetStringNoStrip
+@sp 2
+@example
+@group
+s = gFldGetStringNoStrip(stmt, fld);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+char    *s;     /*  string value      */
+@end group
+@end example
+Returns the field value as a string without stripping trailing
+whitespace.  By contrast, @code{gFldGetString} trims trailing spaces.
+@sp 1
+See also:  @code{FldGetString}
+@end deffn
+
+
+
+@deffn {FldSetDateTime} FldSetDateTime::Statement
+@findex gFldSetDateTime
+@sp 2
+@example
+@group
+stmt = gFldSetDateTime(stmt, fld, dt, tm);
+
+object  stmt;   /*  statement object          */
+char    *fld;   /*  field name                */
+long    dt;     /*  date value (YYYYMMDD)     */
+long    tm;     /*  time value (HHMMSS)       */
+@end group
+@end example
+Sets a date/time field from separate date and time long values.
+@sp 1
+See also:  @code{FldGetDateTime}
+@end deffn
+
+
+
+@deffn {FldSetNull} FldSetNull::Statement
+@findex gFldSetNull
+@sp 2
+@example
+@group
+stmt = gFldSetNull(stmt, fld);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+@end group
+@end example
+Sets the specified field to SQL @code{NULL}.
+@sp 1
+See also:  @code{FldSetNotNull}
+@end deffn
+
+
+
+@deffn {FldSetNotNull} FldSetNotNull::Statement
+@findex gFldSetNotNull
+@sp 2
+@example
+@group
+stmt = gFldSetNotNull(stmt, fld);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+@end group
+@end example
+Marks the specified field as not @code{NULL}.  This is useful after
+calling @code{gFldSetNull} to restore the field to a non-null state
+before assigning a new value.
+@sp 1
+See also:  @code{FldSetNull}
+@end deffn
+
+
+
+@deffn {FldToFile} FldToFile::Statement
+@findex gFldToFile
+@sp 2
+@example
+@group
+r = gFldToFile(stmt, fld, file);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+char    *file;  /*  output file path  */
+int     r;      /*  result            */
+@end group
+@end example
+Writes the contents of the specified field to a file.  Useful for
+extracting binary or large text fields.
+@sp 1
+See also:  @code{FldSetFromFile}
+@end deffn
+
+
+
+@deffn {FldSetFromFile} FldSetFromFile::Statement
+@findex gFldSetFromFile
+@sp 2
+@example
+@group
+stmt = gFldSetFromFile(stmt, fld, file);
+
+object  stmt;   /*  statement object  */
+char    *fld;   /*  field name        */
+char    *file;  /*  input file path   */
+@end group
+@end example
+Sets the specified field's contents from a file.  Useful for storing
+binary or large text data.
+@sp 1
+See also:  @code{FldToFile}
+@end deffn
+
+
+
+@deffn {FldSetBinary} FldSetBinary::Statement
+@findex gFldSetBinary
+@sp 2
+@example
+@group
+stmt = gFldSetBinary(stmt, fld, size, val);
+
+object  stmt;   /*  statement object       */
+char    *fld;   /*  field name             */
+long    size;   /*  data size in bytes     */
+char    *val;   /*  pointer to binary data */
+@end group
+@end example
+Sets a binary field from a memory buffer of the specified size.
+@sp 1
+See also:  @code{FldGetBinary}
+@end deffn
+
+
+
+@deffn {FldGetBinary} FldGetBinary::Statement
+@findex gFldGetBinary
+@sp 2
+@example
+@group
+stmt = gFldGetBinary(stmt, fld, size, val);
+
+object  stmt;   /*  statement object                 */
+char    *fld;   /*  field name                       */
+long    *size;  /*  pointer to receive data size     */
+char    **val;  /*  pointer to receive data pointer  */
+@end group
+@end example
+Retrieves binary field data.  The size and a pointer to the data are
+returned through the output parameters.
+@sp 1
+See also:  @code{FldSetBinary}
+@end deffn
+
+
+
+@section Additional Record Operations
+
+
+@deffn {RecordCount} RecordCount::Statement
+@findex gRecordCount
+@sp 2
+@example
+@group
+n = gRecordCount(stmt);
+
+object  stmt;   /*  statement object       */
+int     n;      /*  number of records      */
+@end group
+@end example
+Returns the number of records in the current result set.
+@end deffn
+
+
+
+@deffn {RereadRecord} RereadRecord::Statement
+@findex gRereadRecord
+@sp 2
+@example
+@group
+r = gRereadRecord(stmt);
+
+object  stmt;   /*  statement object       */
+int     r;      /*  result (0=success)     */
+@end group
+@end example
+Re-reads the current record from the database, refreshing all field
+values.  Useful when the record may have been changed by another user
+or process.
+@end deffn
+
+
+
+@deffn {UnattachDialog} UnattachDialog::Statement
+@findex gUnattachDialog
+@sp 2
+@example
+@group
+stmt = gUnattachDialog(stmt, dlg);
+
+object  stmt;   /*  statement object   */
+object  dlg;    /*  dialog object      */
+@end group
+@end example
+Removes the association between a statement's fields and a dialog's
+controls.  This is the inverse of @code{gAttachDialog}.
+@sp 1
+See also:  @code{AttachDialog}
+@end deffn
+
+
+
+@deffn {CopyCorresponding} CopyCorresponding::Statement
+@findex gCopyCorresponding
+@sp 2
+@example
+@group
+stmt = gCopyCorresponding(stmt, from);
+
+object  stmt;   /*  destination statement   */
+object  from;   /*  source statement        */
+@end group
+@end example
+Copies field values from the source statement to the destination
+statement for all fields that have matching names.  Useful for copying
+data between different tables that share common fields.
+@end deffn
+
+
+
+@section Database Properties
+
+
+@deffn {GetCurrentDataSource} GetCurrentDataSource::Database
+@findex gGetCurrentDataSource
+@sp 2
+@example
+@group
+DB = gGetCurrentDataSource(DB, buf);
+
+object  DB;    /*  database object             */
+char    *buf;  /*  buffer to receive name      */
+@end group
+@end example
+Copies the current data source name into @code{buf}.
+@end deffn
+
+
+
+@deffn {GetCurrentDatabaseName} GetCurrentDatabaseName::Database
+@findex gGetCurrentDatabaseName
+@sp 2
+@example
+@group
+DB = gGetCurrentDatabaseName(DB, buf);
+
+object  DB;    /*  database object              */
+char    *buf;  /*  buffer to receive name       */
+@end group
+@end example
+Copies the current database name into @code{buf}.
+@end deffn
+
+
+
+@deffn {DBMS_type} DBMS_type::Database
+@findex gDBMS_type
+@sp 2
+@example
+@group
+s = gDBMS_type(DB);
+
+object  DB;   /*  database object       */
+char    *s;   /*  DBMS type string      */
+@end group
+@end example
+Returns a string identifying the database management system type
+(e.g.@: ``Microsoft SQL Server'', ``MySQL'', ``PostgreSQL'').
+@end deffn
+
+
+
+@deffn {DBMS_version} DBMS_version::Database
+@findex gDBMS_version
+@sp 2
+@example
+@group
+s = gDBMS_version(DB);
+
+object  DB;   /*  database object          */
+char    *s;   /*  DBMS version string      */
+@end group
+@end example
+Returns a string containing the DBMS version number.
+@end deffn
+
+
+
+@deffn {GetUserName} GetUserName::Database
+@findex gGetUserName
+@sp 2
+@example
+@group
+s = gGetUserName(DB);
+
+object  DB;   /*  database object     */
+char    *s;   /*  user name string    */
+@end group
+@end example
+Returns the user name used for the current database connection.
+@end deffn
+
+
+
+@section Vararg SQL Methods
+
+The following methods accept @code{printf}-style format strings,
+allowing SQL commands to be built inline with variable substitution.
+
+
+@deffn {vDBSelect} vDBSelect::Statement
+@findex vDBSelect
+@sp 2
+@example
+@group
+r = vDBSelect(stmt, fmt, ...);
+
+object  stmt;   /*  statement object              */
+char    *fmt;   /*  printf-style format string    */
+int     r;      /*  result (0=success)            */
+@end group
+@end example
+Executes an SQL @code{SELECT} using a @code{printf}-style format string.
+For example:
+@example
+vDBSelect(stmt, "select * from emp where id = %ld", empId);
+@end example
+@sp 1
+See also:  @code{DBSelect}, @code{vDBSelectOne}
+@end deffn
+
+
+
+@deffn {vDBSelectOne} vDBSelectOne::Statement
+@findex vDBSelectOne
+@sp 2
+@example
+@group
+r = vDBSelectOne(stmt, fmt, ...);
+
+object  stmt;   /*  statement object              */
+char    *fmt;   /*  printf-style format string    */
+int     r;      /*  result (0=success)            */
+@end group
+@end example
+Convenience method that combines @code{vDBSelect} with an implicit
+@code{gFirstRecord}.  Use when exactly one record is expected.
+@sp 1
+See also:  @code{DBSelectOne}, @code{vDBSelect}
+@end deffn
+
+
+
+@deffn {vExecute} vExecute::Statement
+@findex vExecute
+@sp 2
+@example
+@group
+r = vExecute(stmt, fmt, ...);
+
+object  stmt;   /*  statement object              */
+char    *fmt;   /*  printf-style format string    */
+int     r;      /*  result (0=success)            */
+@end group
+@end example
+Executes an arbitrary SQL command using a @code{printf}-style format
+string.  This is the vararg form of @code{gExecute}.
+@example
+vExecute(stmt, "delete from emp where id = %ld", empId);
+@end example
+@sp 1
+See also:  @code{Execute}
+@end deffn
+
+
+
+@section Schema Introspection
+
+The following methods allow inspection of database structure and metadata.
+
+
+@deffn {GetAllTables} GetAllTables::Database
+@findex gGetAllTables
+@sp 2
+@example
+@group
+r = gGetAllTables(DB);
+
+object  DB;   /*  database object  */
+int     r;    /*  result           */
+@end group
+@end example
+Retrieves metadata for all tables in the database.
+@end deffn
+
+
+
+@deffn {SelectColumns} SelectColumns::Statement
+@findex gSelectColumns
+@sp 2
+@example
+@group
+r = gSelectColumns(stmt, table, owner);
+
+object  stmt;    /*  statement object        */
+char    *table;  /*  table name              */
+char    *owner;  /*  owner/schema or NULL    */
+int     r;       /*  result (0=success)      */
+@end group
+@end example
+Retrieves column metadata for the specified table.  After calling this
+method, use @code{gNextRecord} and the field access methods to iterate
+through the column definitions.
+@end deffn
+
+
+
+@deffn {SelectTables} SelectTables::Statement
+@findex gSelectTables
+@sp 2
+@example
+@group
+r = gSelectTables(stmt, owner);
+
+object  stmt;    /*  statement object        */
+char    *owner;  /*  owner/schema or NULL    */
+int     r;       /*  result (0=success)      */
+@end group
+@end example
+Retrieves a list of all tables in the database (optionally filtered by
+owner).  Use @code{gNextRecord} to iterate through the results.
+@end deffn
+
+
+
+@deffn {SelectPrimaryKeyFields} SelectPrimaryKeyFields::Statement
+@findex gSelectPrimaryKeyFields
+@sp 2
+@example
+@group
+r = gSelectPrimaryKeyFields(stmt, table, owner);
+
+object  stmt;    /*  statement object        */
+char    *table;  /*  table name              */
+char    *owner;  /*  owner/schema or NULL    */
+int     r;       /*  result (0=success)      */
+@end group
+@end example
+Retrieves the primary key columns for the specified table.
+@end deffn
+
+
+
+@deffn {SelectForeignKeys} SelectForeignKeys::Statement
+@findex gSelectForeignKeys
+@sp 2
+@example
+@group
+r = gSelectForeignKeys(stmt, table, owner);
+
+object  stmt;    /*  statement object        */
+char    *table;  /*  table name              */
+char    *owner;  /*  owner/schema or NULL    */
+int     r;       /*  result (0=success)      */
+@end group
+@end example
+Retrieves the foreign key relationships for the specified table.
+@end deffn
+
+
+
+@deffn {SelectIndexes} SelectIndexes::Statement
+@findex gSelectIndexes
+@sp 2
+@example
+@group
+r = gSelectIndexes(stmt, table, owner);
+
+object  stmt;    /*  statement object        */
+char    *table;  /*  table name              */
+char    *owner;  /*  owner/schema or NULL    */
+int     r;       /*  result (0=success)      */
+@end group
+@end example
+Retrieves index information for the specified table.
+@end deffn
+
+
+
+@section Data Change Tracking
+
+
+@deffn {DataChanged} DataChanged::Database
+@findex gDataChanged
+@sp 2
+@example
+@group
+val = gDataChanged(DB);
+
+object  DB;    /*  database object          */
+int     val;   /*  1=changed, 0=unchanged   */
+@end group
+@end example
+Returns 1 if data has been changed since the last call to
+@code{gResetChanged}, 0 otherwise.
+@sp 1
+See also:  @code{SetChanged}, @code{ResetChanged}
+@end deffn
+
+
+
+@deffn {ResetChanged} ResetChanged::Database
+@findex gResetChanged
+@sp 2
+@example
+@group
+r = gResetChanged(DB);
+
+object  DB;   /*  database object  */
+@end group
+@end example
+Resets the data-changed flag to 0.
+@sp 1
+See also:  @code{DataChanged}, @code{SetChanged}
+@end deffn
+
+
+
+@deffn {SetChanged} SetChanged::Database
+@findex gSetChanged
+@sp 2
+@example
+@group
+r = gSetChanged(DB);
+
+object  DB;   /*  database object  */
+@end group
+@end example
+Manually sets the data-changed flag to 1.
+@sp 1
+See also:  @code{DataChanged}, @code{ResetChanged}
+@end deffn
+
+
+
+@section Write Control
+
+
+@deffn {DisableWrites} DisableWrites::Database
+@findex gDisableWrites
+@sp 2
+@example
+@group
+r = gDisableWrites(DB);
+
+object  DB;   /*  database object  */
+@end group
+@end example
+Disables all write operations (insert, update, delete) on the database.
+Attempts to write will be silently ignored.
+@sp 1
+See also:  @code{EnableWrites}
+@end deffn
+
+
+
+@deffn {EnableWrites} EnableWrites::Database
+@findex gEnableWrites
+@sp 2
+@example
+@group
+r = gEnableWrites(DB);
+
+object  DB;   /*  database object  */
+@end group
+@end example
+Re-enables write operations after a call to @code{gDisableWrites}.
+@sp 1
+See also:  @code{DisableWrites}
+@end deffn
+
+
+
+@section Error Handling Modes
+
+
+@deffn {IgnoreAllErrors} IgnoreAllErrors::Statement
+@findex gIgnoreAllErrors
+@sp 2
+@example
+@group
+prev = gIgnoreAllErrors(stmt, val);
+
+object  stmt;   /*  statement object          */
+int     val;    /*  1=ignore, 0=normal        */
+int     prev;   /*  previous setting          */
+@end group
+@end example
+When enabled, all SQL errors are silently ignored instead of aborting
+the application.  Returns the previous setting.
+@sp 1
+See also:  @code{ReturnAllErrors}
+@end deffn
+
+
+
+@deffn {ReturnAllErrors} ReturnAllErrors::Statement
+@findex gReturnAllErrors
+@sp 2
+@example
+@group
+prev = gReturnAllErrors(stmt, val);
+
+object  stmt;   /*  statement object          */
+int     val;    /*  1=return errors, 0=normal */
+int     prev;   /*  previous setting          */
+@end group
+@end example
+When enabled, SQL errors are returned as error codes instead of
+aborting the application.  This allows the caller to handle errors
+programmatically.  Returns the previous setting.
+@sp 1
+See also:  @code{IgnoreAllErrors}
+@end deffn

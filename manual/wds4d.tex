@@ -1,0 +1,3532 @@
+@section Cursors
+The @code{Cursor} class (as well as its subclasses) are used to represent
+cursor objects.  This class is never used by an application.  It is used
+to house the functionality common to its subclasses.  Therefore, this
+class documents functionality which is common to all of its subclasses.
+
+Note that a more convenient mechanism for using cursors is provided by
+@code{LoadCursor::Window} and @code{LoadSystemCursor::Window}
+
+
+
+
+
+
+
+
+
+@deffn {Copy} Copy::Cursor
+@sp 2
+@example
+@group
+c = gCopy(csr);
+
+object  csr;    /*  cursor object          */
+object  c;      /*  copy of cursor object  */
+@end group
+@end example
+This method is implemented by all subclasses of @code{Cursor}
+(@code{SystemCursor}, @code{ExternalCursor}).
+
+This method is used to create a new cursor object which is a copy of a
+given cursor object.  The value of this is to be able to associate a
+cursor with multiple objects which will automatically dispose of the
+cursor when they are disposed.  If copies weren't used the second object
+referencing the cursor would reference a disposed cursor object.
+
+Each cursor object must be disposed (either automatically or manually)
+when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  c1, c2;
+
+c2 = gCopy(c1);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepCopy}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepCopy} DeepCopy::Cursor
+@sp 2
+This method performs the same function as @code{Copy}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Cursor
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Cursor
+@sp 2
+@example
+@group
+r = gDispose(csr);
+
+object  csr;   /*  a cursor object    */
+object  r;     /*  NULL               */
+@end group
+@end example
+This method is used to dispose of a cursor object when it
+is no longer needed.  This method is rarely needed due to the fact that
+when a window is disposed it automatically calls this method to
+dispose of its associated cursor object.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  csr;
+
+csr = gDispose(csr);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Cursor
+@sp 2
+@example
+@group
+h = gHandle(csr);
+
+object  csr;    /*  cursor object   */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a cursor object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  csr;
+HCURSOR h;
+
+h = gHandle(csr);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection System Cursors
+The @code{SystemCursor} class represents Windows predefined cursors.
+This class is a subclass of @code{Cursor} and as such inherits most
+of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Cursor} class for additional
+functionality.
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSys} LoadSys::SystemCursor
+@sp 2
+@example
+@group
+csr = gLoadSys(SystemCursor, id);
+
+char    *id;    /*  cursor id      */
+object  csr;    /*  cursor object  */
+@end group
+@end example
+This method is used to create a new object which represents one of the
+Windows predefined cursors.  @code{id} should be one of the Windows
+defined macros specifying the desired cursor.  It is defined in the
+Windows documentation under the function @code{LoadCursor} and
+starts with @code{IDC_}.
+@example
+@group
+@exdent Example:
+
+object  csr;
+
+csr = gLoadSys(SystemCursor, IDC_IBEAM);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemCursor::Window, SetCursor::Application}
+@end deffn
+
+
+
+
+
+@subsection External Cursors
+The @code{ExternalCursor} class represents arbitrary application defined
+cursors.  This class is a subclass of @code{Cursor} and as such inherits
+most of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Cursor} class for additional
+functionality.
+
+
+
+
+
+
+@deffn {Load} Load::ExternalCursor
+@sp 2
+@example
+@group
+csr = mLoad(ExternalCursor, id);
+
+unsigned id;    /*  cursor id      */
+object   csr;   /*  cursor object  */
+@end group
+@end example
+This method is used to load a programmer defined application specific
+cursor.
+
+@code{id} is a programmer defined unsigned integer which identifies
+the cursor.  This identifier is normally a macro and defined through the
+resource editor.  
+
+The value returned is an object representing the cursor loaded, or
+@code{NULL} if the cursor was not found.
+@example
+@group
+@exdent Example:
+
+object  csr;
+
+csr = mLoad(ExternalCursor, MY_CURSOR);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadCursor::Window, SetCursor::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadStr} LoadStr::ExternalCursor
+@sp 2
+@example
+@group
+csr = mLoadStr(ExternalCursor, id);
+
+char    *id;    /*  cursor id      */
+object   csr;   /*  cursor object  */
+@end group
+@end example
+This method is used to load a programmer defined application specific
+cursor by name.
+
+@code{id} is a programmer defined name which identifies the cursor.
+This identifier is normally defined through the resource editor.
+
+The value returned is an object representing the cursor loaded, or
+@code{NULL} if the cursor was not found.
+@example
+@group
+@exdent Example:
+
+object  csr;
+
+csr = mLoadStr(ExternalCursor, "mycursor");
+@end group
+@end example
+@sp 1
+See also:  @code{LoadCursor::Window, SetCursor::Application,}
+        @code{Use::Window}
+@end deffn
+
+
+
+
+@section Icons
+The @code{Icon} class (as well as its subclasses) are used to represent
+icon objects.  This class is never used by an application.  It is used
+to house the functionality common to its subclasses.  Therefore, this
+class documents functionality which is common to all of its subclasses.
+
+Note that a more convenient mechanism for using icons is provided by
+@code{LoadIcon::Window} and @code{LoadSystemIcon::Window}
+
+
+
+
+
+
+
+
+
+@deffn {Copy} Copy::Icon
+@sp 2
+@example
+@group
+c = gCopy(icn);
+
+object  icn;    /*  icon object          */
+object  c;      /*  copy of icon object  */
+@end group
+@end example
+This method is implemented by all subclasses of @code{Icon}
+(@code{SystemIcon}, @code{ExternalIcon}).
+
+This method is used to create a new icon object which is a copy of a
+given icon object.  The value of this is to be able to associate a
+icon with multiple objects which will automatically dispose of the
+icon when they are disposed.  If copies weren't used the second object
+referencing the icon would reference a disposed icon object.
+
+Each icon object must be disposed (either automatically or manually)
+when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  i1, i2;
+
+i2 = gCopy(i1);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepCopy}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepCopy} DeepCopy::Icon
+@sp 2
+This method performs the same function as @code{Copy}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Icon
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Icon
+@sp 2
+@example
+@group
+r = gDispose(icn);
+
+object  icn;   /*  an icon object  */
+object  r;     /*  NULL            */
+@end group
+@end example
+This method is used to dispose of an icon object when it is no longer
+needed.  This method is rarely needed due to the fact that when a window
+is disposed it automatically calls this method to dispose of its
+associated icon object.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  icn;
+
+icn = gDispose(icn);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Icon
+@sp 2
+@example
+@group
+h = gHandle(icn);
+
+object  icn;    /*  icon object     */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+an icon object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  icn;
+HICON   h;
+
+h = gHandle(icn);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection System Icons
+The @code{SystemIcon} class represents Windows predefined icons.
+This class is a subclass of @code{Icon} and as such inherits most
+of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Icon} class for additional
+functionality.
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSys} LoadSys::SystemIcon
+@sp 2
+@example
+@group
+icn = gLoadSys(SystemIcon, id);
+
+char    *id;    /*  icon id      */
+object  icn;    /*  icon object  */
+@end group
+@end example
+This method is used to create a new object which represents one of the
+Windows predefined icons.  @code{id} should be one of the Windows
+defined macros specifying the desired icon.  It is defined in the
+Windows documentation under the function @code{LoadIcon} and
+starts with @code{IDI_}.
+@example
+@group
+@exdent Example:
+
+object  icn;
+
+icn = gLoadSys(SystemIcon, IDI_HAND);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemIcon::Window, SetIcon::Application}
+@end deffn
+
+
+
+
+
+@subsection External Icons
+The @code{ExternalIcon} class represents arbitrary application defined
+icons.  This class is a subclass of @code{Icon} and as such inherits
+most of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Icon} class for additional
+functionality.
+
+
+
+
+
+
+@deffn {Load} Load::ExternalIcon
+@sp 2
+@example
+@group
+icn = mLoad(ExternalIcon, id);
+
+unsigned id;    /*  icon id      */
+object   icn;   /*  icon object  */
+@end group
+@end example
+This method is used to load a programmer defined application specific
+icon.
+
+@code{id} is a programmer defined unsigned integer which identifies
+the icon.  This identifier is normally a macro and defined through the
+resource editor.  
+
+The value returned is an object representing the icon loaded, or
+@code{NULL} if the icon was not found.
+@example
+@group
+@exdent Example:
+
+object  icn;
+
+icn = mLoad(ExternalIcon, MY_ICON);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadIcon::Window, SetIcon::Application}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadStr} LoadStr::ExternalIcon
+@sp 2
+@example
+@group
+icn = mLoadStr(ExternalIcon, id);
+
+char    *id;    /*  icon id      */
+object   icn;   /*  icon object  */
+@end group
+@end example
+This method is used to load a programmer defined application specific
+icon by name.
+
+@code{id} is a programmer defined name which identifies the icon.
+This identifier is normally defined through the resource editor.
+
+The value returned is an object representing the icon loaded, or
+@code{NULL} if the icon was not found.
+@example
+@group
+@exdent Example:
+
+object  icn;
+
+icn = mLoadStr(ExternalIcon, "myicon");
+@end group
+@end example
+@sp 1
+See also:  @code{LoadIcon::Window, SetIcon::Application,}
+        @code{Use::Window}
+@end deffn
+
+
+
+
+
+@section Fonts
+The @code{Font} class (as well as its subclasses) are used to represent
+font objects.  This class is never used by an application.  It is used
+to house the functionality common to its subclasses.  Therefore, this
+class documents functionality which is common to all of its subclasses.
+
+Note that a more convenient mechanism for using fonts is provided by
+@code{LoadFont::Window, LoadSystemFont::Window, LoadFont::Printer},
+and @code{LoadSystemFont::Printer}.
+
+
+
+
+
+
+
+
+
+
+@deffn {AveCharWidth} AveCharWidth::Font
+@sp 2
+@example
+@group
+r = gAveCharWidth(fnt);
+
+object   fnt;  /*  a font object  */
+int      r;    /*  ave char width */
+@end group
+@end example
+This method is used to gain access to the average character width
+associated with a particular font.  
+@example
+@group
+@exdent Example:
+
+object  fnt;
+int     cw;
+
+cw = gAveCharWidth(fnt);
+@end group
+@end example
+@sp 1
+See also:  @code{LineHeight, GetTM}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Copy} Copy::Font
+@sp 2
+@example
+@group
+c = gCopy(fnt);
+
+object  fnt;    /*  font object          */
+object  c;      /*  copy of font object  */
+@end group
+@end example
+This method is implemented by all subclasses of @code{Font}
+(@code{SystemFont}, @code{ExternalFont}).
+
+This method is used to create a new font object which is a copy of a
+given font object.  The value of this is to be able to associate a
+font with multiple objects which will automatically dispose of the
+font when they are disposed.  If copies weren't used the second object
+referencing the font would reference a disposed font object.
+
+Each font object must be disposed (either automatically or manually)
+when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  f1, f2;
+
+f2 = gCopy(f1);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepCopy}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepCopy} DeepCopy::Font
+@sp 2
+This method performs the same function as @code{Copy}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Font
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Font
+@sp 2
+@example
+@group
+r = gDispose(fnt);
+
+object  fnt;   /*  a font object  */
+object  r;     /*  NULL           */
+@end group
+@end example
+This method is used to dispose of a font object when it is no longer
+needed.  This method is rarely needed due to the fact that when a window
+or printer object is disposed it automatically calls this method to
+dispose of its associated font object.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+
+fnt = gDispose(fnt);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {GetTM} GetTM::Font
+@sp 2
+@example
+@group
+r = gGetTM(fnt, tm);
+
+object      fnt;  /*  a font object  */
+TEXTMETRIC  *tm;  /*  font metrics   */
+object      r;    /*  fnt            */
+@end group
+@end example
+This method is used to gain access to the font metrics associated with
+a particular font.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+TEXTMETRIC  tm;
+
+gGetTM(fnt, &tm);
+@end group
+@end example
+@sp 1
+See also:  @code{LineHeight, AveCharWidth}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Font
+@sp 2
+@example
+@group
+h = gHandle(fnt);
+
+object  fnt;    /*  font object     */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a font object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+HGDIOBJ h;
+
+h = gHandle(fnt);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LineHeight} LineHeight::Font
+@sp 2
+@example
+@group
+r = gLineHeight(fnt);
+
+object   fnt;  /*  a font object  */
+int      r;    /*  line height    */
+@end group
+@end example
+This method is used to gain access to the line height associated with
+a particular font.  This number is equal to the height of the largest
+character in the font plus a reasonable amount of space to separate
+lines containing the font.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+int     lh;
+
+lh = gLineHeight(fnt);
+@end group
+@end example
+@sp 1
+See also:  @code{AveCharWidth, GetTM}
+@end deffn
+
+
+
+
+@deffn {Name} Name::Font
+@sp 2
+@example
+@group
+s = gName(fnt);
+
+object  fnt;  /*  a font object  */
+char    *s;   /*  font face name */
+@end group
+@end example
+This instance method returns the font's face name including style
+suffixes (e.g., "Arial Bold Italic").
+@example
+@group
+@exdent Example:
+
+object  fnt;
+char    *name;
+
+name = gName(fnt);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {PixelHeight} PixelHeight::Font
+@sp 2
+@example
+@group
+n = gPixelHeight(Font);
+
+int  n;  /*  vertical DPI (pixels per logical inch)  */
+@end group
+@end example
+This class method returns the screen's vertical DPI (pixels per
+logical inch).  It is called on the @code{Font} class itself, not on
+an instance.
+@example
+@group
+@exdent Example:
+
+int  dpi;
+
+dpi = gPixelHeight(Font);
+@end group
+@end example
+@end deffn
+
+
+
+
+@deffn {PointSize} PointSize::Font
+@sp 2
+@example
+@group
+n = gPointSize(fnt);
+
+object  fnt;  /*  a font object  */
+int     n;    /*  point size     */
+@end group
+@end example
+This instance method returns the font's point size.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+int     ps;
+
+ps = gPointSize(fnt);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+@subsection System Fonts
+The @code{SystemFont} class represents Windows predefined fonts.
+This class is a subclass of @code{Font} and as such inherits most
+of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Font} class for additional
+functionality.
+
+
+
+
+
+
+
+
+@deffn {Load} Load::SystemFont
+@sp 2
+@example
+@group
+fnt = mLoad(SystemFont, id);
+
+unsigned id;    /*  icon id      */
+object   fnt;   /*  icon object  */
+@end group
+@end example
+This method is used to create a new object which represents one of the
+Windows predefined fonts.  @code{id} should be one of the Windows
+defined macros specifying the desired font.  It is defined in the
+Windows documentation under the function @code{GetStockObject} and
+ends with @code{_FONT}.
+@example
+@group
+@exdent Example:
+
+object  fnt;
+
+fnt = mLoad(SystemFont, ANSI_FIXED_FONT);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemFont::Window, LoadSystemFont::Printer,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{SetFont::Application, Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@subsection External Fonts
+The @code{ExternalFont} class represents arbitrary external fonts.  This
+class is a subclass of @code{Font} and as such inherits most of its
+functionality from it.  This section documents the methods particular to
+this class.  See the @code{Font} class for additional functionality.
+
+
+
+
+
+
+
+
+
+@deffn {Indirect} Indirect::ExternalFont
+@sp 2
+@example
+@group
+fnt = gIndirect(ExternalFont, lf);
+
+LOGFONT *lf;    /*  logical font  */
+object  fnt;    /*  font object   */
+@end group
+@end example
+This method is used to find and load a font which most closely matches
+the parameters indicated by @code{lf}.  The structure of @code{lf} is
+fully described in the Windows documentation under the structure
+@code{LOGFONT}.
+
+The value returned is an object representing the font loaded, or
+@code{NULL} if the font was not found.
+@example
+@group
+@exdent Example:
+
+LOGFONT lf;
+object  fnt;
+
+/*  initialize lf  */
+fnt = gIndirect(ExternalFont, &lf);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont::Window, LoadFont::Printer, SetFont::Application,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {New} New::ExternalFont
+@sp 2
+@example
+@group
+fnt = vNew(ExternalFont, nm, ps);
+
+char    *nm;    /*  font name    */
+int     ps;     /*  point size   */
+object  fnt;    /*  font object  */
+@end group
+@end example
+This method is used to load an arbitrary font by name at any point size.
+@code{nm} is the full name of the font as it appears
+when you list the available fonts via the control-panel / fonts Windows
+utility, minus the font type in parentheses.  @code{ps} indicates the
+desired point size.
+
+The value returned is an object representing the font loaded, or
+@code{NULL} if the font was not found.
+
+Note that @code{nm} may also be a Dynace object cast as a (@code{char *}).
+@example
+@group
+@exdent Example:
+
+object  fnt;
+
+fnt = vNew(ExternalFont, "Times New Roman", 12);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont::Window, LoadFont::Printer, SetFont::Application,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+@section Brushes
+The @code{Brush} class (as well as its subclasses) are used to represent
+brush objects.  This class is never used by an application.  It is used
+to house the functionality common to its subclasses.  Therefore, this
+class documents functionality which is common to all of its subclasses.
+
+
+
+
+
+
+
+
+
+@deffn {Color} Color::Brush
+@sp 2
+@example
+@group
+c = gColor(bsh);
+
+object    bsh;  /*  brush object   */
+COLORREF  c;    /*  brush color    */
+@end group
+@end example
+This method is used to obtain the color associated with a brush.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+COLORREF  c;
+
+c = gColor(bsh);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Copy} Copy::Brush
+@sp 2
+@example
+@group
+c = gCopy(bsh);
+
+object  bsh;    /*  brush object          */
+object  c;      /*  copy of brush object  */
+@end group
+@end example
+This method is implemented by all subclasses of @code{Brush}
+(@code{SystemBrush}, @code{StockBrush}, @code{SolidBrush},
+@code{HatchBrush}).
+
+This method is used to create a new brush object which is a copy of a
+given brush object.  The value of this is to be able to associate a
+brush with multiple objects which will automatically dispose of the
+brush when they are disposed.  If copies weren't used the second object
+referencing the brush would reference a disposed brush object.
+
+Each brush object must be disposed (either automatically or manually)
+when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  b1, b2;
+
+b2 = gCopy(b1);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepCopy}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {DeepCopy} DeepCopy::Brush
+@sp 2
+This method performs the same function as @code{Copy}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Brush
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Brush
+@sp 2
+@example
+@group
+r = gDispose(bsh);
+
+object  bsh;   /*  a brush object  */
+object  r;     /*  NULL            */
+@end group
+@end example
+This method is used to dispose of a brush object when it is no longer
+needed.  This method is rarely needed due to the fact that when a window
+or printer object is disposed it automatically calls this method to
+dispose of its associated brush object.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+
+bsh = gDispose(bsh);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+@deffn {Handle} Handle::Brush
+@sp 2
+@example
+@group
+h = gHandle(bsh);
+
+object  bsh;    /*  brush object    */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a brush object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+HBRUSH  h;
+
+h = gHandle(bsh);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+@subsection Stock Brushes
+The @code{StockBrush} class represents common Windows defined brushes.  This
+class is a subclass of @code{Brush} and as such inherits most of its
+functionality from it.  This section documents the methods particular to
+this class.  See the @code{Brush} class for additional functionality.
+
+
+
+
+
+
+@deffn {New} New::StockBrush
+@sp 2
+@example
+@group
+bsh = vNew(StockBrush, id);
+
+unsigned id;    /*  brush id      */
+object  bsh;    /*  brush object  */
+@end group
+@end example
+This method is used to load one of the Windows pre-defined brushes.
+The available options are macros documented in the Windows documentation
+under the function @code{GetStockObject} and end with @code{_BRUSH}.
+
+The value returned is an object representing the brush loaded, or
+@code{NULL} if the brush was not found.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+
+bsh = vNew(StockBrush, GRAY_BRUSH);
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush::Window, BackBrush::Window,}
+        @code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Solid Brushes
+The @code{SolidBrush} class represents arbitrary application defined
+brushes.  This class is a subclass of @code{Brush} and as such inherits
+most of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Brush} class for additional
+functionality.
+
+
+
+
+
+
+@deffn {New} New::SolidBrush
+@sp 2
+@example
+@group
+bsh = vNew(SolidBrush, red, green, blue);
+
+int     red;
+int     green;
+int     blue;
+object  bsh;    /*  brush object  */
+@end group
+@end example
+This method is used to create a solid colored brush with specific colors.
+Each color argument specifies a number between 0 and 255 and indicates
+the intensity of the related color.  If all three are 0 you get black,
+and all three at 255 is white.
+
+The value returned is an object representing the brush created, or
+@code{NULL} if the brush was not created.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+
+bsh = vNew(SolidBrush, 255, 0, 0);
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush::Window, BackBrush::Window,}
+        @code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+@subsection System Brushes
+The @code{SystemBrush} class represents brushes which are those colors
+which were selected by the user as global to their Windows environment.
+The programmer may select, for example, the color the user chose for
+background windows.
+
+This class is a subclass of @code{Brush} and as such inherits
+most of its functionality from it.  This section documents the methods
+particular to this class.  See the @code{Brush} class for additional
+functionality.
+
+
+
+
+
+
+
+
+@deffn {New} New::SystemBrush
+@sp 2
+@example
+@group
+bsh = vNew(SystemBrush, id);
+
+unsigned id;    /*  brush id      */
+object  bsh;    /*  brush object  */
+@end group
+@end example
+This method is used to load one of the Windows user defined brushes.
+The available options are macros documented in the Windows documentation
+under the function @code{GetSysColor}.
+
+The value returned is an object representing the brush loaded, or
+@code{NULL} if the brush was not found.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+
+bsh = vNew(SystemBrush, COLOR_ACTIVEBORDER);
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush::Window, BackBrush::Window,}
+        @code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@subsection Hatch Brushes
+The @code{HatchBrush} class represents arbitrary application defined
+brushes with a specified pattern.  This class is a subclass of
+@code{Brush} and as such inherits most of its functionality from it.
+This section documents the methods particular to this class.  See the
+@code{Brush} class for additional functionality.
+
+
+
+
+
+
+@deffn {New} New::HatchBrush
+@sp 2
+@example
+@group
+bsh = vNew(HatchBrush, red, green, blue, style);
+
+int     red;
+int     green;
+int     blue;
+int     style;  /*  brush pattern  */
+object  bsh;    /*  brush object   */
+@end group
+@end example
+This method is used to create a colored brush with specific colors and
+pattern Each color argument specifies a number between 0 and 255 and
+indicates the intensity of the related color.  If all three are 0 you
+get black, and all three at 255 is white.
+
+The @code{style} parameter indicates the specific pattern for the brush.
+This parameter is a macro documented in the Windows documentation under
+the function @code{CreateHatchBrush} and begin with @code{HS_}.
+
+The value returned is an object representing the brush created, or
+@code{NULL} if the brush was not created.
+@example
+@group
+@exdent Example:
+
+object  bsh;
+
+bsh = vNew(HatchBrush, 255, 10, 10, HS_VERTICAL);
+@end group
+@end example
+@sp 1
+See also:  @code{TextBrush::Window, BackBrush::Window,}
+        @code{Use::Window, Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+
+
+@section Pens
+The @code{Pen} class (as well as its subclasses) are used to represent
+pen objects.  This class is never used by an application.  It is used
+to house the functionality common to its subclasses.  Therefore, this
+class documents functionality which is common to all of its subclasses.
+
+
+
+
+
+
+
+
+
+@deffn {Color} Color::Pen
+@sp 2
+@example
+@group
+c = gColor(pn);
+
+object    pn;   /*  pen object   */
+COLORREF  c;    /*  pen color    */
+@end group
+@end example
+This method is used to obtain the color associated with a pen.
+@example
+@group
+@exdent Example:
+
+object    pn;
+COLORREF  c;
+
+c = gColor(pn);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {Copy} Copy::Pen
+@sp 2
+@example
+@group
+c = gCopy(pn);
+
+object  pn;     /*  pen object          */
+object  c;      /*  copy of pen object  */
+@end group
+@end example
+This method is implemented by all subclasses of @code{Pen}
+(@code{StockPen}, @code{CustomPen}).
+
+This method is used to create a new pen object which is a copy of a
+given pen object.  The value of this is to be able to associate a
+pen with multiple objects which will automatically dispose of the
+pen when they are disposed.  If copies weren't used the second object
+referencing the pen would reference a disposed pen object.
+
+Each pen object must be disposed (either automatically or manually)
+when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  p1, p2;
+
+p2 = gCopy(p1);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepCopy}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {DeepCopy} DeepCopy::Pen
+@sp 2
+This method performs the same function as @code{Copy}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Pen
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Pen
+@sp 2
+@example
+@group
+r = gDispose(pn);
+
+object  pn;   /*  a pen object  */
+object  r;    /*  NULL          */
+@end group
+@end example
+This method is used to dispose of a pen object when it is no longer
+needed.  This method is rarely needed due to the fact that when a window
+or printer object is disposed it automatically calls this method to
+dispose of its associated pen object.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  pn;
+
+pn = gDispose(pn);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+
+
+@deffn {Handle} Handle::Pen
+@sp 2
+@example
+@group
+h = gHandle(pn);
+
+object  pn;     /*  pen object    */
+HANDLE  h;      /*  Windows handle  */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a pen object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  pn;
+HPEN    h;
+
+h = gHandle(pn);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+@subsection Stock Pens
+The @code{StockPen} class represents common Windows defined pens.  This
+class is a subclass of @code{Pen} and as such inherits most of its
+functionality from it.  This section documents the methods particular to
+this class.  See the @code{Pen} class for additional functionality.
+
+
+
+
+
+
+@deffn {New} New::StockPen
+@sp 2
+@example
+@group
+pn = vNew(StockPen, id);
+
+unsigned id;    /*  pen id      */
+object  pn;     /*  pen object  */
+@end group
+@end example
+This method is used to load one of the Windows pre-defined pens.
+The available options are macros documented in the Windows documentation
+under the function @code{GetStockObject} and end with @code{_PEN}.
+
+The value returned is an object representing the pen loaded, or
+@code{NULL} if the pen was not found.
+@example
+@group
+@exdent Example:
+
+object  pn;
+
+pn = vNew(StockPen, BLACK_PEN);
+@end group
+@end example
+@sp 1
+See also:  @code{Use::Printer}
+@end deffn
+
+
+
+
+
+
+
+@subsection Custom Pens
+The @code{CustomPen} class represents arbitrary application defined pens
+with a specified pattern and width.  This class is a subclass of
+@code{Pen} and as such inherits most of its functionality from it.  This
+section documents the methods particular to this class.  See the
+@code{Pen} class for additional functionality.
+
+
+
+
+
+
+@deffn {New} New::CustomPen
+@sp 2
+@example
+@group
+pn = vNew(CustomPen, red, green, blue, style, width);
+
+int     red;
+int     green;
+int     blue;
+int     style;  /*  pen pattern     */
+int     width;  /*  pen line width  */
+object  pn;     /*  pen object      */
+@end group
+@end example
+This method is used to create a colored pen with specific colors,
+pattern and line width.  Each color argument specifies a number between
+0 and 255 and indicates the intensity of the related color.  If all
+three are 0 you get black, and all three at 255 is white.
+
+The @code{style} parameter indicates the specific pattern for the pen.
+This parameter is a macro documented in the Windows documentation under
+the function @code{CreatePen} and begin with @code{PS_}.
+The @code{width} parameter specifies the width of the line in logical
+units.
+
+The value returned is an object representing the pen created, or
+@code{NULL} if the pen was not created.
+@example
+@group
+@exdent Example:
+
+object  pn;
+
+pn = vNew(CustomPen, 255, 10, 10, PS_DASH, 5);
+@end group
+@end example
+@sp 1
+See also:  @code{Use::Printer}
+@end deffn
+
+
+
+
+@section Help System
+The @code{HelpSystem} class is used to support the standard Windows
+help system.  In addition to being able to support arbitrary evocation
+of help messages, this class is used by other WDS classes in order to
+provide complete support for context sensitive help to any level.
+Each class provides mechanisms in order to associate context sensitive
+help text to windows, dialogs, menus or controls.
+
+Most classes which provide context sensitive help support have a method
+called @code{SetTopic} which is used to associate a particular topic
+within a given context.
+
+All the methods in this class are class methods.  This means that
+the first argument to all the methods will be @code{HelpSystem} and
+there is never an instance object to keep track of.
+
+See the appropriate examples for detailed information on how to
+create the actual help file.
+
+
+
+
+
+
+
+
+
+
+
+@deffn {HelpContents} HelpContents::HelpSystem
+@sp 2
+@example
+@group
+r = gHelpContents(HelpSystem);
+
+object  r;      /*  HelpSystem  */
+@end group
+@end example
+This method is used to display the contents screen of the help file.
+@code{HelpSystem} will be returned if the request is successful and
+@code{NULL} otherwise.
+@example
+@group
+@exdent Example:
+
+gHelpContents(HelpSystem);
+@end group
+@end example
+@sp 1
+See also:  @code{HelpFile, HelpTopic, HelpInContext}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {HelpFile} HelpFile::HelpSystem
+@sp 2
+@example
+@group
+r = gHelpFile(HelpSystem, hf);
+
+char    *hf;    /*  help file   */
+object  r;      /*  HelpSystem  */
+@end group
+@end example
+This method is used to determine the external file to be used for all help
+references.  This must be done prior to any of the other help facilities
+use.  The help file will not be opened until one of the help display
+methods is evoked.  The application must also have a main window prior
+to the evocation of the help system.  The help system will automatically
+terminate when the user terminates the application.
+@example
+@group
+@exdent Example:
+
+gHelpFile(HelpSystem, "helpfile.hlp");
+@end group
+@end example
+@sp 1
+See also:  @code{HelpContents}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {HelpInContext} HelpInContext::HelpSystem
+@sp 2
+@example
+@group
+r = gHelpInContext(HelpSystem);
+
+object  r;      /*  HelpSystem  */
+@end group
+@end example
+This method is used to display the help screen associated with the
+current context (set with @code{SetTopic}).  If no context is set the
+help contents will be displayed.  @code{HelpSystem} will be returned if
+the request is successful and @code{NULL} otherwise.
+
+Note that @code{SetTopic} and @code{HelpInContext}, although available
+to an application program, are mainly used internally by WDS in order to
+support the context sensitive help facility provided by the @code{Window},
+@code{Dialog}, @code{Menu}, and @code{Control} classes.  See the
+@code{SetTopic} method associated with those classes.
+@example
+@group
+@exdent Example:
+
+gHelpInContext(HelpSystem);
+@end group
+@end example
+@sp 1
+See also:  @code{HelpFile, SetTopic, HelpContents, HelpTopic}
+@end deffn
+
+
+
+
+
+
+
+@deffn {HelpTopic} HelpTopic::HelpSystem
+@sp 2
+@example
+@group
+r = gHelpTopic(HelpSystem, tpc);
+
+char    *tpc;   /*  help topic  */
+object  r;      /*  HelpSystem  */
+@end group
+@end example
+This method is used to display the help screen associated with a given topic.
+@iftex
+@hfil @break 
+@end iftex
+@code{HelpSystem} will be returned if the request is successful
+and @code{NULL} otherwise.
+@example
+@group
+@exdent Example:
+
+gHelpTopic(HelpSystem, "fileOpen");
+@end group
+@end example
+@sp 1
+See also:  @code{HelpFile, HelpContents, HelpInContext}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetTopic} SetTopic::HelpSystem
+@sp 2
+@example
+@group
+r = gSetTopic(HelpSystem, tpc);
+
+char    *tpc;   /*  help topic      */
+char    *r;     /*  previous topic  */
+@end group
+@end example
+This method is used to set the current help topic context.  It is
+used by @code{HelpInContext} to display the help text associated
+with the current context.  The previous help topic will be returned.
+
+Note that @code{SetTopic} and @code{HelpInContext}, although available
+to an application program, are mainly used internally by WDS in order to
+support the context sensitive help facility provided by the @code{Window},
+@code{Dialog}, @code{Menu}, and @code{Control} classes.  See the
+@code{SetTopic} method associated with those classes.
+@example
+@group
+@exdent Example:
+
+gSetTopic(HelpSystem, "someTopic");
+@end group
+@end example
+@sp 1
+See also:  @code{HelpFile, HelpInContext, HelpContents, HelpTopic}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@section Common Dialogs
+The @code{CommonDialog} class is only used to group the common dialogs
+which are all subclasses of this class.  There is no specific
+functionality associated with this class.  See the particular subclasses
+for documentation.
+
+
+
+
+
+
+@subsection File Selection Dialog
+The @code{FileDialog} class provides a standard and convenient method of
+querying the user for a file name.  The user is able to browse the disk
+or enter a new file name.
+
+The @code{fd} parameter used by all methods in this class refer to
+the file dialog object returned by the @code{New} method.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AppendFilter} AppendFilter::FileDialog
+@sp 2
+@example
+@group
+r = gAppendFilter(fd, ttl, fltr);
+
+object  fd;     /*  file dialog  */
+char    *ttl;   /*  title        */
+char    *fltr;  /*  file filter  */
+object  r;      /*  file dialog  */
+@end group
+@end example
+This method is used to group files according to some file naming
+criteria for user selection.  There may be any number of groups.  The
+user selects the group they are interested in and are presented with
+a list of files which meet the criteria.
+
+@code{ttl} is the name of the group which the user is presented with.
+@code{fltr} is the file filter and may consist of several filters,
+each separated with a semicolon.
+
+This method may be called any number of times to create several groups.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gAppendFilter(fd, "Document Files", "*.txt;*.doc");
+gAppendFilter(fd, "Source Files", "*.c;*.h");
+@end group
+@end example
+@sp 1
+See also:  @code{SetFile, InitialDir, DefExt}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {DefExt} DefExt::FileDialog
+@sp 2
+@example
+@group
+r = gDefExt(fd, ext);
+
+object  fd;     /*  file dialog     */
+char    *ext;   /*  file extension  */
+object  r;      /*  file dialog     */
+@end group
+@end example
+This method is used to set the default file extension which will be
+displayed for the user.  It should not contain a period.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gDefExt(fd, "txt");
+@end group
+@end example
+@sp 1
+See also:  @code{SetFile, AppendFilter}
+@end deffn
+
+
+
+
+
+
+@deffn {Dispose} Dispose::FileDialog
+@sp 2
+@example
+@group
+r = gDispose(fd);
+
+object  fd;   /*  file dialog  */
+object  r;    /*  NULL         */
+@end group
+@end example
+This method is used to dispose of a file dialog object.  This method must
+be called to dispose of the dialog when it is no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+fd = gDispose(fd);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetFile} GetFile::FileDialog
+@sp 2
+@example
+@group
+fname = gGetFile(fd);
+
+object  fd;     /*  file dialog  */
+char    *fname; /*  file name    */
+@end group
+@end example
+This method is used to obtain the file name the user selected once the
+file dialog has been completed.  This value will include the full path,
+file name and extension.  If multiple selections are allowed, the path
+will be returned, then a space delimited list of selected file names.
+@example
+@group
+@exdent Example:
+
+object  fd;
+char    *files;
+
+files = gGetFile(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{GetOpenFile, GetSaveFile, SetFile, SetFlags}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {InitialDir} InitialDir::FileDialog
+@sp 2
+@example
+@group
+r = gInitialDir(fd, pth);
+
+object  fd;     /*  file dialog  */
+char    *pth;   /*  initial path */
+object  r;      /*  file dialog  */
+@end group
+@end example
+This method is used to set the initial path associated with the file dialog.
+If no initial path is set, the system will use the current directory of
+the application.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gInitialDir(fd, "c:\\mypath");
+@end group
+@end example
+@sp 1
+See also:  @code{SetFile, AppendFilter, DefExt}
+@end deffn
+
+
+
+
+
+
+
+@deffn {New} New::FileDialog
+@sp 2
+@example
+@group
+fd = vNew(FileDialog, pwind);
+
+object  pwind;  /*  parent window  */
+object  fd;     /*  file dialog    */
+@end group
+@end example
+This method is used to create a new file dialog object.  It will not be
+displayed until the appropriate method is called.  The object returned
+must be disposed when it no longer needed.
+
+The @code{pwind} parameter refers to either the application's main window
+or any child window object.
+@example
+@group
+@exdent Example:
+
+object  fd, pwind;
+
+fd = vNew(FileDialog, pwind);
+@end group
+@end example
+@sp 1
+See also:  @code{Dispose, GetOpenFile, GetSaveFile}
+@end deffn
+
+
+
+
+
+@deffn {GetOpenFile} GetOpenFile::FileDialog
+@sp 2
+@example
+@group
+r = gGetOpenFile(fd);
+
+object  fd;     /*  file dialog    */
+int     r;      /*  return status  */
+@end group
+@end example
+This method is used to actually display the dialog and obtain user input.
+The type of file dialog presented will be one in which the user must
+select a pre-existing file, presumably to open.
+
+The return value is non-zero if the user makes a valid selection and
+zero if the user did not make a selection or if an error occurred.
+@example
+@group
+@exdent Example:
+
+object  fd;
+int     r;
+
+r = gGetOpenFile(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{GetSaveFile}
+@end deffn
+
+
+
+
+
+
+@deffn {GetSaveFile} GetSaveFile::FileDialog
+@sp 2
+@example
+@group
+r = gGetSaveFile(fd);
+
+object  fd;     /*  file dialog    */
+int     r;      /*  return status  */
+@end group
+@end example
+This method is used to actually display the dialog and obtain user input.
+The type of file dialog presented will be one in which the user may
+select a pre-existing file or type in a new name, presumably to save some
+data to.
+
+The return value is non-zero if the user makes a valid selection and
+zero if the user did not make a selection or if an error occurred.
+@example
+@group
+@exdent Example:
+
+object  fd;
+int     r;
+
+r = gGetSaveFile(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{GetOpenFile}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {SetFile} SetFile::FileDialog
+@sp 2
+@example
+@group
+r = gSetFile(fd, fname);
+
+object  fd;     /*  file dialog  */
+char    *fname; /*  file name    */
+object  r;      /*  file dialog  */
+@end group
+@end example
+This method is used to set the default file name displayed when the
+file dialog is displayed.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gSetFile(fd, "somefile.txt");
+@end group
+@end example
+@sp 1
+See also:  @code{InitialDir, GetFile, SetFlags, DefExt}
+@end deffn
+
+
+
+
+
+
+
+@deffn {SetFlags} SetFlags::FileDialog
+@sp 2
+@example
+@group
+r = gSetFlags(fd, flgs);
+
+object  fd;     /*  file dialog  */
+DWORD   flgs;   /*  flags        */
+object  r;      /*  file dialog  */
+@end group
+@end example
+This method is used to set the option flags associated with a file dialog.
+The available flags are fully documented in the Windows documentation
+under the @code{OPENFILENAME} structure and all begin with @code{OFN_}.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gSetFlags(fd, OFN_ALLOWMULTISELECT);
+@end group
+@end example
+@sp 1
+See also:  @code{SetFile, DefExt}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetTitle} SetTitle::FileDialog
+@sp 2
+@example
+@group
+r = gSetTitle(fd, ttl);
+
+object  fd;     /*  file dialog  */
+char    *ttl;   /*  dialog title */
+object  r;      /*  file dialog  */
+@end group
+@end example
+This method is used to set the text which appears at the top of the
+file dialog.  If no value is set the system will use appropriate defaults.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gSetTitle(fd, "Select File");
+@end group
+@end example
+@sp 1
+See also:  @code{SetFile, AppendFilter, DefExt}
+@end deffn
+
+
+
+
+
+@subsection Printer Selection and Configuration Dialog
+The @code{PrintDialog} class is used to present the user with a standard
+and convenient dialog for printer selection and configuration.
+
+This class is seldom needed because the @code{Printer} class has
+the @code{QueryPrinter::Printer} method which automatically calls
+this class for printer information.  However, this class may be used
+independently in order to have better control of user options.
+
+
+The @code{pd} parameter used by all methods in this class refer to
+the print dialog object returned by the @code{New} method.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Copies} Copies::PrintDialog
+@sp 2
+@example
+@group
+cp = gCopies(fd);
+
+object  fd;     /*  file dialog  */
+int     cp;     /*  copies       */
+@end group
+@end example
+This method is used to obtain the number of copies selected by the user
+subsequent to calling @code{Perform}.
+@example
+@group
+@exdent Example:
+
+object  fd;
+int     cp;
+
+cp = gCopies(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, SetFlags, GetPageRange}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::PrintDialog
+@sp 2
+@example
+@group
+r = gDispose(pd);
+
+object  pd;     /*  print dialog   */
+object  r;      /*  NULL           */
+@end group
+@end example
+This method is used to dispose of a print dialog object.  This must
+be done when it is no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  pd;
+
+pd = gDispose(pd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetPageRange} GetPageRange::PrintDialog
+@sp 2
+@example
+@group
+r = gGetPageRange(fd, start, end);
+
+object  fd;     /*  file dialog           */
+int     *start; /*  starting page number  */
+int     *end;   /*  ending page number    */
+object  r;      /*  file dialog           */
+@end group
+@end example
+This method is used to obtain the page range selected by the user
+subsequent to calling @code{Perform}.
+@example
+@group
+@exdent Example:
+
+object  fd;
+int     start, end;
+
+gGetPageRange(fd, &start, &end);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, SetFlags, Copies}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::PrintDialog
+@sp 2
+@example
+@group
+hdc = gHandle(pd);
+
+object  pd;     /*  print dialog   */
+HANDLE  hdc;    /*  handle to dc   */
+@end group
+@end example
+This method is used to obtain the device context handle associated with
+the print dialog.  It will only be valid after performing the
+dialog (via @code{Perform}).  If the handle is obtained via this method,
+the @code{Dispose} method will not release the handle as it would
+normally do.  This is done so the device context can be used for the
+printer to be opened.  If the handle as obtained it is the application's
+responsibility to release the handle when it is no longer needed.  This
+may be done via the @code{DeleteDC} Windows function.
+
+This method is mainly used internally to WDS and is only made available
+for convenience.
+@example
+@group
+@exdent Example:
+
+object  pd;
+HDC     hdc;
+
+hdc = gHandle(pd);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {New} New::PrintDialog
+@sp 2
+@example
+@group
+pd = vNew(PrintDialog, pwind);
+
+object  pwind;  /*  parent window  */
+object  pd;     /*  print dialog   */
+@end group
+@end example
+This method is used to create a new print dialog object.  It will not be
+displayed until the appropriate method is called.  The object returned
+must be disposed when it no longer needed.
+
+The @code{pwind} parameter refers to either the application's main window
+or any child window object.
+@example
+@group
+@exdent Example:
+
+object  pd, pwind;
+
+pd = vNew(PrintDialog, pwind);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Perform} Perform::PrintDialog
+@sp 2
+@example
+@group
+r = gPerform(pd);
+
+object  pd;     /*  print dialog   */
+int     r;      /*  return status  */
+@end group
+@end example
+This method is used to actually present the user with the print dialog.
+The return value is non-zero if the user appropriately selects a printer.
+Zero will be returned if the user cancels the dialog or an error occurs.
+@example
+@group
+@exdent Example:
+
+object  pd;
+int     r;
+
+r = gPerform(pd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Dispose}
+@end deffn
+
+
+
+
+
+
+
+@deffn {SetFlags} SetFlags::PrintDialog
+@sp 2
+@example
+@group
+r = gSetFlags(pd, flgs);
+
+object  pd;     /*  print dialog  */
+DWORD   flgs;   /*  flags         */
+object  r;      /*  print dialog  */
+@end group
+@end example
+This method is used to set the option flags associated with a print dialog.
+The available flags are fully documented in the Windows documentation
+under the @code{PRINTDLG} structure and all begin with @code{PD_}.
+@example
+@group
+@exdent Example:
+
+object  pd;
+
+gSetFlags(pd, PD_ALLPAGES);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@subsection Color Selection Dialog
+The @code{ColorDialog} class is used to present the user with a standard
+and convenient dialog for color selection and configuration.
+
+The @code{cd} parameter used by all methods in this class refer to
+the color dialog object returned by the @code{New} method.
+
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::ColorDialog
+@sp 2
+@example
+@group
+r = gDispose(cd);
+
+object  cd;     /*  color dialog   */
+object  r;      /*  NULL           */
+@end group
+@end example
+This method is used to dispose of a color dialog object.  This must
+be done when it is no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  cd;
+
+cd = gDispose(cd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {GetColor} GetColor::ColorDialog
+@sp 2
+@example
+@group
+clr = gGetColor(cd);
+
+object   cd;    /*  color dialog    */
+COLORREF clr;   /*  selected color  */
+@end group
+@end example
+This method is used to obtain the users color selection subsequent to
+executing @code{Perform}.
+@example
+@group
+@exdent Example:
+
+object  cd;
+COLORREF clr;
+
+clr = gGetColor(cd);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, SetColor, GetCustomColorPtr}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetCustomColorPtr} GetCustomColorPtr::ColorDialog
+@sp 2
+@example
+@group
+cv = gGetCustomColorPtr(cd);
+
+object   cd;    /*  color dialog    */
+COLORREF *cv;   /*  color vector    */
+@end group
+@end example
+This method is used to obtain a pointer to 16 @code{COLORREF}s
+selected as custom colors by the user.  This vector should be
+inspected subsequent to calling @code{Perform} and prior to
+calling @code{Dispose}.  One @code{Dispose} is called, the returned
+pointer will no longer be valid.
+@example
+@group
+@exdent Example:
+
+object  cd;
+COLORREF *cv;
+
+cv = gGetCustomColorPtr(cd);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, GetColor}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {New} New::ColorDialog
+@sp 2
+@example
+@group
+cd = vNew(ColorDialog, pwind);
+
+object  pwind;  /*  parent window  */
+object  cd;     /*  color dialog   */
+@end group
+@end example
+This method is used to create a new color dialog object.  It will not be
+displayed until the appropriate method is called.  The object returned
+must be disposed when it no longer needed.
+
+The @code{pwind} parameter refers to either the application's main window
+or any child window object.
+@example
+@group
+@exdent Example:
+
+object  cd, pwind;
+
+cd = vNew(ColorDialog, pwind);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Perform} Perform::ColorDialog
+@sp 2
+@example
+@group
+r = gPerform(cd);
+
+object  cd;     /*  color dialog   */
+int     r;      /*  return status  */
+@end group
+@end example
+This method is used to actually present the user with the color
+selection dialog.  The return value is non-zero if the user appropriately
+selects a color.  Zero will be returned if the user canceled the dialog
+or an error occurred.
+@example
+@group
+@exdent Example:
+
+object  cd;
+int     r;
+
+r = gPerform(cd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {SetColor} SetColor::ColorDialog
+@sp 2
+@example
+@group
+r = gSetColor(cd, clr);
+
+object   cd;    /*  color dialog    */
+COLORREF clr;   /*  selected color  */
+object   r;     /*  color dialog    */
+@end group
+@end example
+This method is used to set the initial color associated with the
+color selection dialog.  The Windows @code{RGB} macro may be used
+to obtain a valid @code{COLORREF}.
+@example
+@group
+@exdent Example:
+
+object  cd;
+COLORREF clr;
+
+gSetColor(cd, RGB(255, 0 ,0));
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, GetColor}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetFlags} SetFlags::ColorDialog
+@sp 2
+@example
+@group
+r = gSetFlags(cd, flgs);
+
+object  cd;     /*  color dialog  */
+DWORD   flgs;   /*  flags         */
+object  r;      /*  color dialog  */
+@end group
+@end example
+This method is used to set the option flags associated with a color dialog.
+The available flags are fully documented in the Windows documentation
+under the @code{CHOOSECOLOR} structure and all begin with @code{CC_}.
+@example
+@group
+@exdent Example:
+
+object  cd;
+
+gSetFlags(cd, CC_FULLOPEN);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@subsection Font Selection Dialog
+The @code{FontDialog} class is used to present the user with a standard
+and convenient dialog for font selection.
+
+The @code{fd} parameter used by all methods in this class refer to
+the font dialog object returned by the @code{New} method.
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::FontDialog
+@sp 2
+@example
+@group
+r = gDispose(fd);
+
+object  fd;     /*  font dialog   */
+object  r;      /*  NULL          */
+@end group
+@end example
+This method is used to dispose of a font dialog object.  This must
+be done when it is no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+fd = gDispose(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Font} Font::FontDialog
+@sp 2
+@example
+@group
+fnt = gFont(fd);
+
+object  fd;     /*  font dialog  */
+object  font;   /*  font object  */
+@end group
+@end example
+This method is used to create a font object representing the font the
+user selected.  This font object will be an instance of the
+@code{ExternalFont} class and must be disposed (either directly or
+indirectly) when it is no longer needed.  This method should only
+be called subsequent to @code{Perform}.  @code{NULL} will be returned
+if no font was selected or the font object could not be created.
+@example
+@group
+@exdent Example:
+
+object  fd, fnt;
+
+fnt = gFont(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetColor} GetColor::FontDialog
+@sp 2
+@example
+@group
+clr = gGetColor(fd);
+
+object   fd;    /*  font dialog  */
+COLORREF clr;   /*  color        */
+@end group
+@end example
+This method is used to get the user selected color once @code{Perform}
+has been called.  This will only work if the @code{CF_EFFECTS} option
+is set.
+@example
+@group
+@exdent Example:
+
+object  fd;
+COLORREF clr;
+
+clr = gGetColor(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{SetFlags, SetColor, Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {New} New::FontDialog
+@sp 2
+@example
+@group
+fd = vNew(FontDialog, pwind);
+
+object  pwind;  /*  parent window  */
+object  fd;     /*  font dialog    */
+@end group
+@end example
+This method is used to create a new font dialog object.  It will not be
+displayed until the appropriate method is called.  The object returned
+must be disposed when it no longer needed.
+
+The @code{pwind} parameter refers to either the application's main window
+or any child window object.
+@example
+@group
+@exdent Example:
+
+object  fd, pwind;
+
+fd = vNew(FontDialog, pwind);
+@end group
+@end example
+@sp 1
+See also:  @code{Perform, Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Perform} Perform::FontDialog
+@sp 2
+@example
+@group
+r = gPerform(fd);
+
+object  fd;     /*  font dialog    */
+int     r;      /*  return status  */
+@end group
+@end example
+This method is used to actually present the user with the font
+selection dialog.  The return value is non-zero if the user appropriately
+selects a font.  Zero will be returned if the user canceled the dialog
+or an error occurred.
+@example
+@group
+@exdent Example:
+
+object  fd;
+int     r;
+
+r = gPerform(fd);
+@end group
+@end example
+@sp 1
+See also:  @code{New, Dispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {SetColor} SetColor::FontDialog
+@sp 2
+@example
+@group
+clr = gSetColor(fd);
+
+object   fd;    /*  font dialog  */
+COLORREF clr;   /*  color        */
+@end group
+@end example
+This method is used to set the initial color of the user color selection
+portion of the font dialog.  This will only work if the
+@code{CF_EFFECTS} option is set.  The Windows supplied @code{RGB} macro
+may be used to create the @code{COLORREF}.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gSetColor(fd, RGB(255, 0, 0));
+@end group
+@end example
+@sp 1
+See also:  @code{SetFlags, GetColor, Perform}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetFlags} SetFlags::FontDialog
+@sp 2
+@example
+@group
+r = gSetFlags(fd, flgs);
+
+object  fd;     /*  font dialog  */
+DWORD   flgs;   /*  flags        */
+object  r;      /*  font dialog  */
+@end group
+@end example
+This method is used to set the option flags associated with a font dialog.
+The available flags are fully documented in the Windows documentation
+under the @code{CHOOSEFONT} structure and all begin with @code{CF_}.
+@example
+@group
+@exdent Example:
+
+object  fd;
+
+gSetFlags(fd, CF_ANSIONLY);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+@section Dynamic Link Libraries
+The @code{DynamicLibrary} class is used to support the dynamic link
+library (DLL) facility of Windows.  This class provides a convenient
+mechanism to load, free and use DLLs.
+
+Throughout this section @code{dl} will refer to the object which was
+returned by the @code{LoadLibrary} method and represents a DLL.
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::DynamicLibrary
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::DynamicLibrary
+@sp 2
+@example
+@group
+r = gDispose(dl);
+
+object  dl;   /*  a DLL object  */
+object  r;    /*  NULL          */
+@end group
+@end example
+This method is used to release and dispose of a DLL object when it is no
+longer needed.  All DLL objects are automatically released by WDS when
+the application terminates.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  dl;
+
+dl = gDispose(dl);
+@end group
+@end example
+@sp 1
+See also:  @code{FreeAll, DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {FindStr} FindStr::DynamicLibrary
+@sp 2
+@example
+@group
+dl = gFindStr(DynamicLibrary, fname);
+
+char    *fname; /*  DLL file name  */
+object  dl;     /*  DLL object     */
+@end group
+@end example
+This class method is used to obtain the DLL object (previously loaded via
+@iftex
+@break 
+@end iftex
+@code{LoadLibrary}) via its associated file name.  This won't work
+after the DLL object is disposed.
+@example
+@group
+@exdent Example:
+
+object  dl;
+
+dl = gFindStr(DynamicLibrary, "mydll.dll");
+@end group
+@end example
+@sp 1
+See also:  @code{LoadLibrary}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {FreeAll} FreeAll::DynamicLibrary
+@sp 2
+@example
+@group
+gFreeAll(DynamicLibrary);
+
+@end group
+@end example
+This class method is used to release and dispose of all DLL objects.
+It is automatically called by WDS when the application terminates.
+@example
+@group
+@exdent Example:
+
+gFreeAll(DynamicLibrary);
+@end group
+@end example
+@sp 1
+See also:  @code{Dispose, DeepDispose}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {GetProcAddress} GetProcAddress::DynamicLibrary
+@sp 2
+@example
+@group
+fun = gGetProcAddress(dl, fname);
+
+object  dl;     /*  DLL object           */
+char    *fname; /*  function name        */
+FARPROC fun;    /*  pointer to function  */
+@end group
+@end example
+This method is used to obtain a pointer to a function within a
+DLL.  The DLL function may then be evoked with the pointer.
+@example
+@group
+@exdent Example:
+
+FARPROC fun;
+object  dl;
+
+fun = gGetProcAddress(dl, "myfunc");
+@end group
+@end example
+@sp 1
+See also:  @code{FindStr, LoadLibrary}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadLibrary} LoadLibrary::DynamicLibrary
+@sp 2
+@example
+@group
+dl = gLoadLibrary(DynamicLibrary, file);
+
+char    *file;  /*  DLL file    */
+object  dl;     /*  DLL object  */
+@end group
+@end example
+This method is used to open a DLL file and create a WDS object which
+represents the loaded library.  If the named file does not contain a
+path, the normal Windows search path will be searched.  If the
+DLL cannot be found or loaded, @code{NULL} will be returned.
+@example
+@group
+@exdent Example:
+
+object  dl;
+
+dl = gLoadLibrary(DynamicLibrary, "mydll.dll");
+@end group
+@end example
+@sp 1
+See also:  @code{GetProcAddress, Dispose, FindStr}
+@end deffn
+
+
+
+
+
+
+
+

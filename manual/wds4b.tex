@@ -1,0 +1,2086 @@
+@section Printing
+The @code{Printer} class is used for all aspects of printing.
+It is a subclass of the Dynace @code{Stream} class and as
+such inherits all of its functionality.
+
+All methods in the class use an argument referred to as @code{pntr}.
+This will always be the printer object returned by @code{QueryPrinter},
+@code{New} or @code{NewWithHDC} and used to identify the printer
+which is to be affected.
+
+The value returned by all methods which cause text or graphics output is
+very significant.  During normal operation, the printer object passed
+will be returned.  However, if an error occurs or the user aborted the
+report a @code{NULL} will be returned.  In this case further output
+should be avoided (although it won't hurt - it'll just be ignored) and
+the printer object should be disposed.
+
+All positioning parameters are in increments dictated by
+@code{SetScale}.  Positions begin in the upper left hand corner and have
+an index origin of 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Arc} Arc::Printer
+@sp 2
+@example
+@group
+r = gArc(pntr, yBeg, xBeg, yEnd, xEnd, yaBeg, xaBeg, yaEnd, xaEnd);
+
+object  pntr;   /*  printer object         */
+int     yBeg;   /*  starting row           */
+int     xBeg;   /*  starting column        */
+int     yEnd;   /*  ending row             */
+int     xEnd;   /*  ending column          */
+int     yaBeg;  /*  starting arc row       */
+int     xaBeg;  /*  starting arc column    */
+int     yaEnd;  /*  ending arc row         */
+int     xaEnd;  /*  ending arc column      */
+object  r;      /*  printer object         */
+@end group
+@end example
+This method is used to output an elliptical arc to the printer.  The
+currently selected pen object will indicate the thickness and pattern of
+the outline of the shape, and the currently selected brush object will
+be used to determine what pattern the shape will be filled with.  The
+parameters indicate location of the beginning and ending of the shape as
+well as the coordinates of the arc and are in increments dictated by
+@code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gArc(pntr, 10, 10, 180, 140, 12, 12, 128, 135))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Rectangle, Ellipse, RoundRect,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{Chord, Pie}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Chord} Chord::Printer
+@sp 2
+@example
+@group
+r = gChord(pntr, yBeg, xBeg, yEnd, xEnd,
+                 ylBeg, xlBeg, ylEnd, xlEnd);
+
+object  pntr;   /*  printer object         */
+int     yBeg;   /*  starting row           */
+int     xBeg;   /*  starting column        */
+int     yEnd;   /*  ending row             */
+int     xEnd;   /*  ending column          */
+int     ylBeg;  /*  starting line row      */
+int     xlBeg;  /*  starting line column   */
+int     ylEnd;  /*  ending line row        */
+int     xlEnd;  /*  ending line column     */
+object  r;      /*  printer object         */
+@end group
+@end example
+This method is used to output a chord shape to the printer.  The
+currently selected pen object will indicate the thickness and pattern of
+the outline of the shape, and the currently selected brush object will
+be used to determine what pattern the shape will be filled with.  The
+parameters indicate location of the beginning and ending of the shape as
+well as the coordinates of the intersecting line and are in increments
+dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gChord(pntr, 10, 10, 180, 140, 12, 12, 128, 135))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Rectangle, Ellipse, RoundRect, Pie, Arc}
+@end deffn
+
+
+
+
+@deffn {Copies} Copies::Printer
+@sp 2
+@example
+@group
+n = gCopies(prt);
+
+object  prt;  /*  printer object     */
+int     n;    /*  number of copies   */
+@end group
+@end example
+This instance method returns the number of copies set for this print job.
+@example
+@group
+@exdent Example:
+
+object  prt;
+int     nc;
+
+nc = gCopies(prt);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Printer
+@sp 2
+This method performs the same function as @code{Dispose}.  See that
+method for details.
+@end deffn
+
+
+
+
+
+@deffn {Dispose} Dispose::Printer
+@sp 2
+@example
+@group
+r = gDispose(pntr); 
+
+object  pntr;   /*  printer object  */
+object  r;      /*  NULL            */
+@end group
+@end example
+This method is used to flush the final output page, close the printer and
+dispose of the printer object.  It must be called when a report is complete and the printer is no longer needed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+pntr = gDispose(pntr);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Ellipse} Ellipse::Printer
+@sp 2
+@example
+@group
+r = gEllipse(pntr, yBeg, xBeg, yEnd, xEnd);
+
+object  pntr;   /*  printer object   */
+int     yBeg;   /*  starting row     */
+int     xBeg;   /*  starting column  */
+int     yEnd;   /*  ending row       */
+int     xEnd;   /*  ending column    */
+object  r;      /*  printer object   */
+@end group
+@end example
+This method is used to output an ellipse to the printer.  The currently
+selected pen object will indicate the thickness and pattern of the
+outline of the shape, and the currently selected brush object will be
+used to determine what pattern the shape will be filled with.  The
+parameters indicate location of the beginning and ending of the shape
+and are in increments dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gEllipse(pntr, 10, 20, 30, 40))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Rectangle, RoundRect, Chord, Pie, Arc}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Printer
+@sp 2
+@example
+@group
+r = gHandle(pntr); 
+
+object  pntr;   /*  printer object         */
+HANDLE  hdc;    /*  handle device context  */
+@end group
+@end example
+This method is used to obtain the device context handle associated with
+an opened printer represented by @code{pntr}.  It is used internally
+by Windows and should not normally be needed.
+@example
+@group
+@exdent Example:
+
+HDC     hdc;
+
+hdc = (HDC) gHandle(pntr);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Line} Line::Printer
+@sp 2
+@example
+@group
+r = gLine(pntr, yBeg, xBeg, yEnd, xEnd);
+
+object  pntr;   /*  printer object   */
+int     yBeg;   /*  starting row     */
+int     xBeg;   /*  starting column  */
+int     yEnd;   /*  ending row       */
+int     xEnd;   /*  ending column    */
+object  r;      /*  printer object   */
+@end group
+@end example
+This method is used to output a line to the printer.  The currently
+selected pen object will indicate the thickness and pattern of the line.
+The parameters indicate location of the beginning and ending of the line
+and are in increments dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gLine(pntr, 10, 20, 30, 40))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Arc, Rectangle, Ellipse, RoundRect, Chord, Pie}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadFont} LoadFont::Printer
+@sp 2
+@example
+@group
+r = gLoadFont(pntr, fname, sz);
+
+object   pntr;  /*  printer object   */
+char    *fname; /*  font name        */
+int      sz;    /*  point size       */
+object   r;     /*  font object      */
+@end group
+@end example
+This method is used to load an arbitrary font by name at any point size
+and associate it as the default font for future text output to printer
+@code{pntr}.  @code{fname} is the full name of the font as it appears
+when you list the available fonts via the control-panel / fonts Windows
+utility, minus the font type in parentheses.  @code{sz} indicates the
+desired point size.
+
+Any font object previously associated with the printer will be
+disposed.  When the printer object is disposed, the font object
+will also be disposed.
+
+The value returned is an object representing the font loaded, or
+@code{NULL} if the font was not found.
+
+Note that @code{fname} may also be a Dynace object cast as a (@code{char *}).
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+gLoadFont(pntr, "Times New Roman", 12);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadSystemFont, Indirect::ExternalFont, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {LoadSystemFont} LoadSystemFont::Printer
+@sp 2
+@example
+@group
+r = gLoadSystemFont(pntr, fnt);
+
+object   pntr;  /*  a printer object  */
+unsigned fnt;   /*  font identifier  */
+object   r;     /*  font object      */
+@end group
+@end example
+This method is used to load a Windows predefined font and associate it
+with printer @code{pntr}.  The last font associated with a printer is the
+one which will be used when any text is output to the printer.
+
+@code{fnt} is a Windows defined macro which identifies the font.  The
+available options are defined in the Windows documentation under the
+function named @code{GetStockObject} and normally end with @code{_FONT}.
+The font object will be automatically destroyed whenever the printer
+object is disposed.
+
+The value returned is an object representing the font, or
+@code{NULL} if the font was not found.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+gLoadSystemFont(pntr, SYSTEM_FONT);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont, Load::SystemFont, Use}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {New} New::Printer
+@sp 2
+@example
+@group
+pntr = vNew(Printer, pwind, rname); 
+
+object  pwind;  /*  parent window       */
+char    *rname; /*  report name         */
+object  pntr;   /*  new printer object  */
+@end group
+@end example
+This class method is used to create a new @code{Printer} object which
+will be used by the @code{Printer} instance methods to control the
+printer, fonts and content of output.  This method opens up the
+default printer.
+
+@code{pwind} is the window which will act as the parent to any
+messages which may be displayed when a report is being printed.
+@code{rname} determines what the report is referred to as in any
+messages.
+
+The value returned represents the printer to be used.  If the default
+printer couldn't be opened, @code{NULL} will be returned.  If an object
+is returned, it must be disposed (via @code{Dispose}) when it is no
+longer needed.
+@example
+@group
+@exdent Example:
+
+object  pntr, pwind;
+
+pntr = vNew(Printer, pwind, "My Report");
+@end group
+@end example
+@sp 1
+See also:  @code{QueryPrinter, NewWithHDC}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewPage} NewPage::Printer
+@sp 2
+@example
+@group
+r = gNewPage(pntr); 
+
+object  pntr;   /*  printer object  */
+object  r;      /*  printer object  */
+@end group
+@end example
+This method is used to flush and eject the current output page (if anything
+had been output to it) and prepare for a possible new page of output.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gNewPage(pntr))
+        abort report;
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {NewWithHDC} NewWithHDC::Printer
+@sp 2
+@example
+@group
+pntr = gNewWithHDC(Printer, pwind, rname, hdc); 
+
+object  pwind;  /*  parent window       */
+char    *rname; /*  report name         */
+HDC     hdc;    /*  device context      */
+object  pntr;   /*  new printer object  */
+@end group
+@end example
+This class method is used to create a new @code{Printer} object which
+will be used by the @code{Printer} instance methods to control the
+printer, fonts and content of output.
+
+This method opens up the printer identified by @code{hdc}.  This is
+a Windows internal identifier and may be obtained via the
+@code{PrintDialog} class.
+
+@code{pwind} is the window which will act as the parent to any
+messages which may be displayed when a report is being printed.
+@code{rname} determines what the report is referred to as in any
+messages.
+
+The value returned represents the printer to be used.  If the 
+printer couldn't be opened, @code{NULL} will be returned.
+
+This method is seldom needed due to @code{QueryPrinter} and @code{New}.
+Use them. If an object is returned, it must be disposed (via
+@code{Dispose}) when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  pntr, pwind;
+HDC     hdc;
+
+pntr = gNewWithHDC(Printer, pwind, "My Report", hdc);
+@end group
+@end example
+@sp 1
+See also:  @code{QueryPrinter, New}
+@end deffn
+
+
+
+
+@deffn {OpenDefault} OpenDefault::Printer
+@sp 2
+@example
+@group
+prt = gOpenDefault(Printer, wind, name);
+
+object  wind;  /*  parent window              */
+char    *name; /*  report name or NULL        */
+object  prt;   /*  new printer object or NULL */
+@end group
+@end example
+This class method is used to open a printer using the system default
+printer without showing a print dialog.  @code{wind} is the parent
+window for any messages that may be displayed.  @code{name} is the
+report name and may be @code{NULL}.
+
+The value returned is a new @code{Printer} instance, or @code{NULL}
+if the default printer could not be opened.
+@example
+@group
+@exdent Example:
+
+object  prt, wind;
+
+prt = gOpenDefault(Printer, wind, "My Report");
+@end group
+@end example
+@sp 1
+See also:  @code{New, QueryPrinter}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Pie} Pie::Printer
+@sp 2
+@example
+@group
+r = gPie(pntr, yBeg, xBeg, yEnd, xEnd, yaBeg, xaBeg, yaEnd, xaEnd);
+
+object  pntr;   /*  printer object         */
+int     yBeg;   /*  starting row           */
+int     xBeg;   /*  starting column        */
+int     yEnd;   /*  ending row             */
+int     xEnd;   /*  ending column          */
+int     yaBeg;  /*  starting arc row       */
+int     xaBeg;  /*  starting arc column    */
+int     yaEnd;  /*  ending arc row         */
+int     xaEnd;  /*  ending arc column      */
+object  r;      /*  printer object         */
+@end group
+@end example
+This method is used to output a pie shaped wedge to the printer.  The
+currently selected pen object will indicate the thickness and pattern of
+the outline of the shape, and the currently selected brush object will
+be used to determine what pattern the shape will be filled with.  The
+parameters indicate location of the beginning and ending of the shape as
+well as the coordinates of the intersecting line and are in increments
+dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gPie(pntr, 10, 10, 180, 140, 12, 12, 128, 135))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Rectangle, Ellipse, RoundRect,}
+@iftex
+@hfil @break @hglue .63in 
+@end iftex
+@code{Chord, Arc}
+@end deffn
+
+
+
+
+@deffn {PrintBitmap} PrintBitmap::Printer
+@sp 2
+@example
+@group
+r = gPrintBitmap(prt, file, yPos, xPos, height, width);
+
+object  prt;     /*  printer object          */
+char    *file;   /*  bitmap file path        */
+int     yPos;    /*  vertical position       */
+int     xPos;    /*  horizontal position     */
+int     height;  /*  height of output image  */
+int     width;   /*  width of output image   */
+object  r;       /*  printer object          */
+@end group
+@end example
+This instance method is used to print a bitmap file at the specified
+position and size on the current page.  The coordinates are scaled to
+printer units.
+@example
+@group
+@exdent Example:
+
+object  prt;
+
+gPrintBitmap(prt, "logo.bmp", 10, 20, 100, 200);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Printf} Printf::Printer
+@sp 2
+@example
+@group
+r = vPrintf(pntr, fmt, ...);
+
+object   pntr;  /*  printer object     */
+char    *fmt;   /*  format string      */
+int      r;     /*  length of output   */
+@end group
+@end example
+This method is used to output a string of text (@code{str}) in a sequential
+fashion on printer @code{pntr}.  It is analogous to the standard C library
+function @code{fprintf}.  All of the standard features of your C library
+@code{fprintf} function are supported and that documentation should be
+consulted for full documentation on the arguments.
+
+This method is used to support the standard streams interface, is
+actually defined by the @code{Stream} class, and is documented here for
+convenience.
+
+Note that this method begins with ``v'' since it takes variable arguments.
+
+The value returned by this method is very significant.  During normal
+operation, the length of the output string will be returned.  However,
+if an error occurs or the user aborted the report a @code{-1} will be
+returned.  In this case further output should be avoided (although it
+won't hurt - it'll just be ignored) and the printer object should be
+disposed.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+int     age = 32;
+
+if (-1 == vPrintf(pntr, "My age =- %d\n", age))
+        goto abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut, Puts}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Puts} Puts::Printer
+@sp 2
+@example
+@group
+r = gPuts(pntr, str);
+
+object   pntr;  /*  printer object        */
+char    *str;   /*  string to be output   */
+int      r;     /*  length of str         */
+@end group
+@end example
+This method is used to output a string of text (@code{str}) in a sequential
+fashion on printer @code{pntr}.  This method is used to support the standard
+streams interface, is actually defined by the @code{Stream} class, and
+is documented here for convenience. @code{str} is the text to be output. 
+
+The value returned by this method is very significant.  During normal
+operation, the length of the output string will be returned.  However,
+if an error occurs or the user aborted the report a @code{-1} will be
+returned.  In this case further output should be avoided (although it
+won't hurt - it'll just be ignored) and the printer object should be
+disposed.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (-1 == gPuts(pntr, "Hello World\n"))
+        goto abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut, Printf}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {QueryPrinter} QueryPrinter::Printer
+@sp 2
+@example
+@group
+pntr = gQueryPrinter(Printer, pwind, rname); 
+
+object  pwind;  /*  parent window       */
+char    *rname; /*  report name         */
+object  pntr;   /*  new printer object  */
+@end group
+@end example
+This class method is used to create a new @code{Printer} object which
+will be used by the @code{Printer} instance methods to control the
+printer, fonts and content of output.
+
+This method queries the user for printer selection and optional
+configuration, and uses that information to open the selected
+printer.
+
+@code{pwind} is the window which will act as the parent to any
+messages which may be displayed when a report is being printed.
+@code{rname} determines what the report is referred to as in any
+messages.
+
+The value returned represents the printer to be used.  If the user
+canceled the printer selection or the printer couldn't be opened,
+@code{NULL} will be returned. If an object is returned, it must be
+disposed (via @code{Dispose}) when it is no longer needed.
+@example
+@group
+@exdent Example:
+
+object  pntr, pwind;
+
+pntr = gQueryPrinter(Printer, pwind, "My Report");
+@end group
+@end example
+@sp 1
+See also:  @code{New, NewWithHDC}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Rectangle} Rectangle::Printer
+@sp 2
+@example
+@group
+r = gRectangle(pntr, yBeg, xBeg, yEnd, xEnd);
+
+object  pntr;   /*  printer object   */
+int     yBeg;   /*  starting row     */
+int     xBeg;   /*  starting column  */
+int     yEnd;   /*  ending row       */
+int     xEnd;   /*  ending column    */
+object  r;      /*  printer object   */
+@end group
+@end example
+This method is used to output a rectangle to the printer.  The currently
+selected pen object will indicate the thickness and pattern of the outline
+of the shape, and the currently selected brush object will be used to determine
+what pattern the shape will be filled with.
+The parameters indicate location of the beginning and ending of the shape
+and are in increments dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gRectangle(pntr, 10, 20, 30, 40))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Ellipse, RoundRect, Chord, Pie, Arc}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {RoundRect} RoundRect::Printer
+@sp 2
+@example
+@group
+r = gRoundRect(pntr, yBeg, xBeg, yEnd, xEnd, eHt, eWth);
+
+object  pntr;   /*  printer object         */
+int     yBeg;   /*  starting row           */
+int     xBeg;   /*  starting column        */
+int     yEnd;   /*  ending row             */
+int     xEnd;   /*  ending column          */
+int     eHt;    /*  corner ellipse height  */
+int     eWth;   /*  corner ellipse width   */
+object  r;      /*  printer object         */
+@end group
+@end example
+This method is used to output a rectangle with rounded corners to the
+printer.  The currently selected pen object will indicate the thickness
+and pattern of the outline of the shape, and the currently selected
+brush object will be used to determine what pattern the shape will be
+filled with.  The parameters indicate location of the beginning and
+ending of the shape and are in increments dictated by @code{SetScale}.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gRoundRect(pntr, 10, 20, 30, 40, 1, 1))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, SetScale, Use,}
+        @code{Line, Rectangle, Ellipse, Chord, Pie, Arc}
+@end deffn
+
+
+
+
+@deffn {Scale} Scale::Printer
+@sp 2
+@example
+@group
+r = gScale(prt, row, col);
+
+object  prt;   /*  printer object              */
+int     *row;  /*  pointer to row coordinate   */
+int     *col;  /*  pointer to column coordinate */
+object  r;     /*  printer object              */
+@end group
+@end example
+This instance method scales logical coordinates to physical printer
+coordinates in place, accounting for printer size and offsets.
+@example
+@group
+@exdent Example:
+
+object  prt;
+int     row = 10, col = 20;
+
+gScale(prt, &row, &col);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {SetScale} SetScale::Printer
+@sp 2
+@example
+@group
+r = gSetScale(pntr, ht, wth);
+
+object  pntr;   /*  printer object  */
+int     ht;     /*  logical height  */
+int     wth;    /*  logical width   */
+object  r;      /*  printer object  */
+@end group
+@end example
+This method is used to set the logical scaling factor associated with an
+output device.  Each output page is divided up into @code{ht} evenly
+spaced row and @code{wth} evenly spaced columns.  This scaling factor
+will be used by all text and graphics output when determining output size
+and location on the page.
+
+Coordinates begin at the upper left hand of the page and are zero origin.
+The defaults are set to 80 columns and 66 lines.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+gSetScale(pntr, 132, 160);
+@end group
+@end example
+@sp 1
+See also:  @code{TextOut}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {TextOut} TextOut::Printer
+@sp 2
+@example
+@group
+r = gTextOut(pntr, row, col, txt); 
+
+object  pntr;   /*  printer object  */
+int     row;    /*  output row      */
+int     col;    /*  output column   */
+char    *txt;   /*  text to output  */
+object  r;      /*  printer object  */
+@end group
+@end example
+This method is used to output a line of text (@code{txt}) to the printer.
+@code{row} and @code{col} indicate the position of the text and are in
+increments dictated by @code{SetScale}.  Positions begin in the upper
+left hand corner and have an index origin of 0.
+
+The text will be printed in the currently selected font.  Note that the
+actual printing will not occur until the report is complete and the
+print object disposed.
+
+See the note at the beginning of this section regarding the return value.
+@example
+@group
+@exdent Example:
+
+object  pntr;
+
+if (!gTextOut(pntr, 10, 20, "output text"))
+        abort report;
+@end group
+@end example
+@sp 1
+See also:  @code{NewPage, Printf, SetScale, LoadFont}
+@end deffn
+
+
+
+
+
+
+
+@deffn {Use} Use::Printer
+@sp 2
+@example
+@group
+r = gUse(pntr, obj);
+
+object  pntr;   /*  printer object     */
+object  obj;    /*  arbitrary object   */
+object  r;      /*  the object passed  */
+@end group
+@end example
+This method is used as a general purpose mechanism to associate a
+number of object types with a printer.  @code{obj} may be a @code{Font,
+Brush} or @code{Pen} object.  Those objects would have normally been
+created via their associated classes and then may be associated with a
+printer via this method.
+
+Note that the same object should not be associated with more than one
+printer object.  The problem is that if one printer object is disposed, WDS
+would dispose of all the objects associated with that printer and then the
+other printer would reference objects which have been deleted.  The way
+around this is to use the @code{Copy} method in order to make a copy of
+an object prior to associating it with a new printer.  This way there would
+be two independent objects such that if one is deleted the other would
+still exist.
+
+The value returned is the object passed.
+@example
+@group
+@exdent Example:
+
+object  myPntr, myOtherPntr, someFont;
+
+someFont = vNew(ExternalFont, "Times New Roman", 12);
+if (someFont)  @{
+        gUse(myPntr, someFont);
+        gUse(myOtherPntr, gCopy(someFont));
+@}
+@end group
+@end example
+@sp 1
+See also:  @code{LoadFont} and the @code{Brush} and @code{Pen} classes.
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@section Menus
+The @code{Menu} class, although not used directly by an application, is
+used to house the common functionality associated with the
+@code{ExternalMenu} and @code{InternalMenu} classes.  Most of the
+functionality of those classes is implemented and documented in this
+section.
+
+External menus (those defined in resources) would be created and used
+via the @code{ExternalMenu} class.  Internal menus (those defined at runtime
+by the application code) would be created and used via the
+@code{InternalMenu} and @code{PopupMenu} classes.  Since both of these
+classes are subclasses of the @code{Menu} class, they inherit most of
+their functionality from it.
+
+
+
+
+
+
+
+@deffn {Associate} Associate::Menu
+@sp 2
+@example
+@group
+r = mAssociate(menu, id, fun);
+
+object  menu;   /*  a menu object     */
+int     id;     /*  menu item id      */
+long    (*fun)(object);  /*  function to execute  */
+object  r;      /*  the menu object   */
+@end group
+@end example
+This method is used to associate a function with a menu item such that if
+the user selects the menu item, @code{fun} gets executed.
+
+In the case of external menus, @code{id} is normally a macro created by
+the resource editor while the programmer defines the menu and identifies
+a particular menu option.
+
+@code{fun} is the application specific function which automatically gets
+executed whenever the user selects the indicated option.  @code{fun} has
+the following structure:
+@example
+@group
+static  long    menu_option(object wind)
+@{
+           .
+           .
+           .
+        return 0L;
+@}
+@end group
+@end example
+Where @code{wind} is the window object which the menu is attached to.
+The value returned is what is returned by the window procedure associated
+with the window.  This value is normally 0 and is fully documented by
+the Windows documentation under the @code{WM_COMMAND} message.
+
+The value returned is the menu object passed.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+mAssociate(myMenu, ID_FILE_OPEN, menu_option);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption::InternalMenu, AddMenuOption::PopupMenu}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {DeepDispose} DeepDispose::Menu
+@sp 2
+@example
+@group
+r = gDeepDispose(menu);
+
+object  menu;   /*  a menu object    */
+object  r;      /*  NULL             */
+@end group
+@end example
+This method is used to dispose of a menu object and all menu objects
+which were pushed (via @code{Push}) into the same menu stack.  It is not
+often needed because menus associated with a window are automatically
+disposed of (via this method) when the window is disposed.
+
+If @code{menu} is an internal menu, all associated popup menus will
+also be disposed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = gDeepDispose(myMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{Dispose, Push}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::Menu
+@sp 2
+@example
+@group
+r = gDispose(menu);
+
+object  menu;   /*  a menu object   */
+object  r;      /*  NULL            */
+@end group
+@end example
+This method is used to dispose of a menu object when it is no longer
+needed.  It is not often needed because menus associated with a window
+are automatically disposed of (via @code{DeepDispose}) when the window
+is disposed.
+
+If @code{menu} is an internal menu, all associated popup menus will
+also be disposed.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = gDispose(myMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose}
+@end deffn
+
+
+
+
+@deffn {EnableMenuItem} EnableMenuItem::Menu
+@sp 2
+@example
+@group
+prev = gEnableMenuItem(menu, id, flag);
+
+object    menu;   /*  a menu object        */
+unsigned  id;     /*  menu item identifier  */
+unsigned  flag;   /*  MF_ENABLED, MF_DISABLED, or MF_GRAYED  */
+unsigned  prev;   /*  previous state       */
+@end group
+@end example
+This method enables, disables, or grays a menu item identified by
+@code{id}.  @code{flag} should be one of @code{MF_ENABLED},
+@code{MF_DISABLED}, or @code{MF_GRAYED}.
+
+The value returned is the previous state of the menu item.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+gEnableMenuItem(myMenu, ID_FILE_SAVE, MF_GRAYED);
+@end group
+@end example
+@sp 1
+See also:  @code{SetMode}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Handle} Handle::Menu
+@sp 2
+@example
+@group
+h = gHandle(menu);
+
+object  menu;   /*  menu object    */
+HANDLE  h;      /*  Windows handle */
+@end group
+@end example
+This method is used to obtain the Windows internal handle associated with
+a menu object.  
+
+Note that this method may be used with most WDS objects in order to obtain
+the internal handle that Windows normally associates with each type of object.
+See the appropriate documentation.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+HANDLE  h;
+
+h = gHandle(myMenu);
+@end group
+@end example
+@c @sp 1
+@c See also:  @code{}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {MenuFunction} MenuFunction::Menu
+@sp 2
+@example
+@group
+fun = mMenuFunction(menu, id);
+
+object  menu;   /*  a menu object     */
+int     id;     /*  menu item id      */
+long    (*fun)(object);  /*  function to execute  */
+@end group
+@end example
+This method is used to obtain the function which was associated with a
+menu item.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{Associate}
+@end deffn
+
+
+
+
+
+
+
+@deffn {Pop} Pop::Menu
+@sp 2
+@example
+@group
+prev = gPop(top);
+
+object  top;    /*  top menu       */
+object  prev;   /*  previous menu  */
+@end group
+@end example
+This method is used to dispose of menu @code{top} and gain access to the
+next menu in menu @code{top}'s last in, first out list.  It is mainly
+used by the @code{Window} class in order to support the ability to
+change a menu and later return to a previous menu.  The value returned
+is the next menu in the stack.
+@example
+@group
+@exdent Example:
+
+object  myMenu, subMenu;
+HANDLE  h;
+
+subMenu = gPop(myMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{Push, Use::Window, PopMenu::Window}
+@end deffn
+
+
+
+
+
+
+@deffn {Push} Push::Menu
+@sp 2
+@example
+@group
+r = gPush(top, psh);
+
+object  top;    /*  top menu     */
+object  psh;    /*  pushed menu  */
+object  r;      /*  top menu     */
+@end group
+@end example
+This method is used to push menu (@code{psh}) into a last in, first out
+stack accessible through menu @code{top}.  It is mainly used by the
+@code{Window} class in order to support the ability to change a menu and
+later return to a previous menu.  The value returned is the top menu
+passed.
+@example
+@group
+@exdent Example:
+
+object  myMenu, subMenu;
+HANDLE  h;
+
+h = gPush(myMenu, subMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{Pop, Use::Window, PopMenu::Window}
+@end deffn
+
+
+
+
+@deffn {SetCheckMark} SetCheckMark::Menu
+@sp 2
+@example
+@group
+prev = gSetCheckMark(menu, id, val);
+
+object    menu;   /*  a menu object        */
+unsigned  id;     /*  menu item identifier  */
+int       val;    /*  non-zero to check, zero to uncheck  */
+int       prev;   /*  previous state       */
+@end group
+@end example
+This method checks or unchecks a menu item identified by @code{id}.
+If @code{val} is non-zero, the menu item is checked; if zero, it is
+unchecked.
+
+The value returned is the previous check state.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+gSetCheckMark(myMenu, ID_VIEW_TOOLBAR, 1);
+@end group
+@end example
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {SetMode} SetMode::Menu
+@sp 2
+@example
+@group
+r = mSetMode(menu, id, mode);
+
+object  menu;   /*  menu       */
+unsigned  id;   /*  menu item  */
+unsigned  mode; /*  item mode  */
+object    r;    /*  menu       */
+@end group
+@end example
+This method is used to set the mode associated with a menu item.  This
+mode specifies whether the menu is enabled, disabled or grayed.
+
+In the case of external menus, @code{id} is normally a macro created by
+the resource editor while the programmer defines the menu and identifies
+a particular menu option.  In the case of internal menus, @code{id}
+is the number returned by @code{AddMenuOption::InternalMenu} or
+@code{AddMenuOption::PopupMenu}.
+
+@code{mode} is a Windows defined macro and may be one of the following:
+@example
+@group
+MF_ENABLED      to enable the menu item
+MF_DISABLED     to disable the menu item
+MF_GRAYED       to gray the menu option
+@end group
+@end example
+The value returned is the menu passed.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+mSetMode(myMenu, ID_FILE_OPEN, MF_DISABLED);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption::InternalMenu, AddMenuOption::PopupMenu}
+@end deffn
+
+
+
+
+
+
+@subsection External Menus
+The @code{ExternalMenu} class is used to access menus which were defined
+using the resource editor.  Since this class is a subclass of @code{Menu},
+all of @code{Menu}'s functionality is accessible through instance of this
+class.  Therefore, see the @code{Menu} class for additional functionality.
+
+
+
+
+
+
+
+@deffn {Load} Load::ExternalMenu
+@sp 2
+@example
+@group
+menu = mLoad(ExternalMenu, id);
+
+unsigned  id;   /*  menu id  */
+object  menu;   /*  menu     */
+@end group
+@end example
+This method is used to create a new menu object representing a menu defined
+with the resource editor.
+
+@code{id} is normally a macro created by the resource editor which identifies
+a particular menu.
+
+The value returned is a new object representing the menu or @code{NULL} if
+the menu identified is not found.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = mLoad(ExternalMenu, MY_MENU);
+@end group
+@end example
+@sp 1
+See also:  @code{LoadStr, LoadMenu::Window, LoadMenuStr::Window}
+@end deffn
+
+
+
+
+
+
+
+@deffn {LoadStr} LoadStr::ExternalMenu
+@sp 2
+@example
+@group
+menu = gLoadStr(ExternalMenu, id);
+
+char    *id;    /*  menu id  */
+object  menu;   /*  menu     */
+@end group
+@end example
+This method is used to create a new menu object representing a menu defined
+with the resource editor.
+
+@code{id} is a string which names the desired menu.  This name is
+defined by the resource editor and identifies a particular menu.
+
+The value returned is a new object representing the menu or @code{NULL} if
+the menu identified is not found.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = gLoadStr(ExternalMenu, "mymenu");
+@end group
+@end example
+@sp 1
+See also:  @code{Load, LoadMenu::Window, LoadMenuStr::Window}
+@end deffn
+
+
+
+
+
+
+
+
+@subsection Internal Menus
+The @code{InternalMenu} class is used to enable an application to create
+menus on the fly -- without the need to pre-specify the menu's structure
+with the resource editor.  Since this class is a subclass of
+@code{Menu}, all of @code{Menu}'s functionality is accessible through
+instance of this class.  Therefore, see the @code{Menu} class for
+additional functionality.
+
+
+
+
+
+
+
+
+@deffn {AddMenuOption} AddMenuOption::InternalMenu
+@sp 2
+@example
+@group
+id = gAddMenuOption(mnu, ttl, fun)
+
+object  menu;   /*  menu     */
+char    *ttl;   /*  title    */
+long    (*fun)(); /*  function  */
+int     id;     /*  item id  */
+@end group
+@end example
+This method is used to append a new option to internal menu object
+@code{mnu} and associate it to an application specific function
+(@code{fun}).  Once this is done, if the user selects the new menu
+option the function @code{fun} will be executed.
+
+@code{ttl} represents the character string which will be displayed
+in the menu.  @code{ttl} may also contain an embedded ampersand (&)
+character.  This causes the character following the ampersand to
+be underlined.  It also causes the following character to be the
+Alt key selection the user can use to quickly select a menu option.
+
+@code{fun} is the function which will be executed when the user selects
+the menu option and has the following form:
+@example
+@group
+long    fun(object wind)
+@{
+        .
+        .
+        .
+        return 0L;
+@}
+@end group
+@end example
+The function executed (@code{fun}) is passed the window object and
+returns a long.  The return value is documented in the Windows documentation
+under the message named @code{WM_COMMAND}.  It should normally be @code{0L}.
+
+This method returns a unique WDS generated id which identifies this
+particular menu option and may be used to control the status of the option.
+@example
+@group
+@exdent Example:
+
+static  long    file_message(object wind)
+@{
+        gMessage(wind, "File_Message");
+        return 0L;
+@}
+
+        .
+        .
+        mnu = vNew(InternalMenu);
+        gAddMenuOption(mnu, "&File", file_message);
+@end group
+@end example
+@sp 1
+See also:  @code{AddPopupMenu}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {AddPopupMenu} AddPopupMenu::InternalMenu
+@sp 2
+@example
+@group
+id = gAddPopupMenu(mnu, ttl, pm)
+
+object  mnu;    /*  menu        */
+char    *ttl;   /*  title       */
+object  pm;     /*  Popup menu  */
+object  r;      /*  menu        */
+@end group
+@end example
+This method is used to append a new option to menu object @code{mnu} and
+associate it to a popup menu.  Once this is done, if the user selects
+the new menu option the popup menu will be displayed.
+
+@code{ttl} represents the character string which will be displayed
+in the menu.  @code{ttl} may also contain an embedded ampersand (&)
+character.  This causes the character following the ampersand to
+be underlined.  It also causes the following character to be the
+Alt key selection the user can use to quickly select a menu option.
+
+@code{pm} is a popup menu object created with the @code{PopupMenu}
+class.
+
+This method returns @code{mnu}.
+@example
+@group
+@exdent Example:
+
+object  mnu, pm;
+
+mnu = vNew(InternalMenu);
+pm  = vNew(PopupMenu, mnu);
+gAddPopupMenu(mnu, "&File", pm);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption, New::PopupMenu}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {New} New::InternalMenu
+@sp 2
+@example
+@group
+menu = vNew(InternalMenu);
+
+object  menu;   /*  menu     */
+@end group
+@end example
+This method is used to create a new internal menu.  An internal menu is
+one which is not pre-specified with the resource editor.  It may therefore
+be structured at runtime.
+
+The object returned is a new internal menu object with no items associated
+with it.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = vNew(InternalMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption, AddMenu, Use::Window, LoadMenu::Window}
+@end deffn
+
+
+
+
+
+@section Popup Menus
+The @code{PopupMenu} class is used in conjunction with the
+@code{InternalMenu} class in order to provide a nested menu structure.
+Nesting of popup menus is supported to arbitrary levels.
+
+
+
+
+
+
+
+
+@deffn {AddMenuOption} AddMenuOption::PopupMenu
+@sp 2
+@example
+@group
+id = gAddMenuOption(mnu, ttl, fun)
+
+object  menu;   /*  menu     */
+char    *ttl;   /*  title    */
+long    (*fun)(); /*  function  */
+int     id;     /*  item id  */
+@end group
+@end example
+This method works exactly like @code{AddMenuOption::InternalMenu}.
+See that description for full documentation.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddPopupMenu, AddSeparator}
+@end deffn
+
+
+
+
+
+
+
+
+
+@deffn {AddPopupMenu} AddPopupMenu::PopupMenu
+@sp 2
+@example
+@group
+id = gAddPopupMenu(mnu, ttl, pm)
+
+object  mnu;    /*  menu        */
+char    *ttl;   /*  title       */
+object  pm;     /*  Popup menu  */
+object  r;      /*  menu        */
+@end group
+@end example
+@code{mnu} is the popup menu which is to act as the parent of @code{pm}
+and may be arbitrarily nested.
+
+This method is the same as @code{AddPopupMenu::InternalMenu}.  See that
+method for complete documentation.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddMenuOption, AddSeparator}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+@deffn {AddSeparator} AddSeparator::PopupMenu
+@sp 2
+@example
+@group
+r = gAddSeparator(mnu)
+
+object  mnu;    /*  menu        */
+object  r;      /*  menu        */
+@end group
+@end example
+This method is used to append a horizontal bar to the end of a popup
+menu.  Any menu items added subsequently will appear after the
+horizontal separator.
+
+The menu object passed is returned.
+@example
+@group
+@exdent Example:
+
+gAddSeparator(pm);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption}
+@end deffn
+
+
+
+
+
+
+
+
+
+
+
+@deffn {Dispose} Dispose::PopupMenu
+@sp 2
+@example
+@group
+r = gDispose(menu);
+
+object  menu;   /*  a menu object   */
+object  r;      /*  NULL            */
+@end group
+@end example
+This method is used to dispose of a menu object when it is no longer
+needed.  It is not often needed because popup menus associated with
+other menus are automatically disposed of (via @code{DeepDispose}) when
+the top level menu is disposed.
+
+This class also provides a @code{DeepDispose} which performs the same
+function.
+
+The value returned is always @code{NULL} and may be used to null out
+the variable which contained the object being disposed in order to
+avoid future accidental use.
+@example
+@group
+@exdent Example:
+
+object  myMenu;
+
+myMenu = gDispose(myMenu);
+@end group
+@end example
+@sp 1
+See also:  @code{DeepDispose::Menu}
+@end deffn
+
+
+
+
+
+
+
+
+@c Handle::PopupMenu removed — gHandle is not implemented in PopupMenu.
+
+
+
+
+
+
+
+
+@deffn {MenuFunction} MenuFunction::PopupMenu
+@sp 2
+@example
+@group
+fun = mMenuFunction(menu, id);
+
+object  menu;   /*  a menu object     */
+int     id;     /*  menu item id      */
+long    (*fun)(object);  /*  function to execute  */
+@end group
+@end example
+This method is used to obtain the function which was associated with a
+menu item.
+@c @example
+@c @group
+@c @exdent Example:
+@c @end group
+@c @end example
+@sp 1
+See also:  @code{AddMenuOption}
+@end deffn
+
+
+
+
+
+
+
+
+@deffn {New} New::PopupMenu
+@sp 2
+@example
+@group
+pm = vNew(PopupMenu, tm);
+
+object  tm;     /*  top menu    */
+object  pm;     /*  popup menu  */
+@end group
+@end example
+This method is used to create a new popup menu.  A popup menu is one
+which pops up or appears when a user selects an associated menu option.
+Popup menus are used in conjunction with internal menus in order to
+create arbitrarily complex menu structures.
+
+@code{tm} is the top menu object.  It must be an @code{InternalMenu},
+regardless of where the new popup menu will be nested.
+
+The object returned represents the new popup menu created and may be
+used to add items to that menu.
+@example
+@group
+@exdent Example:
+
+object  myMenu, pm;
+
+myMenu = vNew(InternalMenu);
+pm = vNew(PopupMenu, myMenu);
+gAddPopupMenu(myMenu, "&File", pm);
+@end group
+@end example
+@sp 1
+See also:  @code{AddMenuOption, AddPopupMenu, AddSeparator,}
+@iftex
+@hfil @break @hglue .63in     
+@end iftex
+@code{AddPopupMenu::InternalMenu}
+@end deffn
+
+
+
+
+
+
+

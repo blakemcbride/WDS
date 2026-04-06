@@ -1,0 +1,3221 @@
+@c -*-texinfo-*-
+
+@c  Copyright (c) 1996 Blake McBride
+@c  All rights reserved.
+@c
+@c  Redistribution and use in source and binary forms, with or without
+@c  modification, are permitted provided that the following conditions are
+@c  met:
+@c
+@c  1. Redistributions of source code must retain the above copyright
+@c  notice, this list of conditions and the following disclaimer.
+@c
+@c  2. Redistributions in binary form must reproduce the above copyright
+@c  notice, this list of conditions and the following disclaimer in the
+@c  documentation and/or other materials provided with the distribution.
+@c
+@c  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+@c  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+@c  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+@c  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+@c  HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+@c  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+@c  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+@c  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+@c  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@c  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+@c  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+@section Tree Views
+The @code{TreeView} class (a subclass of @code{Control}) implements a
+hierarchical tree control for displaying and selecting items arranged in
+a parent-child structure.  Individual nodes in the tree are represented
+by instances of the @code{TreeViewItem} class.
+
+@subsection TreeView Methods
+
+
+
+@deffn {AddTVItem} gAddTVItem::TreeView
+@findex gAddTVItem
+@sp 2
+@example
+@group
+tvi = gAddTVItem(tv, parent, txt);
+
+object  tv;       /*  TreeView object          */
+object  parent;   /*  parent TreeViewItem or NULL  */
+char    *txt;     /*  item display text         */
+object  tvi;      /*  new TreeViewItem object   */
+@end group
+@end example
+Creates and adds a new tree item with the given text.  If @code{parent}
+is @code{NULL}, the item is added at the root level.  Otherwise it is
+added as a child of @code{parent}.  Returns the newly created
+@code{TreeViewItem}.
+@sp 1
+See also:  @code{AddTVItemWithImage}
+@end deffn
+
+
+
+@deffn {AddTVItemWithImage} gAddTVItemWithImage::TreeView
+@findex gAddTVItemWithImage
+@sp 2
+@example
+@group
+tvi = gAddTVItemWithImage(tv, parent, image, txt);
+
+object  tv;       /*  TreeView object              */
+object  parent;   /*  parent TreeViewItem or NULL   */
+int     image;    /*  image index in image list     */
+char    *txt;     /*  item display text             */
+object  tvi;      /*  new TreeViewItem object       */
+@end group
+@end example
+Creates and adds a new tree item with the given text and a custom image
+from the associated image list.  Similar to @code{gAddTVItem} but allows
+specifying an image index.
+@sp 1
+See also:  @code{AddTVItem}, @code{SetImageList}, @code{NewImageList}
+@end deffn
+
+
+
+@deffn {Alphabetize} gAlphabetize::TreeView
+@findex gAlphabetize::TreeView
+@sp 2
+@example
+@group
+r = gAlphabetize(tv);
+
+object  tv;   /*  TreeView object  */
+object  r;    /*  TreeView object  */
+@end group
+@end example
+Enables alphabetical sorting of tree items.
+@sp 1
+See also:  @code{AlphabetizeOff}, @code{Resort}
+@end deffn
+
+
+
+@deffn {AlphabetizeOff} gAlphabetizeOff::TreeView
+@findex gAlphabetizeOff::TreeView
+@sp 2
+@example
+@group
+r = gAlphabetizeOff(tv);
+
+object  tv;   /*  TreeView object  */
+object  r;    /*  TreeView object  */
+@end group
+@end example
+Disables alphabetical sorting.  Items will sort by their original
+insertion order (or by @code{order}/@code{suborder} properties).
+@sp 1
+See also:  @code{Alphabetize}, @code{Resort}
+@end deffn
+
+
+
+@deffn {CheckFunction} gCheckFunction::TreeView
+@findex gCheckFunction::TreeView
+@sp 2
+@example
+@group
+r = gCheckFunction(tv, fun);
+
+object  tv;    /*  TreeView object              */
+int     (*fun)();  /*  validation function       */
+object  r;     /*  TreeView object              */
+@end group
+@end example
+Sets a validation function that is called by @code{gCheckValue} to
+validate the tree view's state before the dialog completes.
+@sp 1
+See also:  @code{CheckValue}
+@end deffn
+
+
+
+@deffn {CheckValue} gCheckValue::TreeView
+@findex gCheckValue::TreeView
+@sp 2
+@example
+@group
+err = gCheckValue(tv);
+
+object  tv;    /*  TreeView object           */
+int     err;   /*  0=valid, 1=error          */
+@end group
+@end example
+Validates the tree view's current state using the function set by
+@code{gCheckFunction}.  Returns 0 if valid, 1 if validation fails.
+@sp 1
+See also:  @code{CheckFunction}
+@end deffn
+
+
+
+@deffn {Deselect} gDeselect::TreeView
+@findex gDeselect::TreeView
+@sp 2
+@example
+@group
+r = gDeselect(tv);
+
+object  tv;   /*  TreeView object  */
+object  r;    /*  TreeView object  */
+@end group
+@end example
+Deselects the current selection in the tree view.
+@end deffn
+
+
+
+@deffn {First} gFirst::TreeView
+@findex gFirst::TreeView
+@sp 2
+@example
+@group
+tvi = gFirst(tv);
+
+object  tv;    /*  TreeView object             */
+object  tvi;   /*  first TreeViewItem or NULL   */
+@end group
+@end example
+Returns the root (first) @code{TreeViewItem} in the tree, or @code{NULL}
+if the tree is empty.
+@end deffn
+
+
+
+@deffn {GetSelection} gGetSelection::TreeView
+@findex gGetSelection::TreeView
+@sp 2
+@example
+@group
+tvi = gGetSelection(tv);
+
+object  tv;    /*  TreeView object               */
+object  tvi;   /*  selected TreeViewItem or NULL  */
+@end group
+@end example
+Returns the currently selected @code{TreeViewItem}, or @code{NULL} if
+no item is selected.
+@end deffn
+
+
+
+@deffn {LoadBitmap} gLoadBitmap::TreeView
+@findex gLoadBitmap::TreeView
+@sp 2
+@example
+@group
+id = gLoadBitmap(tv, resID);
+
+object    tv;      /*  TreeView object      */
+unsigned  resID;   /*  bitmap resource ID    */
+int       id;      /*  image ID or -1       */
+@end group
+@end example
+Loads a bitmap resource into the tree view's image list.  Returns the
+image ID for use with @code{gAddTVItemWithImage}, or @code{-1} if no
+image list is associated.
+@sp 1
+See also:  @code{NewImageList}, @code{SetImageList}
+@end deffn
+
+
+
+@deffn {New} New::TreeView
+@findex vNew::TreeView
+@sp 2
+@example
+@group
+tv = vNew(TreeView, ctlID, name, dlg);
+
+object    tv;      /*  new TreeView object   */
+UINT      ctlID;   /*  control ID            */
+char      *name;   /*  name of control       */
+object    dlg;     /*  dialog object          */
+@end group
+@end example
+This method creates a new @code{TreeView} control and associates it with
+a control defined in the dialog resource identified by @code{ctlID}.
+@end deffn
+
+
+
+@deffn {NewImageList} gNewImageList::TreeView
+@findex gNewImageList::TreeView
+@sp 2
+@example
+@group
+r = gNewImageList(tv, cx, cy, flags, numb, grow);
+
+object    tv;      /*  TreeView object      */
+int       cx;      /*  image width           */
+int       cy;      /*  image height          */
+unsigned  flags;   /*  image list flags      */
+int       numb;    /*  initial image count   */
+int       grow;    /*  grow increment        */
+object    r;       /*  TreeView object       */
+@end group
+@end example
+Creates a new @code{ImageList} and associates it with the tree view.
+@sp 1
+See also:  @code{SetImageList}, @code{LoadBitmap}
+@end deffn
+
+
+
+@deffn {RemoveAll} gRemoveAll::TreeView
+@findex gRemoveAll::TreeView
+@sp 2
+@example
+@group
+r = gRemoveAll(tv);
+
+object  tv;   /*  TreeView object  */
+object  r;    /*  TreeView object  */
+@end group
+@end example
+Clears the entire tree, removing and disposing all items.
+@end deffn
+
+
+
+@deffn {Resort} gResort::TreeView
+@findex gResort::TreeView
+@sp 2
+@example
+@group
+r = gResort(tv);
+
+object  tv;   /*  TreeView object  */
+object  r;    /*  TreeView object  */
+@end group
+@end example
+Re-sorts the tree items.  If alphabetical sorting is enabled (via
+@code{gAlphabetize}), items are sorted alphabetically.  Otherwise items
+are sorted by their @code{order} and @code{suborder} properties.  The
+current selection is preserved.
+@sp 1
+See also:  @code{Alphabetize}, @code{AlphabetizeOff}
+@end deffn
+
+
+
+@deffn {SetExpFun} gSetExpFun::TreeView
+@findex gSetExpFun::TreeView
+@sp 2
+@example
+@group
+prev = gSetExpFun(tv, fun);
+
+object  tv;     /*  TreeView object                        */
+ifun    fun;    /*  expand/collapse callback function       */
+ifun    prev;   /*  previous callback function              */
+@end group
+@end example
+Sets a callback function that is called when a tree item is expanded or
+collapsed.  Returns the previous callback function.
+@end deffn
+
+
+
+@deffn {SetImageList} gSetImageList::TreeView
+@findex gSetImageList::TreeView
+@sp 2
+@example
+@group
+r = gSetImageList(tv, imageList);
+
+object  tv;          /*  TreeView object     */
+object  imageList;   /*  ImageList object    */
+object  r;           /*  TreeView object     */
+@end group
+@end example
+Associates an @code{ImageList} object with the tree view for custom item
+icons.
+@sp 1
+See also:  @code{NewImageList}, @code{LoadBitmap}
+@end deffn
+
+
+
+@deffn {SetSelFun} gSetSelFun::TreeView
+@findex gSetSelFun::TreeView
+@sp 2
+@example
+@group
+prev = gSetSelFun(tv, fun);
+
+object  tv;     /*  TreeView object                        */
+ifun    fun;    /*  selection changed callback function     */
+ifun    prev;   /*  previous callback function              */
+@end group
+@end example
+Sets a callback function that is called when the selected tree item
+changes.  Returns the previous callback function.  The callback receives
+the dialog object, the TreeView control, and the newly selected
+@code{TreeViewItem}.
+@end deffn
+
+
+
+@subsection TreeViewItem Methods
+
+
+
+@deffn {AutoDisposeTag} gAutoDisposeTag::TreeViewItem
+@findex gAutoDisposeTag::TreeViewItem
+@sp 2
+@example
+@group
+r = gAutoDisposeTag(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;     /*  TreeViewItem object  */
+@end group
+@end example
+Enables automatic disposal of the tag object when the tree item is
+disposed or when a new tag replaces the old one.
+@sp 1
+See also:  @code{SetTag}, @code{GetTag}
+@end deffn
+
+
+
+@deffn {ChangeImage} gChangeImage::TreeViewItem
+@findex gChangeImage::TreeViewItem
+@sp 2
+@example
+@group
+r = gChangeImage(tvi, image);
+
+object  tvi;     /*  TreeViewItem object  */
+int     image;   /*  new image index      */
+object  r;       /*  TreeViewItem object  */
+@end group
+@end example
+Changes the display image of the tree item.  The image index refers to
+an image in the @code{ImageList} associated with the parent
+@code{TreeView}.
+@sp 1
+See also:  @code{GetImageID}
+@end deffn
+
+
+
+@deffn {Child} gChild::TreeViewItem
+@findex gChild::TreeViewItem
+@sp 2
+@example
+@group
+c = gChild(tvi);
+
+object  tvi;   /*  TreeViewItem object             */
+object  c;     /*  first child item or NULL         */
+@end group
+@end example
+Returns the first child @code{TreeViewItem}, or @code{NULL} if the item
+has no children.
+@end deffn
+
+
+
+@deffn {Children} gChildren::TreeViewItem
+@findex gChildren::TreeViewItem
+@sp 2
+@example
+@group
+c = gChildren(tvi);
+
+object  tvi;   /*  TreeViewItem object              */
+object  c;     /*  children collection or NULL       */
+@end group
+@end example
+Returns the collection of child @code{TreeViewItem} objects, or
+@code{NULL} if the item has no children.
+@end deffn
+
+
+
+@deffn {Collapse} gCollapse::TreeViewItem
+@findex gCollapse::TreeViewItem
+@sp 2
+@example
+@group
+r = gCollapse(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;     /*  TreeViewItem object  */
+@end group
+@end example
+Collapses the tree node to hide its children.
+@sp 1
+See also:  @code{Expand}
+@end deffn
+
+
+
+@deffn {Control} gControl::TreeViewItem
+@findex gControl::TreeViewItem
+@sp 2
+@example
+@group
+tv = gControl(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  tv;    /*  TreeView object      */
+@end group
+@end example
+Returns the @code{TreeView} control object that contains this item.
+@end deffn
+
+
+
+@deffn {DeleteTVItem} gDeleteTVItem::TreeViewItem
+@findex gDeleteTVItem
+@sp 2
+@example
+@group
+r = gDeleteTVItem(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;     /*  NULL                 */
+@end group
+@end example
+Removes this item from its parent and disposes it.  All children are
+also disposed.
+@end deffn
+
+
+
+@deffn {DisposeChildren} gDisposeChildren::TreeViewItem
+@findex gDisposeChildren::TreeViewItem
+@sp 2
+@example
+@group
+r = gDisposeChildren(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;
+@end group
+@end example
+Disposes all child items of this node.
+@end deffn
+
+
+
+@deffn {Expand} gExpand::TreeViewItem
+@findex gExpand::TreeViewItem
+@sp 2
+@example
+@group
+r = gExpand(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;     /*  TreeViewItem object  */
+@end group
+@end example
+Expands the tree node to show its children.
+@sp 1
+See also:  @code{Collapse}
+@end deffn
+
+
+
+@deffn {GetImageID} gGetImageID::TreeViewItem
+@findex gGetImageID::TreeViewItem
+@sp 2
+@example
+@group
+id = gGetImageID(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+int     id;    /*  image index          */
+@end group
+@end example
+Returns the current image index for this tree item.
+@sp 1
+See also:  @code{ChangeImage}
+@end deffn
+
+
+
+@deffn {GetParent} gGetParent::TreeViewItem
+@findex gGetParent::TreeViewItem
+@sp 2
+@example
+@group
+p = gGetParent(tvi);
+
+object  tvi;   /*  TreeViewItem object          */
+object  p;     /*  parent item or NULL           */
+@end group
+@end example
+Returns the parent @code{TreeViewItem}, or @code{NULL} if the item is
+at the root level.
+@end deffn
+
+
+
+@deffn {GetTag} gGetTag::TreeViewItem
+@findex gGetTag::TreeViewItem
+@sp 2
+@example
+@group
+tag = gGetTag(tvi);
+
+object  tvi;   /*  TreeViewItem object     */
+object  tag;   /*  tag object or NULL      */
+@end group
+@end example
+Returns the user data object attached to the tree item, or @code{NULL}
+if none is set.
+@sp 1
+See also:  @code{SetTag}
+@end deffn
+
+
+
+@deffn {IsChildOf} gIsChildOf::TreeViewItem
+@findex gIsChildOf::TreeViewItem
+@sp 2
+@example
+@group
+val = gIsChildOf(tvi, parent);
+
+object  tvi;      /*  TreeViewItem object  */
+object  parent;   /*  potential ancestor    */
+int     val;      /*  1=yes, 0=no          */
+@end group
+@end example
+Returns 1 if the item is a descendant of @code{parent}, 0 otherwise.
+Walks up the parent chain to determine the relationship.
+@end deffn
+
+
+
+@deffn {NewTVItem} gNewTVItem::TreeViewItem
+@findex gNewTVItem
+@sp 2
+@example
+@group
+tvi = gNewTVItem(TreeViewItem, tv, parent, image, alpha, txt);
+
+object  tvi;      /*  new TreeViewItem object       */
+object  tv;       /*  TreeView control object        */
+object  parent;   /*  parent item or NULL             */
+int     image;    /*  image index                    */
+int     alpha;    /*  alphabetize flag               */
+char    *txt;     /*  item display text              */
+@end group
+@end example
+Low-level factory method to create a @code{TreeViewItem}.  Most
+applications should use @code{gAddTVItem} or @code{gAddTVItemWithImage}
+on the @code{TreeView} instead.
+@end deffn
+
+
+
+@deffn {Next} gNext::TreeViewItem
+@findex gNext::TreeViewItem
+@sp 2
+@example
+@group
+nxt = gNext(tvi);
+
+object  tvi;   /*  TreeViewItem object        */
+object  nxt;   /*  next item or NULL           */
+@end group
+@end example
+Returns the next visible @code{TreeViewItem} in tree traversal order,
+or @code{NULL} if there is no next item.
+@end deffn
+
+
+
+@deffn {Select} gSelect::TreeViewItem
+@findex gSelect::TreeViewItem
+@sp 2
+@example
+@group
+r = gSelect(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+object  r;     /*  TreeViewItem object  */
+@end group
+@end example
+Programmatically selects this item in the tree view.
+@end deffn
+
+
+
+@deffn {SetStringValue} gSetStringValue::TreeViewItem
+@findex gSetStringValue::TreeViewItem
+@sp 2
+@example
+@group
+r = gSetStringValue(tvi, val);
+
+object  tvi;    /*  TreeViewItem object  */
+char    *val;   /*  new display text     */
+object  r;      /*  TreeViewItem object  */
+@end group
+@end example
+Updates the display text of the tree item.
+@sp 1
+See also:  @code{StringValue}
+@end deffn
+
+
+
+@deffn {SetTag} gSetTag::TreeViewItem
+@findex gSetTag::TreeViewItem
+@sp 2
+@example
+@group
+prev = gSetTag(tvi, tag);
+
+object  tvi;    /*  TreeViewItem object       */
+object  tag;    /*  user data object          */
+object  prev;   /*  previous tag or NULL      */
+@end group
+@end example
+Attaches an arbitrary user data object to the tree item.  Returns the
+previous tag.  If auto-dispose is enabled and a previous tag exists, it
+is automatically disposed.
+@sp 1
+See also:  @code{GetTag}, @code{AutoDisposeTag}
+@end deffn
+
+
+
+@deffn {StringValue} gStringValue::TreeViewItem
+@findex gStringValue::TreeViewItem
+@sp 2
+@example
+@group
+s = gStringValue(tvi);
+
+object  tvi;   /*  TreeViewItem object  */
+char    *s;    /*  display text string  */
+@end group
+@end example
+Returns the current display text of the tree item.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
+
+
+
+
+@section Tool Bar
+The @code{ToolBar} class (a subclass of @code{ChildWindow}) implements a
+toolbar control that displays a row of bitmap buttons and optional combo
+box controls at the top of a window.  Each button can have an associated
+callback function and tooltip.
+
+@subsection ToolBar Methods
+
+
+
+@deffn {AddToolBitmap} gAddToolBitmap::ToolBar
+@findex gAddToolBitmap
+@sp 2
+@example
+@group
+r = gAddToolBitmap(tb, id1, id2, space, fun, tip);
+
+object    tb;      /*  ToolBar object                     */
+unsigned  id1;     /*  resource ID of normal bitmap        */
+unsigned  id2;     /*  resource ID of pressed bitmap (0=same)  */
+int       space;   /*  extra space to the left (pixels)    */
+LRESULT   (*fun)();  /*  click callback function           */
+char      *tip;    /*  tooltip text or NULL                */
+object    r;       /*  ToolBar object                     */
+@end group
+@end example
+Adds a bitmap button to the toolbar.  @code{id1} is the resource ID of
+the normal (up) state bitmap.  @code{id2} is the pressed (down) state
+bitmap; pass 0 to use the same bitmap for both states.  @code{space}
+adds extra horizontal spacing before the button.  @code{fun} is the
+callback function invoked when the button is clicked.  @code{tip} is
+the tooltip text displayed on hover.
+
+The callback function receives two arguments: the parent window object
+and the button resource ID.
+@sp 1
+See also:  @code{AddToolBitmapFromFile}
+@end deffn
+
+
+
+@deffn {AddToolBitmapFromFile} gAddToolBitmapFromFile::ToolBar
+@findex gAddToolBitmapFromFile
+@sp 2
+@example
+@group
+r = gAddToolBitmapFromFile(tb, file, id1, id2, space, fun, tip);
+
+object    tb;      /*  ToolBar object                     */
+char      *file;   /*  bitmap file path                    */
+unsigned  id1;     /*  resource ID of normal bitmap        */
+unsigned  id2;     /*  resource ID of pressed bitmap       */
+int       space;   /*  extra space to the left (pixels)    */
+LRESULT   (*fun)();  /*  click callback function           */
+char      *tip;    /*  tooltip text or NULL                */
+object    r;       /*  ToolBar object                     */
+@end group
+@end example
+Adds a bitmap button from an external file rather than a resource.
+Otherwise identical to @code{gAddToolBitmap}.
+@sp 1
+See also:  @code{AddToolBitmap}
+@end deffn
+
+
+
+@deffn {AddToolComboBox} gAddToolComboBox::ToolBar
+@findex gAddToolComboBox
+@sp 2
+@example
+@group
+ctl = gAddToolComboBox(tb, height, width, space, fun, tip, name);
+
+object  tb;      /*  ToolBar object                    */
+int     height;  /*  drop-down height                   */
+int     width;   /*  control width                      */
+int     space;   /*  extra space to the left (pixels)   */
+int     (*fun)();  /*  change callback function          */
+char    *tip;    /*  tooltip text or NULL                */
+char    *name;   /*  control name                       */
+object  ctl;     /*  ComboBox control object             */
+@end group
+@end example
+Adds a @code{ComboBox} control to the toolbar.  Returns the combo box
+control object, which can be configured using the @code{ComboBox}
+methods.
+@end deffn
+
+
+
+@deffn {ChangeTip} gChangeTip::ToolBar
+@findex gChangeTip
+@sp 2
+@example
+@group
+r = gChangeTip(tb, id, tip);
+
+object    tb;    /*  ToolBar object            */
+unsigned  id;    /*  button resource ID         */
+char      *tip;  /*  new tooltip text           */
+object    r;     /*  ToolBar object             */
+@end group
+@end example
+Changes the tooltip text for a toolbar button.
+@sp 1
+See also:  @code{GetTip}
+@end deffn
+
+
+
+@deffn {EnableToolBitmap} gEnableToolBitmap::ToolBar
+@findex gEnableToolBitmap
+@sp 2
+@example
+@group
+changed = gEnableToolBitmap(tb, id, val);
+
+object    tb;       /*  ToolBar object              */
+unsigned  id;       /*  button resource ID           */
+int       val;      /*  1=enable, 0=disable          */
+int       changed;  /*  1 if state changed, 0 if not */
+@end group
+@end example
+Enables or disables a toolbar button.  Disabled buttons are drawn with
+a grayed-out appearance and do not respond to clicks.
+@end deffn
+
+
+
+@deffn {GetControlStr} gGetControlStr::ToolBar
+@findex gGetControlStr::ToolBar
+@sp 2
+@example
+@group
+ctl = gGetControlStr(tb, name);
+
+object  tb;     /*  ToolBar object                     */
+char    *name;  /*  control name                        */
+object  ctl;    /*  ComboBox control object or NULL     */
+@end group
+@end example
+Retrieves a combo box control embedded in the toolbar by its name.
+Returns @code{NULL} if not found.
+@end deffn
+
+
+
+@deffn {GetTip} gGetTip::ToolBar
+@findex gGetTip
+@sp 2
+@example
+@group
+s = gGetTip(tb, id);
+
+object    tb;   /*  ToolBar object       */
+unsigned  id;   /*  button resource ID    */
+char      *s;   /*  tooltip text          */
+@end group
+@end example
+Returns the tooltip text for a toolbar button.
+@sp 1
+See also:  @code{ChangeTip}
+@end deffn
+
+
+
+@deffn {New} New::ToolBar
+@findex vNew::ToolBar
+@sp 2
+@example
+@group
+tb = vNew(ToolBar, win);
+
+object  tb;    /*  new ToolBar object    */
+object  win;   /*  parent window object  */
+@end group
+@end example
+Creates a new @code{ToolBar} and attaches it to the top of the specified
+parent window.
+@end deffn
+
+
+
+@deffn {PixelHeight} gPixelHeight::ToolBar
+@findex gPixelHeight::ToolBar
+@sp 2
+@example
+@group
+h = gPixelHeight(tb);
+
+object  tb;   /*  ToolBar object         */
+int     h;    /*  toolbar pixel height    */
+@end group
+@end example
+Returns the pixel height of the toolbar.
+@end deffn
+
+
+
+@deffn {SetAccessModeFunction} gSetAccessModeFunction::ToolBar
+@findex gSetAccessModeFunction::ToolBar
+@sp 2
+@example
+@group
+prev = gSetAccessModeFunction(ToolBar, fun);
+
+ifun  fun;    /*  access mode function  */
+ifun  prev;   /*  previous function     */
+@end group
+@end example
+This is a class method.  Sets a function that determines whether each
+toolbar button should be enabled or disabled based on application-level
+access control.  Returns the previous function.
+
+The function is called for each button during @code{gUpdateAccessMode}
+and receives the button resource ID as an argument.
+@sp 1
+See also:  @code{UpdateAccessMode}
+@end deffn
+
+
+
+@deffn {SetToolBarMouseFunction} gSetToolBarMouseFunction::ToolBar
+@findex gSetToolBarMouseFunction
+@sp 2
+@example
+@group
+prev = gSetToolBarMouseFunction(tb, id, button, fun);
+
+object    tb;       /*  ToolBar object                       */
+unsigned  id;       /*  button resource ID                    */
+unsigned  button;   /*  mouse button/modifier combination     */
+ifun      fun;      /*  callback function                     */
+ofun      prev;     /*  previous callback function            */
+@end group
+@end example
+Sets a mouse event callback for a specific toolbar button and
+mouse button/modifier combination.  The @code{button} parameter
+encodes both the mouse button (left/right) and modifier keys
+(Shift, Control).
+@end deffn
+
+
+
+@deffn {SetToolFunction} gSetToolFunction::ToolBar
+@findex gSetToolFunction
+@sp 2
+@example
+@group
+prev = gSetToolFunction(tb, id, fun);
+
+object    tb;     /*  ToolBar object                */
+unsigned  id;     /*  button resource ID             */
+LRESULT   (*fun)();  /*  new click callback          */
+ifun      prev;   /*  previous callback function     */
+@end group
+@end example
+Changes the click callback function for a toolbar button.  Returns the
+previous function.
+@end deffn
+
+
+
+@deffn {ShowToolBitmap} gShowToolBitmap::ToolBar
+@findex gShowToolBitmap
+@sp 2
+@example
+@group
+prev = gShowToolBitmap(tb, id, val);
+
+object    tb;     /*  ToolBar object           */
+unsigned  id;     /*  button resource ID        */
+int       val;    /*  1=show, 0=hide            */
+int       prev;   /*  previous hidden state     */
+@end group
+@end example
+Shows or hides a toolbar button.
+@end deffn
+
+
+
+@deffn {UpdateAccessMode} gUpdateAccessMode::ToolBar
+@findex gUpdateAccessMode
+@sp 2
+@example
+@group
+r = gUpdateAccessMode(tb);
+
+object  tb;   /*  ToolBar object  */
+object  r;    /*  ToolBar object  */
+@end group
+@end example
+Updates the enabled/disabled state of all toolbar buttons by calling
+the access mode function set via @code{gSetAccessModeFunction}.
+@sp 1
+See also:  @code{SetAccessModeFunction}
+@end deffn
+
+
+
+@deffn {UpdateState} gUpdateState::ToolBar
+@findex gUpdateState::ToolBar
+@sp 2
+@example
+@group
+r = gUpdateState(tb);
+
+object  tb;   /*  ToolBar object  */
+object  r;    /*  ToolBar object  */
+@end group
+@end example
+Updates the toolbar's position and size to match the parent window's
+current width.  Typically called after the parent window is resized.
+@end deffn
+
+
+
+@deffn {UseAlternateColor} gUseAlternateColor::ToolBar
+@findex gUseAlternateColor
+@sp 2
+@example
+@group
+gUseAlternateColor(tb);
+
+object  tb;   /*  ToolBar object  */
+@end group
+@end example
+Enables alternate color mode for toolbar button rendering.
+@end deffn
+
+
+
+
+@section Status Bar
+The @code{StatusBar} class (a subclass of @code{ChildWindow}) implements
+a status bar control that displays one or more text sections at the
+bottom of a window.
+
+@subsection StatusBar Methods
+
+
+
+@deffn {AddSection} gAddSection::StatusBar
+@findex gAddSection
+@sp 2
+@example
+@group
+r = gAddSection(sb, id, width, mode);
+
+object  sb;      /*  StatusBar object           */
+int     id;      /*  section identifier          */
+int     width;   /*  section width               */
+int     mode;    /*  alignment mode              */
+object  r;       /*  StatusBar object or NULL    */
+@end group
+@end example
+Adds a new section to the status bar.  @code{id} is used to identify the
+section when setting text.  @code{width} specifies the section width.
+Returns @code{NULL} if the maximum number of sections (20) has been
+reached.
+@sp 1
+See also:  @code{SetSectionText}
+@end deffn
+
+
+
+@deffn {New} New::StatusBar
+@findex vNew::StatusBar
+@sp 2
+@example
+@group
+sb = vNew(StatusBar, win);
+
+object  sb;    /*  new StatusBar object   */
+object  win;   /*  parent window object   */
+@end group
+@end example
+Creates a new @code{StatusBar} and attaches it to the bottom of the
+specified parent window.
+@end deffn
+
+
+
+@deffn {PixelHeight} gPixelHeight::StatusBar
+@findex gPixelHeight::StatusBar
+@sp 2
+@example
+@group
+h = gPixelHeight(sb);
+
+object  sb;   /*  StatusBar object        */
+int     h;    /*  status bar pixel height  */
+@end group
+@end example
+Returns the pixel height of the status bar.
+@end deffn
+
+
+
+@deffn {SetSectionText} gSetSectionText::StatusBar
+@findex gSetSectionText
+@sp 2
+@example
+@group
+r = gSetSectionText(sb, id, text);
+
+object  sb;     /*  StatusBar object  */
+int     id;     /*  section ID        */
+char    *text;  /*  display text      */
+object  r;      /*  StatusBar object  */
+@end group
+@end example
+Sets or updates the text displayed in a status bar section.
+@sp 1
+See also:  @code{AddSection}
+@end deffn
+
+
+
+@deffn {UpdateState} gUpdateState::StatusBar
+@findex gUpdateState::StatusBar
+@sp 2
+@example
+@group
+r = gUpdateState(sb);
+
+object  sb;   /*  StatusBar object  */
+object  r;    /*  StatusBar object  */
+@end group
+@end example
+Updates the status bar's position and size to align with the parent
+window's bottom edge.  Typically called after the parent window is
+resized.
+@end deffn
+
+
+
+
+@section Image Control
+The @code{ImageControl} class (a subclass of @code{Control}) implements
+a control for displaying bitmap images in dialogs and windows.  Bitmaps
+can be loaded from resource IDs or from external @code{.bmp} files.
+
+@subsection ImageControl Methods
+
+
+
+@deffn {GetExitType} gGetExitType::ImageControl
+@findex gGetExitType::ImageControl
+@sp 2
+@example
+@group
+type = gGetExitType(ic);
+
+object  ic;     /*  ImageControl object  */
+int     type;   /*  exit type            */
+@end group
+@end example
+Returns the exit type previously set by @code{gSetExitType}.
+@sp 1
+See also:  @code{SetExitType}
+@end deffn
+
+
+
+@deffn {New} New::ImageControl
+@findex vNew::ImageControl
+@sp 2
+@example
+@group
+ic = vNew(ImageControl, ctlID, name, dlg);
+
+object  ic;       /*  new ImageControl object  */
+UINT    ctlID;    /*  control ID               */
+char    *name;    /*  control name             */
+object  dlg;      /*  dialog object            */
+@end group
+@end example
+Creates a new @code{ImageControl} associated with a control defined in
+the dialog resource.
+@end deffn
+
+
+
+@deffn {SetBitmapID} gSetBitmapID::ImageControl
+@findex gSetBitmapID
+@sp 2
+@example
+@group
+r = gSetBitmapID(ic, id);
+
+object  ic;   /*  ImageControl object       */
+int     id;   /*  bitmap resource ID         */
+object  r;    /*  ImageControl object        */
+@end group
+@end example
+Sets the displayed bitmap from a resource ID.  The bitmap is loaded and
+displayed when the control is shown.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
+
+
+
+@deffn {SetButtonBorder} gSetButtonBorder::ImageControl
+@findex gSetButtonBorder
+@sp 2
+@example
+@group
+prev = gSetButtonBorder(ic, val);
+
+object  ic;     /*  ImageControl object              */
+int     val;    /*  -1=down, 0=none, 1=up border     */
+int     prev;   /*  previous border value             */
+@end group
+@end example
+Sets the 3D border style around the image control.  @code{1} gives a
+raised border, @code{-1} gives a sunken border, and @code{0} removes
+the border.  Returns the previous border setting.
+@end deffn
+
+
+
+@deffn {SetDCFunction} gSetDCFunction::ImageControl
+@findex gSetDCFunction::ImageControl
+@sp 2
+@example
+@group
+prev = gSetDCFunction(ic, fun);
+
+object  ic;     /*  ImageControl object               */
+int     (*fun)();  /*  double-click callback function  */
+ofun    prev;   /*  previous callback function         */
+@end group
+@end example
+Sets a callback function that is invoked when the user double-clicks
+the image control.  Returns the previous callback function.
+@end deffn
+
+
+
+@deffn {SetExitType} gSetExitType::ImageControl
+@findex gSetExitType::ImageControl
+@sp 2
+@example
+@group
+r = gSetExitType(ic, type);
+
+object  ic;     /*  ImageControl object        */
+int     type;   /*  IDOK, IDCANCEL, or 0       */
+object  r;      /*  ImageControl object        */
+@end group
+@end example
+Configures the image control to act like a button that closes the dialog
+when clicked.  Pass @code{IDOK} or @code{IDCANCEL} to enable this
+behavior, or 0 to disable it.
+@sp 1
+See also:  @code{GetExitType}
+@end deffn
+
+
+
+@deffn {SetStringValue} gSetStringValue::ImageControl
+@findex gSetStringValue::ImageControl
+@sp 2
+@example
+@group
+r = gSetStringValue(ic, val);
+
+object  ic;    /*  ImageControl object   */
+char    *val;  /*  bitmap file path      */
+object  r;     /*  ImageControl object   */
+@end group
+@end example
+Sets the displayed bitmap from an external @code{.bmp} file path.
+@sp 1
+See also:  @code{SetBitmapID}, @code{StringValue}
+@end deffn
+
+
+
+@deffn {StringValue} gStringValue::ImageControl
+@findex gStringValue::ImageControl
+@sp 2
+@example
+@group
+s = gStringValue(ic);
+
+object  ic;   /*  ImageControl object   */
+char    *s;   /*  bitmap file path      */
+@end group
+@end example
+Returns the bitmap file path currently associated with the control.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
+
+
+
+
+@section Time Control
+The @code{TimeControl} class (a subclass of @code{SpinControl}) implements
+a control for entering and validating time values.  It supports
+configurable time ranges, formatting, and 12-hour wrapping.
+
+@subsection TimeControl Methods
+
+
+
+@deffn {BlankIfZero} gBlankIfZero::TimeControl
+@findex gBlankIfZero
+@sp 2
+@example
+@group
+prev = gBlankIfZero(tc, val);
+
+object  tc;     /*  TimeControl object     */
+int     val;    /*  1=blank if zero, 0=no  */
+int     prev;   /*  previous setting       */
+@end group
+@end example
+When enabled, the control displays as blank when the time value is zero
+rather than showing @code{0:00}.  Returns the previous setting.
+@end deffn
+
+
+
+@deffn {FormatTime} gFormatTime::TimeControl
+@findex gFormatTime
+@sp 2
+@example
+@group
+r = gFormatTime(tc, fmt);
+
+object  tc;    /*  TimeControl object     */
+char    *fmt;  /*  format string          */
+object  r;     /*  TimeControl object     */
+@end group
+@end example
+Sets the format string used to display the time value.
+@end deffn
+
+
+
+@deffn {HideData} gHideData::TimeControl
+@findex gHideData::TimeControl
+@sp 2
+@example
+@group
+prev = gHideData(tc, flg);
+
+object  tc;     /*  TimeControl object        */
+int     flg;    /*  1=hide, 0=show            */
+int     prev;   /*  previous setting          */
+@end group
+@end example
+When enabled, the control displays asterisks instead of the actual time
+value.  Returns the previous setting.
+@end deffn
+
+
+
+@deffn {IsBlank} gIsBlank::TimeControl
+@findex gIsBlank::TimeControl
+@sp 2
+@example
+@group
+val = gIsBlank(tc);
+
+object  tc;    /*  TimeControl object     */
+int     val;   /*  1=blank, 0=has value   */
+@end group
+@end example
+Returns 1 if the control is currently blank, 0 otherwise.
+@end deffn
+
+
+
+@deffn {New} New::TimeControl
+@findex vNew::TimeControl
+@sp 2
+@example
+@group
+tc = vNew(TimeControl, ctlID, name, dlg);
+
+object  tc;       /*  new TimeControl object  */
+UINT    ctlID;    /*  control ID              */
+char    *name;    /*  control name            */
+object  dlg;      /*  dialog object           */
+@end group
+@end example
+Creates a new @code{TimeControl} associated with a control defined in
+the dialog resource.
+@end deffn
+
+
+
+@deffn {SetBeginHour} gSetBeginHour::TimeControl
+@findex gSetBeginHour::TimeControl
+@sp 2
+@example
+@group
+prev = gSetBeginHour(tc, hour);
+
+object  tc;     /*  TimeControl object        */
+int     hour;   /*  beginning hour for wrap   */
+int     prev;   /*  previous begin hour       */
+@end group
+@end example
+Sets the beginning hour for 12-hour wrap-around behavior.  For example,
+setting this to 8 means hours are interpreted in the range 8:00--7:59.
+Returns the previous value.
+
+This method may also be called as a class method on @code{TimeControl}
+to set the default for all instances.
+@end deffn
+
+
+
+@deffn {SetDefaultLong} gSetDefaultLong::TimeControl
+@findex gSetDefaultLong::TimeControl
+@sp 2
+@example
+@group
+r = gSetDefaultLong(tc, val);
+
+object  tc;    /*  TimeControl object  */
+long    val;   /*  default time value  */
+object  r;     /*  TimeControl object  */
+@end group
+@end example
+Sets the default time value used when @code{gUseDefault} is called.
+@end deffn
+
+
+
+@deffn {SetTimeValue} gSetTimeValue::TimeControl
+@findex gSetTimeValue
+@sp 2
+@example
+@group
+r = gSetTimeValue(tc, val);
+
+object  tc;    /*  TimeControl object  */
+long    val;   /*  time as long value  */
+object  r;     /*  TimeControl object  */
+@end group
+@end example
+Sets the time value from a long integer and updates the display.
+@code{gSetLongValue} is a synonym for this method.
+@sp 1
+See also:  @code{TimeValue}
+@end deffn
+
+
+
+@deffn {TimeRange} gTimeRange::TimeControl
+@findex gTimeRange
+@sp 2
+@example
+@group
+r = gTimeRange(tc, minimum, maximum, allowNone);
+
+object  tc;          /*  TimeControl object          */
+long    minimum;     /*  minimum time value           */
+long    maximum;     /*  maximum time value           */
+int     allowNone;   /*  1=allow empty, 0=required    */
+object  r;           /*  TimeControl object           */
+@end group
+@end example
+Sets the valid time range for the control.  If @code{allowNone} is 1,
+the user may leave the field empty.
+@end deffn
+
+
+
+@deffn {TimeValue} gTimeValue::TimeControl
+@findex gTimeValue
+@sp 2
+@example
+@group
+val = gTimeValue(tc);
+
+object  tc;    /*  TimeControl object  */
+long    val;   /*  time as long value  */
+@end group
+@end example
+Returns the current time value as a long integer.
+@code{gLongValue} is a synonym for this method.
+@sp 1
+See also:  @code{SetTimeValue}
+@end deffn
+
+
+
+
+@section Shortcut Menu
+The @code{ShortcutMenu} class (a subclass of @code{Menu}) implements
+context menus (also known as popup or right-click menus) that can be
+displayed at arbitrary screen positions.
+
+@subsection ShortcutMenu Methods
+
+
+
+@deffn {AddMenuOption} gAddMenuOption::ShortcutMenu
+@findex gAddMenuOption::ShortcutMenu
+@sp 2
+@example
+@group
+id = gAddMenuOption(sm, title, fun);
+
+object  sm;      /*  ShortcutMenu object        */
+char    *title;  /*  menu item text              */
+void    (*fun)();  /*  callback function         */
+int     id;      /*  assigned menu item ID       */
+@end group
+@end example
+Dynamically adds a menu item with the given text and callback function.
+Returns the automatically assigned ID for the menu item.
+@sp 1
+See also:  @code{AddSubMenu}, @code{AddSeparator}
+@end deffn
+
+
+
+@deffn {AddSeparator} gAddSeparator::ShortcutMenu
+@findex gAddSeparator::ShortcutMenu
+@sp 2
+@example
+@group
+r = gAddSeparator(sm);
+
+object  sm;   /*  ShortcutMenu object  */
+object  r;    /*  ShortcutMenu object  */
+@end group
+@end example
+Adds a separator line to the menu.
+@sp 1
+See also:  @code{AddMenuOption}
+@end deffn
+
+
+
+@deffn {AddSubMenu} gAddSubMenu::ShortcutMenu
+@findex gAddSubMenu
+@sp 2
+@example
+@group
+sub = gAddSubMenu(sm, title);
+
+object  sm;      /*  ShortcutMenu object          */
+char    *title;  /*  submenu title                 */
+object  sub;     /*  new submenu object            */
+@end group
+@end example
+Creates and adds a new submenu with the given title.  Returns the new
+submenu object, which can have items added to it via
+@code{gAddMenuOption}.
+@sp 1
+See also:  @code{AddMenuOption}, @code{AddSeparator}
+@end deffn
+
+
+
+@deffn {LoadShortcutMenu} gLoadShortcutMenu::ShortcutMenu
+@findex gLoadShortcutMenu
+@sp 2
+@example
+@group
+sm = gLoadShortcutMenu(ShortcutMenu, id, submenu);
+
+object    sm;        /*  new ShortcutMenu object   */
+unsigned  id;        /*  menu resource ID           */
+int       submenu;   /*  submenu index              */
+@end group
+@end example
+This is a class method.  Loads a shortcut menu from a menu resource by
+numeric ID.  @code{submenu} specifies which submenu to use from the
+resource.
+@sp 1
+See also:  @code{LoadShortcutMenuStr}
+@end deffn
+
+
+
+@deffn {LoadShortcutMenuFromFile} gLoadShortcutMenuFromFile::ShortcutMenu
+@findex gLoadShortcutMenuFromFile
+@sp 2
+@example
+@group
+sm = gLoadShortcutMenuFromFile(ShortcutMenu, file, id, submenu);
+
+object    sm;        /*  new ShortcutMenu object   */
+char      *file;     /*  resource file path         */
+unsigned  id;        /*  menu resource ID           */
+int       submenu;   /*  submenu index              */
+@end group
+@end example
+This is a class method.  Loads a shortcut menu from an external resource
+file.
+@end deffn
+
+
+
+@deffn {LoadShortcutMenuStr} gLoadShortcutMenuStr::ShortcutMenu
+@findex gLoadShortcutMenuStr
+@sp 2
+@example
+@group
+sm = gLoadShortcutMenuStr(ShortcutMenu, name, submenu);
+
+object  sm;        /*  new ShortcutMenu object   */
+char    *name;     /*  menu resource name         */
+int     submenu;   /*  submenu index              */
+@end group
+@end example
+This is a class method.  Loads a shortcut menu from a menu resource by
+string name.
+@sp 1
+See also:  @code{LoadShortcutMenu}
+@end deffn
+
+
+
+@deffn {New} New::ShortcutMenu
+@findex vNew::ShortcutMenu
+@sp 2
+@example
+@group
+sm = vNew(ShortcutMenu);
+
+object  sm;   /*  new ShortcutMenu object  */
+@end group
+@end example
+Creates a new, empty shortcut menu.
+@sp 1
+See also:  @code{LoadShortcutMenu}, @code{LoadShortcutMenuStr}
+@end deffn
+
+
+
+@deffn {Perform} gPerform::ShortcutMenu
+@findex gPerform::ShortcutMenu
+@sp 2
+@example
+@group
+r = gPerform(sm);
+
+object  sm;   /*  ShortcutMenu object  */
+int     r;    /*  result               */
+@end group
+@end example
+Displays the shortcut menu at the current cursor position and executes
+the callback associated with the item selected by the user.
+@end deffn
+
+
+
+
+@section Static Control
+The @code{StaticControl} class (a subclass of @code{Control}) implements
+a basic static text display control.  The @code{StaticTextControl} class
+(a subclass of @code{TextControl}) provides additional capabilities
+including printing, XML serialization, and multi-language support.
+
+@subsection StaticControl Methods
+
+
+
+@deffn {New} New::StaticControl
+@findex vNew::StaticControl
+@sp 2
+@example
+@group
+sc = vNew(StaticControl, ctlID, name, dlg);
+
+object  sc;       /*  new StaticControl object  */
+UINT    ctlID;    /*  control ID                */
+char    *name;    /*  control name              */
+object  dlg;      /*  dialog object             */
+@end group
+@end example
+Creates a new @code{StaticControl} associated with a control defined in
+the dialog resource.
+@end deffn
+
+
+
+@deffn {SetStringValue} gSetStringValue::StaticControl
+@findex gSetStringValue::StaticControl
+@sp 2
+@example
+@group
+r = gSetStringValue(sc, val);
+
+object  sc;    /*  StaticControl object  */
+char    *val;  /*  display text          */
+object  r;     /*  StaticControl object  */
+@end group
+@end example
+Sets the text displayed by the static control.  @code{gSetTitle} is a
+synonym for this method.
+@sp 1
+See also:  @code{StringValue}
+@end deffn
+
+
+
+@deffn {StringValue} gStringValue::StaticControl
+@findex gStringValue::StaticControl
+@sp 2
+@example
+@group
+s = gStringValue(sc);
+
+object  sc;   /*  StaticControl object  */
+char    *s;   /*  display text string   */
+@end group
+@end example
+Returns the current display text.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
+
+
+
+@subsection StaticTextControl Methods
+
+The @code{StaticTextControl} class inherits from @code{TextControl} and
+adds support for URL bindings, multi-language text, and right-alignment.
+
+
+
+@deffn {ResetText} gResetText::StaticTextControl
+@findex gResetText
+@sp 2
+@example
+@group
+r = gResetText(stc);
+
+object  stc;   /*  StaticTextControl object  */
+object  r;     /*  StaticTextControl object  */
+@end group
+@end example
+Resets the window text to the current language's text value.
+@sp 1
+See also:  @code{SetCurrentLanguage}
+@end deffn
+
+
+
+@deffn {SetCurrentLanguage} gSetCurrentLanguage::StaticTextControl
+@findex gSetCurrentLanguage::StaticTextControl
+@sp 2
+@example
+@group
+r = gSetCurrentLanguage(stc, lang);
+
+object  stc;    /*  StaticTextControl object  */
+int     lang;   /*  language ID               */
+object  r;      /*  StaticTextControl object  */
+@end group
+@end example
+Sets the display language and updates the text accordingly.
+@sp 1
+See also:  @code{ResetText}
+@end deffn
+
+
+
+@deffn {SetURL} gSetURL::StaticTextControl
+@findex gSetURL
+@sp 2
+@example
+@group
+r = gSetURL(stc, url);
+
+object  stc;    /*  StaticTextControl object  */
+char    *url;   /*  URL binding string        */
+object  r;      /*  StaticTextControl object  */
+@end group
+@end example
+Associates a URL with the static text control.
+@sp 1
+See also:  @code{URL}
+@end deffn
+
+
+
+@deffn {URL} gURL::StaticTextControl
+@findex gURL
+@sp 2
+@example
+@group
+s = gURL(stc);
+
+object  stc;   /*  StaticTextControl object  */
+char    *s;    /*  URL string                */
+@end group
+@end example
+Returns the URL associated with this control, or an empty string if
+none is set.
+@sp 1
+See also:  @code{SetURL}
+@end deffn
+
+
+
+
+@section Bitmap
+The @code{Bitmap} class provides support for displaying bitmap images on
+windows.  Bitmaps can be positioned, centered, tiled, or stretched to
+fill the window.
+
+@subsection Bitmap Methods
+
+
+
+@deffn {DrawBitmap} gDrawBitmap::Bitmap
+@findex gDrawBitmap
+@sp 2
+@example
+@group
+r = gDrawBitmap(bm);
+
+object  bm;   /*  Bitmap object  */
+object  r;    /*  Bitmap object  */
+@end group
+@end example
+Draws the bitmap on its parent window using the positioning mode
+specified at creation time (positioned, centered, or tiled).
+@end deffn
+
+
+
+@deffn {NewBitmap} gNewBitmap::Bitmap
+@findex gNewBitmap
+@sp 2
+@example
+@group
+bm = gNewBitmap(Bitmap, bmpID, mode, y, x, wind);
+
+object    bm;      /*  new Bitmap object        */
+UINT      bmpID;   /*  bitmap resource ID        */
+int       mode;    /*  display mode              */
+int       y;       /*  vertical position          */
+int       x;       /*  horizontal position        */
+object    wind;    /*  parent window object       */
+@end group
+@end example
+This is a class method.  Creates a new @code{Bitmap} object from a
+resource.  @code{mode} controls how the bitmap is displayed: 1 for
+positioned at (@code{x},@code{y}), 2 for centered, 3 for tiled.
+Position values are scaled to font pixels.
+@sp 1
+See also:  @code{NewBitmap2}, @code{DrawBitmap}
+@end deffn
+
+
+
+@deffn {NewBitmap2} gNewBitmap2::Bitmap
+@findex gNewBitmap2
+@sp 2
+@example
+@group
+bm = gNewBitmap2(Bitmap, bmpID, mode, y, x, wind);
+
+object    bm;      /*  new Bitmap object        */
+UINT      bmpID;   /*  bitmap resource ID        */
+int       mode;    /*  display mode              */
+int       y;       /*  vertical position          */
+int       x;       /*  horizontal position        */
+object    wind;    /*  parent window object       */
+@end group
+@end example
+This is a class method.  Identical to @code{gNewBitmap} except that
+position values are not scaled to font pixels --- they are used as
+raw pixel coordinates.
+@sp 1
+See also:  @code{NewBitmap}
+@end deffn
+
+
+
+
+@section Spin Control
+The @code{SpinControl} class (a subclass of @code{Control}) provides
+spin button (up/down arrow) functionality that can be attached to other
+controls such as @code{TimeControl} or @code{NumericControl}.
+
+@subsection SpinControl Methods
+
+
+
+@deffn {SetSpinFunction} gSetSpinFunction::SpinControl
+@findex gSetSpinFunction
+@sp 2
+@example
+@group
+r = gSetSpinFunction(ctl, spinID, func);
+
+object    ctl;      /*  SpinControl object               */
+unsigned  spinID;   /*  resource ID of spin button        */
+int       (*func)(object ctl, object dlg, int val);
+                    /*  callback function                 */
+object    r;        /*  SpinControl object                */
+@end group
+@end example
+Associates a spin button control with this control and sets the callback
+function.  The callback receives the control object, the dialog object,
+and a value of @code{+1} (up arrow) or @code{-1} (down arrow).
+@end deffn
+
+
+
+@section Task List
+The @code{TaskList} class provides a workflow management system that
+presents the user with a list of tasks (steps) displayed in a modeless
+dialog.  Each task in the list is represented by a @code{Task} object
+that manages its own dialog or processing step.  The user selects tasks
+from the list, and the system handles transitions, validation, and
+cleanup between tasks.
+
+@subsection TaskList Methods
+
+
+
+@deffn {AddCompletionFunctionAfter} gAddCompletionFunctionAfter::TaskList
+@findex gAddCompletionFunctionAfter::TaskList
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionAfter(tl, fun);
+
+object  tl;    /*  TaskList object          */
+int     (*fun)();  /*  completion function  */
+object  r;     /*  TaskList object          */
+@end group
+@end example
+Adds a completion function that is called after other completion
+functions when the task list closes.
+@sp 1
+See also:  @code{AddCompletionFunctionBefore}, @code{CompletionFunction}
+@end deffn
+
+
+
+@deffn {AddCompletionFunctionBefore} gAddCompletionFunctionBefore::TaskList
+@findex gAddCompletionFunctionBefore::TaskList
+@sp 2
+@example
+@group
+r = gAddCompletionFunctionBefore(tl, fun);
+
+object  tl;    /*  TaskList object          */
+int     (*fun)();  /*  completion function  */
+object  r;     /*  TaskList object          */
+@end group
+@end example
+Adds a completion function that is called before other completion
+functions when the task list closes.
+@sp 1
+See also:  @code{AddCompletionFunctionAfter}, @code{CompletionFunction}
+@end deffn
+
+
+
+@deffn {AddTask} gAddTask::TaskList
+@findex gAddTask
+@sp 2
+@example
+@group
+r = gAddTask(tl, proc, option);
+
+object  tl;      /*  TaskList object               */
+object  proc;    /*  task procedure                 */
+char    *option; /*  display text for list box      */
+object  r;       /*  link object                    */
+@end group
+@end example
+Adds a task to the task list with the given display text.  The text
+appears in the list box presented to the user.
+@end deffn
+
+
+
+@deffn {CheckValue} gCheckValue::TaskList
+@findex gCheckValue::TaskList
+@sp 2
+@example
+@group
+err = gCheckValue(tl);
+
+object  tl;    /*  TaskList object          */
+int     err;   /*  0=valid, non-zero=error  */
+@end group
+@end example
+Validates the current task's dialog values.  Returns 0 if valid,
+non-zero if validation fails.
+@end deffn
+
+
+
+@deffn {CompletionFunction} gCompletionFunction::TaskList
+@findex gCompletionFunction::TaskList
+@sp 2
+@example
+@group
+r = gCompletionFunction(tl, fun);
+
+object  tl;    /*  TaskList object          */
+int     (*fun)();  /*  completion function  */
+object  r;     /*  TaskList object          */
+@end group
+@end example
+Sets a completion function to be called when the task list closes.
+Replaces any previously set completion function.
+@sp 1
+See also:  @code{AddCompletionFunctionAfter}, @code{AddCompletionFunctionBefore}
+@end deffn
+
+
+
+@deffn {CurrentTask} gCurrentTask::TaskList
+@findex gCurrentTask
+@sp 2
+@example
+@group
+task = gCurrentTask(tl);
+
+object  tl;     /*  TaskList object            */
+object  task;   /*  current Task or NULL       */
+@end group
+@end example
+Returns the currently active @code{Task} object, or @code{NULL} if no
+task is active.
+@end deffn
+
+
+
+@deffn {Dialog} gDialog::TaskList
+@findex gDialog::TaskList
+@sp 2
+@example
+@group
+dlg = gDialog(tl);
+
+object  tl;    /*  TaskList object         */
+object  dlg;   /*  ModelessDialog object   */
+@end group
+@end example
+Returns the @code{ModelessDialog} object that contains the task list UI.
+@end deffn
+
+
+
+@deffn {Disable} gDisable::TaskList
+@findex gDisable::TaskList
+@sp 2
+@example
+@group
+r = gDisable(tl);
+
+object  tl;   /*  TaskList object  */
+object  r;    /*  TaskList object  */
+@end group
+@end example
+Disables the task list dialog.
+@sp 1
+See also:  @code{Enable}
+@end deffn
+
+
+
+@deffn {Enable} gEnable::TaskList
+@findex gEnable::TaskList
+@sp 2
+@example
+@group
+r = gEnable(tl);
+
+object  tl;   /*  TaskList object  */
+object  r;    /*  TaskList object  */
+@end group
+@end example
+Enables the task list dialog and restores focus to the current task
+if one is active.
+@sp 1
+See also:  @code{Disable}
+@end deffn
+
+
+
+@deffn {GetPosition} gGetPosition::TaskList
+@findex gGetPosition::TaskList
+@sp 2
+@example
+@group
+r = gGetPosition(tl, y, x);
+
+object  tl;   /*  TaskList object               */
+int     *y;   /*  pointer to vertical position   */
+int     *x;   /*  pointer to horizontal position  */
+object  r;    /*  TaskList object                */
+@end group
+@end example
+Retrieves the current position of the task list dialog.
+@end deffn
+
+
+
+@deffn {GetTag} gGetTag::TaskList
+@findex gGetTag::TaskList
+@sp 2
+@example
+@group
+tag = gGetTag(tl);
+
+object  tl;    /*  TaskList object      */
+object  tag;   /*  tag object or NULL   */
+@end group
+@end example
+Returns the user data object attached to the task list, or @code{NULL}
+if none is set.
+@sp 1
+See also:  @code{SetTag}, @code{AutoDisposeTag}
+@end deffn
+
+
+
+@deffn {NewTaskList} gNewTaskList::TaskList
+@findex gNewTaskList
+@sp 2
+@example
+@group
+tl = gNewTaskList(TaskList, dlg_id, lb_id, pwind, fun);
+
+object    tl;      /*  new TaskList object             */
+unsigned  dlg_id;  /*  dialog resource ID               */
+unsigned  lb_id;   /*  list box control ID              */
+object    pwind;   /*  parent window                    */
+int       (*fun)();  /*  initialization function or NULL */
+@end group
+@end example
+This is a class method.  Creates a new @code{TaskList} with a modeless
+dialog (@code{dlg_id}) containing a list box (@code{lb_id}).
+@code{pwind} is the parent window.  @code{fun} is an optional
+initialization function called when the dialog is set up.
+@end deffn
+
+
+
+@deffn {NextTask} gNextTask::TaskList
+@findex gNextTask::TaskList
+@sp 2
+@example
+@group
+r = gNextTask(tl, result);
+
+object  tl;       /*  TaskList object         */
+int     result;   /*  task completion result  */
+object  r;        /*  TaskList object         */
+@end group
+@end example
+Advances to the next task.  The @code{result} parameter indicates how
+the current task completed (e.g.@: OK or Cancel), which determines
+whether the current task's save or cleanup phase is executed.
+@end deffn
+
+
+
+@deffn {Perform} gPerform::TaskList
+@findex gPerform::TaskList
+@sp 2
+@example
+@group
+r = gPerform(tl);
+
+object  tl;   /*  TaskList object  */
+int     r;    /*  0                */
+@end group
+@end example
+Displays the task list selection dialog non-modally.
+@sp 1
+See also:  @code{PerformModal}
+@end deffn
+
+
+
+@deffn {PerformModal} gPerformModal::TaskList
+@findex gPerformModal::TaskList
+@sp 2
+@example
+@group
+r = gPerformModal(tl);
+
+object  tl;   /*  TaskList object  */
+int     r;    /*  0                */
+@end group
+@end example
+Displays the task list selection dialog modally, disabling the parent
+window until the task list is closed.
+@sp 1
+See also:  @code{Perform}
+@end deffn
+
+
+
+@deffn {SetShortValue} gSetShortValue::TaskList
+@findex gSetShortValue::TaskList
+@sp 2
+@example
+@group
+r = gSetShortValue(tl, val);
+
+object  tl;    /*  TaskList object          */
+int     val;   /*  task index to select     */
+object  r;     /*  TaskList object          */
+@end group
+@end example
+Selects a task by index in the list box.
+@end deffn
+
+
+
+@deffn {SetTag} gSetTag::TaskList
+@findex gSetTag::TaskList
+@sp 2
+@example
+@group
+prev = gSetTag(tl, tag);
+
+object  tl;     /*  TaskList object          */
+object  tag;    /*  user data object         */
+object  prev;   /*  previous tag or NULL     */
+@end group
+@end example
+Attaches a user data object to the task list.  Returns the previous tag.
+If auto-dispose is enabled and a previous tag exists, it is automatically
+disposed.
+@sp 1
+See also:  @code{GetTag}, @code{AutoDisposeTag}
+@end deffn
+
+
+
+@deffn {SetZOrder} gSetZOrder::TaskList
+@findex gSetZOrder::TaskList
+@sp 2
+@example
+@group
+r = gSetZOrder(tl, hwnd);
+
+object  tl;     /*  TaskList object           */
+HWND    hwnd;   /*  window to position after  */
+object  r;      /*  TaskList object           */
+@end group
+@end example
+Sets the z-order (window stacking position) for the task list dialog.
+@end deffn
+
+
+
+@subsection Task Methods
+
+
+
+@deffn {AutoDisposeTag} gAutoDisposeTag::Task
+@findex gAutoDisposeTag::Task
+@sp 2
+@example
+@group
+r = gAutoDisposeTag(task);
+
+object  task;   /*  Task object  */
+object  r;      /*  Task object  */
+@end group
+@end example
+Enables automatic disposal of the tag object when the task is disposed
+or when a new tag replaces the old one.
+@sp 1
+See also:  @code{SetTag}, @code{GetTag}
+@end deffn
+
+
+
+@deffn {CheckValue} gCheckValue::Task
+@findex gCheckValue::Task
+@sp 2
+@example
+@group
+err = gCheckValue(task);
+
+object  task;   /*  Task object              */
+int     err;    /*  0=valid, non-zero=error  */
+@end group
+@end example
+Validates the task's dialog values.  Returns 0 if valid, non-zero if
+validation fails.
+@end deffn
+
+
+
+@deffn {GetTag} gGetTag::Task
+@findex gGetTag::Task
+@sp 2
+@example
+@group
+tag = gGetTag(task);
+
+object  task;   /*  Task object          */
+object  tag;    /*  tag object or NULL   */
+@end group
+@end example
+Returns the user data object attached to the task, or @code{NULL} if
+none is set.
+@sp 1
+See also:  @code{SetTag}, @code{AutoDisposeTag}
+@end deffn
+
+
+
+@deffn {NewTask} gNewTask::Task
+@findex gNewTask
+@sp 2
+@example
+@group
+task = gNewTask(Task, tl);
+
+object  task;   /*  new Task object       */
+object  tl;     /*  parent TaskList       */
+@end group
+@end example
+This is a class method.  Creates a new @code{Task} associated with the
+given @code{TaskList}.
+@end deffn
+
+
+
+@deffn {NextTask} gNextTask::Task
+@findex gNextTask::Task
+@sp 2
+@example
+@group
+r = gNextTask(task, result);
+
+object  task;     /*  Task object              */
+int     result;   /*  completion result code   */
+object  r;        /*  Task object              */
+@end group
+@end example
+Advances to the next task in the parent @code{TaskList} with the given
+result code.
+@end deffn
+
+
+
+@deffn {SetTag} gSetTag::Task
+@findex gSetTag::Task
+@sp 2
+@example
+@group
+prev = gSetTag(task, tag);
+
+object  task;    /*  Task object              */
+object  tag;     /*  user data object         */
+object  prev;    /*  previous tag or NULL     */
+@end group
+@end example
+Attaches a user data object to the task.  Returns the previous tag.
+@sp 1
+See also:  @code{GetTag}, @code{AutoDisposeTag}
+@end deffn
+
+
+
+@deffn {TaskList} gTaskList::Task
+@findex gTaskList::Task
+@sp 2
+@example
+@group
+tl = gTaskList(task);
+
+object  task;   /*  Task object      */
+object  tl;     /*  TaskList object   */
+@end group
+@end example
+Returns the @code{TaskList} that this task belongs to.
+@end deffn
+
+
+
+
+@section HTTP Request
+The @code{HttpRequest} class provides an HTTP client for making
+HTTP and HTTPS requests.  It wraps the WinInet API and supports
+custom headers, authentication, request bodies, and response handling.
+The @code{WebService} class builds on @code{HttpRequest} to provide
+a higher-level SOAP web service client.
+
+@subsection HttpRequest Methods
+
+
+
+@deffn {AddHeader} gAddHeader::HttpRequest
+@findex gAddHeader
+@sp 2
+@example
+@group
+r = gAddHeader(req, name, value);
+
+object  req;     /*  HttpRequest object  */
+char    *name;   /*  header name         */
+char    *value;  /*  header value        */
+object  r;       /*  HttpRequest object  */
+@end group
+@end example
+Adds a custom HTTP request header.
+@end deffn
+
+
+
+@deffn {GetErrorMessage} gGetErrorMessage::HttpRequest
+@findex gGetErrorMessage::HttpRequest
+@sp 2
+@example
+@group
+s = gGetErrorMessage(req);
+
+object  req;   /*  HttpRequest object       */
+char    *s;    /*  error message or NULL    */
+@end group
+@end example
+Returns the error message string if the request failed, or @code{NULL}
+if no error occurred.
+@end deffn
+
+
+
+@deffn {GetResponse} gGetResponse::HttpRequest
+@findex gGetResponse::HttpRequest
+@sp 2
+@example
+@group
+s = gGetResponse(req);
+
+object  req;   /*  HttpRequest object    */
+char    *s;    /*  response body string  */
+@end group
+@end example
+Returns the response body as a string.  Only populated if no output
+file was specified via @code{gSetOutputFileName}.
+@sp 1
+See also:  @code{SetOutputFileName}
+@end deffn
+
+
+
+@deffn {GetResponseHeader} gGetResponseHeader::HttpRequest
+@findex gGetResponseHeader::HttpRequest
+@sp 2
+@example
+@group
+s = gGetResponseHeader(req, name);
+
+object  req;    /*  HttpRequest object         */
+char    *name;  /*  header name (case-insensitive)  */
+char    *s;     /*  header value or NULL        */
+@end group
+@end example
+Returns the value of a single response header by name.  The lookup is
+case-insensitive.  Returns @code{NULL} if the header is not found.
+@sp 1
+See also:  @code{GetResponseHeaders}
+@end deffn
+
+
+
+@deffn {GetResponseHeaders} gGetResponseHeaders::HttpRequest
+@findex gGetResponseHeaders
+@sp 2
+@example
+@group
+dict = gGetResponseHeaders(req);
+
+object  req;    /*  HttpRequest object          */
+object  dict;   /*  StringDictionary of headers */
+@end group
+@end example
+Returns a @code{StringDictionary} containing all response headers.
+Header names are lowercased.
+@sp 1
+See also:  @code{GetResponseHeader}
+@end deffn
+
+
+
+@deffn {NewHttpRequest} gNewHttpRequest::HttpRequest
+@findex gNewHttpRequest
+@sp 2
+@example
+@group
+req = gNewHttpRequest(HttpRequest, url, verb);
+
+object  req;    /*  new HttpRequest object  */
+char    *url;   /*  request URL             */
+char    *verb;  /*  HTTP method (GET, POST, etc.)  */
+@end group
+@end example
+This is a class method.  Creates a new @code{HttpRequest} for the given
+URL and HTTP method.
+@end deffn
+
+
+
+@deffn {SendRequest} gSendRequest::HttpRequest
+@findex gSendRequest::HttpRequest
+@sp 2
+@example
+@group
+code = gSendRequest(req, flags);
+
+object  req;    /*  HttpRequest object        */
+DWORD   flags;  /*  connection flags          */
+DWORD   code;   /*  0=success, or HTTP code   */
+@end group
+@end example
+Sends the HTTP request with all configured headers and content.
+Returns 0 on success (HTTP 2xx), or the HTTP response code on error.
+@end deffn
+
+
+
+@deffn {SetAuth} gSetAuth::HttpRequest
+@findex gSetAuth
+@sp 2
+@example
+@group
+r = gSetAuth(req, user, pass);
+
+object  req;    /*  HttpRequest object  */
+char    *user;  /*  username            */
+char    *pass;  /*  password            */
+object  r;      /*  HttpRequest object  */
+@end group
+@end example
+Sets HTTP Basic Authentication credentials for the request.
+@end deffn
+
+
+
+@deffn {SetContent} gSetContent::HttpRequest
+@findex gSetContent
+@sp 2
+@example
+@group
+r = gSetContent(req, content);
+
+object  req;      /*  HttpRequest object  */
+char    *content; /*  request body        */
+object  r;        /*  HttpRequest object  */
+@end group
+@end example
+Sets the request body content as a string.  Replaces any previous
+content.
+@sp 1
+See also:  @code{SetContentFromFile}
+@end deffn
+
+
+
+@deffn {SetContentFromFile} gSetContentFromFile::HttpRequest
+@findex gSetContentFromFile
+@sp 2
+@example
+@group
+r = gSetContentFromFile(req, filename);
+
+object  req;       /*  HttpRequest object         */
+char    *filename; /*  file path                  */
+object  r;         /*  HttpRequest object or NULL */
+@end group
+@end example
+Loads the request body content from a file.  Returns @code{NULL} on
+file error.
+@sp 1
+See also:  @code{SetContent}
+@end deffn
+
+
+
+@deffn {SetOutputFileName} gSetOutputFileName::HttpRequest
+@findex gSetOutputFileName
+@sp 2
+@example
+@group
+r = gSetOutputFileName(req, name);
+
+object  req;    /*  HttpRequest object  */
+char    *name;  /*  file path or NULL   */
+object  r;      /*  HttpRequest object  */
+@end group
+@end example
+Sets an output file path to save the response body to instead of
+keeping it in memory.  Pass @code{NULL} to disable file output.
+@sp 1
+See also:  @code{GetResponse}
+@end deffn
+
+
+
+@deffn {SetResponseTimeoutSeconds} gSetResponseTimeoutSeconds::HttpRequest
+@findex gSetResponseTimeoutSeconds
+@sp 2
+@example
+@group
+gSetResponseTimeoutSeconds(req, seconds);
+
+object  req;      /*  HttpRequest object  */
+int     seconds;  /*  timeout in seconds  */
+@end group
+@end example
+Sets the timeout for waiting on a server response.  The default is
+60 seconds.
+@end deffn
+
+
+
+@deffn {SetSecure} gSetSecure::HttpRequest
+@findex gSetSecure
+@sp 2
+@example
+@group
+r = gSetSecure(req, secure);
+
+object  req;     /*  HttpRequest object  */
+int     secure;  /*  non-zero for HTTPS  */
+object  r;       /*  HttpRequest object  */
+@end group
+@end example
+Enables or disables HTTPS for the request.  Pass a non-zero value
+to use HTTPS (port 443 by default).
+@end deffn
+
+
+
+@subsection WebService Methods
+
+The @code{WebService} class wraps @code{HttpRequest} to provide a
+SOAP web service client.  It builds SOAP XML envelopes, sends them
+via HTTP POST, and parses XML responses.
+
+
+
+@deffn {AddArgument} gAddArgument::WebService
+@findex gAddArgument
+@sp 2
+@example
+@group
+r = gAddArgument(ws, param, val);
+
+object  ws;      /*  WebService object  */
+char    *param;  /*  parameter name     */
+char    *val;    /*  parameter value    */
+object  r;       /*  WebService object  */
+@end group
+@end example
+Adds a SOAP method parameter as a name-value pair.  Call multiple times
+to build the parameter list.
+@end deffn
+
+
+
+@deffn {GetErrorMessage} gGetErrorMessage::WebService
+@findex gGetErrorMessage::WebService
+@sp 2
+@example
+@group
+s = gGetErrorMessage(ws);
+
+object  ws;   /*  WebService object        */
+char    *s;   /*  error message or NULL    */
+@end group
+@end example
+Returns the error message string if the request failed, or @code{NULL}
+if no error occurred.
+@end deffn
+
+
+
+@deffn {GetResponse} gGetResponse::WebService
+@findex gGetResponse::WebService
+@sp 2
+@example
+@group
+s = gGetResponse(ws);
+
+object  ws;   /*  WebService object        */
+char    *s;   /*  raw XML response string  */
+@end group
+@end example
+Returns the raw XML response body from the SOAP service.
+@sp 1
+See also:  @code{GetXMLResponse}
+@end deffn
+
+
+
+@deffn {GetXMLResponse} gGetXMLResponse::WebService
+@findex gGetXMLResponse
+@sp 2
+@example
+@group
+xml = gGetXMLResponse(ws);
+
+object  ws;    /*  WebService object   */
+object  xml;   /*  XMLNode object      */
+@end group
+@end example
+Parses the response as XML and returns an @code{XMLNode} object for
+structured access to the response elements.
+@sp 1
+See also:  @code{GetResponse}
+@end deffn
+
+
+
+@deffn {NewServiceRequest} gNewServiceRequest::WebService
+@findex gNewServiceRequest
+@sp 2
+@example
+@group
+ws = gNewServiceRequest(WebService, url);
+
+object  ws;    /*  new WebService object  */
+char    *url;  /*  SOAP service URL       */
+@end group
+@end example
+This is a class method.  Creates a new @code{WebService} request
+targeting the given SOAP endpoint URL.
+@end deffn
+
+
+
+@deffn {SendRequest} gSendRequest::WebService
+@findex gSendRequest::WebService
+@sp 2
+@example
+@group
+code = gSendRequest(ws, flags);
+
+object  ws;     /*  WebService object         */
+DWORD   flags;  /*  connection flags          */
+DWORD   code;   /*  0=success, or HTTP code   */
+@end group
+@end example
+Builds the SOAP XML envelope from the configured method and arguments,
+sends it via HTTP POST, and retrieves the response.  Returns 0 on
+success, or the HTTP response code on error.
+@end deffn
+
+
+
+@deffn {SetMethod} gSetMethod::WebService
+@findex gSetMethod
+@sp 2
+@example
+@group
+r = gSetMethod(ws, method);
+
+object  ws;       /*  WebService object  */
+char    *method;  /*  SOAP method name   */
+object  r;        /*  WebService object  */
+@end group
+@end example
+Sets the SOAP method (operation) name to invoke on the remote service.
+@end deffn
+
+
+
+@deffn {SetNamespaceURL} gSetNamespaceURL::WebService
+@findex gSetNamespaceURL
+@sp 2
+@example
+@group
+r = gSetNamespaceURL(ws, url);
+
+object  ws;    /*  WebService object       */
+char    *url;  /*  XML namespace URL       */
+object  r;     /*  WebService object       */
+@end group
+@end example
+Sets the XML namespace URL for the SOAP envelope.
+@end deffn
+
+
+
+
+@section Line Control
+The @code{LineControl} class (a subclass of @code{Control}) implements a
+control that draws a line on a dialog or window.  The line color and
+style (solid, dotted, dashed) can be configured.
+
+@subsection LineControl Methods
+
+
+
+@deffn {New} New::LineControl
+@findex vNew::LineControl
+@sp 2
+@example
+@group
+lc = vNew(LineControl, ctlID, name, dlg);
+
+object  lc;       /*  new LineControl object  */
+UINT    ctlID;    /*  control ID              */
+char    *name;    /*  control name            */
+object  dlg;      /*  dialog object           */
+@end group
+@end example
+Creates a new @code{LineControl} associated with a control defined in
+the dialog resource.  The line defaults to black and solid style.
+@end deffn
+
+
+
+@deffn {SetLineColor} gSetLineColor::LineControl
+@findex gSetLineColor
+@sp 2
+@example
+@group
+r = gSetLineColor(lc, color);
+
+object  lc;     /*  LineControl object  */
+char    color;  /*  color index         */
+object  r;      /*  LineControl object  */
+@end group
+@end example
+Sets the line color by color index.
+@sp 1
+See also:  @code{SetLineStyle}
+@end deffn
+
+
+
+@deffn {SetLineStyle} gSetLineStyle::LineControl
+@findex gSetLineStyle
+@sp 2
+@example
+@group
+r = gSetLineStyle(lc, style);
+
+object  lc;     /*  LineControl object       */
+char    style;  /*  line style (solid, dotted, dashed)  */
+object  r;      /*  LineControl object       */
+@end group
+@end example
+Sets the line style (solid, dotted, dashed, etc.).
+@sp 1
+See also:  @code{SetLineColor}
+@end deffn
+
+
+
+
+@section Rectangle Control
+The @code{RectControl} class (a subclass of @code{Control}) implements a
+control that draws a rectangle on a dialog or window.  It supports
+configurable frame styles, fill patterns, background colors, and text
+display with formatting.
+
+@subsection RectControl Methods
+
+
+
+@deffn {AllowEdge} gAllowEdge::RectControl
+@findex gAllowEdge
+@sp 2
+@example
+@group
+prev = gAllowEdge(rc, val);
+
+object  rc;     /*  RectControl object         */
+int     val;    /*  1=allow edge, 0=no         */
+int     prev;   /*  previous setting           */
+@end group
+@end example
+Controls whether text extends to the edge of the rectangle.  Returns
+the previous setting.
+@end deffn
+
+
+
+@deffn {Draw3D} gDraw3D::RectControl
+@findex gDraw3D
+@sp 2
+@example
+@group
+prev = gDraw3D(rc, val);
+
+object  rc;     /*  RectControl object         */
+int     val;    /*  1=enable 3D, 0=disable     */
+int     prev;   /*  previous setting           */
+@end group
+@end example
+Enables or disables a 3D effect on the rectangle border.  Returns the
+previous setting.
+@end deffn
+
+
+
+@deffn {New} New::RectControl
+@findex vNew::RectControl
+@sp 2
+@example
+@group
+rc = vNew(RectControl, ctlID, name, dlg);
+
+object  rc;       /*  new RectControl object  */
+UINT    ctlID;    /*  control ID              */
+char    *name;    /*  control name            */
+object  dlg;      /*  dialog object           */
+@end group
+@end example
+Creates a new @code{RectControl} associated with a control defined in
+the dialog resource.  Defaults to a frame on all sides, no fill, and
+black color.
+@end deffn
+
+
+
+@deffn {SetBackgroundColor} gSetBackgroundColor::RectControl
+@findex gSetBackgroundColor
+@sp 2
+@example
+@group
+r = gSetBackgroundColor(rc, color);
+
+object  rc;     /*  RectControl object  */
+char    color;  /*  color index         */
+object  r;      /*  RectControl object  */
+@end group
+@end example
+Sets a solid background color for the rectangle interior.
+@sp 1
+See also:  @code{SetBackgroundRGBColor}, @code{SetFill}
+@end deffn
+
+
+
+@deffn {SetBackgroundColorRef} gSetBackgroundColorRef::RectControl
+@findex gSetBackgroundColorRef
+@sp 2
+@example
+@group
+r = gSetBackgroundColorRef(rc, clr);
+
+object    rc;    /*  RectControl object  */
+COLORREF  clr;   /*  Windows COLORREF    */
+object    r;     /*  RectControl object  */
+@end group
+@end example
+Sets the background color using a Windows @code{COLORREF} value.
+@sp 1
+See also:  @code{SetBackgroundColor}, @code{SetBackgroundRGBColor}
+@end deffn
+
+
+
+@deffn {SetBackgroundRGBColor} gSetBackgroundRGBColor::RectControl
+@findex gSetBackgroundRGBColor
+@sp 2
+@example
+@group
+r = gSetBackgroundRGBColor(rc, red, green, blue);
+
+object  rc;     /*  RectControl object  */
+int     red;    /*  red component       */
+int     green;  /*  green component     */
+int     blue;   /*  blue component      */
+object  r;      /*  RectControl object  */
+@end group
+@end example
+Sets the background color using RGB values.
+@sp 1
+See also:  @code{SetBackgroundColor}, @code{SetBackgroundColorRef}
+@end deffn
+
+
+
+@deffn {SetDT_Format} gSetDT_Format::RectControl
+@findex gSetDT_Format
+@sp 2
+@example
+@group
+r = gSetDT_Format(rc, fmt);
+
+object  rc;    /*  RectControl object        */
+short   fmt;   /*  Windows DT_* format flags */
+object  r;     /*  RectControl object        */
+@end group
+@end example
+Sets text formatting flags using Windows @code{DT_*} constants
+(e.g.@: @code{DT_LEFT}, @code{DT_CENTER}, @code{DT_WORDBREAK}).
+@end deffn
+
+
+
+@deffn {SetFill} gSetFill::RectControl
+@findex gSetFill
+@sp 2
+@example
+@group
+r = gSetFill(rc, fill);
+
+object  rc;    /*  RectControl object  */
+char    fill;  /*  1=fill, 0=no fill  */
+object  r;     /*  RectControl object  */
+@end group
+@end example
+Enables or disables filling the rectangle interior.
+@sp 1
+See also:  @code{SetPattern}, @code{SetBackgroundColor}
+@end deffn
+
+
+
+@deffn {SetFrameColor} gSetFrameColor::RectControl
+@findex gSetFrameColor
+@sp 2
+@example
+@group
+r = gSetFrameColor(rc, color);
+
+object  rc;     /*  RectControl object  */
+char    color;  /*  color index         */
+object  r;      /*  RectControl object  */
+@end group
+@end example
+Sets the frame (border) color.
+@sp 1
+See also:  @code{SetFrameStyle}, @code{SetFrameThickness}
+@end deffn
+
+
+
+@deffn {SetFrameStyle} gSetFrameStyle::RectControl
+@findex gSetFrameStyle
+@sp 2
+@example
+@group
+r = gSetFrameStyle(rc, style);
+
+object  rc;     /*  RectControl object                     */
+char    style;  /*  frame style (which sides have borders) */
+object  r;      /*  RectControl object                     */
+@end group
+@end example
+Sets which sides of the rectangle have borders (left, right, top,
+bottom, or combinations).
+@sp 1
+See also:  @code{SetFrameColor}, @code{SetFrameThickness}
+@end deffn
+
+
+
+@deffn {SetFrameThickness} gSetFrameThickness::RectControl
+@findex gSetFrameThickness
+@sp 2
+@example
+@group
+r = gSetFrameThickness(rc, thickness);
+
+object  rc;          /*  RectControl object        */
+short   thickness;   /*  frame thickness in pixels  */
+object  r;           /*  RectControl object         */
+@end group
+@end example
+Sets the frame border thickness in pixels.
+@sp 1
+See also:  @code{SetFrameColor}, @code{SetFrameStyle}
+@end deffn
+
+
+
+@deffn {SetPattern} gSetPattern::RectControl
+@findex gSetPattern
+@sp 2
+@example
+@group
+r = gSetPattern(rc, dotSize, stepSize, foreColor, backColor);
+
+object  rc;         /*  RectControl object                 */
+short   dotSize;    /*  dot size for pattern               */
+short   stepSize;   /*  spacing between dots               */
+char    foreColor;  /*  pattern foreground color index      */
+char    backColor;  /*  pattern background color index      */
+object  r;          /*  RectControl object                 */
+@end group
+@end example
+Sets a dot pattern for filling the rectangle interior.  Must also call
+@code{gSetFill} to enable filling.
+@sp 1
+See also:  @code{SetFill}, @code{SetBackgroundColor}
+@end deffn
+
+
+
+@deffn {SetStringValue} gSetStringValue::RectControl
+@findex gSetStringValue::RectControl
+@sp 2
+@example
+@group
+r = gSetStringValue(rc, val);
+
+object  rc;    /*  RectControl object  */
+char    *val;  /*  display text        */
+object  r;     /*  RectControl object  */
+@end group
+@end example
+Sets the text displayed within the rectangle.
+@sp 1
+See also:  @code{StringValue}, @code{SetDT_Format}
+@end deffn
+
+
+
+@deffn {SetTextColor} gSetTextColor::RectControl
+@findex gSetTextColor::RectControl
+@sp 2
+@example
+@group
+r = gSetTextColor(rc, color);
+
+object  rc;     /*  RectControl object  */
+char    color;  /*  color index         */
+object  r;      /*  RectControl object  */
+@end group
+@end example
+Sets the text color by color index.
+@sp 1
+See also:  @code{SetTextRGBColor}, @code{SetTextColorRef}
+@end deffn
+
+
+
+@deffn {SetTextColorRef} gSetTextColorRef::RectControl
+@findex gSetTextColorRef
+@sp 2
+@example
+@group
+r = gSetTextColorRef(rc, clr);
+
+object    rc;    /*  RectControl object  */
+COLORREF  clr;   /*  Windows COLORREF    */
+object    r;     /*  RectControl object  */
+@end group
+@end example
+Sets the text color using a Windows @code{COLORREF} value.
+@sp 1
+See also:  @code{SetTextColor}, @code{SetTextRGBColor}
+@end deffn
+
+
+
+@deffn {SetTextRGBColor} gSetTextRGBColor::RectControl
+@findex gSetTextRGBColor
+@sp 2
+@example
+@group
+r = gSetTextRGBColor(rc, red, green, blue);
+
+object  rc;     /*  RectControl object  */
+int     red;    /*  red component       */
+int     green;  /*  green component     */
+int     blue;   /*  blue component      */
+object  r;      /*  RectControl object  */
+@end group
+@end example
+Sets the text color using RGB values.
+@sp 1
+See also:  @code{SetTextColor}, @code{SetTextColorRef}
+@end deffn
+
+
+
+@deffn {StringValue} gStringValue::RectControl
+@findex gStringValue::RectControl
+@sp 2
+@example
+@group
+s = gStringValue(rc);
+
+object  rc;   /*  RectControl object   */
+char    *s;   /*  display text string  */
+@end group
+@end example
+Returns the current display text.
+@sp 1
+See also:  @code{SetStringValue}
+@end deffn
